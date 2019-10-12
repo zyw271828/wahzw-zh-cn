@@ -1,0 +1,3 @@
+[submodule "themes/jane"]
+	path = themes/jane
+	url = https://github.com/p0n1/hugo-theme-jane.git
