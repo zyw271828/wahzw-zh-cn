@@ -1,4 +1,4 @@
-baseURL = "https://p0n1.github.io/blog"
+baseURL = "https://sec-bit.github.io/blog"
 theme = "jane"
 enableRobotsTXT = true
 enableEmoji = true
