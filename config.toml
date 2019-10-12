@@ -150,8 +150,8 @@ defaultContentLanguage = "zh-cn"  # Default language to use (if you setup multil
     theme = "github-light"                           # theme: github-light, github-dark, github-dark-orange, icy-dark, dark-blue, photon-dark
 
   [params.search.google]    # google custom search, see https://cse.google.com
-    enable = false
-    id = ""
+    enable = true
+    id = "013402755253274635861:4rj70y1whw3"
     title = "Search"
 
   # use public git repo url to link lastmod git commit, enableGitInfo should be true.
