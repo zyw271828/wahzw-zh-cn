@@ -2,119 +2,119 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on SECBIT Blog</title>
-    <link>https://p0n1.github.io/blog/categories/</link>
+    <link>https://sec-bit.github.io/blog/categories/</link>
     <description>Recent content in Categories on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 28 Aug 2019 08:00:00 +0800</lastBuildDate>
     
-	<atom:link href="https://p0n1.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://sec-bit.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Zero Knowledge Proof</title>
-      <link>https://p0n1.github.io/blog/categories/zero-knowledge-proof/</link>
+      <link>https://sec-bit.github.io/blog/categories/zero-knowledge-proof/</link>
       <pubDate>Wed, 28 Aug 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/categories/zero-knowledge-proof/</guid>
+      <guid>https://sec-bit.github.io/blog/categories/zero-knowledge-proof/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Vulnerability</title>
-      <link>https://p0n1.github.io/blog/categories/vulnerability/</link>
+      <link>https://sec-bit.github.io/blog/categories/vulnerability/</link>
       <pubDate>Mon, 29 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/categories/vulnerability/</guid>
+      <guid>https://sec-bit.github.io/blog/categories/vulnerability/</guid>
       <description></description>
     </item>
     
     <item>
       <title>zkSNARKs</title>
-      <link>https://p0n1.github.io/blog/categories/zksnarks/</link>
+      <link>https://sec-bit.github.io/blog/categories/zksnarks/</link>
       <pubDate>Mon, 29 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/categories/zksnarks/</guid>
+      <guid>https://sec-bit.github.io/blog/categories/zksnarks/</guid>
       <description></description>
     </item>
     
     <item>
       <title>zkPoD</title>
-      <link>https://p0n1.github.io/blog/categories/zkpod/</link>
+      <link>https://sec-bit.github.io/blog/categories/zkpod/</link>
       <pubDate>Wed, 24 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/categories/zkpod/</guid>
+      <guid>https://sec-bit.github.io/blog/categories/zkpod/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Libra</title>
-      <link>https://p0n1.github.io/blog/categories/libra/</link>
+      <link>https://sec-bit.github.io/blog/categories/libra/</link>
       <pubDate>Wed, 10 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/categories/libra/</guid>
+      <guid>https://sec-bit.github.io/blog/categories/libra/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Programming Language</title>
-      <link>https://p0n1.github.io/blog/categories/programming-language/</link>
+      <link>https://sec-bit.github.io/blog/categories/programming-language/</link>
       <pubDate>Wed, 10 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/categories/programming-language/</guid>
+      <guid>https://sec-bit.github.io/blog/categories/programming-language/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Smart Contract</title>
-      <link>https://p0n1.github.io/blog/categories/smart-contract/</link>
+      <link>https://sec-bit.github.io/blog/categories/smart-contract/</link>
       <pubDate>Wed, 10 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/categories/smart-contract/</guid>
+      <guid>https://sec-bit.github.io/blog/categories/smart-contract/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ethereum</title>
-      <link>https://p0n1.github.io/blog/categories/ethereum/</link>
+      <link>https://sec-bit.github.io/blog/categories/ethereum/</link>
       <pubDate>Thu, 13 Jun 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/categories/ethereum/</guid>
+      <guid>https://sec-bit.github.io/blog/categories/ethereum/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Game Theory</title>
-      <link>https://p0n1.github.io/blog/categories/game-theory/</link>
+      <link>https://sec-bit.github.io/blog/categories/game-theory/</link>
       <pubDate>Thu, 13 Jun 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/categories/game-theory/</guid>
+      <guid>https://sec-bit.github.io/blog/categories/game-theory/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Formal Verification</title>
-      <link>https://p0n1.github.io/blog/categories/formal-verification/</link>
+      <link>https://sec-bit.github.io/blog/categories/formal-verification/</link>
       <pubDate>Wed, 24 Oct 2018 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/categories/formal-verification/</guid>
+      <guid>https://sec-bit.github.io/blog/categories/formal-verification/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Bitcoin</title>
-      <link>https://p0n1.github.io/blog/categories/bitcoin/</link>
+      <link>https://sec-bit.github.io/blog/categories/bitcoin/</link>
       <pubDate>Sat, 29 Sep 2018 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/categories/bitcoin/</guid>
+      <guid>https://sec-bit.github.io/blog/categories/bitcoin/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Blockchain</title>
-      <link>https://p0n1.github.io/blog/categories/blockchain/</link>
+      <link>https://sec-bit.github.io/blog/categories/blockchain/</link>
       <pubDate>Sat, 29 Sep 2018 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/categories/blockchain/</guid>
+      <guid>https://sec-bit.github.io/blog/categories/blockchain/</guid>
       <description></description>
     </item>
     

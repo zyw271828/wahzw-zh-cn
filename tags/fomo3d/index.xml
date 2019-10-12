@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Fomo3D on SECBIT Blog</title>
-    <link>https://p0n1.github.io/blog/tags/fomo3d/</link>
+    <link>https://sec-bit.github.io/blog/tags/fomo3d/</link>
     <description>Recent content in Fomo3D on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 20 Aug 2018 08:00:00 +0800</lastBuildDate>
     
-	<atom:link href="https://p0n1.github.io/blog/tags/fomo3d/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://sec-bit.github.io/blog/tags/fomo3d/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Last Winner 的最后赢家 - 智能合约超大规模黑客攻击手法曝光</title>
-      <link>https://p0n1.github.io/blog/2018/08/20/last-winner-of-lastwinner/</link>
+      <link>https://sec-bit.github.io/blog/2018/08/20/last-winner-of-lastwinner/</link>
       <pubDate>Mon, 20 Aug 2018 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2018/08/20/last-winner-of-lastwinner/</guid>
+      <guid>https://sec-bit.github.io/blog/2018/08/20/last-winner-of-lastwinner/</guid>
       <description>Last Winner（类 Fomo3D）游戏大火，导致以太坊异常拥堵，Gas 费用暴涨。大量以太币资金入场。Last Winner 游戏合约存在大量非正常交易，并且伴随着大量合约的创建与自毁，与正常人类调用行为特征偏离很大，这引起了我们的高度警惕。</description>
     </item>
     

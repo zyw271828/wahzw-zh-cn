@@ -2,29 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Smart Contract on SECBIT Blog</title>
-    <link>https://p0n1.github.io/blog/en/categories/smart-contract/</link>
+    <link>https://sec-bit.github.io/blog/en/categories/smart-contract/</link>
     <description>Recent content in Smart Contract on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 10 Jul 2019 08:00:00 +0800</lastBuildDate>
     
-	<atom:link href="https://p0n1.github.io/blog/en/categories/smart-contract/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://sec-bit.github.io/blog/en/categories/smart-contract/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>&#39;Move&#39; Programming Language: The Highlight of Libra</title>
-      <link>https://p0n1.github.io/blog/en/2019/07/10/move-programming-language-the-highlight-of-libra/</link>
+      <link>https://sec-bit.github.io/blog/en/2019/07/10/move-programming-language-the-highlight-of-libra/</link>
       <pubDate>Wed, 10 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/en/2019/07/10/move-programming-language-the-highlight-of-libra/</guid>
+      <guid>https://sec-bit.github.io/blog/en/2019/07/10/move-programming-language-the-highlight-of-libra/</guid>
       <description>Among publications of Libra, the most attractive thing would be the brand new &amp;lsquo;Move&amp;rsquo; programming language. After the first glance at &amp;lsquo;Move&amp;rsquo; whitepaper, we came to the idea that this is the future of smart contract language.</description>
     </item>
     
     <item>
       <title>Lacking Insights in ERC223 &amp; ERC827 Implementation</title>
-      <link>https://p0n1.github.io/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</link>
+      <link>https://sec-bit.github.io/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</link>
       <pubDate>Sun, 24 Jun 2018 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</guid>
+      <guid>https://sec-bit.github.io/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</guid>
       <description>This bug originates from a common practice: calling an arbitrary function appointed by the contract caller from another contract after invoking a function in the current one, while the bug in ATN contract reveals the danger of this approach: the contract caller could bypass authority checks or attack others with the identity of contract itself via this feature.</description>
     </item>
     

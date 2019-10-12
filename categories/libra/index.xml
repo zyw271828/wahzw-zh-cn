@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Libra on SECBIT Blog</title>
-    <link>https://p0n1.github.io/blog/categories/libra/</link>
+    <link>https://sec-bit.github.io/blog/categories/libra/</link>
     <description>Recent content in Libra on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 10 Jul 2019 08:00:00 +0800</lastBuildDate>
     
-	<atom:link href="https://p0n1.github.io/blog/categories/libra/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://sec-bit.github.io/blog/categories/libra/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Move语言：我眼中的 Libra 最大亮点</title>
-      <link>https://p0n1.github.io/blog/2019/07/10/move-programming-language-the-highlight-of-libra/</link>
+      <link>https://sec-bit.github.io/blog/2019/07/10/move-programming-language-the-highlight-of-libra/</link>
       <pubDate>Wed, 10 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2019/07/10/move-programming-language-the-highlight-of-libra/</guid>
+      <guid>https://sec-bit.github.io/blog/2019/07/10/move-programming-language-the-highlight-of-libra/</guid>
       <description>Libra 的一系列发布中，新的编程语言 Move 尤为吸人眼球。第一时间看了 Move 的白皮书，嗯，这也许才是未来智能合约语言该有的样子。</description>
     </item>
     

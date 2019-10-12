@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>SECBIT Blog</title>
-    <link>https://p0n1.github.io/blog/en/</link>
+    <link>https://sec-bit.github.io/blog/en/</link>
     <description>Recent content on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 29 Jul 2019 08:00:00 +0800</lastBuildDate>
     
-        <atom:link href="https://p0n1.github.io/blog/en/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://sec-bit.github.io/blog/en/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>The &#39;Input Aliasing&#39; bug caused by a contract library of zkSNARKs</title>
-      <link>https://p0n1.github.io/blog/en/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</link>
+      <link>https://sec-bit.github.io/blog/en/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</link>
       <pubDate>Mon, 29 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/en/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</guid>
+      <guid>https://sec-bit.github.io/blog/en/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</guid>
       
         <description>
 
@@ -168,10 +168,10 @@
     
     <item>
       <title>&#39;Move&#39; Programming Language: The Highlight of Libra</title>
-      <link>https://p0n1.github.io/blog/en/2019/07/10/move-programming-language-the-highlight-of-libra/</link>
+      <link>https://sec-bit.github.io/blog/en/2019/07/10/move-programming-language-the-highlight-of-libra/</link>
       <pubDate>Wed, 10 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/en/2019/07/10/move-programming-language-the-highlight-of-libra/</guid>
+      <guid>https://sec-bit.github.io/blog/en/2019/07/10/move-programming-language-the-highlight-of-libra/</guid>
       
         <description>
 
@@ -297,10 +297,10 @@
     
     <item>
       <title>Lacking Insights in ERC223 &amp; ERC827 Implementation</title>
-      <link>https://p0n1.github.io/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</link>
+      <link>https://sec-bit.github.io/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</link>
       <pubDate>Sun, 24 Jun 2018 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</guid>
+      <guid>https://sec-bit.github.io/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</guid>
       
         <description>
 

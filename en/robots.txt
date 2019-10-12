@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://p0n1.github.io/blog/sitemap.xml
+Sitemap: https://sec-bit.github.io/blog/sitemap.xml

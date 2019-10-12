@@ -2,128 +2,128 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on SECBIT Blog</title>
-    <link>https://p0n1.github.io/blog/post/</link>
+    <link>https://sec-bit.github.io/blog/post/</link>
     <description>Recent content in Posts on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 28 Aug 2019 08:00:00 +0800</lastBuildDate>
     
-	<atom:link href="https://p0n1.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://sec-bit.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>读心术：从零知识证明中提取「知识」</title>
-      <link>https://p0n1.github.io/blog/2019/08/28/extractor-and-proof-of-knowledge/</link>
+      <link>https://sec-bit.github.io/blog/2019/08/28/extractor-and-proof-of-knowledge/</link>
       <pubDate>Wed, 28 Aug 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2019/08/28/extractor-and-proof-of-knowledge/</guid>
+      <guid>https://sec-bit.github.io/blog/2019/08/28/extractor-and-proof-of-knowledge/</guid>
       <description>只有「知识」在存在的前提下，保证「零知识」才有意义。</description>
     </item>
     
     <item>
       <title>从「模拟」理解零知识证明：平行宇宙与时光倒流</title>
-      <link>https://p0n1.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/</link>
+      <link>https://sec-bit.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/</link>
       <pubDate>Tue, 06 Aug 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/</guid>
+      <guid>https://sec-bit.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/</guid>
       <description>相信很多人都听说过零知识证明，但是只有极少数人听说过模拟，然而模拟是理解零知识的关键。</description>
     </item>
     
     <item>
       <title>初识「零知识」与「证明」</title>
-      <link>https://p0n1.github.io/blog/2019/07/31/zero-knowledge-proof/</link>
+      <link>https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-proof/</link>
       <pubDate>Wed, 31 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2019/07/31/zero-knowledge-proof/</guid>
+      <guid>https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-proof/</guid>
       <description>要解释「零知识证明」，我们需要先解释「证明」，然后解释什么是「知识」，最后再解释什么是「零知识」。</description>
     </item>
     
     <item>
       <title>zkSNARKs 合约库「输入假名」漏洞致众多零知项目存在安全风险</title>
-      <link>https://p0n1.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</link>
+      <link>https://sec-bit.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</link>
       <pubDate>Mon, 29 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</guid>
+      <guid>https://sec-bit.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</guid>
       <description>大量零知识证明项目由于错误地使用了某个 zkSNARKs 合约库，引入「输入假名 (Input Aliasing) 」漏洞，可导致伪造证明、双花、重放等攻击行为发生，且攻击成本极低。众多以太坊社区开源项目受影响，其中包括三大最常用的 zkSNARKs 零知开发库 snarkjs、ethsnarks、ZoKrates，以及近期大热的三个混币（匿名转账）应用 hopper、Heiswap、Miximus。</description>
     </item>
     
     <item>
       <title>PoD-Tiny——实现零信任交易的最简协议</title>
-      <link>https://p0n1.github.io/blog/2019/07/24/zkpod-explained-pod-tiny/</link>
+      <link>https://sec-bit.github.io/blog/2019/07/24/zkpod-explained-pod-tiny/</link>
       <pubDate>Wed, 24 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2019/07/24/zkpod-explained-pod-tiny/</guid>
+      <guid>https://sec-bit.github.io/blog/2019/07/24/zkpod-explained-pod-tiny/</guid>
       <description>zkPoD 是一个全新的实现 ZKCP 目标的方案。目前 zkPoD 已经支持上 GB 的数据，支持低 TPS 公链，也支持高 TPS 联盟链；既支持二进制数据，也支持带有内部丰富类型与结构的表格数据。与传统的「受信第三方」相比，zkPoD 利用区块链来作为一个「Trustless 第三方」，实现了的「零信任公平交易」。本文介绍一个极简的 PoD 协议——PoD-Tiny，这个协议简化了很多问题，并不实用，但是可以帮助读者快速理解 PoD 的原理和面临的挑战。</description>
     </item>
     
     <item>
       <title>zkPoD：区块链，零知识证明与形式化验证，实现无中介、零信任的公平交易</title>
-      <link>https://p0n1.github.io/blog/2019/07/14/zkpod-short-intro/</link>
+      <link>https://sec-bit.github.io/blog/2019/07/14/zkpod-short-intro/</link>
       <pubDate>Sun, 14 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2019/07/14/zkpod-short-intro/</guid>
+      <guid>https://sec-bit.github.io/blog/2019/07/14/zkpod-short-intro/</guid>
       <description>所谓「公平交易」是指买卖双⽅在不相识（不互信）的情况下，能够放⼼进⾏交易⽽⽆需担⼼对⽅作弊。如果交易顺利完成，则买家得到商品，同时卖家得到钱款；若协议中途任何⼀⽅退出，或任何⼀⽅作弊，协议都会保证另⼀⽅的利益不会受损。如何利用零知识证明 (ZKP) 与区块链来实现去中介的公平交易协议？</description>
     </item>
     
     <item>
       <title>Move语言：我眼中的 Libra 最大亮点</title>
-      <link>https://p0n1.github.io/blog/2019/07/10/move-programming-language-the-highlight-of-libra/</link>
+      <link>https://sec-bit.github.io/blog/2019/07/10/move-programming-language-the-highlight-of-libra/</link>
       <pubDate>Wed, 10 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2019/07/10/move-programming-language-the-highlight-of-libra/</guid>
+      <guid>https://sec-bit.github.io/blog/2019/07/10/move-programming-language-the-highlight-of-libra/</guid>
       <description>Libra 的一系列发布中，新的编程语言 Move 尤为吸人眼球。第一时间看了 Move 的白皮书，嗯，这也许才是未来智能合约语言该有的样子。</description>
     </item>
     
     <item>
       <title>为什么说区块链是一座全新的博弈竞技场？</title>
-      <link>https://p0n1.github.io/blog/2019/06/13/ethereum-the-unprecedented-arena-for-playing-cooperative-games/</link>
+      <link>https://sec-bit.github.io/blog/2019/06/13/ethereum-the-unprecedented-arena-for-playing-cooperative-games/</link>
       <pubDate>Thu, 13 Jun 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2019/06/13/ethereum-the-unprecedented-arena-for-playing-cooperative-games/</guid>
+      <guid>https://sec-bit.github.io/blog/2019/06/13/ethereum-the-unprecedented-arena-for-playing-cooperative-games/</guid>
       <description>区块链到底有什么用？</description>
     </item>
     
     <item>
       <title>Don’t Test, Verify —— 哪个故事真正符合你对形式化验证的想象？</title>
-      <link>https://p0n1.github.io/blog/2018/10/24/formal-verification-background/</link>
+      <link>https://sec-bit.github.io/blog/2018/10/24/formal-verification-background/</link>
       <pubDate>Wed, 24 Oct 2018 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2018/10/24/formal-verification-background/</guid>
+      <guid>https://sec-bit.github.io/blog/2018/10/24/formal-verification-background/</guid>
       <description>世界上是否有一种技术可以保证计算机程序绝对安全，能够完全抵挡住黑客的进攻？</description>
     </item>
     
     <item>
       <title>是谁控制了比特币，是你？还是钱包？BTC地址与交易原理剖析</title>
-      <link>https://p0n1.github.io/blog/2018/09/29/bitcoin-p2pk2-p2sh-addr-pywallet-bug/</link>
+      <link>https://sec-bit.github.io/blog/2018/09/29/bitcoin-p2pk2-p2sh-addr-pywallet-bug/</link>
       <pubDate>Sat, 29 Sep 2018 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2018/09/29/bitcoin-p2pk2-p2sh-addr-pywallet-bug/</guid>
+      <guid>https://sec-bit.github.io/blog/2018/09/29/bitcoin-p2pk2-p2sh-addr-pywallet-bug/</guid>
       <description>安比（SECBIT）实验室在对数字钱包源码审计时，发现一个名为 pywallet 的比特币钱包开源库包含了一个严重缺陷。如果向 pywallet 生成的 OmniLayer 收款地址转账，将导致资产永久丢失。</description>
     </item>
     
     <item>
       <title>Last Winner 的最后赢家 - 智能合约超大规模黑客攻击手法曝光</title>
-      <link>https://p0n1.github.io/blog/2018/08/20/last-winner-of-lastwinner/</link>
+      <link>https://sec-bit.github.io/blog/2018/08/20/last-winner-of-lastwinner/</link>
       <pubDate>Mon, 20 Aug 2018 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2018/08/20/last-winner-of-lastwinner/</guid>
+      <guid>https://sec-bit.github.io/blog/2018/08/20/last-winner-of-lastwinner/</guid>
       <description>Last Winner（类 Fomo3D）游戏大火，导致以太坊异常拥堵，Gas 费用暴涨。大量以太币资金入场。Last Winner 游戏合约存在大量非正常交易，并且伴随着大量合约的创建与自毁，与正常人类调用行为特征偏离很大，这引起了我们的高度警惕。</description>
     </item>
     
     <item>
       <title>从世界杯小组赛消极比赛，到矿工博弈及共识算法，博弈论解释了一切</title>
-      <link>https://p0n1.github.io/blog/2018/08/03/worldcup-miner-dilemma/</link>
+      <link>https://sec-bit.github.io/blog/2018/08/03/worldcup-miner-dilemma/</link>
       <pubDate>Fri, 03 Aug 2018 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2018/08/03/worldcup-miner-dilemma/</guid>
+      <guid>https://sec-bit.github.io/blog/2018/08/03/worldcup-miner-dilemma/</guid>
       <description>诺贝尔经济学奖获得者约翰.纳什(John F. Nash)在他的博士论文中提出的“纳什均衡”概念，完全颠覆了传统经济学家的固有观念，因此“纳什均衡”对经济学的影响被类比为“DNA双螺旋结构对生物科学的影响”。纳什均衡提供了一种分析社会和经济参与者行为的工具，安比(SECBIT)实验室的研究员利用均衡的概念来揭示世界杯比赛中消极比赛、比特币系统中矿工挖矿博弈，以及共识系统所面临的挑战背后所蕴含的均衡模型。</description>
     </item>
     
     <item>
       <title>ERC223及ERC827实现代码欠缺安全考虑</title>
-      <link>https://p0n1.github.io/blog/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</link>
+      <link>https://sec-bit.github.io/blog/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</link>
       <pubDate>Sun, 24 Jun 2018 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</guid>
+      <guid>https://sec-bit.github.io/blog/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</guid>
       <description>ERC223, ERC827的部分实现代码引入了任意函数调用缺陷，可能会对使用这部分代码的合约带来安全漏洞。如果需要实现上述规范接口，请仔细检查实现代码。这种合约本身允许用户自定义 &lt;code&gt;call()&lt;/code&gt; 任意地址上任意函数的设计，十分危险。攻击者可以很容易地借用当前合约的身份来进行&lt;strong&gt;任何操作&lt;/strong&gt;，比如盗取Token或者绕开权限检查等。</description>
     </item>
     

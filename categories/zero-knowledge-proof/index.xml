@@ -2,65 +2,65 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Zero Knowledge Proof on SECBIT Blog</title>
-    <link>https://p0n1.github.io/blog/categories/zero-knowledge-proof/</link>
+    <link>https://sec-bit.github.io/blog/categories/zero-knowledge-proof/</link>
     <description>Recent content in Zero Knowledge Proof on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 28 Aug 2019 08:00:00 +0800</lastBuildDate>
     
-	<atom:link href="https://p0n1.github.io/blog/categories/zero-knowledge-proof/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>读心术：从零知识证明中提取「知识」</title>
-      <link>https://p0n1.github.io/blog/2019/08/28/extractor-and-proof-of-knowledge/</link>
+      <link>https://sec-bit.github.io/blog/2019/08/28/extractor-and-proof-of-knowledge/</link>
       <pubDate>Wed, 28 Aug 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2019/08/28/extractor-and-proof-of-knowledge/</guid>
+      <guid>https://sec-bit.github.io/blog/2019/08/28/extractor-and-proof-of-knowledge/</guid>
       <description>只有「知识」在存在的前提下，保证「零知识」才有意义。</description>
     </item>
     
     <item>
       <title>从「模拟」理解零知识证明：平行宇宙与时光倒流</title>
-      <link>https://p0n1.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/</link>
+      <link>https://sec-bit.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/</link>
       <pubDate>Tue, 06 Aug 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/</guid>
+      <guid>https://sec-bit.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/</guid>
       <description>相信很多人都听说过零知识证明，但是只有极少数人听说过模拟，然而模拟是理解零知识的关键。</description>
     </item>
     
     <item>
       <title>初识「零知识」与「证明」</title>
-      <link>https://p0n1.github.io/blog/2019/07/31/zero-knowledge-proof/</link>
+      <link>https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-proof/</link>
       <pubDate>Wed, 31 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2019/07/31/zero-knowledge-proof/</guid>
+      <guid>https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-proof/</guid>
       <description>要解释「零知识证明」，我们需要先解释「证明」，然后解释什么是「知识」，最后再解释什么是「零知识」。</description>
     </item>
     
     <item>
       <title>zkSNARKs 合约库「输入假名」漏洞致众多零知项目存在安全风险</title>
-      <link>https://p0n1.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</link>
+      <link>https://sec-bit.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</link>
       <pubDate>Mon, 29 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</guid>
+      <guid>https://sec-bit.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</guid>
       <description>大量零知识证明项目由于错误地使用了某个 zkSNARKs 合约库，引入「输入假名 (Input Aliasing) 」漏洞，可导致伪造证明、双花、重放等攻击行为发生，且攻击成本极低。众多以太坊社区开源项目受影响，其中包括三大最常用的 zkSNARKs 零知开发库 snarkjs、ethsnarks、ZoKrates，以及近期大热的三个混币（匿名转账）应用 hopper、Heiswap、Miximus。</description>
     </item>
     
     <item>
       <title>PoD-Tiny——实现零信任交易的最简协议</title>
-      <link>https://p0n1.github.io/blog/2019/07/24/zkpod-explained-pod-tiny/</link>
+      <link>https://sec-bit.github.io/blog/2019/07/24/zkpod-explained-pod-tiny/</link>
       <pubDate>Wed, 24 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2019/07/24/zkpod-explained-pod-tiny/</guid>
+      <guid>https://sec-bit.github.io/blog/2019/07/24/zkpod-explained-pod-tiny/</guid>
       <description>zkPoD 是一个全新的实现 ZKCP 目标的方案。目前 zkPoD 已经支持上 GB 的数据，支持低 TPS 公链，也支持高 TPS 联盟链；既支持二进制数据，也支持带有内部丰富类型与结构的表格数据。与传统的「受信第三方」相比，zkPoD 利用区块链来作为一个「Trustless 第三方」，实现了的「零信任公平交易」。本文介绍一个极简的 PoD 协议——PoD-Tiny，这个协议简化了很多问题，并不实用，但是可以帮助读者快速理解 PoD 的原理和面临的挑战。</description>
     </item>
     
     <item>
       <title>zkPoD：区块链，零知识证明与形式化验证，实现无中介、零信任的公平交易</title>
-      <link>https://p0n1.github.io/blog/2019/07/14/zkpod-short-intro/</link>
+      <link>https://sec-bit.github.io/blog/2019/07/14/zkpod-short-intro/</link>
       <pubDate>Sun, 14 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://p0n1.github.io/blog/2019/07/14/zkpod-short-intro/</guid>
+      <guid>https://sec-bit.github.io/blog/2019/07/14/zkpod-short-intro/</guid>
       <description>所谓「公平交易」是指买卖双⽅在不相识（不互信）的情况下，能够放⼼进⾏交易⽽⽆需担⼼对⽅作弊。如果交易顺利完成，则买家得到商品，同时卖家得到钱款；若协议中途任何⼀⽅退出，或任何⼀⽅作弊，协议都会保证另⼀⽅的利益不会受损。如何利用零知识证明 (ZKP) 与区块链来实现去中介的公平交易协议？</description>
     </item>
     

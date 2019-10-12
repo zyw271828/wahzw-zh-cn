@@ -1,369 +1,369 @@
-<?xml-stylesheet type="text/xsl" href="https://p0n1.github.io/sitemap.xsl"?>
+<?xml-stylesheet type="text/xsl" href="https://sec-bit.github.io/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://p0n1.github.io/blog/categories/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/extractor/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/extractor/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/post/</loc>
+    <loc>https://sec-bit.github.io/blog/post/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/</loc>
+    <loc>https://sec-bit.github.io/blog/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/zero-knowledge/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/zero-knowledge/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/categories/zero-knowledge-proof/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/zero-knowledge-proof/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/zero-knowledge-proof/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/2019/08/28/extractor-and-proof-of-knowledge/</loc>
+    <loc>https://sec-bit.github.io/blog/2019/08/28/extractor-and-proof-of-knowledge/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/simulator/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/simulator/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/</loc>
+    <loc>https://sec-bit.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/proof/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/proof/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/2019/07/31/zero-knowledge-proof/</loc>
+    <loc>https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-proof/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/smart-contract/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/smart-contract/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/categories/vulnerability/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/vulnerability/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/vulnerability/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/vulnerability/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/categories/zksnarks/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/zksnarks/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/zksnarks/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/zksnarks/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</loc>
+    <loc>https://sec-bit.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/blockchain/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/blockchain/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/fair-exchange/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/fair-exchange/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/formal-verification/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/formal-verification/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/2019/07/24/zkpod-explained-pod-tiny/</loc>
+    <loc>https://sec-bit.github.io/blog/2019/07/24/zkpod-explained-pod-tiny/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/categories/zkpod/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/zkpod/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/zkpod/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/zkpod/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/2019/07/14/zkpod-short-intro/</loc>
+    <loc>https://sec-bit.github.io/blog/2019/07/14/zkpod-short-intro/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/facebook/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/facebook/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/categories/libra/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/libra/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/libra/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/libra/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/2019/07/10/move-programming-language-the-highlight-of-libra/</loc>
+    <loc>https://sec-bit.github.io/blog/2019/07/10/move-programming-language-the-highlight-of-libra/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/categories/programming-language/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/programming-language/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/programming-language/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/programming-language/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/categories/smart-contract/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/smart-contract/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/cooperative-games/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/cooperative-games/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/categories/ethereum/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/ethereum/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/ethereum/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/ethereum/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/categories/game-theory/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/game-theory/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/game-theory/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/game-theory/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/2019/06/13/ethereum-the-unprecedented-arena-for-playing-cooperative-games/</loc>
+    <loc>https://sec-bit.github.io/blog/2019/06/13/ethereum-the-unprecedented-arena-for-playing-cooperative-games/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/2018/10/24/formal-verification-background/</loc>
+    <loc>https://sec-bit.github.io/blog/2018/10/24/formal-verification-background/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/categories/formal-verification/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/formal-verification/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/security/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/security/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/address/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/address/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/categories/bitcoin/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/bitcoin/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/bitcoin/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/bitcoin/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/categories/blockchain/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/blockchain/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/crypto-wallet/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/crypto-wallet/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/2018/09/29/bitcoin-p2pk2-p2sh-addr-pywallet-bug/</loc>
+    <loc>https://sec-bit.github.io/blog/2018/09/29/bitcoin-p2pk2-p2sh-addr-pywallet-bug/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/dapp/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/dapp/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/fomo3d/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/fomo3d/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/game/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/game/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/2018/08/20/last-winner-of-lastwinner/</loc>
+    <loc>https://sec-bit.github.io/blog/2018/08/20/last-winner-of-lastwinner/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/consensus/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/consensus/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/miner/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/miner/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/world-cup/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/world-cup/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/2018/08/03/worldcup-miner-dilemma/</loc>
+    <loc>https://sec-bit.github.io/blog/2018/08/03/worldcup-miner-dilemma/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/erc223/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/erc223/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</loc>
+    <loc>https://sec-bit.github.io/blog/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://p0n1.github.io/blog/tags/erc827/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/erc827/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
