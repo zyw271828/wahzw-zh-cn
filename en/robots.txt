@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://p0n1.github.io/blog/sitemap.xml

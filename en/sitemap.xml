@@ -1,0 +1,133 @@
+<?xml-stylesheet type="text/xsl" href="https://p0n1.github.io/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/categories/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/post/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/tags/smart-contract/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/tags/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/tags/vulnerability/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/categories/zero-knowledge-proof/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/tags/zero-knowledge-proof/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/categories/zksnarks/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/tags/zksnarks/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/2019/07/10/move-programming-language-the-highlight-of-libra/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/tags/facebook/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/categories/libra/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/tags/libra/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/categories/programming-language/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/tags/programming-language/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/categories/smart-contract/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/tags/erc223/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/tags/erc827/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://p0n1.github.io/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+</urlset>

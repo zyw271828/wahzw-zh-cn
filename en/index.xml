@@ -1,0 +1,769 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SECBIT Blog</title>
+    <link>https://p0n1.github.io/blog/en/</link>
+    <description>Recent content on SECBIT Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 29 Jul 2019 08:00:00 +0800</lastBuildDate>
+    
+        <atom:link href="https://p0n1.github.io/blog/en/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The &#39;Input Aliasing&#39; bug caused by a contract library of zkSNARKs</title>
+      <link>https://p0n1.github.io/blog/en/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</link>
+      <pubDate>Mon, 29 Jul 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://p0n1.github.io/blog/en/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</guid>
+      
+        <description>
+
+&lt;p&gt;Many zero-knowledge proof projects are threatened by attacks like faking proof, double spending and replaying due to the &amp;lsquo;Input Aliasing&amp;rsquo; bug caused by a contract library of zkSNARKs. This applies to many Ethereum open-source projects as well, including 3 most popular zkSNARKs library - snarkjs, ethsnarks, ZoKrates and 3 topical mixcoin apps - hopper, Heiswap, Miximus.&lt;/p&gt;
+
+&lt;h2 id=&#34;double-spending-the-very-first-issue&#34;&gt;Double Spending: The Very First Issue&lt;/h2&gt;
+
+&lt;p&gt;Semaphore is an anonymous signal system with zero-knowledge proof evolved from the mixcoin project by the famous developer &amp;lsquo;barryWhiteHat&amp;rsquo; .&lt;/p&gt;
+
+&lt;p&gt;Russian developer &amp;lsquo;poma&amp;rsquo; first pointed out that &lt;a href=&#34;https://github.com/kobigurk/semaphore/issues/16&#34;&gt;it might contain double spending bug&lt;/a&gt;[1].&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;poma-found.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The bug hides in &lt;a href=&#34;https://github.com/kobigurk/semaphore/blob/602dd57abb43e48f490e92d7091695d717a63915/semaphorejs/contracts/Semaphore.sol#L83&#34;&gt;line 83&lt;/a&gt;[2] so please take a closer look:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;semaphore_bug_full.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This function requires the caller to constract a zero- knowledge proof to show he or she could take out money from the contract. Also, it reads &lt;code&gt;nullifiers_set&lt;/code&gt; and check if a certain element of the proof is marked to prevent double spending. If the proof is in &lt;code&gt;nullifiers_set&lt;/code&gt;, the contract would fail the check and the caller could not take money away. The developer suggests that people could not submit the same proof repeatedly for profit and this measure could prevent double spending and replaying.&lt;/p&gt;
+
+&lt;p&gt;However, one essential problem is missed. The attacker could pass the zero-knowledge check in line 82 and bypass the double-spending check in line 83 by modifying a former successful proof with the &amp;lsquo;Input Aliasing&amp;rsquo; bug.&lt;/p&gt;
+
+&lt;p&gt;This bug could be dated back to 2017 when Christian Reitwiessner, the creator of Solidity, provided a &lt;a href=&#34;https://gist.github.com/chriseth/f9be9d9391efc5beb9704255a8e2989d&#34;&gt;sample implementation&lt;/a&gt;[3] of zkSNARKs contract cryptography. &lt;strong&gt;Later on, almost every ethereum contract with zkSNARKs referred to this implementation, thus they could all get attacked by this technique.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;attack-flow.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;mixcoin-app-the-worst-hit-region&#34;&gt;Mixcoin APP: The Worst-hit Region&lt;/h2&gt;
+
+&lt;p&gt;The earliest and widest application of zero-knowledge proof in ethereum is mixcoin or anonymous transferring/private transaction. The ethereum itself does not support anonymous trading, while the community is craving for privacy protection. Therefore, many hot projects emerged as a result. Here we use mixcoin contract application as an example to show you the threat of &amp;lsquo;Input Aliasing&amp;rsquo; bug.&lt;/p&gt;
+
+&lt;p&gt;There are 2 preconditions of mixcoin contracts or anonymous transferring:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Prove that I have a certain number of money&lt;/li&gt;
+&lt;li&gt;Prove that the certain money is not spent&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This is an explanation of the process for easier understanding:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;A would like to spend some money.&lt;/li&gt;
+&lt;li&gt;A needs to prove ownership of this money. First, A shows a zkproof to prove that A knows the preimage of a hash (HashA), this hash is on the leaf of a tree with signal root, and the other hash of the preimage is HashB. HashA is the witness and HashB is the public statement. A is anonymous for not exposing HashA.&lt;/li&gt;
+&lt;li&gt;The contract checks zkproof and checks if HashB is in &lt;code&gt;nullifiers_set&lt;/code&gt;. If not, the money is not spent yet and could be used by A.&lt;/li&gt;
+&lt;li&gt;If permission is given, the contract would put HashB into &lt;code&gt;nullifiers_set&lt;/code&gt; to show that money of HashB is already spent.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The code &lt;code&gt;verifyProof(a, b, c, input)&lt;/code&gt; in line 82 above shows the legitimacy of the money. &lt;code&gt;input[]&lt;/code&gt; is the public statement. &lt;code&gt;require(nullifiers_set[input[1]] == false)&lt;/code&gt; in line 83 checks if the money is spent before.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Many zkSNARKs contracts, especially those involving mixcoin, have the same core logic of line 82 and 83. Therefore, they all have the same bug and might get attacked by &amp;lsquo;Input Aliasing&amp;rsquo;.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;analysis-how-to-spend-the-money-5-times-anonymously&#34;&gt;Analysis: How to Spend The Money 5 Times Anonymously?&lt;/h2&gt;
+
+&lt;p&gt;The function &lt;code&gt;verifyProof(a, b, c, input)&lt;/code&gt; computes input parameters on the elliptic curve and applies a function called &lt;code&gt;scalar_mul()&lt;/code&gt; to &lt;a href=&#34;https://github.com/iden3/snarkjs/blob/0349d90824bd25688e3013ca26f7f73b51bc7755/templates/verifier_groth.sol#L202&#34;&gt;implement scalar multiplication on the elliptic curve&lt;/a&gt;[4].&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;/// @return the product of a point on G1 and a scalar, i.e.
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;c1&#34;&gt;/// p == p.scalar_mul(1) and p.add(p) == p.scalar_mul(2) for all points p.
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;scalar_mul&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;G1Point&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;point&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;uint&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;internal&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;returns&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;G1Point&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;nx&#34;&gt;uint&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;memory&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;nx&#34;&gt;input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;X&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;nx&#34;&gt;input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;nx&#34;&gt;input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;nx&#34;&gt;bool&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;success&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;nx&#34;&gt;assembly&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;nx&#34;&gt;success&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;call&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;gas&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x80&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x60&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+            &lt;span class=&#34;c1&#34;&gt;// Use &amp;#34;invalid&amp;#34; to make gas estimation work
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;k&#34;&gt;switch&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;success&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;case&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;invalid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;nx&#34;&gt;require&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;success&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;We know that ethereum has some pre-compiled contract embedded for cryptographic computation on the elliptic curve to reduce the gas consumption of zkSNARKs verification. The implementation of &lt;code&gt;scalar_mul()&lt;/code&gt; calls the No. 7 pre-compiled ethereum contract and realizes scalar multiplication[5] of elliptic curve alt_bn128 according to &lt;a href=&#34;https://github.com/ethereum/EIPs/blob/master/EIPS/eip-196.md&#34;&gt;EIP 196&lt;/a&gt;. The following graph is the definition in the yellow book, which we usually call ECMUL or ecc_mul.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./yellow_paper_ecmul.png&#34; alt=&#34;以太坊黄皮书定义&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In cryptography, the range of elliptic curve &lt;code&gt;{x,y}&lt;/code&gt; is a finite field based on mod p called Zp or Fp. In another word, the x and y from coordinate &lt;code&gt;{x,y}&lt;/code&gt; of the elliptic curve are values in Fp. Some points from an elliptic curve form a relatively huge cyclic group and the sum of the points are called the order, &lt;code&gt;q&lt;/code&gt;, of the group. The encryption based on the elliptic curve is performed within this cyclic group. If the cyclic group order &lt;code&gt;q&lt;/code&gt; is a prime number, then the encryption could get performed in a mod q finite field &lt;code&gt;Fq&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Usually, we pick big cyclic groups as the base of encryption. Select a random non-infinite point of the cyclic group as the generator &lt;code&gt;G&lt;/code&gt; (The group order &lt;code&gt;q&lt;/code&gt; is usually a huge prime number, then picking any non-zero point is equival), and all other points could get generated by &lt;code&gt;G+G+....&lt;/code&gt;. The number of elements in this group is &lt;code&gt;q&lt;/code&gt; meaning that there are &lt;code&gt;q&lt;/code&gt; points, and we could mark every point by &lt;code&gt;0,1,2,3,....q-1&lt;/code&gt;. Here the point 0 is an infinite point, point 1 is &lt;code&gt;G&lt;/code&gt; mentioned before - it is also called the base point, point 2 is &lt;code&gt;G+G&lt;/code&gt; and point 3 is &lt;code&gt;G+G+G&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now we have two ways to represent the first point. First one is to show the coordinate &lt;code&gt;{x,y}&lt;/code&gt; and x,y here belongs to &lt;code&gt;Fp&lt;/code&gt;. Second one is &lt;code&gt;n*G&lt;/code&gt;. We only need to assign n since G is public, and n belongs to &lt;code&gt;Fq&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The signature of &lt;code&gt;scalar_mul(G1Point point, uint s)&lt;/code&gt; shows it applies point as the generator and compute &lt;code&gt;point+point+.....+point&lt;/code&gt; where there are n points in total. This is the second way of representation.&lt;/p&gt;
+
+&lt;p&gt;Solidity smart contracts encode &lt;code&gt;Fq&lt;/code&gt; by type uint256, while the maximum of uint256 is greater than &lt;code&gt;q&lt;/code&gt;. Then there might me a scenario: &lt;strong&gt;multiple values&lt;/strong&gt; of uint256 would map to the same value in &lt;code&gt;Fq&lt;/code&gt; after mod. For example, &lt;code&gt;s&lt;/code&gt; and &lt;code&gt;s + q&lt;/code&gt; represents the same point &lt;code&gt;s&lt;/code&gt; because point &lt;code&gt;q&lt;/code&gt; is equivalent to point &lt;code&gt;0&lt;/code&gt; in the cyclic group (each point corresponds to &lt;code&gt;0,1,2,3,....q-1&lt;/code&gt;). Similarly, &lt;code&gt;s + 2q&lt;/code&gt; and others all represents point &lt;code&gt;s&lt;/code&gt;. &lt;strong&gt;The mechanism of inputting multiple big integers would correspond to the same value in &lt;code&gt;Fq&lt;/code&gt; is what we call &amp;lsquo;Input Aliasing&amp;rsquo;, meaning that these integers are all aliases.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The elliptic curve implemented by No. 7 ethereum contract is &lt;code&gt;y^2 = ax^3+bx+c&lt;/code&gt;. The p and q is:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;yellow_paper_curve.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;q&lt;/code&gt; value here is the group order above. Then, in the range of type uint256, there are &lt;code&gt;uint256_max/q&lt;/code&gt; &amp;mdash; no more than 5 integers represents the same point (5 &amp;lsquo;Input Aliasing&amp;rsquo;).&lt;/p&gt;
+
+&lt;p&gt;What is this meaning? Let us go back to function &lt;code&gt;verifyProof(a, b, c, input)&lt;/code&gt; calling &lt;code&gt;scalar_mul(G1Point point, uint s)&lt;/code&gt; and every element in list &lt;code&gt;input[]&lt;/code&gt; is actually &lt;code&gt;s&lt;/code&gt;. For every &lt;code&gt;s&lt;/code&gt; in range of type uint256, there are at most 4 other values returning the same value.&lt;/p&gt;
+
+&lt;p&gt;Therefore, when the user submits a zero-knowledge proof to the contract, the contract would put &lt;code&gt;input[1]&lt;/code&gt; (some &lt;code&gt;s&lt;/code&gt;) to &lt;code&gt;nullifiers_set&lt;/code&gt;. The user or other attackers could use the other 4 values to submit the proof again. &lt;strong&gt;These 4 values are not in &lt;code&gt;nullifiers_set&lt;/code&gt; so the fake proof could pass the check, and 5 &amp;lsquo;Input Aliasing&amp;rsquo; enable spending the money 5 times with a low cost!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;more-projects-affected&#34;&gt;More Projects Affected&lt;/h2&gt;
+
+&lt;p&gt;Aside from semaphore, many other ethereum mixcoin and zkSNARKs projects have the same &amp;lsquo;Input Aliasing&amp;rsquo; issue.&lt;/p&gt;
+
+&lt;p&gt;Among these projects, the most influential ones are the famous zkSNARKs library or framework projects including snarkjs, ethsnarks, ZoKrates and so on. Many applications would copy or refer to their code for developing, thus introducing the vulnerability. Therefore the 3 projects listed fixed this bug overnight, along with other mixcoin projects with zkSNARKs like hopper, Heiswap and Miximus. &lt;strong&gt;All these projects are highly welcomed in the community and Heiswap is called &amp;lsquo;Vitalik&amp;rsquo;s favorite project&amp;rsquo;.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;solution-to-input-aliasing&#34;&gt;Solution to &amp;lsquo;Input Aliasing&amp;rsquo;&lt;/h2&gt;
+
+&lt;p&gt;In fact, all projects importing this zkSNARKs cryptography library should check their code to ensure security. So how to fix this issue?&lt;/p&gt;
+
+&lt;p&gt;Fortunately, the solution is simple. We just need to add a check of input parameter range and enforce the input value is smaller than q value mentioned above. That is, banning &amp;lsquo;Input Aliasing&amp;rsquo; by preventing representation of the same point by multiple values.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;scalar_fix.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;introspection&#34;&gt;Introspection&lt;/h2&gt;
+
+&lt;p&gt;This &amp;lsquo;Input Aliasing&amp;rsquo; bug requires our rethinking. Let us review the whole story first. Christian posted his zkSNARKs computing contract implementation to GitHub Gist in 2017. As a computation library, we could think that his implementation is secure without disobeying any cryptographic common senses, and perfectly fulfilled the job of proof verification in the contract. In fact, Christian, as the Solidity creator, would make no simple mistake here. However, 2 years later, this code snippet caused such a security risk. Countless colleagues and professionals have seen or used this 200 lines of code over 2 years without noticing any issue.&lt;/p&gt;
+
+&lt;p&gt;What is really going wrong? Maybe a misunderstanding of the interface between low-level library implementors and developers. In another word: the implementor did not consider about developer&amp;rsquo;s misusing; whereas the developers did not fully understand the low-level principles and made false security assumptions.&lt;/p&gt;
+
+&lt;p&gt;Luckily, all common zkSNARKs contract libraries updated as soon as possible to ban &amp;lsquo;Input Aliasing&amp;rsquo; from low-level. &lt;strong&gt;SECBIT Lab holds the view that although updating libraries gets rid of security issues in the future, there still might be some developers unluckily get in touch with the bugged version code or tutorial (like tokens returning 0 due to integer overflow) if the seriousness is not broadcast widely.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&amp;lsquo;Input Aliasing&amp;rsquo; reminds us of &amp;lsquo;Integer Overflow&amp;rsquo; issues before. Two bugs share many propeties: originating from developers&amp;rsquo; false assumptions; relating to Solidity type uint256; spreading widely; many vulnerable tutorial or library contract code existing online. Obviously, &amp;lsquo;Input Aliasing&amp;rsquo; is harder to find, longer to hide and more knowledge required (complex elliptic curves and cryptographic theories). SECBIT Lab predicts that more security issues are to come with the emergence of more applications with the development of zkSNARKs, zero-knowledge proof and privacy technologies. We hope that the community would learn from the experience and pay more attention to security in this new technology tide.&lt;/p&gt;
+
+&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;[1] &lt;a href=&#34;https://github.com/kobigurk/semaphore/issues/16&#34;&gt;https://github.com/kobigurk/semaphore/issues/16&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[2] &lt;a href=&#34;https://github.com/kobigurk/semaphore/blob/602dd57abb43e48f490e92d7091695d717a63915/semaphorejs/contracts/Semaphore.sol#L83&#34;&gt;https://github.com/kobigurk/semaphore/blob/602dd57abb43e48f490e92d7091695d717a63915/semaphorejs/contracts/Semaphore.sol#L83&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[3] &lt;a href=&#34;https://gist.github.com/chriseth/f9be9d9391efc5beb9704255a8e2989d&#34;&gt;https://gist.github.com/chriseth/f9be9d9391efc5beb9704255a8e2989d&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[4] &lt;a href=&#34;https://github.com/iden3/snarkjs/blob/0349d90824bd25688e3013ca26f7f73b51bc7755/templates/verifier_groth.sol#L202&#34;&gt;https://github.com/iden3/snarkjs/blob/0349d90824bd25688e3013ca26f7f73b51bc7755/templates/verifier_groth.sol#L202&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[5] &lt;a href=&#34;https://github.com/ethereum/EIPs/blob/master/EIPS/eip-196.md&#34;&gt;https://github.com/ethereum/EIPs/blob/master/EIPS/eip-196.md&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>&#39;Move&#39; Programming Language: The Highlight of Libra</title>
+      <link>https://p0n1.github.io/blog/en/2019/07/10/move-programming-language-the-highlight-of-libra/</link>
+      <pubDate>Wed, 10 Jul 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://p0n1.github.io/blog/en/2019/07/10/move-programming-language-the-highlight-of-libra/</guid>
+      
+        <description>
+
+&lt;p&gt;Abstract: Would Facebook bring dawn to smart contracts?&lt;/p&gt;
+
+&lt;p&gt;Everyone must have been bombarded by Facebook news recently.&lt;/p&gt;
+
+&lt;p&gt;Libra, the cryptocurrency project started by Facebook, got published officially on June 18th along with its website and whitepaper offering global currency &amp;amp; financial service to billions of people. Also, it has several technical whitepapers to explain the new programming language &amp;lsquo;Move&amp;rsquo; and consensus protocol &amp;ndash; LibraBFT. Its source code has been published on GitHub, and the test network has gone online. Libra is designed as a permissioned blockchain as the developing team states that no mature solution in the permissionless (public) blockchain is available for billions of people and transition to the public blockchain would begin in five years.&lt;/p&gt;
+
+&lt;p&gt;Among publications of Libra, the most attractive thing would be the brand new &amp;lsquo;Move&amp;rsquo; programming language. After the first glance at &amp;lsquo;Move&amp;rsquo; whitepaper, we came to the idea that this is the future of smart contract language.&lt;/p&gt;
+
+&lt;p&gt;Lefteris Karapetsas, a developer from Berlin, said on Twitter:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Their design goals seem to overlap, or even aim to replace Ethereum?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;CryptoPuzzleDream, the founder of PuzzleToLife.com, holds this opinion:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I think &amp;lsquo;move&amp;rsquo; programming language released by $FB could be more exciting than Libra&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;A standard geek James Clark states:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I&amp;rsquo;m usually pretty skeptical of anything related to cryptocurrency, but here&amp;rsquo;s one piece of Libra that looks potentially interesting: a bytecode programming language called Move with semantics inspired by linear logic.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This is the very thought that just came across our mind:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&amp;lsquo;Move&amp;rsquo; is the smart contract platform language designed for digital assets.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;three-applications-of-move&#34;&gt;Three Applications of &amp;lsquo;Move&amp;rsquo;&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Issuing cryptocurrencies, tokens, and digital assets&lt;/li&gt;
+&lt;li&gt;Handling blockchain transactions&lt;/li&gt;
+&lt;li&gt;Managing validators&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;the-bottom-up-static-typing&#34;&gt;The Bottom-up Static Typing&lt;/h2&gt;
+
+&lt;p&gt;The static typing of Move, which is essentially a logical constraint, is much stricter than Ethereum smart contract language. The modern programming languages like Rust, Golang, Typescript, Haskell, Scala, OCaml all select static typing due to the advantage that many simple program bugs could be detected during compilation instead of execution.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Well-typed programs never get stuck.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This is a technical jargon in programming languages saying that the code would be highly reliable if it passes type checking.&lt;/p&gt;
+
+&lt;p&gt;However, &amp;lsquo;Move&amp;rsquo; is not 100% statically typed, due to practicability requirements. It tries to perform type checking during compilation rather than deployment. Some type checking tasks have to be postponed during execution, while type safety is guaranteed.&lt;/p&gt;
+
+&lt;p&gt;One excellent design concept of &amp;lsquo;Move&amp;rsquo; is that its virtual machine is statically typed. The layer above is IR (Intermediate Representation), which is also typed. The top layers of &amp;lsquo;Move&amp;rsquo; would offer more high-level languages to financial applications adhering to static typing to avoid simple bugs in smart contracts.&lt;/p&gt;
+
+&lt;h2 id=&#34;first-class-resources&#34;&gt;First-class Resources&lt;/h2&gt;
+
+&lt;p&gt;The word &lt;code&gt;First-class Resources&lt;/code&gt; seems pretty much academic. So what is the meaning? The so-called first class in programming language refers to prior programmed objects during coding.&lt;/p&gt;
+
+&lt;p&gt;So what does &lt;code&gt;Resources&lt;/code&gt; refer to? It is another academic term about &lt;code&gt;value&lt;/code&gt;. &lt;code&gt;Value&lt;/code&gt; could be copied arbitrarily while &lt;code&gt;Resources&lt;/code&gt; could just get consumed, not copied. &lt;code&gt;Resources&lt;/code&gt; are similar to cokes that decrease if someone drinks daily. &lt;code&gt;Value&lt;/code&gt;, on the contrary, are words on a notebook. You and other people could read and copy them every day in your mind while words would not disappear.&lt;/p&gt;
+
+&lt;p&gt;Traditional programming languages, including Ethereum smart contract language, record digital assets in &lt;code&gt;values&lt;/code&gt; which might be incorrect numbers. In fact, there are plenty of wrong records, e.g., Jack transferred to John, and John gets 10 dollars while Jack&amp;rsquo;s balance remains. Many issues in this field significantly reduced people&amp;rsquo;s trust in the smart contract future.&lt;/p&gt;
+
+&lt;p&gt;Instead, the &amp;lsquo;Move&amp;rsquo; contract applies the &amp;lsquo;resource type&amp;rsquo; integrating the traditional linear logic. Digital assets are defined by resource types so that they could fit attributes in linear logic:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Digital assets could not be copied&lt;/li&gt;
+&lt;li&gt;Digital assets could not vanish&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The real principle of &lt;code&gt;First-class Resources&lt;/code&gt; is that &lt;code&gt;digital assets are first-class citizens&lt;/code&gt;. Now we could infer that &amp;lsquo;Move&amp;rsquo; is the smart contract language designed exactly for managing digital assets. Technically, digital assets could be variables in contracts to be stored, assigned, and become parameters/return values of functions &amp;amp; processes. The static typing of &amp;lsquo;Move&amp;rsquo; enables the compiler to examine most errors of resources during compilation and before deployment, enhancing smart contracts&amp;rsquo; security.&lt;/p&gt;
+
+&lt;p&gt;Here is one sentence selected from the whitepaper abstract:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;First-class resources are a very general concept that programmers can use not only to implement safe digital assets but also to write correct business logic for wrapping assets and enforcing access control policies.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;contract-security-design&#34;&gt;Contract Security Design&lt;/h2&gt;
+
+&lt;p&gt;&amp;lsquo;Move&amp;rsquo; contract design is properly integrated with security. First of all, &amp;lsquo;Move&amp;rsquo; does not support dynamic dispatch at all. Here is an explanation of dynamic dispatch - a flexible language mechanism: we could write lots of functions, processes, or subprograms in the code for the main program calling to perform different tasks. Suppose that we could know which function the program would call or the calling sequence, then these calls are static. On the contrary, if we have no idea about function calling details until program execution, then it would be dynamic. Obviously, dynamic dispatch is much more flexible than static dispatch.&lt;/p&gt;
+
+&lt;p&gt;Nevertheless, flexibility means more bugs. Many modern programming languages support dynamic dispatch to an extent on the level of language itself, e.g., dynamic binding caused by inheritance in an object-oriented language. These dynamic properties make program reasoning and formal verification harder and the program itself riskier. There are many dynamic properties in Ethereum smart contracts, such as delegatecall, parameters in the form of contracts and function pointers, while &amp;lsquo;Move&amp;rsquo; supports none of the dynamic dispatch or property. All contract execution path could be determined during compilation to be thoroughly analyzed and verified.&lt;/p&gt;
+
+&lt;p&gt;Before execution, &amp;lsquo;Move&amp;rsquo; contracts would get verified by a bytecode verifier for all types of bugs. In the meantime, the bytecode undergoes interpretation with types for execution and verification.&lt;/p&gt;
+
+&lt;p&gt;&amp;lsquo;Move&amp;rsquo; has stringent restrictions on mutable contract variables and borrows some design concepts from Rust. At any time, only one pointer could modify the mutable variables to avoid messing up data. In Ethereum Solidity, you could define many pointers for only one variable, leading to bugs once the code logic is not designed correctly.&lt;/p&gt;
+
+&lt;p&gt;&amp;lsquo;Move&amp;rsquo; modular system does support cyclic recursion dependency compared to EVM, so there would be no re-entrancy bug.&lt;/p&gt;
+
+&lt;h2 id=&#34;advanced-module-system&#34;&gt;Advanced Module System&lt;/h2&gt;
+
+&lt;p&gt;&amp;lsquo;Move&amp;rsquo; module system is designed in the style of a functional programming language (OCaml, Coq, SML), according to the whitepaper:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Move modules are similar to smart contracts in other blockchain languages. &amp;hellip;, However, modules enforce strong data abstraction — a type is transparent inside its declaring module and opaque outside of it.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The module system could encapsulate the digital asset concept perfectly. We could manage digital assets via public module interfaces along with their authorities flexibly. The ERC20 token of Ethereum is in the form of a contract, while a token of &amp;lsquo;Move&amp;rsquo; is a box passed freely like a resource without showing details inside. Meanwhile, the module system abstraction is based on its static typing, and type security could be guaranteed by smart contract virtual machine verification.&lt;/p&gt;
+
+&lt;p&gt;The &amp;lsquo;Move&amp;rsquo; module system offers a solid base for formal verification, as we could define invariants inside the module. The invariant is a strict restraint of digital asset state providing valuable information for formal verification automation. Additionally, the black-box abstraction of module systems enables the formal verification to be modularized, costing less. It would be much easier to write program analyzers and symbolic executors based on the &amp;lsquo;Move&amp;rsquo; module system, as the abstraction makes the contract logic simple for inference.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-future-move-smart-contract&#34;&gt;The Future &amp;lsquo;Move&amp;rsquo; Smart Contract&lt;/h2&gt;
+
+&lt;p&gt;Although &amp;lsquo;Move&amp;rsquo; seems rough and immature, this direction is exciting. We could see from the &amp;lsquo;Move&amp;rsquo; language that Facebook desires to build a grand digital asset platform, which originally belongs to future Ethereum.&lt;/p&gt;
+
+&lt;p&gt;Why do we love &amp;lsquo;Move&amp;rsquo;? Here are three reasons:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Integrating programming language researching results and EVM smart contract language experience&lt;/li&gt;
+&lt;li&gt;Prioritizing the security and correctness of smart contracts&lt;/li&gt;
+&lt;li&gt;Innovating smart contract language design for financial apps rather than following routines (not applying WASM, LLVM or modifying EVM)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;No traditional scheme stands out in blockchain; the future is all about innovation.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Lacking Insights in ERC223 &amp; ERC827 Implementation</title>
+      <link>https://p0n1.github.io/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</link>
+      <pubDate>Sun, 24 Jun 2018 08:00:00 +0800</pubDate>
+      
+      <guid>https://p0n1.github.io/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</guid>
+      
+        <description>
+
+&lt;blockquote&gt;
+&lt;p&gt;An Analysis of ATN Token&amp;rsquo;s CUSTOM_CALL Bug&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;On June 20th, 2018, AI Technology Network (ATN) reported an attack on ATN smart contract: an hacker set his address as &lt;code&gt;owner&lt;/code&gt; via a bug in ATN Token contracts and issued 11 million ATN tokens for himself on May 11th, 2018. ATN team located the bug, discovered the hacking method and upgraded the contract in no time [1]. The hacker made use of passing custom fallback functions in ERC223 contracts along with &lt;code&gt;ds-auth&lt;/code&gt; approving check, then called the function of this contract when ERC223 contract invoked this CUSTOM_CALL. Afterwards, &amp;lsquo;隐形人真忙&amp;rsquo; of Baidu Security also shared experience of &amp;lsquo;call injection attack in Ethereum smart contracts&amp;rsquo; in Xianzhi Security Summit. This bug originates from a common practice: calling an arbitrary function appointed by the contract caller from another contract after invoking a function in the current one, while the bug in ATN contract reveals the danger of this approach: the contract caller could bypass authority checks or attack others with the identity of contract itself via this feature.&lt;/p&gt;
+
+&lt;p&gt;Number of ERC20 contracts with similar vulnerabilities deployed on Ethereum at present: 146&lt;/p&gt;
+
+&lt;p&gt;Links of Risky Code:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/Dexaran/ERC223-token-standard/blob/16d350ec85d5b14b9dc857468c8e0eb4a10572d3/ERC223_Token.sol#L70&#34;&gt;https://github.com/Dexaran/ERC223-token-standard/blob/16d350ec85d5b14b9dc857468c8e0eb4a10572d3/ERC223_Token.sol#L70&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/OpenZeppelin/openzeppelin-solidity/blob/dc1e352cc49565ba0a33c346006655cf63681ff5/contracts/token/ERC827/ERC827Token.sol&#34;&gt;https://github.com/OpenZeppelin/openzeppelin-solidity/blob/dc1e352cc49565ba0a33c346006655cf63681ff5/contracts/token/ERC827/ERC827Token.sol&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Update:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ERC827 code was removed from open-zeppelin [2]&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;analysis-on-atn-incident&#34;&gt;Analysis on ATN Incident&lt;/h3&gt;
+
+&lt;p&gt;ERC223 is a draft of Token standard raised by Dexaran on March 5th, 2017 [3] to solve the problem of handling tokens sent to an ERC20 contract. ERC20 has 2 ways to transfer tokens: one is calling &lt;code&gt;transfer()&lt;/code&gt; directly and another is invoking &lt;code&gt;approve()&lt;/code&gt; + &lt;code&gt;transferFrom()&lt;/code&gt; - approve first, then transfer. Taking the later approach is required when the smart contract takes the receiver role, otherwise tokens sent to the contract address would be locked forever.&lt;/p&gt;
+
+&lt;p&gt;Here is a &lt;strong&gt;correct sample&lt;/strong&gt; of ERC223 draft: when calling &lt;code&gt;transfer()&lt;/code&gt;, the contract checks if &lt;code&gt;to&lt;/code&gt; address is a contract. If so, it calls &lt;code&gt;tokenFallback()&lt;/code&gt; in the target contract to handle tokens sent to the contract. There is no CUSTOM_CALL abusing.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// Correct draft code sample
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;contract&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;ERC223&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;transfer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;address&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;uint&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;bytes&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;nx&#34;&gt;uint&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;codeLength&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;nx&#34;&gt;assembly&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;nx&#34;&gt;codeLength&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;extcodesize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;nx&#34;&gt;balances&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;msg&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;sender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;balances&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;msg&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;sender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;].&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;nx&#34;&gt;balances&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;balances&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;].&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;codeLength&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;c1&#34;&gt;// Require proper transaction handling.
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;nx&#34;&gt;ERC223Receiver&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;receiver&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;ERC223Receiver&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+            &lt;span class=&#34;nx&#34;&gt;receiver&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;tokenFallback&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;msg&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;sender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;ERC223 is a superset of ERC20 designed to replace ERC20 as a new Token contract standard, while not being widely accepted for over a year. Only a small portion of projects employed it.&lt;/p&gt;
+
+&lt;p&gt;This is an &lt;strong&gt;incorrect implementation&lt;/strong&gt; of ERC223 taken by ATN Token unfortunately. The user is permitted to pass arbitrary &lt;code&gt;_custom_fallback&lt;/code&gt; to call any functions from &lt;code&gt;_to&lt;/code&gt; address.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// CUSTOM_CALL abusing
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;transferFrom&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;address&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_from&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+    &lt;span class=&#34;nx&#34;&gt;address&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+    &lt;span class=&#34;nx&#34;&gt;uint256&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_amount&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+    &lt;span class=&#34;nx&#34;&gt;bytes&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+    &lt;span class=&#34;nx&#34;&gt;string&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_custom_fallback&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; 
+    &lt;span class=&#34;kr&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;returns&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bool&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;success&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;...&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;ERC223ReceivingContract&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;receiver&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;ERC223ReceivingContract&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;receiving&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;call&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;byte4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;keccak256&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_custom_fallback&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_from&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;amout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;...&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Report on ATN bugs stated that its contract referred to a recommended implementation of ERC223 [4]. After investigating this issue, we found that it was indeed similar to &lt;code&gt;transfer()&lt;/code&gt; in Recommended branch of ERC223-token-standard repo maintained by Dexaran [5]:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// CUSTOM_CALL abusing
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;transfer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;address&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+    &lt;span class=&#34;nx&#34;&gt;uint&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+    &lt;span class=&#34;nx&#34;&gt;bytes&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+    &lt;span class=&#34;nx&#34;&gt;string&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_custom_fallback&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; 
+    &lt;span class=&#34;kr&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;returns&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bool&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;success&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; 
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;...&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;assert&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;call&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bytes4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;keccak256&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_custom_fallback&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;msg&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;sender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;...&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This is actually risky. &amp;lsquo;&lt;em&gt;A Guide to Smart Contract Security Best Practices&lt;/em&gt;&amp;rsquo; by ConsenSys urges developers avoiding contract external calling. The hacker passed &lt;code&gt;setOwner(address)&lt;/code&gt; as &lt;code&gt;_custom_fallback&lt;/code&gt; in this attack and the target address &lt;code&gt;_to&lt;/code&gt; was exactly ATN contract itself, thus invoking &lt;code&gt;setOwner(address)&lt;/code&gt; of ATN contract indirectly. &lt;code&gt;msg.sender&lt;/code&gt; became ATN Token contract itself so as to pass the test &lt;code&gt;isAuthorized()&lt;/code&gt; in &lt;code&gt;ds-auth&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;EVM does not check the number of parameters when reading them. After the hacker called &lt;code&gt;setOwner(adddress)&lt;/code&gt;, EVM only read &lt;code&gt;_from&lt;/code&gt; on left. Therefore no error would emerge on differences between parameter numbers and the required sum by the function when applying low-level &lt;code&gt;call()&lt;/code&gt; for parameter passing. The hacker had no difficulty constructing attacking parameters as a result.&lt;/p&gt;
+
+&lt;h3 id=&#34;danger-of-abusing-custom-call&#34;&gt;Danger of Abusing CUSTOM_CALL&lt;/h3&gt;
+
+&lt;p&gt;Back to &lt;code&gt;_custom_fallback&lt;/code&gt; implementation. As a common Token interface, the designer should, in our opinion, take as many cases as possible into account to get rid of introducing potential risks and vulnerabilities. Suppose &lt;code&gt;_custom_fallback&lt;/code&gt; interface above gets accepted widely, more similar security problems are yet to come. A robust interface design should be simple, easy-handling and straightforward. The &lt;code&gt;tokenFallback()&lt;/code&gt; interface in the draft could have dealt with the ERC20 issue intended for, whereas introducing &lt;code&gt;_custom_fallback&lt;/code&gt; would disrupt developers and become abused.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;  &lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;approveAndCall&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;address&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_spender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;uint256&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;bytes&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_data&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;kr&#34;&gt;public&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;payable&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;returns&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bool&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;// require(_spender != address(this));
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;nx&#34;&gt;approve&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_spender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;require&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_spender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;call&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;msg&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;In most cases, when we pass a smart contract address to ERC20 &lt;code&gt;approve()&lt;/code&gt;, the other side cannot get relevant notifications for next steps and  a common solution is &lt;code&gt;receiverCall&lt;/code&gt;. The snippet above is one implementation and unluckily contains severe CUSTOM_CALL abusing. After executing &lt;code&gt;approveAndCall()&lt;/code&gt;, it would run other operations defined by &lt;code&gt;_spender&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Pay attention to this one.&lt;/p&gt;
+
+&lt;p&gt;Consequences: These types of contracts are designed to permit users defining &lt;code&gt;call()&lt;/code&gt; with functions on any addresses, which is highly risky. By capturing the contract&amp;rsquo;s identity, hackers could easily conduct &lt;strong&gt;any operations&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;This often leads to 3 dangerous results:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;First&lt;/strong&gt;：Allow an attacker to steal tokens in other contracts with the identity of a buggy contract&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Second&lt;/strong&gt;：Bypass authority checks in the contract with the help of &lt;code&gt;ds-auth&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Third&lt;/strong&gt;：Allow an attacker to steal approved tokens in other accounts with the identity of a buggy contract&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;An example of first one: Suppose buggy contract A has B/C/D tokens, a hacker could set &lt;code&gt;_spender&lt;/code&gt; address to a target token contract (e.g. B&amp;rsquo;s address) and select &lt;code&gt;_data&lt;/code&gt; for calling &lt;code&gt;transfer(address,uint256)&lt;/code&gt;, there would not be any barrier for the hacker to transfer out A&amp;rsquo;s tokens with the identity of contract A. &lt;code&gt;_spender != address(this)&lt;/code&gt; in code above could only protect A Token.&lt;/p&gt;
+
+&lt;p&gt;If smart contracts managing all kinds of tokens allow custom &lt;code&gt;call()&lt;/code&gt;, tokens inside them are all in danger.&lt;/p&gt;
+
+&lt;p&gt;An example of second one: The hacker in ATN incident made use of the contract&amp;rsquo;s identity to bypass &lt;code&gt;ds-auth&lt;/code&gt; authority restriction.&lt;/p&gt;
+
+&lt;p&gt;An example of third one: Imagine that a user X approve buggy contract A of managing 10,000 B tokens, a hacker could steal B calling &lt;code&gt;transferFrom&lt;/code&gt; via this bug.&lt;/p&gt;
+
+&lt;h3 id=&#34;inconsistency-between-erc223-s-draft-interface&#34;&gt;Inconsistency Between ERC223&amp;rsquo;s Draft &amp;amp; Interface&lt;/h3&gt;
+
+&lt;p&gt;With further investigation, we found no description of using &lt;code&gt;_custom_fallback&lt;/code&gt; in ERC223 interface draft.&lt;/p&gt;
+
+&lt;p&gt;This is the interface defined by the draft:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;nx&#34;&gt;contract&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;ERC223Interface&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;uint&lt;/span&gt; &lt;span class=&#34;kr&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;totalSupply&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;balanceOf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;address&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;who&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;constant&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;returns&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;uint&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;transfer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;address&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;uint&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;transfer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;address&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;uint&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;bytes&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;event&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Transfer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;address&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;indexed&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;address&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;indexed&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;uint&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;bytes&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;No parameters called &lt;code&gt;_custom_fallback&lt;/code&gt; appear in two &lt;code&gt;transfer()&lt;/code&gt; interfaces.&lt;/p&gt;
+
+&lt;p&gt;Let us inspect the draft description:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;If the receiver is a contract ERC223 token contract will try to call tokenFallback function on receiver contract. If there is no tokenFallback function on receiver contract transaction will fail. tokenFallback function is analogue of fallback function for Ether transactions. It can be used to handle incoming transactions.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The gist is that if the token receiver is an ERC223 contract then call its &lt;code&gt;tokenFallback()&lt;/code&gt;. Fail the trade if the target has no &lt;code&gt;tokenFallback()&lt;/code&gt;. Here &lt;code&gt;tokenFallback()&lt;/code&gt; works as a default &lt;code&gt;fallback&lt;/code&gt; in Ethereum transaction.&lt;/p&gt;
+
+&lt;p&gt;ERC223 draft has an explicit goal: defining &lt;code&gt;tokenFallback()&lt;/code&gt; for Token contracts for handling received tokens. While there is no &lt;code&gt;_custom_fallback&lt;/code&gt; in the main branch of ERC223 code, the Recommended branch introduces an implementation of &lt;code&gt;transfer()&lt;/code&gt; with &lt;code&gt;_custom_fallback&lt;/code&gt; without warnings.&lt;/p&gt;
+
+&lt;h3 id=&#34;other-bugs-in-erc223-implementation&#34;&gt;Other Bugs in ERC223 Implementation&lt;/h3&gt;
+
+&lt;p&gt;In fact, ERC223 Recommended branch has other bugs.&lt;/p&gt;
+
+&lt;p&gt;When dealing with bytes, &lt;code&gt;call()&lt;/code&gt; would trigger a bug in EVM level, causing inconsistency in data [6].&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// ERC223_Token.sol#L70
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;assert&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;call&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bytes4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;keccak256&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_custom_fallback&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;msg&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;sender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Under certain circumstances, errors would arise in event handling indexed bytes variables [7].&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// ERC223_Interface.sol#L18
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;event&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Transfer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;address&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;indexed&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;address&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;indexed&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;uint&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;bytes&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;indexed&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;It is safe to say ERC223 Recommended branch is not reliable, please try not to apply the code.&lt;/p&gt;
+
+&lt;h2 id=&#34;mechanism-of-passing-parameters-in-evm&#34;&gt;Mechanism of Passing Parameters in EVM&lt;/h2&gt;
+
+&lt;p&gt;To better understand this vulnerability, we would explore EVM&amp;rsquo;s mechanism of calling functions and passing parameters. Take a look at this sample&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;nx&#34;&gt;contract&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;transfer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;address&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;uint256&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;){&lt;/span&gt;
+  	      &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;First comes an introduction to parameter passing in EVM: When calling a function, if it has parameters, we need to construct the input according to types appointed by ABI normally. For example, if Ethereum invokes &lt;code&gt;transfer()&lt;/code&gt; in the form of &lt;code&gt;transfer(address to, uint256 value)&lt;/code&gt;, it takes first 4 bytes of function signature&amp;rsquo;s hash value as &lt;code&gt;function selector&lt;/code&gt; and computes &lt;code&gt;sha3(transfer(address,uint256))&lt;/code&gt;, then the result is &lt;code&gt;0xA9059CBB&lt;/code&gt;, plus the address of &lt;code&gt;to&lt;/code&gt;, the 256 bits becomes&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;0x0000000000000000000000003f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;value&lt;/code&gt; is also plugged into 256 bits computation&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;0x000000000000000000000000000000000000000000000000000000e8d4a51000&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Finally we have a full calldata:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;0xa9059cbb0000000000000000000000003f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be000000000000000000000000000000000000000000000000000000e8d4a51000&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Send the transaction along with the calldata, Ethereum could complete function calling. When an Ethereum node receives a request, it loads calldata and smart contract byte code into EVM. Byte code gets generated in compilation such that processing parameters are done in the mean time. The byte code only checks if &lt;code&gt;calldata&lt;/code&gt; is shorter than a minimum requirement rather than if it is too long. The compiler would generate a series of &lt;code&gt;CALLDATALOAD&lt;/code&gt; with mathematical operations to extract parameters required by the function. First it computes the target function invoked:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;CALLDATALOAD&lt;/code&gt; instruction would load the calldata (&lt;code&gt;0xa9059cbb0000000000000000000000003f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be000000000000000000000000000000000000000000000000000000e8d4a51000&lt;/code&gt;) of the trade into the stack and divide the first 256 bits by &lt;code&gt;0x100000000000000000000000000000000000000000000000000000000&lt;/code&gt;, then gets &lt;code&gt;0xA9059CBB&lt;/code&gt;. Every other parameter would be extracted in a similar way. However, byte code and EVM would not process parameters when there are too many of them and leave out this step instead. All in all, this feature originates from the compiler. The hacker could easily construct attacking parameters on CUSTOM_CALL.&lt;/p&gt;
+
+&lt;h2 id=&#34;risky-erc827-implementation&#34;&gt;Risky ERC827 Implementation&lt;/h2&gt;
+
+&lt;p&gt;The similar ERC827 Token draft possesses this issue as well [8]. Code below comes from an ERC827 buggy implementation by &lt;strong&gt;openzeppelin-solidity&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;transferAndCall&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;address&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;uint256&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bytes&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;kr&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;payable&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;returns&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bool&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;require&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_to&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;address&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;super&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;transfer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;require&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;call&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;msg&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;After the program finished transaction in &lt;code&gt;transferAndCall()&lt;/code&gt;, it would call a function on &lt;code&gt;_to&lt;/code&gt; address with parameters set by callers. Since the check &lt;code&gt;_to != address(this)&lt;/code&gt;, the code cannot bypass the authority check combined with &lt;code&gt;ds-auth&lt;/code&gt; library(&lt;code&gt;second result&lt;/code&gt;), while might introduce &lt;code&gt;first result&lt;/code&gt; and &lt;code&gt;second result&lt;/code&gt; above, managing buggy contracts&amp;rsquo; tokens(attack other contracts via &amp;lsquo;this&amp;rsquo; contract).&lt;/p&gt;
+
+&lt;p&gt;Aside from this, numerous ERC20 Token contracts implement similar &lt;code&gt;call()&lt;/code&gt; which is highly risky. It permits attackers stealing contracts&amp;rsquo; tokens and bypassing authority checks in some cases.&lt;/p&gt;
+
+&lt;h2 id=&#34;correct-erc20-erc721-implementation-on-receivercall&#34;&gt;Correct ERC20 &amp;amp; ERC721 Implementation on &amp;lsquo;receiverCall&amp;rsquo;&lt;/h2&gt;
+
+&lt;p&gt;A correct &amp;lsquo;receiverCall&amp;rsquo; program should hard-code the signature of called function to prevent from getting &lt;strong&gt;arbitrarily appointed&lt;/strong&gt; by an attacker. Here are 2 correct &amp;lsquo;receiverCall&amp;rsquo; examples:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Conduct &amp;lsquo;receiverCall&amp;rsquo; via declaring Receiver function&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Take ERC20 code maintained by ethereum.org as an example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;approveAndCall&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;address&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_spender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;uint256&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;bytes&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_extraData&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;kr&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;returns&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bool&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;success&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; 
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;tokenRecipient&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;spender&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;tokenRecipient&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_spender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;approve&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_spender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;nx&#34;&gt;spender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;receiveApproval&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;msg&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;sender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_extraData&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;lsquo;receiverCall&amp;rsquo; acts like a normal function call.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;run &amp;lsquo;receiverCall&amp;rsquo; by &lt;strong&gt;signature constant&lt;/strong&gt; of Receiver function&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This correct snippet comes from Token-Factory by ConsenSys&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;cm&#34;&gt;/* Approves and then calls the receiving contract */&lt;/span&gt;
+&lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;approveAndCall&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;address&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_spender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;uint256&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;bytes&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_extraData&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;returns&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bool&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;success&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;allowed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;msg&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;sender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;][&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_spender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;Approval&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;msg&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;sender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_spender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+
+    &lt;span class=&#34;c1&#34;&gt;//call the receiveApproval function on the contract you want to be notified. This crafts the function signature manually so one doesn&amp;#39;t have to include a contract in here just for this.
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;c1&#34;&gt;//receiveApproval(address _from, uint256 _value, address _tokenContract, bytes _extraData)
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;c1&#34;&gt;//it is assumed that when does this that the call *should* succeed, otherwise one would use vanilla approve instead.
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;_spender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;call&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bytes4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bytes32&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;sha3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;receiveApproval(address,uint256,address,bytes)&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;msg&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;sender&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;_extraData&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;throw&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;There are some repositories implementing &amp;lsquo;receiverCall&amp;rsquo; correctly&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/svenstucki/ERC677&#34;&gt;https://github.com/svenstucki/ERC677&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/token/ERC721/ERC721BasicToken.sol#L349&#34;&gt;https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/token/ERC721/ERC721BasicToken.sol#L349&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ConsenSys/Token-Factory/blob/master/contracts/HumanStandardToken.sol&#34;&gt;https://github.com/ConsenSys/Token-Factory/blob/master/contracts/HumanStandardToken.sol&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ethereum/ethereum-org/blob/b46095815f52cf328ecf7676b2b38284d48fba58/solidity/token-advanced.sol#L138&#34;&gt;https://github.com/ethereum/ethereum-org/blob/b46095815f52cf328ecf7676b2b38284d48fba58/solidity/token-advanced.sol#L138&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Special thanks to Yuhui Wu from Qingxin Tech who discussed the topic with us and provided feedback and comment. For more information, check out the &lt;a href=&#34;https://github.com/sec-bit/awesome-buggy-erc20-tokens&#34;&gt;Awesome Buggy ERC-20 Tokens&lt;/a&gt; open-source repo maintained by SECBIT Labs&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ERC223 standard acts differently from interface definition and two branches in official repo are implemented inconsistently. Be cautious with &lt;strong&gt;official code&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;ERC827 is vulnerable as well&lt;/li&gt;
+&lt;li&gt;Be careful using low-level call&lt;/li&gt;
+&lt;li&gt;EVM&amp;rsquo;s mechanism on calling contract functions needs to be well understood&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;[1]&lt;a href=&#34;https://atn.io/resource/aareport.pdf&#34;&gt;ATN Report&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[2]&lt;a href=&#34;https://github.com/OpenZeppelin/openzeppelin-solidity/pull/1045&#34;&gt;OpenZeppelin removed ERC827&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[3]&lt;a href=&#34;https://github.com/ethereum/EIPs/issues/223&#34;&gt;ERC-223 Token Standard Proposal Draft&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[4]&lt;a href=&#34;https://github.com/ATNIO/atn-contracts/blob/7203781ad8d106ec6d1f9ca8305e76dd1274b181/src/ATN.sol#L114&#34;&gt;ATN.sol transferFrom()&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[5]&lt;a href=&#34;https://github.com/Dexaran/ERC223-token-standard/blob/16d350ec85d5b14b9dc857468c8e0eb4a10572d3/ERC223_Token.sol#L70&#34;&gt;ERC223_Token.sol transfer() function&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[6]&lt;a href=&#34;https://github.com/Dexaran/ERC223-token-standard/issues/50&#34;&gt;ERC223-token-standard Issue 50&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[7]&lt;a href=&#34;https://github.com/Dexaran/ERC223-token-standard/issues/51&#34;&gt;ERC223-token-standard Issue 51&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[8]&lt;a href=&#34;https://github.com/OpenZeppelin/openzeppelin-solidity/blob/f18c3bc438b366f9cb3a8613f5be160c2cbced5e/contracts/token/ERC827/ERC827Token.sol#L73&#34;&gt;ERC827Token.sol&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[9]&lt;a href=&#34;https://peckshield.com/2018/06/23/evilReflex/&#34;&gt;New evilReflex Bug Identified in Multiple ERC20 Smart Contracts (CVE-2018-12702, CVE-2018-12703)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[10]&lt;a href=&#34;https://huobiglobal.zendesk.com/hc/en-us/articles/360000110521-HADAX-Suspends-18T-and-GVE-Deposits-and-Withdrawals&#34;&gt;HADAX Suspends 18T and GVE Deposits and Withdrawals&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+      
+    </item>
+    
+  </channel>
+</rss>

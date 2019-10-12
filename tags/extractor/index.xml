@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Extractor on SECBIT Blog</title>
+    <link>https://p0n1.github.io/blog/tags/extractor/</link>
+    <description>Recent content in Extractor on SECBIT Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 28 Aug 2019 08:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://p0n1.github.io/blog/tags/extractor/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>读心术：从零知识证明中提取「知识」</title>
+      <link>https://p0n1.github.io/blog/2019/08/28/extractor-and-proof-of-knowledge/</link>
+      <pubDate>Wed, 28 Aug 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://p0n1.github.io/blog/2019/08/28/extractor-and-proof-of-knowledge/</guid>
+      <description>只有「知识」在存在的前提下，保证「零知识」才有意义。</description>
+    </item>
+    
+  </channel>
+</rss>

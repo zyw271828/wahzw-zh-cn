@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>zkPoD on SECBIT Blog</title>
+    <link>https://p0n1.github.io/blog/tags/zkpod/</link>
+    <description>Recent content in zkPoD on SECBIT Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 24 Jul 2019 08:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://p0n1.github.io/blog/tags/zkpod/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>PoD-Tiny——实现零信任交易的最简协议</title>
+      <link>https://p0n1.github.io/blog/2019/07/24/zkpod-explained-pod-tiny/</link>
+      <pubDate>Wed, 24 Jul 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://p0n1.github.io/blog/2019/07/24/zkpod-explained-pod-tiny/</guid>
+      <description>zkPoD 是一个全新的实现 ZKCP 目标的方案。目前 zkPoD 已经支持上 GB 的数据，支持低 TPS 公链，也支持高 TPS 联盟链；既支持二进制数据，也支持带有内部丰富类型与结构的表格数据。与传统的「受信第三方」相比，zkPoD 利用区块链来作为一个「Trustless 第三方」，实现了的「零信任公平交易」。本文介绍一个极简的 PoD 协议——PoD-Tiny，这个协议简化了很多问题，并不实用，但是可以帮助读者快速理解 PoD 的原理和面临的挑战。</description>
+    </item>
+    
+    <item>
+      <title>zkPoD：区块链，零知识证明与形式化验证，实现无中介、零信任的公平交易</title>
+      <link>https://p0n1.github.io/blog/2019/07/14/zkpod-short-intro/</link>
+      <pubDate>Sun, 14 Jul 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://p0n1.github.io/blog/2019/07/14/zkpod-short-intro/</guid>
+      <description>所谓「公平交易」是指买卖双⽅在不相识（不互信）的情况下，能够放⼼进⾏交易⽽⽆需担⼼对⽅作弊。如果交易顺利完成，则买家得到商品，同时卖家得到钱款；若协议中途任何⼀⽅退出，或任何⼀⽅作弊，协议都会保证另⼀⽅的利益不会受损。如何利用零知识证明 (ZKP) 与区块链来实现去中介的公平交易协议？</description>
+    </item>
+    
+  </channel>
+</rss>

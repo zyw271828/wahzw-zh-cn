@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>zkSNARKs on SECBIT Blog</title>
+    <link>https://p0n1.github.io/blog/en/categories/zksnarks/</link>
+    <description>Recent content in zkSNARKs on SECBIT Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 29 Jul 2019 08:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://p0n1.github.io/blog/en/categories/zksnarks/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The &#39;Input Aliasing&#39; bug caused by a contract library of zkSNARKs</title>
+      <link>https://p0n1.github.io/blog/en/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</link>
+      <pubDate>Mon, 29 Jul 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://p0n1.github.io/blog/en/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</guid>
+      <description>Many zero-knowledge proof projects are threatened by attacks like faking proof, double spending and replaying due to the &amp;lsquo;Input Aliasing&amp;rsquo; bug caused by a contract library of zkSNARKs. This applies to many Ethereum open-source projects as well, including 3 most popular zkSNARKs library - snarkjs, ethsnarks, ZoKrates and 3 topical mixcoin apps - hopper, Heiswap, Miximus.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Smart Contract on SECBIT Blog</title>
+    <link>https://p0n1.github.io/blog/categories/smart-contract/</link>
+    <description>Recent content in Smart Contract on SECBIT Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 10 Jul 2019 08:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://p0n1.github.io/blog/categories/smart-contract/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Move语言：我眼中的 Libra 最大亮点</title>
+      <link>https://p0n1.github.io/blog/2019/07/10/move-programming-language-the-highlight-of-libra/</link>
+      <pubDate>Wed, 10 Jul 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://p0n1.github.io/blog/2019/07/10/move-programming-language-the-highlight-of-libra/</guid>
+      <description>Libra 的一系列发布中，新的编程语言 Move 尤为吸人眼球。第一时间看了 Move 的白皮书，嗯，这也许才是未来智能合约语言该有的样子。</description>
+    </item>
+    
+    <item>
+      <title>ERC223及ERC827实现代码欠缺安全考虑</title>
+      <link>https://p0n1.github.io/blog/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</link>
+      <pubDate>Sun, 24 Jun 2018 08:00:00 +0800</pubDate>
+      
+      <guid>https://p0n1.github.io/blog/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</guid>
+      <description>ERC223, ERC827的部分实现代码引入了任意函数调用缺陷，可能会对使用这部分代码的合约带来安全漏洞。如果需要实现上述规范接口，请仔细检查实现代码。这种合约本身允许用户自定义 &lt;code&gt;call()&lt;/code&gt; 任意地址上任意函数的设计，十分危险。攻击者可以很容易地借用当前合约的身份来进行&lt;strong&gt;任何操作&lt;/strong&gt;，比如盗取Token或者绕开权限检查等。</description>
+    </item>
+    
+  </channel>
+</rss>

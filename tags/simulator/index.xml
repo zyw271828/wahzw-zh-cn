@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Simulator on SECBIT Blog</title>
+    <link>https://p0n1.github.io/blog/tags/simulator/</link>
+    <description>Recent content in Simulator on SECBIT Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 06 Aug 2019 08:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://p0n1.github.io/blog/tags/simulator/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>从「模拟」理解零知识证明：平行宇宙与时光倒流</title>
+      <link>https://p0n1.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/</link>
+      <pubDate>Tue, 06 Aug 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://p0n1.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/</guid>
+      <description>相信很多人都听说过零知识证明，但是只有极少数人听说过模拟，然而模拟是理解零知识的关键。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Last Winner 的最后赢家 - 智能合约超大规模黑客攻击手法曝光 - SECBIT Blog</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="SECBIT Labs" />
+  <meta name="description" content="Last Winner（类 Fomo3D）游戏大火，导致以太坊异常拥堵，Gas 费用暴涨。大量以太币资金入场。Last Winner 游戏合约存在大量非正常交易，并且伴随着大量合约的创建与自毁，与正常人类调用行为特征偏离很大，这引起了我们的高度警惕。" />
+
+  <meta name="keywords" content="Blockchain, Smart Contract, Zero Knowledge Proof" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.55.4" />
+
+
+<link rel="canonical" href="https://p0n1.github.io/blog/2018/08/20/last-winner-of-lastwinner/" />
+
+
+
+
+
+<link rel="icon" href="/blog/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+<link rel="stylesheet" href="/blog/css/custom.css">
+
+
+<meta property="og:title" content="Last Winner 的最后赢家 - 智能合约超大规模黑客攻击手法曝光" />
+<meta property="og:description" content="Last Winner（类 Fomo3D）游戏大火，导致以太坊异常拥堵，Gas 费用暴涨。大量以太币资金入场。Last Winner 游戏合约存在大量非正常交易，并且伴随着大量合约的创建与自毁，与正常人类调用行为特征偏离很大，这引起了我们的高度警惕。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://p0n1.github.io/blog/2018/08/20/last-winner-of-lastwinner/" />
+<meta property="article:published_time" content="2018-08-20T08:00:00&#43;08:00"/>
+<meta property="article:modified_time" content="2019-10-12T18:48:30&#43;08:00"/><meta property="og:site_name" content="SECBIT Blog" />
+
+<meta itemprop="name" content="Last Winner 的最后赢家 - 智能合约超大规模黑客攻击手法曝光">
+<meta itemprop="description" content="Last Winner（类 Fomo3D）游戏大火，导致以太坊异常拥堵，Gas 费用暴涨。大量以太币资金入场。Last Winner 游戏合约存在大量非正常交易，并且伴随着大量合约的创建与自毁，与正常人类调用行为特征偏离很大，这引起了我们的高度警惕。">
+
+
+<meta itemprop="datePublished" content="2018-08-20T08:00:00&#43;08:00" />
+<meta itemprop="dateModified" content="2019-10-12T18:48:30&#43;08:00" />
+<meta itemprop="wordCount" content="11657">
+
+
+
+<meta itemprop="keywords" content="Smart Contract,Fomo3D,Vulnerability,DApp,Game,Blockchain," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Last Winner 的最后赢家 - 智能合约超大规模黑客攻击手法曝光"/>
+<meta name="twitter:description" content="Last Winner（类 Fomo3D）游戏大火，导致以太坊异常拥堵，Gas 费用暴涨。大量以太币资金入场。Last Winner 游戏合约存在大量非正常交易，并且伴随着大量合约的创建与自毁，与正常人类调用行为特征偏离很大，这引起了我们的高度警惕。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-149859278-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        renderMathInElement(document.body,
+            {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false },
+                ]
+            }
+        );
+    });
+</script>
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/blog/" class="logo">SECBIT Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://p0n1.github.io/blog/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://p0n1.github.io/blog/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://p0n1.github.io/blog/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://p0n1.github.io/blog/categories/">分类</a>
+          
+        
+      </li>
+    <li class="mobile-menu-item">
+        
+        <div class="mobile-menu-parent mobile-menu-item-lang">
+          <span class="mobile-submenu-open"></span>
+          <a href="#">
+            
+            <i class="iconfont">
+              <svg height="16" width="16" version="1.1" viewBox="0 0 128 128">
+  <path d="m 64.719501,1.4279814 c -34.694029,0 -62.8192028,28.1251726 -62.8192028,62.8192016 0,34.694036 28.1251738,62.819207 62.8192028,62.819207 4.245691,0 8.392744,-0.42239 12.402214,-1.2253 -1.616124,-0.77296 -1.792473,-6.57213 -0.194346,-9.87848 1.779059,-3.68082 7.361625,-13.00555 1.840404,-16.134231 -5.521221,-3.12869 -3.98755,-4.53968 -7.361625,-8.15914 -3.374083,-3.61947 -1.994181,-4.16357 -2.208492,-5.09179 -0.736158,-3.19004 3.251385,-7.975096 3.435429,-8.465866 0.184043,-0.490781 0.184043,-2.331182 0.122689,-2.883308 -0.06131,-0.552125 -2.515051,-2.024446 -3.12852,-2.085791 -0.613469,-0.06133 -0.920209,0.98154 -1.77906,1.042896 -0.858856,0.06133 -4.601018,-2.269838 -5.39853,-2.883308 -0.797504,-0.61346 -1.165591,-2.085792 -2.269828,-3.190033 -1.104247,-1.104252 -1.226945,-0.24539 -2.944651,-0.920206 -1.717714,-0.674812 -7.238935,-2.69926 -11.471867,-4.416975 -4.23294,-1.717714 -4.601019,-4.125615 -4.662365,-5.827954 -0.06131,-1.702333 -2.57657,-4.171587 -3.756227,-5.950646 -1.179335,-1.77906 -1.396914,-4.232932 -1.826339,-3.680809 -0.429425,0.552114 2.208484,6.993538 1.77906,7.177582 -0.429425,0.184043 -1.349635,-1.77906 -2.576572,-3.374083 -1.226936,-1.595016 1.28829,-0.736159 -2.637915,-8.465864 -3.926198,-7.729705 1.226944,-11.671284 1.472324,-15.704806 0.24539,-4.033514 3.312738,1.472325 1.717715,-1.104238 -1.595016,-2.576571 0.122697,-7.975094 -1.104246,-9.938197 -1.226936,-1.963102 -8.220475,2.208492 -8.220475,2.208492 0.184036,-1.901758 6.134682,-5.153142 10.428966,-8.1591366 4.294277,-3.005996 6.91682,-0.674813 10.367621,0.4294236 3.450803,1.104246 3.680817,0.736167 2.515226,-0.368079 -1.165591,-1.1042446 0.49077,-1.6563686 3.190031,-1.2269356 2.699269,0.429425 3.435428,3.6808086 7.545669,3.3740746 4.110242,-0.306735 0.429425,0.797511 0.981548,1.840412 0.552123,1.042892 -0.613468,0.920202 -3.312729,2.760607 -2.699262,1.840403 0.06131,1.840403 4.846407,5.337177 4.785055,3.496773 3.312729,-2.331183 2.821952,-4.907753 -0.490777,-2.576563 3.496773,-0.552115 3.496773,-0.552115 2.944651,1.963094 2.400546,0.107972 4.547684,0.782784 2.147139,0.674814 7.967076,5.597286 7.967076,5.597286 -7.300273,3.98755 -2.699261,4.416975 -1.472325,5.337178 1.226937,0.920202 -2.515218,2.699261 -2.515218,2.699261 -1.53367,-1.53367 -1.779059,0.06131 -2.760614,0.613476 -0.981548,0.552115 -0.06131,1.963095 -0.06131,1.963095 -5.076415,0.797512 -3.926198,6.13469 -3.864852,7.422971 0.06131,1.288289 -3.251385,3.251384 -4.110242,5.091796 -0.858857,1.840405 2.208491,5.827948 0.613468,6.073336 -1.595016,0.24539 -3.190031,-6.011991 -11.778601,-3.680808 -2.589322,0.702954 -8.343174,3.680808 -5.275824,9.754153 3.06734,6.073336 8.15913,-1.717714 9.876843,-0.858857 1.717714,0.858857 -0.490778,4.72371 -0.122691,4.785055 0.368079,0.06131 4.8464,0.168662 5.09179,5.398522 0.245388,5.229868 6.809502,4.785065 8.220482,4.907755 1.410972,0.12269 6.134682,-3.864859 6.809502,-4.048894 0.674815,-0.184034 3.374076,-2.453876 9.263377,0.920195 5.889301,3.374089 8.895296,2.883308 10.919743,4.294285 2.02445,1.410987 0.61347,4.232939 2.51523,5.153134 1.90175,0.920217 9.50876,-0.306736 11.41051,2.821966 1.90176,3.1287 -7.8524,18.833491 -10.91974,20.551201 -3.06734,1.71772 -4.478321,5.64392 -7.545665,8.15913 -3.067349,2.51523 -7.361625,5.62854 -11.410522,8.03646 -3.583968,2.1311 -4.228845,5.949 -5.825333,7.15419 28.11404,-6.24545 49.13623,-31.328971 49.13623,-61.323497 0,-34.694029 -28.125171,-62.8192016 -62.819206,-62.8192016 z M 79.442753,60.382331 c -0.858857,0.245389 -2.637917,1.840405 -6.993547,-0.736166 -4.35563,-2.576564 -7.361625,-2.085794 -7.729705,-2.515218 0,0 -0.368079,-1.0429 1.533671,-1.226937 3.905098,-0.378065 8.833951,3.619464 9.938196,3.680809 1.104246,0.06131 1.656361,-1.104245 3.619464,-0.471631 1.963103,0.631953 0.490777,1.023755 -0.368079,1.269143 z M 58.891546,7.6853614 c -0.427786,-0.311152 0.354344,-0.669418 0.82058,-1.288281 0.269103,-0.357613 0.0695,-0.951289 0.406356,-1.28829 0.92021,-0.920203 5.459876,-2.208485 4.572225,0.306734 -0.887321,2.515226 -5.12434,2.760614 -5.799161,2.269837 z m 10.98109,7.9750936 c -1.533672,-0.06131 -5.14381,-0.442837 -4.478321,-1.104246 2.591952,-2.576563 -0.981548,-3.312729 -3.190039,-3.496766 -2.208485,-0.184043 -3.128687,-1.4109786 -2.02444,-1.5336776 1.104237,-0.12269 5.521213,0.06139 6.257379,0.6748206 0.736158,0.613469 4.723709,2.208485 4.969099,3.374076 0.24538,1.16559 0,2.147138 -1.533678,2.085793 z M 83.184914,15.23103 c -1.226943,0.981547 -7.400887,-3.521968 -8.588569,-4.539674 -5.153134,-4.4169746 -7.913742,-2.9446486 -8.995903,-3.6808086 -1.082485,-0.736166 -0.696897,-1.717713 0.959464,-3.190039 1.656369,-1.472325 6.318732,0.490778 9.017994,0.797512 2.699262,0.306734 5.827955,2.392527 5.889301,4.871925 0.06131,2.4792256 2.944649,4.7595296 1.717713,5.7410846 z" />
+</svg>
+
+            </i>
+            语言
+          </a>
+        </div>
+        <ul class="mobile-submenu-list">
+          
+            <li>
+              
+                <a href="https://p0n1.github.io/blog/en/">English</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="https://p0n1.github.io/blog/"><strong>中文</strong></a>
+              
+            </li>
+          
+        </ul>
+      </li>
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/blog/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/blog/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/blog/" class="logo">
+    
+      SECBIT Blog
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://p0n1.github.io/blog/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://p0n1.github.io/blog/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://p0n1.github.io/blog/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://p0n1.github.io/blog/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    <li class="menu-item">
+        
+        <a class="menu-item-link menu-parent menu-item-lang" href="#">
+          
+          <i class="iconfont">
+            <svg height="16" width="16" version="1.1" viewBox="0 0 128 128">
+  <path d="m 64.719501,1.4279814 c -34.694029,0 -62.8192028,28.1251726 -62.8192028,62.8192016 0,34.694036 28.1251738,62.819207 62.8192028,62.819207 4.245691,0 8.392744,-0.42239 12.402214,-1.2253 -1.616124,-0.77296 -1.792473,-6.57213 -0.194346,-9.87848 1.779059,-3.68082 7.361625,-13.00555 1.840404,-16.134231 -5.521221,-3.12869 -3.98755,-4.53968 -7.361625,-8.15914 -3.374083,-3.61947 -1.994181,-4.16357 -2.208492,-5.09179 -0.736158,-3.19004 3.251385,-7.975096 3.435429,-8.465866 0.184043,-0.490781 0.184043,-2.331182 0.122689,-2.883308 -0.06131,-0.552125 -2.515051,-2.024446 -3.12852,-2.085791 -0.613469,-0.06133 -0.920209,0.98154 -1.77906,1.042896 -0.858856,0.06133 -4.601018,-2.269838 -5.39853,-2.883308 -0.797504,-0.61346 -1.165591,-2.085792 -2.269828,-3.190033 -1.104247,-1.104252 -1.226945,-0.24539 -2.944651,-0.920206 -1.717714,-0.674812 -7.238935,-2.69926 -11.471867,-4.416975 -4.23294,-1.717714 -4.601019,-4.125615 -4.662365,-5.827954 -0.06131,-1.702333 -2.57657,-4.171587 -3.756227,-5.950646 -1.179335,-1.77906 -1.396914,-4.232932 -1.826339,-3.680809 -0.429425,0.552114 2.208484,6.993538 1.77906,7.177582 -0.429425,0.184043 -1.349635,-1.77906 -2.576572,-3.374083 -1.226936,-1.595016 1.28829,-0.736159 -2.637915,-8.465864 -3.926198,-7.729705 1.226944,-11.671284 1.472324,-15.704806 0.24539,-4.033514 3.312738,1.472325 1.717715,-1.104238 -1.595016,-2.576571 0.122697,-7.975094 -1.104246,-9.938197 -1.226936,-1.963102 -8.220475,2.208492 -8.220475,2.208492 0.184036,-1.901758 6.134682,-5.153142 10.428966,-8.1591366 4.294277,-3.005996 6.91682,-0.674813 10.367621,0.4294236 3.450803,1.104246 3.680817,0.736167 2.515226,-0.368079 -1.165591,-1.1042446 0.49077,-1.6563686 3.190031,-1.2269356 2.699269,0.429425 3.435428,3.6808086 7.545669,3.3740746 4.110242,-0.306735 0.429425,0.797511 0.981548,1.840412 0.552123,1.042892 -0.613468,0.920202 -3.312729,2.760607 -2.699262,1.840403 0.06131,1.840403 4.846407,5.337177 4.785055,3.496773 3.312729,-2.331183 2.821952,-4.907753 -0.490777,-2.576563 3.496773,-0.552115 3.496773,-0.552115 2.944651,1.963094 2.400546,0.107972 4.547684,0.782784 2.147139,0.674814 7.967076,5.597286 7.967076,5.597286 -7.300273,3.98755 -2.699261,4.416975 -1.472325,5.337178 1.226937,0.920202 -2.515218,2.699261 -2.515218,2.699261 -1.53367,-1.53367 -1.779059,0.06131 -2.760614,0.613476 -0.981548,0.552115 -0.06131,1.963095 -0.06131,1.963095 -5.076415,0.797512 -3.926198,6.13469 -3.864852,7.422971 0.06131,1.288289 -3.251385,3.251384 -4.110242,5.091796 -0.858857,1.840405 2.208491,5.827948 0.613468,6.073336 -1.595016,0.24539 -3.190031,-6.011991 -11.778601,-3.680808 -2.589322,0.702954 -8.343174,3.680808 -5.275824,9.754153 3.06734,6.073336 8.15913,-1.717714 9.876843,-0.858857 1.717714,0.858857 -0.490778,4.72371 -0.122691,4.785055 0.368079,0.06131 4.8464,0.168662 5.09179,5.398522 0.245388,5.229868 6.809502,4.785065 8.220482,4.907755 1.410972,0.12269 6.134682,-3.864859 6.809502,-4.048894 0.674815,-0.184034 3.374076,-2.453876 9.263377,0.920195 5.889301,3.374089 8.895296,2.883308 10.919743,4.294285 2.02445,1.410987 0.61347,4.232939 2.51523,5.153134 1.90175,0.920217 9.50876,-0.306736 11.41051,2.821966 1.90176,3.1287 -7.8524,18.833491 -10.91974,20.551201 -3.06734,1.71772 -4.478321,5.64392 -7.545665,8.15913 -3.067349,2.51523 -7.361625,5.62854 -11.410522,8.03646 -3.583968,2.1311 -4.228845,5.949 -5.825333,7.15419 28.11404,-6.24545 49.13623,-31.328971 49.13623,-61.323497 0,-34.694029 -28.125171,-62.8192016 -62.819206,-62.8192016 z M 79.442753,60.382331 c -0.858857,0.245389 -2.637917,1.840405 -6.993547,-0.736166 -4.35563,-2.576564 -7.361625,-2.085794 -7.729705,-2.515218 0,0 -0.368079,-1.0429 1.533671,-1.226937 3.905098,-0.378065 8.833951,3.619464 9.938196,3.680809 1.104246,0.06131 1.656361,-1.104245 3.619464,-0.471631 1.963103,0.631953 0.490777,1.023755 -0.368079,1.269143 z M 58.891546,7.6853614 c -0.427786,-0.311152 0.354344,-0.669418 0.82058,-1.288281 0.269103,-0.357613 0.0695,-0.951289 0.406356,-1.28829 0.92021,-0.920203 5.459876,-2.208485 4.572225,0.306734 -0.887321,2.515226 -5.12434,2.760614 -5.799161,2.269837 z m 10.98109,7.9750936 c -1.533672,-0.06131 -5.14381,-0.442837 -4.478321,-1.104246 2.591952,-2.576563 -0.981548,-3.312729 -3.190039,-3.496766 -2.208485,-0.184043 -3.128687,-1.4109786 -2.02444,-1.5336776 1.104237,-0.12269 5.521213,0.06139 6.257379,0.6748206 0.736158,0.613469 4.723709,2.208485 4.969099,3.374076 0.24538,1.16559 0,2.147138 -1.533678,2.085793 z M 83.184914,15.23103 c -1.226943,0.981547 -7.400887,-3.521968 -8.588569,-4.539674 -5.153134,-4.4169746 -7.913742,-2.9446486 -8.995903,-3.6808086 -1.082485,-0.736166 -0.696897,-1.717713 0.959464,-3.190039 1.656369,-1.472325 6.318732,0.490778 9.017994,0.797512 2.699262,0.306734 5.827955,2.392527 5.889301,4.871925 0.06131,2.4792256 2.944649,4.7595296 1.717713,5.7410846 z" />
+</svg>
+
+          </i>
+          中文
+        </a>
+        <ul class="submenu">
+          
+            
+              <li>
+                <a href="https://p0n1.github.io/blog/en/">English</a>
+              </li>
+            
+          
+            
+          
+        </ul>
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Last Winner 的最后赢家 - 智能合约超大规模黑客攻击手法曝光</h1>
+      
+      <div class="post-meta">
+        <time datetime="2018-08-20" class="post-time">
+          2018-08-20
+        </time>
+        <div class="post-category">
+            <a href="https://p0n1.github.io/blog/categories/blockchain/"> Blockchain </a>
+            <a href="https://p0n1.github.io/blog/categories/vulnerability/"> Vulnerability </a>
+            
+          </div>
+        <span class="more-meta"> 约 11657 字 </span>
+          <span class="more-meta"> 预计阅读 24 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#last-winner-的最后赢家-智能合约超大规模黑客攻击手法曝光">Last Winner 的最后赢家 - 智能合约超大规模黑客攻击手法曝光</a>
+<ul>
+<li><a href="#悄然上线-莫名火爆的-last-winner">悄然上线：莫名火爆的 Last Winner</a></li>
+<li><a href="#疑团重重-前期大量参与者的资金来历不明">疑团重重：前期大量参与者的资金来历不明</a></li>
+<li><a href="#疯狂推广-只面向国人-合约源码却未公开">疯狂推广：只面向国人，合约源码却未公开</a></li>
+<li><a href="#安全性存疑-实则是-fomo3d-山寨版">安全性存疑：实则是 Fomo3D 山寨版</a></li>
+<li><a href="#前情回顾-类-fomo3d-游戏空投机制存漏洞">前情回顾：类 Fomo3D 游戏空投机制存漏洞</a></li>
+<li><a href="#不能说的秘密-黑客制造秘密武器攫取高额收益">不能说的秘密：黑客制造秘密武器攫取高额收益</a></li>
+<li><a href="#案发现场-大量类似交易-超高回报率">案发现场：大量类似交易，超高回报率</a></li>
+<li><a href="#暴利-数据面前我们再次震惊">暴利：数据面前我们再次震惊</a></li>
+<li><a href="#火线追凶-bapt-lw20-团队攻击-lw-始末">火线追凶：BAPT-LW20 团队攻击 LW 始末</a></li>
+<li><a href="#不仅仅是空投-bapt-lw20-黑客团队拿走-lw-最终大奖">不仅仅是空投：BAPT-LW20 黑客团队拿走 LW 最终大奖</a></li>
+<li><a href="#同行相杀-zethr-团队两天时间就成功利用漏洞">同行相杀：Zethr 团队两天时间就成功利用漏洞</a></li>
+<li><a href="#游戏细节-last-winner-为何让黑客如此疯狂">游戏细节：Last Winner 为何让黑客如此疯狂</a></li>
+<li><a href="#攻击合约-设计复杂又精巧">攻击合约：设计复杂又精巧</a></li>
+<li><a href="#智能合约-一切皆可预测">智能合约：一切皆可预测</a></li>
+<li><a href="#技术流-攻击手法细节披露">技术流：攻击手法细节披露</a></li>
+<li><a href="#彩蛋一-空投与挖矿">彩蛋一：空投与挖矿</a></li>
+<li><a href="#彩蛋二-黑客预先创建的合约数量与中奖概率">彩蛋二：黑客预先创建的合约数量与中奖概率</a></li>
+<li><a href="#彩蛋三-黑客可能利用了空投概率计算的另一个-bug">彩蛋三：黑客可能利用了空投概率计算的另一个 bug</a></li>
+<li><a href="#尾声-下一个是谁">尾声：下一个是谁？</a></li>
+<li><a href="#bapt-lw20-bapt-f3d-大事件时间表">BAPT-LW20 &amp; BAPT-F3D 大事件时间表：</a></li>
+<li><a href="#参考文献">参考文献</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="last-winner-的最后赢家-智能合约超大规模黑客攻击手法曝光">Last Winner 的最后赢家 - 智能合约超大规模黑客攻击手法曝光</h1>
+
+<blockquote>
+<p>安比（SECBIT）实验室创始人郭宇：2009年，中本聪创造了一个虚拟的去中心化新世界。这仿佛是一片流着奶和蜜糖的应许之地，人们欢呼雀跃，蜂拥而至。但与所有的生态系统一样，新世界有生命，就有捕食者。有交易者，就有黑客。区块链上的应用在进化，攻击者也同样，我们给大家展示的是区块链世界不为人知的另一面，暗流涌动。意料之外，也在意料之中。</p>
+</blockquote>
+
+<p>Last Winner（类 Fomo3D）游戏大火，导致以太坊异常拥堵，Gas 费用暴涨。大量以太币资金入场。</p>
+
+<p>北京时间 2018 年 8 月 10 日凌晨 1:38，加州时间 9 日上午 10:38，安比（SECBIT）实验室收到合作伙伴美国硅谷 AnChain.ai 公司消息，基于 AI 的态势感知系统发出预警信息，发现部分游戏合约出现大量交易并且存在异常的资金流动情况。安比（SECBIT）实验室的小伙伴赶紧根据最新线索，对相关合约和交易进行观察、跟踪、分析。</p>
+
+<p>安比（SECBIT）实验室由中国科学技术大学博士郭宇创建，从密码学、代码语义、形式化验证、博弈论、编译器等多种理论角度切入，在智能合约安全技术上开展全方位深入研究。</p>
+
+<p>AnChain.ai 由辛辛那提大学计算机博士方春生 Victor Fang 创建，方博士是硅谷上市网络安全公司 FireEye 史上第一位首席数据科学家，负责 AI 产品研发。AnChain.ai 专注安全威胁情报、区块链态势感知，凭借 AI 技术助力区块链生态安全。</p>
+
+<p>下文敏感地址只保留前 4 位。片尾有<strong>三个彩蛋</strong>，智能合约爱好者请不要错过。</p>
+
+<p><img src="hacker.png" alt="hacker" /></p>
+
+<h2 id="悄然上线-莫名火爆的-last-winner">悄然上线：莫名火爆的 Last Winner</h2>
+
+<p>Last Winner 是一款基于以太坊智能合约的 DApp 游戏，于 8 月 6 日上线，这款游戏一经推出，就“异常”火爆。</p>
+
+<p>这款游戏合约地址为 0xDd9fd6b6F8f7ea932997992bbE67EabB3e316f3C。据 Etherscan 显示，短短六天时间内，该游戏合约就已产生 27 万余笔交易。甚至前段时间以太坊网络大拥堵也与 Last Winner 游戏密切相关。8 月 8 日 和 9 日，在 Last Winner 和 Fomo3D 超大规模交易量的共同作用下，以太坊未确认交易数量创年内新高，平均 Gas 费用一度飙升至正常 10 倍以上。</p>
+
+<p><img src="gasprice.png" alt="Gas Price" /></p>
+
+<p>该游戏第一轮奖池金额为 1.6 万多个以太币，而玩家总投资额更超过 10 万以太币，资金量巨大。目前游戏第一轮已结束，第二轮奖金池已迅速累积至 7000 多以太币。</p>
+
+<p>疯狂的现象级游戏背后<strong>暗流涌动</strong>。</p>
+
+<h2 id="疑团重重-前期大量参与者的资金来历不明">疑团重重：前期大量参与者的资金来历不明</h2>
+
+<p>据知名媒体「区块律动」报道，Last Winner 由名为「蚁群传播」的<strong>资金盘传销组织</strong>推广运营，有着数量众多的会员和极强的推广拉下线能力 [1]。而据另一款火爆游戏 Fomo3D 开发团队称，Last Winner 是仿 Fomo3D 游戏，其背后运营团队准备了 20 万 ETH 来进行自动刷量交易。因此，Last Winner 游戏火爆的背后，可能是一场精心布局的传销游戏，初期利用机器人发起批量交易，伪造活跃假象，吸引新韭菜入场。</p>
+
+<p>Last Winner 游戏合约存在大量非正常交易，并且伴随着大量合约的创建与自毁，与正常人类调用行为特征偏离很大，这引起了我们的高度警惕。</p>
+
+<h2 id="疯狂推广-只面向国人-合约源码却未公开">疯狂推广：只面向国人，合约源码却未公开</h2>
+
+<p>在各大论坛、媒体、以及微信群中，都可以见到 Last Winner 游戏的推广文章，而这些文章有着类似的描述，并且都附上<strong>推广邀请码</strong>。但 Last Winner 英文相关资料非常少。</p>
+
+<p><img src="promo-post.png" alt="推广文章" /></p>
+
+<p>显然，这是一款针对中国人的游戏，有着诱人的推广（<strong>拉下线</strong>）奖励，因此在网络上广为传播。并且，这款游戏有适配安卓和 iPhone 手机的 App，简化了使用操作，降低了参与门槛。</p>
+
+<p>但是，十分可疑的是，作为一款基于智能合约的区块链游戏，Last Winner 居然没有公开合约源代码！这是一个非常危险的信号。为何这样一个游戏能这么火爆，吸引<strong>这么多人</strong>参加？</p>
+
+<p>我们直觉上感到这款游戏到处透露着诡异的气息。</p>
+
+<h2 id="安全性存疑-实则是-fomo3d-山寨版">安全性存疑：实则是 Fomo3D 山寨版</h2>
+
+<p>Last Winner 官方宣传语写道：</p>
+
+<blockquote>
+<p>Last Winner（LW）是首款完全去中心化的类 Fomo3D 游戏 DApp，完全基于以太坊智能合约原生开发。只要下载安装 App 就可参与游戏。</p>
+</blockquote>
+
+<p>类 Fomo3D 游戏，且未公开源代码，这不得不让人产生怀疑。要知道，短短时间内原创开发一个好玩又<strong>安全</strong>的 DApp 游戏难度非常大。</p>
+
+<p>安比（SECBIT）实验室迅速使用内部工具逆向分析了 Last Winner 的合约代码（字节码）。果不其然，这款游戏合约代码函数名称与 Fomo3D 高度相似，疑似直接拷贝（抄袭）了 Fomo3D 的源码，但却又新增了 10 余个可疑<strong>未知函数</strong>。</p>
+
+<p>尽管 Fomo3D 在 Etherscan 公开了源代码，但这并不代表它开源给任何人随意使用。</p>
+
+<p>安比（SECBIT）实验室之前报道过：在 Fomo3D 爆红之后，各类山寨版 Fomo3D 层出不穷。之前这些山寨版游戏往往复制 Fomo3D 官网和合约源码，并可疑地在一些地方进行修改。而 Last Winner 在此基础上更进一步，推出移动客户端，并疯狂推广，却不公开智能合约源代码。</p>
+
+<p>智能合约游戏或 DApp 的亮点之一就是公开透明。Last Winner 游戏则完全违背了这一点，动机十分可疑，参与该类游戏的风险极高！</p>
+
+<p>当时严峻的形势是：一方面有多个地址疑似疯狂发起攻击交易，另一方面项目方游戏合约未公开源码，高度可疑却吸引了巨量资金。我们感觉到态势十分紧急，于是迅速开展分工合作。AnChain.ai 中美团队日夜交替分析和监控异常交易，收集证据，定位攻击来源与攻击规模。</p>
+
+<p>安比（SECBIT）实验室的小伙伴们则兵分两路，分别开展对<strong>不透明游戏合约</strong>和<strong>黑客攻击手法</strong>的逆向分析。</p>
+
+<h2 id="前情回顾-类-fomo3d-游戏空投机制存漏洞">前情回顾：类 Fomo3D 游戏空投机制存漏洞</h2>
+
+<p>Fomo3D 游戏参与形式是用以太币购买游戏道具，除了最后一个购买的人可以获得巨额大奖外，平时参与者还有机会获得“空投”奖励。</p>
+
+<p>这里有主奖池和副奖池的概念，最终的巨额大奖和<strong>空投奖励</strong>分别从从主奖池和副奖池中获取。</p>
+
+<p>所有进入游戏的以太币，有 1% 数量会进到副奖池。每一次购买道具都会有概率获得空投。空投的概率从 0% 开始，每增加一笔不小于 0.1 ETH 销售订单，空投概率会增加 0.1%。同时空投奖金额与购买金额也挂钩，如果购买 0.1 ~ 1 ETH，就有概率赢得 25% 副奖池奖金，购买更多则比例越大。</p>
+
+<p>一进入游戏界面，就会看到<strong>鲜明提示</strong>，通知当前中奖概率和奖池金额。这一设计，原本是想增加游戏趣味性，并起到吸引资金入场、延长游戏时间的作用。但实际情况却并非如此。</p>
+
+<p>通过观察 LastWinner 游戏合约以及部分地址的异常交易行为，我们心中有了<strong>初步答案</strong>。</p>
+
+<p>让我们把时间退回到 20 多天前，<strong>早在 7 月 24 日</strong>，安比（SECBIT）实验室和派盾（PeckShield）科技分别同时预警：Fomo3D 游戏的智能合约存在随机数漏洞可被利用，Fomo3D 及所有抄袭源码的山寨合约均存在该安全漏洞 [2]。原本设计上随机性较大的空投游戏可通过<strong>特殊手段操纵</strong>，大大提高中奖概率。</p>
+
+<p>经安比（SECBIT）实验室字节码智能扫描工具逆向分析，Last Winner 游戏空投奖励代码与 Fomo3D 基本一致，相似度达 91%，可能存在同样漏洞。随着游戏火爆进行，机敏的黑客肯定也闻风而动。</p>
+
+<h2 id="不能说的秘密-黑客制造秘密武器攫取高额收益">不能说的秘密：黑客制造秘密武器攫取高额收益</h2>
+
+<p><img src="lw-graph.png" alt="攻击分析" /></p>
+
+<p>在区块链态势感知系统所展现出来的数据面前，我们不由地倒吸一口凉气。</p>
+
+<p>图中的这些可疑地址，如同“病毒”一般紧紧缠绕在 Last Winner 合约四周，肆意吞噬着 Last Winner 内的资金。</p>
+
+<p>我们观察到，图中紧靠 Last Winner 的这些地址，有着<strong>类似的行为模式</strong>。</p>
+
+<p>如：</p>
+
+<ol>
+<li>不停地往某合约地址上发起交易，同时附带 0.1 个以太币</li>
+<li>不少交易状态为失败</li>
+<li>成功的交易又会涉及大量“内部交易”</li>
+<li>“内部交易”调用逻辑十分复杂，并伴随大量合约的创建和自毁</li>
+</ol>
+
+<p>安比（SECBIT）实验室迅速得出初步结论：这些不明合约就是黑客用来攻击 Last Winner 的秘密武器，黑客正是通过这些合约，持续吸走 Last Winner 游戏内的以太币。</p>
+
+<h2 id="案发现场-大量类似交易-超高回报率">案发现场：大量类似交易，超高回报率</h2>
+
+<p>上面态势感知图中，<strong>占地面积最大</strong>的嫌疑地址引起了我们的注意：0xae58，于是从这个地址展开了追踪。</p>
+
+<p><strong>8 月 9 号当天</strong>，0xae58 地址内以太币余额就以超过 300 个，而当时他正在大量往地址 0x5483 上发起交易，每笔交易转账金额都是 0.1 Ether。显然，黑客正通过 0x5483 智能合约向 LW 发起攻击。</p>
+
+<p><img src="same-txn-in.png" alt="来自不同地址的相同交易" /></p>
+
+<p>让我们观察下面这条状态显示为成功的交易。表面上看是 0xae58 向攻击合约 0x5483 转了 0.1 Ether，实际却涉及了一大堆地址间的相互转账，最终随着 0x7c77 合约<strong>自毁</strong>，0.189 个 Ether 转移回 0xae58 的账户中。</p>
+
+<p><img src="pwn-tx-example.png" alt="成功攻击的交易" /></p>
+
+<p>这十分神奇，攻击者投入 0.1 个以太币，最终收获 0.189 个，<strong>瞬间回报率高达 89%</strong>，简直暴利。</p>
+
+<p>我们很快发现，除了 0xae58 地址外，还有<strong>四个地址</strong>也持续不断地向 0x5483 合约发起类似交易，持续获得高额回报。</p>
+
+<p>而失败的交易，仅消耗 27712 燃料（Gas），<strong>成本损耗十分低</strong>。</p>
+
+<p>研究目标立刻锁定为攻击合约 0x5483。由于无法获得源码，安比（SECBIT）实验室立刻使用内部工具展开逆向分析。</p>
+
+<h2 id="暴利-数据面前我们再次震惊">暴利：数据面前我们再次震惊</h2>
+
+<p><strong>8 月 13 日</strong>，当我们沉浸在研究黑客的攻击合约各种细节优化和精巧设计之时，黑客攻击数据全景分析新鲜出炉。</p>
+
+<p>其中，攻击获利最大的是以 0x820d 地址为首的团队。他们累计获利超过 5000 个以太币。AnChain.ai 团队和安比（SECBIT）实验室将该黑客团伙精确定位，并将其命名为 BAPT-LW20 (Blockchain APT – Last Winner)。</p>
+
+<p>BAPT-LW20 团队在短短 6 天时间内，共发送将近 5 万笔交易，从中攫取 5194 个 Ether，获利价值将近 1200 万人民币。</p>
+
+<p>由下图每小时发起的<strong>攻击交易数量趋势图</strong>（下图），我们可以看出攻击的高峰期发生在 <strong>8 月 8 日 ～ 10 日</strong>，每小时平均攫取将近 100 以太币，将近 22 万人民币。这正好也是 LW 游戏最火爆的时间段。随着游戏进入后期，入场资金急剧下降，收益降低，黑客也不得不也降低了攻击频率。</p>
+
+<p><img src="hour-txn.png" alt="每小时发起的攻击交易数量" /></p>
+
+<p>再看看<strong>黑客每小时攫取以太币数量趋势图</strong>（下图）。惨淡的漫漫熊市里，黑客却在狂赚以太币。</p>
+
+<p><img src="lw-hourly-stolen.png" alt="每小时被盗的ETH数量" /></p>
+
+<p>下图是“Last Winner 中黑客的交易量占比和攫取 ETH 占比”，可见黑客发送的交易量只占总交易量的 9.877%，但是却攫取了Last Winner奖金池中49%的奖金。黑客的娴熟攻击技能，为他们带来了普通玩家难以企及的好运，而普通玩家在这场游戏里面几乎很难获得空投奖励。</p>
+
+<p><img src="lw-attack-txn-and-share.png" alt="AnChain AI 预测" /></p>
+
+<h2 id="火线追凶-bapt-lw20-团队攻击-lw-始末">火线追凶：BAPT-LW20 团队攻击 LW 始末</h2>
+
+<p>安比（SECBIT）实验室尝试追踪复原 BAPT-LW20 团队攻击时间线。</p>
+
+<p>下图是 BAPT-LW20 团队某账户余额变动情况。</p>
+
+<p><img src="fomo-vs-lw.png" alt="BAPT-LW20 某账户余额" /></p>
+
+<p>0x820d 是 BAPT-LW20 团队所有攻击合约的部署者，也是攻击的实施者之一，可认为是 BAPT-LW20 团队的队长。0x820d 地址最早活跃于 <strong>7 月 20 日</strong>，账户中的初始以太币均由 0x73B6 地址转入。而 0x73B6 也是同一天开始活跃的新地址，它的初始以太币来自总部位于美国旧金山的 Kraken 交易所。</p>
+
+<p>0x820d 在收到来自 0x73B6 的 10 个以太币后，随即部署了它的第一个合约。可能有些地方不太理想，他并没有继续使用该合约。<strong>三分钟后</strong>，0x820d 部署下了第二个合约，攻击对象是 Fomo3D。在一组准备工作设置、若干次失败的调用以及两次虽然成功但却没有收益的尝试过后，0x820d 应该是发现了攻击合约里的 bug 和优化空间。</p>
+
+<p>在接下来的 <strong>14 个小时内</strong>，他依次部署了 8 个合约进行攻击测试，无奈都不成功。终于在第 9 个合约 0xBad7 中首次完成攻击，以 0.1 ETH 的投入换回了 0.125 ETH。</p>
+
+<p>0xBad7 是 0x820d 团队首个可以正常工作的攻击合约，他们在 7 月 21 日至 7 月 23 日三天时间内总计调用该合约 11551 次，小有斩获。</p>
+
+<p><strong>7 月 23 日</strong>，0x820d 又部署了新的合约，将攻击对象转移为另一款 Fomo3D 山寨游戏老鼠会 <strong>RatScam</strong> (0x5167350d082c9ec48ed6fd4c694dea7361269705)，0x820d 团队在一天时间内使用了 2299 次攻击合约。</p>
+
+<p><strong>一天后</strong>，0x820d 又找到了新目标，一个名为 <strong>FoMoGame</strong>（0x86D179c28cCeb120Cd3f64930Cf1820a88B77D60） 的山寨游戏，部署新合约（0xb599）进行攻击。这款游戏知名度不高，入场资金并不多，黑客调用了 126 次之后就放弃。</p>
+
+<p>接下来的<strong>三天内</strong>，0x820d 前后部署了 10 个新合约进行优化与攻击测试。</p>
+
+<p>终于，在 <strong>7 月 26 日</strong>上线了他们的新版攻击合约（0x5483）。该合约总共发生过 23835 笔交易，最近一次活跃时间在 8 月 10 号（7 天前）。这款攻击合约，可由攻击者 <strong>自定义受害游戏合约地址</strong>。因此 0x820d 在接下来的几天内，<strong>持续混合攻击 Fomo3D 原版、RatScam、FoMoGame 等游戏</strong>，并持续观察其他山寨游戏的动态，等待时机。同时，继续部署若干个新合约进行调优测试。</p>
+
+<p>终于，<strong>8 月 6 日</strong> Last Winner 游戏上线，<strong>24 小时后</strong> 0x820d 团队就使用准备好的 0x5483 合约，针对 Last Winner 发起第一次攻击，并在接下来的 4 天内集中力量，疯狂利用空投漏洞展开攻势。</p>
+
+<p><strong>8 月 10 日</strong>，0x820d 调用 0x5483 攻击合约 withdraw 接口，提走了里面的余额，攻击疑似暂停。</p>
+
+<p>原来，他们早已经部署了新版合约攻击合约 0x9C10，又发起了超过 30000 笔交易，至今仍在活跃攻击。</p>
+
+<h2 id="不仅仅是空投-bapt-lw20-黑客团队拿走-lw-最终大奖">不仅仅是空投：BAPT-LW20 黑客团队拿走 LW 最终大奖</h2>
+
+<p>北京时间 8 月 17 日上午，Last Winner 游戏第一轮最终结束，最终大奖由 0x5167 地址获得，奖金额总计 7,754 以太币。</p>
+
+<p><img src="real-winner.png" alt="最后的赢家" /></p>
+
+<p><strong>而这个地址正是 BAPT-LW20 黑客团队的五个地址之一</strong>。</p>
+
+<p>如下图，14 小时前，黑客还在利用<strong>攻击合约</strong>获取空投奖励。随后，他改变了方案，直接用自身地址购买道具参与游戏，不断尝试夺取最终大奖。在此之后，又继续调用合约攻击 LW 游戏。</p>
+
+<p><img src="attack-and-play.png" alt="临近游戏结束" /></p>
+
+<p>安比（SECBIT）实验室猜测黑客潜伏很久，早已做好充分的准备，长时间利用脚本监控 LW 游戏状态，最终才能在众人放松警惕之时获得大奖。</p>
+
+<p><strong>BAPT-LW20 黑客团队利用空投漏洞获利超 5,194 Ether，同时又夺取最终大奖 7,754 Ether，累计获利 12,948 Ether。</strong></p>
+
+<h2 id="同行相杀-zethr-团队两天时间就成功利用漏洞">同行相杀：Zethr 团队两天时间就成功利用漏洞</h2>
+
+<p>这场超大规模的类 Fomo3D 智能合约游戏被攻击事件，攻击者使用的秘密武器也正是智能合约。</p>
+
+<p>据安比（SECBIT）实验室调查分析，0x20C9 地址最先成功利用原版 Fomo3D 空投漏洞并获取奖励。我们将他定位，并将其命名为 BAPT-LW10。</p>
+
+<p>0x20C9 于 <strong>7 月 8 日</strong> 10 点 07 分创建了攻击合约 0xe7ce，在接下来的十分钟内，前后调用了三次，最终在第四次时成功获得奖励，投入 0.1 以太币，收回 0.19 个，回报率高达 90%（见下图）。</p>
+
+<p><img src="first-pwn-by-etherguy.png" alt="最早成功利用漏洞的交易" /></p>
+
+<p>此后，0x20C9 继续部署多个攻击合约，进行调试优化。最终，在 <strong>7 月 23 日</strong>部署了最终版本 0x39ac 攻击合约，接下来的时间前后调用过 90 余次，而攻击对象涉及 Fomo3D 原版、Last Winner 以及其他山寨版 Fomo3D。</p>
+
+<p>据我们观察，0x20C9 是最早研究并成功利用空投漏洞的黑客。研究过程中，安比（SECBIT）实验室发现 0x20C9 与另一款游戏 <strong>Zethr</strong> 密切关联。</p>
+
+<p>最终我们在 Zethr 游戏合约代码中发现了他的身影。他是热门游戏 Zethr 的八位核心开发者之一，代号为 <strong>Etherguy</strong>。</p>
+
+<p><img src="zethr-etherguy.png" alt="zethr-etherguy" /></p>
+
+<p>显然，作为 DApp 游戏开发同行，Etherguy 以及他所在的 Zethr 团队很早就研究了 Fomo3D 项目代码。Fomo3D 合约 7 月 6 日部署上主网，Etherguy <strong>两天后就发现并成功利用了漏洞</strong>。从调用规模来看，Etherguy (BAPT-LW10) 应该主要还是出于研究目的，并没有太多获利。</p>
+
+<p>让其他黑客获利最多的正是 Last Winner 游戏。</p>
+
+<h2 id="游戏细节-last-winner-为何让黑客如此疯狂">游戏细节：Last Winner 为何让黑客如此疯狂</h2>
+
+<p>从最初 Fomo3D 上线后不久，空投漏洞就已被人发现并成功利用。随着游戏的广泛传播，以及该漏洞被逐渐披露，空投漏洞的攻击手段也在这一过程中不断升级进化，最终部分黑客团队完成了精巧的攻击方案，可低成本、高效率获得奖励，并可大规模工程化地攻击任意任何同类游戏合约，疯狂收割以太币。</p>
+
+<p>据安比（SECBIT）实验室分析，除 LW 游戏以外，不少黑客团队都曾尝试攻击其他类 Fomo3D 游戏合约。但获利都远小于 BAPT-LW20 团队在 LW 游戏中所得。</p>
+
+<p>我们试图从 LW 游戏本身寻找答案。</p>
+
+<p>LW 游戏是 Fomo3D 山寨版，本身没有太多创新，但入场资金完全集中在游戏开始后的<strong>第 2 天至第 5 天</strong>内。巨量入场资金，会让游戏空投奖池迅速累积，因此这段时间也是黑客攻击的黄金时机。</p>
+
+<p>更要命的是，Last Winner 团队修改了空投游戏参数，使进入副奖池（空投奖池）的以太币比例<strong>由 1% 调整到 10%</strong>，相当于空投奖励金高了 10 倍！</p>
+
+<p>一方面，游戏运营团队可能是利用高额空投奖励吸引用户疯狂加入；另一方面，他们可能并不知道空投漏洞的严重性，而提高奖励比例则会让该问题进一步放大。</p>
+
+<p><strong>Last Winner 游戏简直成为了黑客的提款机！</strong></p>
+
+<p>特别地，前面提到 Last Winner 游戏第一轮入场资金已达 10 万以太币，这也就是说，单单这一款游戏就有超过 1 万个以太币都持续暴露在被攻击的风险下，成为黑客的囊中之物。要知道，这款游戏第一轮最终奖池也才 1.6 万余以太币。本来空投奖励都是很小的金额，但黑客持续利用空投漏洞，积少成多，终成 Last Winner 最大赢家。</p>
+
+<p>我们追踪到有多个团队对 Fomo3D 及山寨合约开展大规模自动化攻击，企图攫取利益。</p>
+
+<p>而 BAPT-LW20 团队在游戏开始后 <strong>24 小时</strong>左右就加入了战局，并迅速扩大作战规模，最终占得先机，获取巨额收益。</p>
+
+<p>安比（SECBIT）实验室追踪到还有其他黑客团队向 Last Winner 合约开展攻击。部分黑客 8 月 11 号以后才入局，虽规模也很大，但终究因为错过黄金时机而获利较少。</p>
+
+<h2 id="攻击合约-设计复杂又精巧">攻击合约：设计复杂又精巧</h2>
+
+<p>攻击合约 0x5483，创建于 7 月 26 日，创建者为 0x820D，同时也是持续调用攻击合约的五个地址之一。</p>
+
+<p>起初，攻击合约的创建时间让我们感到疑惑，前面提到 LW 游戏合约于 8 月 6 日才部署上主网。难道 0x820D 可以未卜先知，或者他与项目方有什么不可告人的秘密？</p>
+
+<p>带着这个疑问，我们尝试从合约 0x5483 的代码（字节码）中寻找答案。</p>
+
+<p>经过逆向发现，该合约有七个公开函数，其中一个疑似函数名是 <code>withdraw(uint256)</code>，用于将攻击合约中积累的以太币转走。</p>
+
+<p>安比（SECBIT）实验室在字节码中发现了上面提到的五个地址。原来这两个函数都会跳转到同一个内部函数，检查交易发起人是否是这五人地址之一。如果是，则可继续执行，如果不是，则提前让交易失败。</p>
+
+<p>这也解释了为什么偏偏是这五个地址一直在调用攻击合约。<strong>因为他们是一个团队，合约特地为他们而设计，而其他人根本无法正常调用。</strong></p>
+
+<p>初步猜测，攻击合约这么设计是为了分散权限和资金，降低出问题或被发现的风险。</p>
+
+<p><img src="pwn-calldata.png" alt="传入参数" /></p>
+
+<p>上图正是一笔攻击交易的传入参数。第一部分是调用函数哈希 ID，后面跟着三个参数。注意看第一个参数，攻击者传入的明显是一个地址。显然，这个地址正是 LW 游戏合约地址。</p>
+
+<p>原来如此，攻击目标对象可以作为参数传入。“黑客真机智！”，我们不由地感慨。之前的一个困惑被解开，早在 LW 游戏上线前就已部署好的攻击合约 0x5483，其实是一个<strong>通用型武器</strong>。</p>
+
+<p>继续研究，接下来合约的复杂程度出乎我们意料。我们沿着生成的控制流程图（CFG）追踪合约函数调用过程，程序指令以及<strong>分支情况</strong>非常之多（下图是一小部分截图），让人难以完全跟上。</p>
+
+<p><img src="cfg.png" alt="控制流程图" /></p>
+
+<p>安比（SECBIT）实验室使用动态追踪调试技术，结合逆向分析结果与攻击交易内部记录，搞清楚了黑客所使用的手法。</p>
+
+<p><img src="internal-txns.png" alt="内部交易图" /></p>
+
+<p>其他攻击交易也都是类似的过程，黑客调用攻击合约，攻击合约再调用提前创建好的合约，进而创建新的合约，以新合约的身份参与 LW 游戏，买游戏道具，然后几乎<strong>必定获得</strong>空投奖励。</p>
+
+<p><strong>这一过程中不断新建的合约，就是态势感知系统中预警的大量异常合约创建与自毁。</strong></p>
+
+<p>追踪攻击合约调用历史，发现攻击者在部署完攻击合约后，就立即多次调用特定函数，每次新建 10 个新合约。而函数总共恰好调用了 100 次，因此<strong>新建了 1000 个新合约</strong>（记住这个细节）。</p>
+
+<p>在攻击交易中，攻击合约最先调用的就是这预先创建好的 1000 个合约之一，似乎是<strong>特地</strong>从中挑选出来一个地址。</p>
+
+<h2 id="智能合约-一切皆可预测">智能合约：一切皆可预测</h2>
+
+<p>攻击函数控制流程图（CFG）中一个相隔很远的<strong>循环</strong>引起了我们的注意。</p>
+
+<p>我们恍然大悟。攻击函数所做的就是不断循环地在 1000 个合约中，挑选“合适”的地址来完成下一步新建合约操作。所谓“合适”的地址，就是指能确保每次参与游戏都能获得空投奖励。</p>
+
+<p>前面提到，以太坊智能合约中可以很容易的预测随机数，因为随机数的来源都是区块或者交易中特定的一些公开参数，如交易发起者地址、区块时间戳、区块难度等等。因此空投游戏利用随机数来控制中奖概率是不可行的。</p>
+
+<p>而这里，黑客利用了另一个以太坊的特征，一个地址（账户）创建一个合约，合约地址是可按照特定规则计算得到的，任何人都可以根据已知信息进行推算。</p>
+
+<p>因此，黑客循环利用自己控制的 1000 个合约地址，推算各地址下一次新建的合约地址，而该地址恰恰是空投游戏中奖数字的随机源。攻击合约通过一系列预演推算来筛选出“合适”的地址来完成攻击操作（技术细节后文会详细讨论）。</p>
+
+<p>这才是黑客能够以超高概率获得空投的真正原因！</p>
+
+<h2 id="技术流-攻击手法细节披露">技术流：攻击手法细节披露</h2>
+
+<p>类 Fomo3D 游戏空投漏洞的根本原因在于，以太坊智能合约环境中难以生成无法预测的随机数。而 Fomo3D 开发者在其合约中增加了「判断调用者是普通人类还是合约」的逻辑来尝试规避，但此逻辑实现存在漏洞。黑客利用攻击合约提前预测随机数，并通过在构造函数内调用游戏合约的方法来伪装成普通人类（非合约）地址，从而大大增加自身中奖概率。</p>
+
+<p>时间再次回到 <strong>7 月 23 日</strong>，以太坊基金会开发团队负责人之一 Péter Szilágyi 在 Reddit 上首次公开爆出这个漏洞并给出 1.0 版本的 POC 方案（详细可以参考引文 [3]）。这主要是利用了这些特点：</p>
+
+<ul>
+<li>空投游戏用来控制中奖概率的随机源，可被提前获得</li>
+<li>用户能否获得空投奖励以及奖励金额，可在另外一个合约中提前计算出来，从而决定后面的操纵逻辑</li>
+<li>Fomo3D 空投机制中尝试限制只有非合约地址（普通人类）才能参加游戏以防止上述情况的发生。但该判断方法存在漏洞，在构造合约的过程中（即合约构造方法里）参与游戏即可绕过该限制。</li>
+</ul>
+
+<p>因此攻击者可以部署一个智能合约，并在合约的构造方法中计算出自己是否能够获益，如果能则投入以太币参加游戏空投获利，否则就不参加（参见下图）。</p>
+
+<p><img src="./pwn-v1.png" alt="第一版" /></p>
+
+<p>Péter 提出的这个方案只是一个最简单的原型，因为每次部署合约都要消耗不少 Gas，而且<strong>工作效率很低</strong>且收益率并不高，采用该方案攻击，发起上千笔交易，都不一定能够真正获得空投奖励。</p>
+
+<p>看到这里你可能会有疑问，上文的攻击者似乎手法更高明，而且<strong>实际成功攻击的发生时间要早得多</strong>。</p>
+
+<p>Zethr 开发者 Etherguy 早在 <strong>7 月 8 日</strong>就已使用更高明的手法成功获利，解决了上文 <strong>1.0 方案</strong>中的部分问题，我们姑且称之为 <strong>2.0 版本</strong>。</p>
+
+<p>这个思路是通过<strong>合约循环创建子合约</strong>（参见下图），直到子合约满足空投条件可以获利为止。这样做的好处是，在 Gas 充足的情况下，每次调用合约几乎一定可以获得收益，提高了工作效率。然而这种方案和 1.0 版本的攻击成本接近，并没有从本质上提高收益率。</p>
+
+<p><img src="./pwn-v2.png" alt="第二版" /></p>
+
+<p>而这次事件的最大获利者 BAPT-LW20 团队，就是在 2.0 版本的思路上进行了进一步优化<strong>降低了投入成本</strong>，提高了收益率。 <strong>3.0 版本</strong>则疯狂创建代理合约，通过利用计算下一步新建合约地址的技巧提前预判，筛选出符合条件的代理合约再创建出新的子合约，在子合约的构造函数中再完成上述攻击（见下图）。而且攻击目标地址可配置，可多人同时协作攻击。当游戏奖池金额不足以覆盖攻击成本时，发出的攻击交易会自动提前失败，仅消耗很低的 Gas 费用。</p>
+
+<p><img src="./pwn-v3.png" alt="第三版" /></p>
+
+<p>在分析各类攻击合约过程中，我们还见到另外一种更高明的做法：主攻击合约有着良好的设计模型，支持<strong>核心算法动态替换与升级</strong>。原理上则是利用了 <code>delegatecall</code> 进行操作。安比（SECBIT）实验室会持续关注这批黑客的动向。</p>
+
+<h2 id="彩蛋一-空投与挖矿">彩蛋一：空投与挖矿</h2>
+
+<p>我们知道在 PoW 挖矿的时候，矿工通常需要进行如下计算：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">BlockHash</span> <span class="o">=</span> <span class="nx">Hash</span><span class="p">(</span><span class="nx">Header</span><span class="o">+</span><span class="nx">Nonce</span><span class="p">)</span>
+<span class="nx">Check</span><span class="p">(</span><span class="nx">BlockHash</span> <span class="o">&lt;</span> <span class="nx">Diff</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>当 BlockHash 结果小于当前难度值的时候，代表找到了一个合法的 Nonce。</p>
+
+<p>在 Fomo3D 的空投奖励里有着类似挖矿的机制：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">airdrop</span><span class="p">()</span> <span class="kr">private</span> <span class="nx">view</span> <span class="nx">returns</span><span class="p">(</span><span class="nx">bool</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="nx">uint256</span> <span class="nx">seed</span> <span class="o">=</span> <span class="nx">uint256</span><span class="p">(</span><span class="nx">keccak256</span><span class="p">(</span><span class="nx">abi</span><span class="p">.</span><span class="nx">encodePacked</span><span class="p">(</span>
+  <span class="p">(</span><span class="nx">block</span><span class="p">.</span><span class="nx">timestamp</span><span class="p">).</span><span class="nx">add</span>
+  <span class="p">(</span><span class="nx">block</span><span class="p">.</span><span class="nx">difficulty</span><span class="p">).</span><span class="nx">add</span>
+  <span class="p">((</span><span class="nx">uint256</span><span class="p">(</span><span class="nx">keccak256</span><span class="p">(</span><span class="nx">abi</span><span class="p">.</span><span class="nx">encodePacked</span><span class="p">(</span><span class="nx">block</span><span class="p">.</span><span class="nx">coinbase</span><span class="p">))))</span> <span class="o">/</span> <span class="p">(</span><span class="nx">now</span><span class="p">)).</span><span class="nx">add</span>
+  <span class="p">(</span><span class="nx">block</span><span class="p">.</span><span class="nx">gaslimit</span><span class="p">).</span><span class="nx">add</span>
+  <span class="p">((</span><span class="nx">uint256</span><span class="p">(</span><span class="nx">keccak256</span><span class="p">(</span><span class="nx">abi</span><span class="p">.</span><span class="nx">encodePacked</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">))))</span> <span class="o">/</span> <span class="p">(</span><span class="nx">now</span><span class="p">)).</span><span class="nx">add</span>
+  <span class="p">(</span><span class="nx">block</span><span class="p">.</span><span class="nx">number</span><span class="p">))));</span>
+  <span class="k">if</span><span class="p">((</span><span class="nx">seed</span> <span class="o">-</span> <span class="p">((</span><span class="nx">seed</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span> <span class="o">&lt;</span> <span class="nx">airDropTracker_</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="k">return</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>用户唯一可以操纵的就是 <code>msg.sender</code> 字段，我们是否可以将 <code>msg.sender</code> 作为 Nonce 来挖矿呢？</p>
+
+<p>答案显然是可以的，智能合约的地址是根据 <code>发起者账户 + nonce</code> 决定的，于是有了第 1 代方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">                       创建合约
+用户（地址+nonce0） --------------------&gt; 新合约（尝试攻击）
+用户（地址+nonce1） --------------------&gt; 新合约（尝试攻击）
+用户（地址+nonce2） --------------------&gt; 新合约（尝试攻击）
+用户（地址+nonce3） --------------------&gt; 新合约（尝试攻击）</pre></td></tr></table>
+</div>
+</div>
+<p>但是这种方式需要用户持续部署合约，消耗的矿工费代价非常大，且成功率极低，每次都是以 <sup>1</sup>&frasl;<sub>1000</sub> 的中奖概率在尝试。</p>
+
+<p>由于第 1 代惊人的失败率，显然无法利用，于是有了第 2 代攻击方法：</p>
+
+<p>这种方法的主要思想是，合约创建的新合约地址由 <code>合约地址+nonce</code> 确定：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">      部署合约    |------------------| hash(caddr, nonce)
+用户 ----------&gt; |循环创建合约，      | -------&gt; 新合约（尝试攻击）
+                 |直到攻击成功或到达终 | -------&gt; 新合约（尝试攻击）
+                 |止条件才停止，可能需 | -------&gt; 新合约（尝试攻击）
+                 |要部署大量合约。    | -------&gt; 新合约（尝试攻击）
+                 |----------------- |</pre></td></tr></table>
+</div>
+</div>
+<p>这种方式类似于挖矿，固定区块头部，不断修改 nonce 来试探能否成功获得奖励，但是问题在于，如果在循环第 1000 次才发现合法的 nonce，那么意味着之前部署的 999 个合约都属于浪费 Gas 的操作。</p>
+
+<p>那么如何更高效地寻找合法的 nonce 呢？</p>
+
+<p>我们回想比特币挖矿，一个挖矿任务中，不仅有 nonce，还有 extraNonce [4]。</p>
+
+<p><img src="bitcoin.png" alt="比特币挖矿" /></p>
+
+<blockquote>
+<p>在比特币区块的 Coinbase 字段中，有一个自由修改的区域，修改这个区域会导致 MerkleRoot 被修改，从而实现 Header 被修改，具有 nonce 的效果，因此被称作 extraNonce。</p>
+</blockquote>
+
+<p>为什么需要引入 extraNonce 呢？原因在于 nonce 为 32 bit 数字，搜索范围只有 2^32，矿机几乎一瞬间就遍历完了，通过不断修改 extraNonce 来扩大本地搜索范围，我们甚至可以不修改 nonce 只修改 extraNonce 来挖矿。</p>
+
+<p>也许黑客也想到了这一点，他们通过提前部署 1000 个代理合约来实现有 1000 个 extraNonce 的效果。
+至此，攻击方法升级到了第 3 代：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">                    部署合约
+用户 --------------------------------------&gt; 管理合约 C
+
+      调用合约C，预先创建代理合约(extraNonce)
+用户 --------------------------------------&gt; 1000个代理合约
+
+      调用合约C，循环尝试可以成功攻击的代理合约
+用户 --------------------------------------&gt; 部署合约(尝试攻击)</pre></td></tr></table>
+</div>
+</div>
+<p>显而易见，这种攻击方式同时实现了 2 个效果：</p>
+
+<ul>
+<li>提升了攻击成功率</li>
+<li>减少了攻击合约部署数量，大大减少了 Gas 消耗。</li>
+</ul>
+
+<h2 id="彩蛋二-黑客预先创建的合约数量与中奖概率">彩蛋二：黑客预先创建的合约数量与中奖概率</h2>
+
+<p>前文提到黑客预先部署 1000 个代理合约，这个数字有什么讲究呢？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="k">if</span><span class="p">((</span><span class="nx">seed</span> <span class="o">-</span> <span class="p">((</span><span class="nx">seed</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span> <span class="o">&lt;</span> <span class="nx">airDropTracker_</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>seed 经由一系列以太坊链上环境以及多次 Hash 运算得出。Hash 结果对 1000 取余数，可以得到 0～999 的伪随机数。</p>
+
+<p>我们假设哈希输出结果是均匀的，并且哈希是抗碰撞的，那么平均每次中奖的概率为 1/1000。</p>
+
+<p>模拟结果：</p>
+
+<p><img src="probability-sim.png" alt="模拟结果" /></p>
+
+<p>公式运算结果：</p>
+
+<p><img src="probability-calculate.png" alt="公式运算结果" /></p>
+
+<p>尽管更多合约能够提供更高的中奖概率，但是需要考虑到 Gas 消耗与 Gas Limit 等因素，不宜过大。</p>
+
+<p>安比（SECBIT）实验室认为黑客选择部署 1000 个合约，是根据概率代码 <sup>1</sup>&frasl;<sub>1000</sub> 想当然做出的判断。</p>
+
+<h2 id="彩蛋三-黑客可能利用了空投概率计算的另一个-bug">彩蛋三：黑客可能利用了空投概率计算的另一个 bug</h2>
+
+<p>黑客仍然需要更高效地攫取利润，他们甚至“发现”了 Fomo3D 空投规则在这种攻击方式下暴露出的缺陷。</p>
+
+<p>攻击合约需要在最开始获取空投奖励信息，作为后续操作的依据。因此，攻击合约会先依次调用游戏合约的两个查询接口，分别是 <code>0xd87574e0 airDropPot_()</code> 和 <code>0x11a09ae7 airDropTracker_()</code>。</p>
+
+<p>Fomo3D 空投奖励的 <code>airDropTracker_</code> 计算方式为如下方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="k">if</span> <span class="p">(</span><span class="nx">_eth</span> <span class="o">&gt;=</span> <span class="mi">100000000000000000</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="nx">airDropTracker_</span><span class="o">++</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">airdrop</span><span class="p">()</span> <span class="o">==</span> <span class="kc">true</span><span class="p">)</span>
+      <span class="p">{...}</span>
+  <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>Fomo3D 判断是否能中空投奖励使用了如下方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="k">if</span><span class="p">((</span><span class="nx">seed</span> <span class="o">-</span> <span class="p">((</span><span class="nx">seed</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span> <span class="o">&lt;</span> <span class="nx">airDropTracker_</span><span class="p">)</span>
+  <span class="k">return</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>根据我们分析，0x820d 后期更新的攻击合约直接去除了对 <code>airDropTracker_</code> 的判断，但这样做其实<strong>有利有弊</strong>。</p>
+
+<p>如果你了解细节，猜出了黑客的用意，或者知晓这种做法的优缺点，欢迎添加小安同学微信（secbit_xiaoanbi），她会把你加入到「SECBIT 智能合约安全技术讨论」的群里。</p>
+
+<h2 id="尾声-下一个是谁">尾声：下一个是谁？</h2>
+
+<p><strong>8 月 14 日</strong>，BAPT-LW20 黑客团队的 0x820d 再次部署了两个新版攻击合约，这一次他们将炮筒又对准了另一款一天前新部署的不知名合约。</p>
+
+<p>望着大屏幕上 AnChain.ai 态势感知态势感知平台不断闪烁的红点，安比（SECBIT）实验室和 AnChain.ai 都很清楚，区块链世界里的战役还远远没有结束。</p>
+
+<p>2009年，中本聪创造了一个虚拟的去中心化新世界。这仿佛是一片流着奶和蜜糖的应许之地，人们欢呼雀跃，蜂拥而至。但与所有的生态系统一样，新世界有生命，就有捕食者。有交易者，就有黑客。区块链上的应用在进化，攻击者也同样，我们给大家展示的是区块链世界不为人知的另一面，暗流涌动。意料之外，也在意料之中。</p>
+
+<h2 id="bapt-lw20-bapt-f3d-大事件时间表">BAPT-LW20 &amp; BAPT-F3D 大事件时间表：</h2>
+
+<ul>
+<li>2018/07/06 Fomo3D 游戏合约上线</li>
+<li>2018/07/08 Zethr 核心开发者 Etherguy 发现并利用空投漏洞</li>
+<li>2018/07/20 Fomo3D 游戏在国内走红</li>
+<li>2018/07/20 BAPT-LW20 黑客团队地址开始活跃</li>
+<li>2018/07/21 BAPT-LW20 团队第一次成功利用 Fomo3D 空投漏洞</li>
+<li>2018/07/23 BAPT-LW20 团队攻击山寨游戏⽼鼠会 RatScam</li>
+<li>2018/07/23 Péter 在 Reddit 爆料 Fomo3D 空投漏洞</li>
+<li>2018/07/24 安比（SECBIT）实验室发布 Fomo3D 及山寨版游戏空投漏洞预警</li>
+<li>2018/07/24 BAPT-LW20 黑客团队攻击 FoMoGame</li>
+<li>2018/07/26 BAPT-LW20 黑客团队部署新版攻击合约 0x5483</li>
+<li>2018/08/06 类 Fomo3D 游戏 Last Winner 上线</li>
+<li>2018/08/07 LW 游戏开始火爆</li>
+<li>2018/08/07 BAPT-LW20 黑客团队开始攻击 LW 游戏</li>
+<li>2018/08/09 以太坊未确认交易数创年内新高</li>
+<li>2018/08/10 凌晨 AnChain.ai 态势感知系统发出预警</li>
+<li>2018/08/10 安比（SECBIT）实验室与 AnChain.ai 联手开展调查</li>
+<li>2018/08/10 BAPT-LW20 黑客团队转移旧合约中资金，使用新版合约继续开展攻击</li>
+<li>2018/08/11 完成 BAPT-LW20 攻击时间线复原</li>
+<li>2018/08/12 完成 BAPT-LW20 攻击手法复原</li>
+<li>2018/08/13 针对更多攻击源分析</li>
+<li>2018/08/13 完成 BAPT-F3D 和 BAPT-LW20 攻击数据全景分析，黑客获利超 5000 Ether</li>
+<li>2018/08/14 BAPT-LW20 黑客团队再次部署新版攻击合约，开始攻击一个不知名合约</li>
+<li>2018/08/17 BAPT-LW20 黑客团队夺取 LW 最终大奖 7754 Ether</li>
+<li>2018/08/17 安比（SECBIT）实验室完成 BAPT-LW20 攻击事件报告</li>
+</ul>
+
+<h2 id="参考文献">参考文献</h2>
+
+<ul>
+<li>[1] 区块律动：8万笔交易「封死」以太坊网络，只为抢夺Fomo3D大奖？<a href="https://mp.weixin.qq.com/s/5nrgj8sIZ0SlXebG5sWVPw">https://mp.weixin.qq.com/s/5nrgj8sIZ0SlXebG5sWVPw</a></li>
+<li>[2] Pwning Fomo3D Revealed: Iterative, Pre-Calculated Contract Creation For Airdrop Prizes!, <a href="https://peckshield.com/2018/07/24/fomo3d/">https://peckshield.com/2018/07/24/fomo3d/</a></li>
+<li>[3] Péter Szilágyi 提出的空投漏洞利用 POC，<a href="https://www.reddit.com/r/ethereum/comments/916xni/how_to_pwn_fomo3d_a_beginners_guide/">https://www.reddit.com/r/ethereum/comments/916xni/how_to_pwn_fomo3d_a_beginners_guide/</a>, 2018/07/23</li>
+<li>[4] AsicBoost - A Speedup for Bitcoin Mining, <a href="https://arxiv.org/pdf/1604.00575.pdf">https://arxiv.org/pdf/1604.00575.pdf</a>, 2016/03/31</li>
+</ul>
+
+<p>以上数据均由安比（SECBIT）实验室和 AnChain.ai 提供，合作交流请联系info@secbit.io。</p>
+
+<hr />
+
+<p><strong>安比（SECBIT）实验室</strong></p>
+
+<p>安比（SECBIT）实验室专注于区块链与智能合约安全问题，全方位监控智能合约安全漏洞、提供专业合约安全审计服务，在智能合约安全技术上开展全方位深入研究，致力于参与共建共识、可信、有序的区块链经济体。</p>
+
+<p>安比（SECBIT）实验室创始人郭宇，中国科学技术大学博士、耶鲁大学访问学者、曾任中科大副教授。专注于形式化证明与系统软件研究领域十余年，具有丰富的金融安全产品研发经验，是国内早期关注并研究比特币与区块链技术的科研人员之一。研究专长：区块链技术、形式化验证、程序语言理论、操作系统内核、计算机病毒。</p>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">SECBIT Labs</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2019-10-12
+      
+        <a href="https://github.com/sec-bit/blog/commit/a24eb64002b7307448502f68f462c704eba317f1" title="init blog">
+          (a24eb64)
+        </a>
+        
+          <br>init blog
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content">如需转载请注明文章作者和出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://p0n1.github.io/blog/tags/smart-contract/">Smart Contract</a>
+          <a href="https://p0n1.github.io/blog/tags/fomo3d/">Fomo3D</a>
+          <a href="https://p0n1.github.io/blog/tags/vulnerability/">Vulnerability</a>
+          <a href="https://p0n1.github.io/blog/tags/dapp/">DApp</a>
+          <a href="https://p0n1.github.io/blog/tags/game/">Game</a>
+          <a href="https://p0n1.github.io/blog/tags/blockchain/">Blockchain</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/blog/2018/09/29/bitcoin-p2pk2-p2sh-addr-pywallet-bug/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">是谁控制了比特币，是你？还是钱包？BTC地址与交易原理剖析</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/blog/2018/08/03/worldcup-miner-dilemma/">
+            <span class="next-text nav-default">从世界杯小组赛消极比赛，到矿工博弈及共识算法，博弈论解释了一切</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "sec-bit/comments-for-secbit-blog"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:hi@secbit.io" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://twitter.com/SECBIT_IO" rel="me noopener" class="iconfont"
+      title="twitter"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1264 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M1229.8616 18.043658c0 0-117.852626 63.135335-164.151872 67.344358-105.225559-164.151872-505.082682-92.598492-437.738325 223.078185C278.622548 312.675223 89.216542 47.506814 89.216542 47.506814s-117.852626 189.406006 75.762402 345.139833C127.097743 396.85567 55.544363 371.601535 55.544363 371.601535S26.081207 535.753407 253.368414 615.724832c-21.045112 29.463156-113.643603 8.418045-113.643603 8.418045s25.254134 143.10676 231.496229 180.987961c-143.10676 130.479693-387.230056 92.598492-370.393967 105.225559 206.242095 189.406006 1119.599946 231.496229 1128.01799-643.98042C1179.353331 249.539887 1263.533778 123.269217 1263.533778 123.269217s-130.479693 37.881201-138.897738 33.672179C1225.652577 98.015083 1229.8616 18.043658 1229.8616 18.043658"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/sec-bit" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/org/secbit/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://p0n1.github.io/blog/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2018 -
+    2019
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        SECBIT Labs
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/blog/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/blog/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/blog/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css"
+    integrity="sha384-BdGj8xC2eZkQaxoQ8nSLefg4AV4/AwB3Fj+8SUSo7pnKP6Eoy18liIKTPn9oBYNG"
+    crossorigin="anonymous">
+
+  
+  <script defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.js"
+    integrity="sha384-JiKN5O8x9Hhs/UE5cT5AAJqieYlOZbGT3CHws/y97o3ty4R7/O5poG9F3JoiOYw1"
+    crossorigin="anonymous"></script>
+
+  
+  <script defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/contrib/auto-render.min.js"
+    integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI"
+    crossorigin="anonymous" onload="renderMathInElement(document.body);">
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      renderMathInElement(document.body, {
+        
+      });
+    });
+  </script>
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/blog/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

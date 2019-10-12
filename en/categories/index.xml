@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on SECBIT Blog</title>
+    <link>https://p0n1.github.io/blog/en/categories/</link>
+    <description>Recent content in Categories on SECBIT Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 29 Jul 2019 08:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://p0n1.github.io/blog/en/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Zero Knowledge Proof</title>
+      <link>https://p0n1.github.io/blog/en/categories/zero-knowledge-proof/</link>
+      <pubDate>Mon, 29 Jul 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://p0n1.github.io/blog/en/categories/zero-knowledge-proof/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>zkSNARKs</title>
+      <link>https://p0n1.github.io/blog/en/categories/zksnarks/</link>
+      <pubDate>Mon, 29 Jul 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://p0n1.github.io/blog/en/categories/zksnarks/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Libra</title>
+      <link>https://p0n1.github.io/blog/en/categories/libra/</link>
+      <pubDate>Wed, 10 Jul 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://p0n1.github.io/blog/en/categories/libra/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Programming Language</title>
+      <link>https://p0n1.github.io/blog/en/categories/programming-language/</link>
+      <pubDate>Wed, 10 Jul 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://p0n1.github.io/blog/en/categories/programming-language/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Smart Contract</title>
+      <link>https://p0n1.github.io/blog/en/categories/smart-contract/</link>
+      <pubDate>Wed, 10 Jul 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://p0n1.github.io/blog/en/categories/smart-contract/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
