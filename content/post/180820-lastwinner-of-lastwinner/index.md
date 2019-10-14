@@ -4,7 +4,7 @@ date: 2018-08-20T08:00:00+08:00
 summary: "Last Winner（类 Fomo3D）游戏大火，导致以太坊异常拥堵，Gas 费用暴涨。大量以太币资金入场。Last Winner 游戏合约存在大量非正常交易，并且伴随着大量合约的创建与自毁，与正常人类调用行为特征偏离很大，这引起了我们的高度警惕。"
 slug: "last winner of lastwinner"
 featuredImage: "pwn-v3.png"
-tags: ["Smart Contract", "Fomo3D", "Vulnerability", "DApp", "Game", "Blockchain"]
+tags: ["Smart Contract", "Fomo3D", "Last Winner", "Vulnerability", "DApp", "Game", "Blockchain"]
 categories: ["Blockchain", "Vulnerability"]
 ---
 
