@@ -3,31 +3,31 @@
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/categories/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/post/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/tags/smart-contract/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/tags/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -40,7 +40,7 @@
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/tags/vulnerability/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -107,7 +107,44 @@
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/categories/smart-contract/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/blockchain/</loc>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/dapp/</loc>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/fomo3d/</loc>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/game/</loc>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/</loc>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/categories/vulnerability/</loc>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   

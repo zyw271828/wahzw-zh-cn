@@ -296,6 +296,117 @@
     </item>
     
     <item>
+      <title>How the winner got Fomo3D prize - A Detailed Explanation</title>
+      <link>https://sec-bit.github.io/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/</link>
+      <pubDate>Thu, 23 Aug 2018 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/</guid>
+      
+        <description>
+
+&lt;p&gt;The first round of Fomo3D has ended and the winner&amp;rsquo;s address is 0xa169, with a prize of 10,469.66 ethers.&lt;/p&gt;
+
+&lt;p&gt;You may think that the winner is just an ordinary participant.&lt;/p&gt;
+
+&lt;p&gt;SECBIT Labs &lt;strong&gt;first found&lt;/strong&gt; that the Fomo3D winner played a special attack trick to sharply decrease the number of transactions packed by miners near the end of the game (multiple blocks were involved), &lt;strong&gt;accelerating the approach of the game end&lt;/strong&gt; and &lt;strong&gt;increasing the winning probability&lt;/strong&gt;. SECBIT Labs also observed several similar abnormal blocks and transactions regarding to the last round of Last Winner.&lt;/p&gt;
+
+&lt;h2 id=&#34;a-series-of-abnormal-blocks-and-transactions&#34;&gt;A Series of Abnormal Blocks and Transactions&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;eng_pic/txns.jpg&#34; alt=&#34;1&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The picture shows that the block with height 6191896 packs the last key purchasing transaction of Fomo3D winner, containing 92 transactions which is normal.&lt;/p&gt;
+
+&lt;p&gt;However, the number of transactions in the following 11 blocks (6191898～6191908) &lt;strong&gt;decreased sharply&lt;/strong&gt; and the minimum block (6191906) &lt;strong&gt;only contained 3 transactions&lt;/strong&gt;, which is abnormal.&lt;/p&gt;
+
+&lt;p&gt;Take a look at these &amp;lsquo;special&amp;rsquo; blocks.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;eng_pic/3txns-block.jpg&#34; alt=&#34;2&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Here we can see that the block with height 6191906 only had 3 transactions sending to the same contract (calling the same &lt;strong&gt;mysterious contract&lt;/strong&gt;), and the sum of the transaction fees &lt;strong&gt;is greater than 4 ethers&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The creator of this mysterious contract (0x18e1) is exactly the winner (0xa169)!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The person in charge of F2POOL told us that a transaction with high TxFee would enter and get packed in blocks first.&lt;/p&gt;
+
+&lt;p&gt;This explains that the 11 blocks mentioned above possess excessive TxFee while they only pack few transactions. These blocks were processed by mining pools like SparkPool, Nanopool, Ethermine, BitClubPool, MiningPoolHub. Apparently, selecting transactions with high TxFee is in line with mining pools&amp;rsquo; interest and it is widely applied throughout the industry [1].&lt;/p&gt;
+
+&lt;h2 id=&#34;what-had-the-mysterious-contract-ever-done&#34;&gt;What had the &amp;lsquo;mysterious contract&amp;rsquo; ever done?&lt;/h2&gt;
+
+&lt;p&gt;SECBIT Labs discovered that these abnormal transactions sent to the attack contract in related blocks all failed in the end.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;eng_pic/bad-instr.jpg&#34; alt=&#34;3&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We could see from the picture above that the final status is &amp;lsquo;Fail&amp;rsquo; and Etherscan has a warning of &lt;code&gt;Bad instruction&lt;/code&gt; and the Gas Limit (4200000) is exhausted, which is half of the normal gas limit, sending high TxFee to the mining pool which packed the transaction.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Gas limit in Ethereum represents the maximum approved gas in a single block to determine the number of transactions packed in the block. Usually, the block gas limit is set with certain strategies between miners and the common value is 8000000 [2].&lt;/p&gt;
+
+&lt;p&gt;Each transaction in Ethreum also has a gas limit set by the transaction sender, which is the maximum gas consumed by the transaction. The actual gas consumption is determined by the actual transaction execution process. The sum of all transaction gas cannot exceed the block gas limit [3].&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;We know that &lt;strong&gt;assert() in Ethereum smart contracts is used for asserting. When the result of asserting does not satisfy conditions, the gas would be exhausted.&lt;/strong&gt; Etherscan would notify &lt;code&gt;Bad instruction&lt;/code&gt; in case of this transaction, which is in fact caused by that the EVM encounters an undefined operator &lt;code&gt;0xfe&lt;/code&gt; [4].&lt;/p&gt;
+
+&lt;p&gt;The winner (attacker) made use of this feature and took up the block gas limit with few transactions.&lt;/p&gt;
+
+&lt;h2 id=&#34;more-brilliant-hacks&#34;&gt;More Brilliant Hacks&lt;/h2&gt;
+
+&lt;p&gt;Moreover, SECBIT Labs discovered that the mysterious contract would call &lt;code&gt;getCurrentRoundInfo()&lt;/code&gt; in Fomo3D to get info of the current round like the time remaining and the last buyer.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;eng_pic/getCurRndInfo.jpg&#34; alt=&#34;img&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The &amp;lsquo;mysterious contract&amp;rsquo; has not published its source code. By combining the result of reverse engineering, SECBIT Labs infers that the winner would call the method in the mysterious contract to query info, especially &lt;strong&gt;time round ends&lt;/strong&gt; and &lt;strong&gt;current player in leads address&lt;/strong&gt;. When the remaining time reaches a threshold and the last buyer is the attacker, call &lt;code&gt;assert()&lt;/code&gt; to fail the transaction and use up all gas; when the remaining time is far from the threshold or the last buyer is someone else, do nothing, which takes little gas.&lt;/p&gt;
+
+&lt;p&gt;The winner (attacker) made use of this approach and launched many similar &lt;strong&gt;mutable mysterious transactions&lt;/strong&gt;: when the attacker has a high winning change, use these mysterious transactions which would &lt;strong&gt;get packed by mining pools first and take up the following blocks&lt;/strong&gt;, leading to the situation that other key purchases cannot be packed in time, accelerating the approach of game end and increasing the attackers&amp;rsquo; winning probability sharply.&lt;/p&gt;
+
+&lt;h2 id=&#34;other-techniques-and-details&#34;&gt;Other techniques and details&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;SECBIT Labs observed that Fomo3D winner (attacker) created multiple similar mysterious contracts (attacking contracts) with transactions by different addresses to distract attention and decrease the chance of exposure. Each contract had many transactions and the one (0x18e1) making the attacker becoming the winner had more than 5000 transactions, which is of great efforts.&lt;/li&gt;
+&lt;li&gt;When calling the mysterious contract (attacking contract), the winner (attacker) would try different gas limit from 170000 to 480000, which is a technique as well.&lt;/li&gt;
+&lt;li&gt;More than 10 blocks after the block (6191896) containing the transactions of purchasing keys by  Fomo3D winner (attacker) 0xa169 has no transaction related to Fomo3D key buying, which ended the game finally.&lt;/li&gt;
+&lt;li&gt;The next block (6191897) also contained many abnormal transactions.&lt;/li&gt;
+&lt;li&gt;Before the game end, many of us assumed that attackers would cooperate with large mining pools for rejecting rivals&amp;rsquo; transactions to get the prize, or that attackers would launch lots of useless transactions to congest Ethereum network to get the prize, as rivals&amp;rsquo; transactions cannot be packed.&lt;/li&gt;
+&lt;li&gt;The winner (attacker) made use of the common packing priority rather than &lt;strong&gt;cooperated with mining pools&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The mysterious contract (attacking contract) is simply a classic model of turning smart contracts to weapons with great precision and definite objects. This attack is way more brilliant than tuning up the gas price to launch transactions with scripts near the game end. The attack transaction broadcast to each mining pool functioned like missiles in memory, watching for the proper moment for action.&lt;/li&gt;
+&lt;li&gt;SECBIT Labs also observed multiple similar abnormal transactions and blocks at the end of Last Winner.&lt;/li&gt;
+&lt;li&gt;The mysterious contract created by the winner (attacker) is trading with other Fomo3D-like games (e.g. Super Card) frequently, intending to get prizes with the same approach.&lt;/li&gt;
+&lt;li&gt;There is simply no &amp;lsquo;black swan&amp;rsquo;, but only smart and diligent attackers. Please refer to &amp;lsquo;Power Law Distribution&amp;rsquo; and &amp;lsquo;Game Fallacy&amp;rsquo; [5].&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;the-lucky-f2pool-mining-pool&#34;&gt;The Lucky F2POOL Mining Pool&lt;/h2&gt;
+
+&lt;p&gt;Another point worth mentioning is that the winning transaction and the previous ones of two games (Fomo3D, Last Winner) were both packed by F2Pool.&lt;/p&gt;
+
+&lt;p&gt;After a detailed discussion, SECBIT Labs and F2POOL all primarily affirms that it is merely a coincidence. F2POOL is lucky enough to see the winning round of two popular smart contract games.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-future-of-smart-contract-game&#34;&gt;The Future of Smart Contract Game&lt;/h2&gt;
+
+&lt;p&gt;SECBIT Labs had reported attacks in Last Winner and other Fomo3d-like games that attackers made use of the airdrop bug in the original Fomo3D game to get much prize, along with vulnerabilities in Fomo3D Quick.&lt;/p&gt;
+
+&lt;p&gt;While we are sighing at the special winning techniques, we are worrying about the future of smart contract games.&lt;/p&gt;
+
+&lt;p&gt;As the most popular smart contract game in 2018, Fomo3D made many innovations in skills and laws, which is a great leap in smart contract game history. It is undeniable that the Fomo3D developing team has superior programming skills and strong feelings for decentralization.&lt;/p&gt;
+
+&lt;p&gt;When Fomo3D was published, many people said that it was a truly fair decentralized game. However, attackers were still able to make use of deficiencies and received great paybacks.&lt;/p&gt;
+
+&lt;p&gt;Limitations of skills, Greedy in humanity and information asymmetry all impede the birth of a truly secure, fair and transparent decentralized game. After Fomo3D, many copycats emerged without improvements in technologies and creativeness. The society is becoming more and more impetuous.&lt;/p&gt;
+
+&lt;p&gt;As a fan of blockchain and smart contract, SECBIT Labs is eager to embrace a secure, fair, outstanding and interesting smart contract game in the future.&lt;/p&gt;
+
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;[1] &lt;a href=&#34;https://ethereum.stackexchange.com/questions/15896/do-mining-pool-or-miners-decide-on-which-transaction-to-be-included-in-the-next&#34;&gt;https://ethereum.stackexchange.com/questions/15896/do-mining-pool-or-miners-decide-on-which-transaction-to-be-included-in-the-next&lt;/a&gt;, 2017/05/06&lt;/li&gt;
+&lt;li&gt;[2] Accounts, Transactions, Gas, and Block Gas Limits in Ethereum, &lt;a href=&#34;https://hudsonjameson.com/2017-06-27-accounts-transactions-gas-ethereum/&#34;&gt;https://hudsonjameson.com/2017-06-27-accounts-transactions-gas-ethereum/&lt;/a&gt;, 2017/06/27&lt;/li&gt;
+&lt;li&gt;[3] Intro | Accounts, Transactions, Gas, and Block Gas Limits in Ethereum, &lt;a href=&#34;https://ethfans.org/posts/479&#34;&gt;https://ethfans.org/posts/479&lt;/a&gt;, 2017/07/03&lt;/li&gt;
+&lt;li&gt;[4] Revert(), Assert(), and Require() in Solidity, &lt;a href=&#34;https://medium.com/blockchannel/the-use-of-revert-assert-and-require-in-solidity-and-the-new-revert-opcode-in-the-evm-1a3a7990e06e&#34;&gt;https://medium.com/blockchannel/the-use-of-revert-assert-and-require-in-solidity-and-the-new-revert-opcode-in-the-evm-1a3a7990e06e&lt;/a&gt;, 2017/09/28&lt;/li&gt;
+&lt;li&gt;[5] Black Swan, &lt;a href=&#34;https://book.douban.com/subject/3025921/&#34;&gt;https://book.douban.com/subject/3025921/&lt;/a&gt;, &lt;sup&gt;2008&lt;/sup&gt;&amp;frasl;&lt;sub&gt;05&lt;/sub&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>Lacking Insights in ERC223 &amp; ERC827 Implementation</title>
       <link>https://sec-bit.github.io/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</link>
       <pubDate>Sun, 24 Jun 2018 08:00:00 +0800</pubDate>

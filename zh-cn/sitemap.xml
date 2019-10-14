@@ -3,7 +3,7 @@
   
   <url>
     <loc>https://sec-bit.github.io/blog/categories/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -15,19 +15,19 @@
   
   <url>
     <loc>https://sec-bit.github.io/blog/post/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://sec-bit.github.io/blog/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://sec-bit.github.io/blog/tags/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -38,13 +38,13 @@
   </url>
   
   <url>
-    <loc>https://sec-bit.github.io/blog/categories/zero-knowledge-proof/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/zero-knowledge-proof/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -84,30 +84,30 @@
   
   <url>
     <loc>https://sec-bit.github.io/blog/tags/smart-contract/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://sec-bit.github.io/blog/categories/vulnerability/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://sec-bit.github.io/blog/tags/vulnerability/</loc>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/categories/vulnerability/</loc>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/tags/zksnarks/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://sec-bit.github.io/blog/categories/zksnarks/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://sec-bit.github.io/blog/tags/zksnarks/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -121,7 +121,7 @@
   
   <url>
     <loc>https://sec-bit.github.io/blog/tags/blockchain/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -145,13 +145,13 @@
   </url>
   
   <url>
-    <loc>https://sec-bit.github.io/blog/categories/zkpod/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/zkpod/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://sec-bit.github.io/blog/tags/zkpod/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/zkpod/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -170,13 +170,13 @@
   </url>
   
   <url>
-    <loc>https://sec-bit.github.io/blog/categories/libra/</loc>
+    <loc>https://sec-bit.github.io/blog/tags/libra/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://sec-bit.github.io/blog/tags/libra/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/libra/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -189,31 +189,25 @@
   </url>
   
   <url>
-    <loc>https://sec-bit.github.io/blog/categories/programming-language/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://sec-bit.github.io/blog/tags/programming-language/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://sec-bit.github.io/blog/categories/smart-contract/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/programming-language/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/categories/smart-contract/</loc>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://sec-bit.github.io/blog/tags/cooperative-games/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://sec-bit.github.io/blog/categories/ethereum/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -225,13 +219,19 @@
   </url>
   
   <url>
-    <loc>https://sec-bit.github.io/blog/categories/game-theory/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/ethereum/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://sec-bit.github.io/blog/tags/game-theory/</loc>
+    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/categories/game-theory/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -269,20 +269,20 @@
   </url>
   
   <url>
-    <loc>https://sec-bit.github.io/blog/categories/bitcoin/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://sec-bit.github.io/blog/tags/bitcoin/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://sec-bit.github.io/blog/categories/blockchain/</loc>
+    <loc>https://sec-bit.github.io/blog/categories/bitcoin/</loc>
     <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/categories/blockchain/</loc>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -301,25 +301,38 @@
   
   <url>
     <loc>https://sec-bit.github.io/blog/tags/dapp/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://sec-bit.github.io/blog/tags/fomo3d/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
+    <loc>https://sec-bit.github.io/blog/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/</loc>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://sec-bit.github.io/blog/tags/game/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/tags/last-winner/</loc>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://sec-bit.github.io/blog/2018/08/20/last-winner-of-lastwinner/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2019-10-14T19:27:48+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
