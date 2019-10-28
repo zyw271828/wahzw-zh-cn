@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>security on SECBIT Blog</title>
-    <link>https://sec-bit.github.io/blog/tags/security/</link>
-    <description>Recent content in security on SECBIT Blog</description>
+    <title>quantum computing on SECBIT Blog</title>
+    <link>https://sec-bit.github.io/blog/categories/quantum-computing/</link>
+    <description>Recent content in quantum computing on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 28 Oct 2019 08:00:00 +0800</lastBuildDate>
     
-	<atom:link href="https://sec-bit.github.io/blog/tags/security/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://sec-bit.github.io/blog/categories/quantum-computing/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -17,15 +17,6 @@
       
       <guid>https://sec-bit.github.io/blog/2019/10/28/bitcoin-safety-in-the-coming-era-of-quantum-computing/</guid>
       <description>量子时代的到来不可避免，巨大的变革将会带来无尽的机会，区块链、密码学与数字资产安全无疑是未来十年的焦点，请扔掉包袱，与我们一起前行。</description>
-    </item>
-    
-    <item>
-      <title>Don’t Test, Verify —— 哪个故事真正符合你对形式化验证的想象？</title>
-      <link>https://sec-bit.github.io/blog/2018/10/24/formal-verification-background/</link>
-      <pubDate>Wed, 24 Oct 2018 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/2018/10/24/formal-verification-background/</guid>
-      <description>世界上是否有一种技术可以保证计算机程序绝对安全，能够完全抵挡住黑客的进攻？</description>
     </item>
     
   </channel>

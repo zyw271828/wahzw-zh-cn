@@ -30,10 +30,10 @@
     
     <item>
       <title>初识「零知识」与「证明」</title>
-      <link>https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-proof/</link>
+      <link>https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-and-proof/</link>
       <pubDate>Wed, 31 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-proof/</guid>
+      <guid>https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-and-proof/</guid>
       <description>要解释「零知识证明」，我们需要先解释「证明」，然后解释什么是「知识」，最后再解释什么是「零知识」。</description>
     </item>
     

@@ -5,10 +5,19 @@
     <link>https://sec-bit.github.io/blog/post/</link>
     <description>Recent content in Posts on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 28 Aug 2019 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 28 Oct 2019 08:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://sec-bit.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>如果量子计算时代到来，我们的比特币安全吗？</title>
+      <link>https://sec-bit.github.io/blog/2019/10/28/bitcoin-safety-in-the-coming-era-of-quantum-computing/</link>
+      <pubDate>Mon, 28 Oct 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/2019/10/28/bitcoin-safety-in-the-coming-era-of-quantum-computing/</guid>
+      <description>量子时代的到来不可避免，巨大的变革将会带来无尽的机会，区块链、密码学与数字资产安全无疑是未来十年的焦点，请扔掉包袱，与我们一起前行。</description>
+    </item>
     
     <item>
       <title>读心术：从零知识证明中提取「知识」</title>
@@ -30,10 +39,10 @@
     
     <item>
       <title>初识「零知识」与「证明」</title>
-      <link>https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-proof/</link>
+      <link>https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-and-proof/</link>
       <pubDate>Wed, 31 Jul 2019 08:00:00 +0800</pubDate>
       
-      <guid>https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-proof/</guid>
+      <guid>https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-and-proof/</guid>
       <description>要解释「零知识证明」，我们需要先解释「证明」，然后解释什么是「知识」，最后再解释什么是「零知识」。</description>
     </item>
     

@@ -5,10 +5,46 @@
     <link>https://sec-bit.github.io/blog/tags/</link>
     <description>Recent content in Tags on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 28 Aug 2019 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 28 Oct 2019 08:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://sec-bit.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>bitcoin</title>
+      <link>https://sec-bit.github.io/blog/tags/bitcoin/</link>
+      <pubDate>Mon, 28 Oct 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/tags/bitcoin/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>blockchain</title>
+      <link>https://sec-bit.github.io/blog/tags/blockchain/</link>
+      <pubDate>Mon, 28 Oct 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/tags/blockchain/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>quantum computing</title>
+      <link>https://sec-bit.github.io/blog/tags/quantum-computing/</link>
+      <pubDate>Mon, 28 Oct 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/tags/quantum-computing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>security</title>
+      <link>https://sec-bit.github.io/blog/tags/security/</link>
+      <pubDate>Mon, 28 Oct 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/tags/security/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Extractor</title>
@@ -83,15 +119,6 @@
     </item>
     
     <item>
-      <title>Blockchain</title>
-      <link>https://sec-bit.github.io/blog/tags/blockchain/</link>
-      <pubDate>Wed, 24 Jul 2019 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/tags/blockchain/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Fair Exchange</title>
       <link>https://sec-bit.github.io/blog/tags/fair-exchange/</link>
       <pubDate>Wed, 24 Jul 2019 08:00:00 +0800</pubDate>
@@ -160,33 +187,6 @@
       <pubDate>Thu, 13 Jun 2019 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/tags/ethereum/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Game Theory</title>
-      <link>https://sec-bit.github.io/blog/tags/game-theory/</link>
-      <pubDate>Thu, 13 Jun 2019 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/tags/game-theory/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Security</title>
-      <link>https://sec-bit.github.io/blog/tags/security/</link>
-      <pubDate>Wed, 24 Oct 2018 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/tags/security/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Address</title>
-      <link>https://sec-bit.github.io/blog/tags/address/</link>
-      <pubDate>Sat, 29 Sep 2018 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/tags/address/</guid>
       <description></description>
     </item>
     
