@@ -7,6 +7,7 @@ slug: "The 'Input Aliasing' bug caused by a contract library of zkSNARKs"
 author: p0n1
 tags: ["zkSNARKs", "Zero Knowledge Proof", "Vulnerability", "Smart Contract"]
 categories: ["zkSNARKs", "Zero Knowledge Proof"]
+contentCopyright: "If you need to reprint, please indicate the author and source of the article."
 ---
 
 

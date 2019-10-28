@@ -3,7 +3,7 @@ title: "初识「零知识」与「证明」"
 date: 2019-07-31T08:00:00+08:00
 summary: "要解释「零知识证明」，我们需要先解释「证明」，然后解释什么是「知识」，最后再解释什么是「零知识」。"
 featuredImage: "img/showmeproof.jpg"
-slug: "zero knowledge & proof"
+slug: "zero knowledge and proof"
 author: 郭宇
 tags: ["Zero Knowledge Proof", "Zero Knowledge", "Proof"]
 categories: ["Zero Knowledge Proof"]
