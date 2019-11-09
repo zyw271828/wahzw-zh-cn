@@ -5,10 +5,28 @@
     <link>https://sec-bit.github.io/blog/tags/</link>
     <description>Recent content in Tags on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 01 Nov 2019 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 07 Nov 2019 08:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://sec-bit.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Zero Knowledge Proof</title>
+      <link>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</link>
+      <pubDate>Thu, 07 Nov 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tutorials</title>
+      <link>https://sec-bit.github.io/blog/tags/tutorials/</link>
+      <pubDate>Thu, 07 Nov 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/tags/tutorials/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Common Reference String</title>
@@ -52,15 +70,6 @@
       <pubDate>Fri, 01 Nov 2019 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/tags/random-oracle-model/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Zero Knowledge Proof</title>
-      <link>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</link>
-      <pubDate>Fri, 01 Nov 2019 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</guid>
       <description></description>
     </item>
     
@@ -178,15 +187,6 @@
       <pubDate>Wed, 24 Jul 2019 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/tags/formal-verification/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>zkPoD</title>
-      <link>https://sec-bit.github.io/blog/tags/zkpod/</link>
-      <pubDate>Wed, 24 Jul 2019 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/tags/zkpod/</guid>
       <description></description>
     </item>
     

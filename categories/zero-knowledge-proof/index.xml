@@ -5,10 +5,19 @@
     <link>https://sec-bit.github.io/blog/categories/zero-knowledge-proof/</link>
     <description>Recent content in Zero Knowledge Proof on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 01 Nov 2019 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 07 Nov 2019 08:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>零知识证明学习资源汇总</title>
+      <link>https://sec-bit.github.io/blog/2019/11/07/zkp-learning-resources/</link>
+      <pubDate>Thu, 07 Nov 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/2019/11/07/zkp-learning-resources/</guid>
+      <description>本文收集了关于零知识证明的一些学习资料（包括科普文章、论文、开源仓库及相关学习网站等），并对这些资源进行了整理分析，希望能对大家有所帮助。</description>
+    </item>
     
     <item>
       <title>亚瑟王的「随机」挑战：从交互到非交互式零知识证明</title>
