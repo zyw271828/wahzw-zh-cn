@@ -19,7 +19,7 @@ SECBIT Labs **first found** that the Fomo3D winner played a special attack trick
 
 ## A Series of Abnormal Blocks and Transactions
 
-![1](eng_pic/txns.jpg)
+![1](eng_pic/txns.en.jpg)
 
 The picture shows that the block with height 6191896 packs the last key purchasing transaction of Fomo3D winner, containing 92 transactions which is normal.
 
@@ -27,7 +27,7 @@ However, the number of transactions in the following 11 blocks (6191898～619190
 
 Take a look at these 'special' blocks.
 
-![2](eng_pic/3txns-block.jpg)
+![2](eng_pic/3txns-block.en.jpg)
 
 Here we can see that the block with height 6191906 only had 3 transactions sending to the same contract (calling the same **mysterious contract**), and the sum of the transaction fees **is greater than 4 ethers**.
 
@@ -41,7 +41,7 @@ This explains that the 11 blocks mentioned above possess excessive TxFee while t
 
 SECBIT Labs discovered that these abnormal transactions sent to the attack contract in related blocks all failed in the end.
 
-![3](eng_pic/bad-instr.jpg)
+![3](eng_pic/bad-instr.en.jpg)
 
 We could see from the picture above that the final status is 'Fail' and Etherscan has a warning of `Bad instruction` and the Gas Limit (4200000) is exhausted, which is half of the normal gas limit, sending high TxFee to the mining pool which packed the transaction.
 
@@ -57,7 +57,7 @@ The winner (attacker) made use of this feature and took up the block gas limit w
 
 Moreover, SECBIT Labs discovered that the mysterious contract would call `getCurrentRoundInfo()` in Fomo3D to get info of the current round like the time remaining and the last buyer.
 
-![img](eng_pic/getCurRndInfo.jpg)
+![img](eng_pic/getCurRndInfo.en.jpg)
 
 The 'mysterious contract' has not published its source code. By combining the result of reverse engineering, SECBIT Labs infers that the winner would call the method in the mysterious contract to query info, especially **time round ends** and **current player in leads address**. When the remaining time reaches a threshold and the last buyer is the attacker, call `assert()` to fail the transaction and use up all gas; when the remaining time is far from the threshold or the last buyer is someone else, do nothing, which takes little gas.
 
