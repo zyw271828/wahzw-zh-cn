@@ -5,10 +5,19 @@
     <link>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</link>
     <description>Recent content in Zero Knowledge Proof on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 07 Nov 2019 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 19 Dec 2019 08:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://sec-bit.github.io/blog/tags/zero-knowledge-proof/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>链上富人寻「隐私」记（一：Mixer 篇）</title>
+      <link>https://sec-bit.github.io/blog/2019/12/19/onchain-privacy-and-mixer/</link>
+      <pubDate>Thu, 19 Dec 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/2019/12/19/onchain-privacy-and-mixer/</guid>
+      <description>10 月底，在最爱的《橙皮书📙》公众号里看到了自己，心里却不是滋味，背后甚至有些发凉。Bowen 的一篇文章——「Top 10 DeFi 大户的链上人生」让我彻底暴露了。</description>
+    </item>
     
     <item>
       <title>零知识证明学习资源汇总</title>
