@@ -10,4 +10,5 @@
 
 ## More
 
+- Hugo Static Site Generator v0.62.0/extended
 - https://gohugo.io/getting-started/usage/
