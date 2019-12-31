@@ -1,14 +1,23 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>tutorials on SECBIT Blog</title>
     <link>https://sec-bit.github.io/blog/tags/tutorials/</link>
     <description>Recent content in tutorials on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 07 Nov 2019 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 25 Dec 2019 08:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://sec-bit.github.io/blog/tags/tutorials/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>从零开始学习 zk-SNARK（一）——多项式的性质与证明</title>
+      <link>https://sec-bit.github.io/blog/2019/12/25/learn-zk-snark-from-zero-part-one/</link>
+      <pubDate>Wed, 25 Dec 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/2019/12/25/learn-zk-snark-from-zero-part-one/</guid>
+      <description>当我第一次了解到 zk-SNARK 技术是如何将这些东西完美地融合在一起的时候，就被数学之美震撼到了，并且随着我发现的维度越多，好奇心就越强烈。在这篇文章中，我主要就基于一些实例简洁明了地阐明 zk-SNARK ，并对这里面的很多问题做出了解释，并利用这种方式分享了我的经验，进而让更多人也能够欣赏到这项最先进的技术以及它的创新之处，最终欣赏到数学之美。</description>
+    </item>
     
     <item>
       <title>零知识证明学习资源汇总</title>

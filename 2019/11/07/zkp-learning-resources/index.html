@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.55.4" />
+<meta name="generator" content="Hugo 0.62.0" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2019/11/07/zkp-learning-resources/" />
@@ -53,7 +53,7 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.0995afa14b62cd93e93cfc066b646c4c17a3eddca0e9d52a1d9dcf5d90aaacd3.css" integrity="sha256-CZWvoUtizZPpPPwGa2RsTBej7dyg6dUqHZ3PXZCqrNM=" media="screen" crossorigin="anonymous">
 
 
 
@@ -65,21 +65,19 @@
 <meta property="og:description" content="本文收集了关于零知识证明的一些学习资料（包括科普文章、论文、开源仓库及相关学习网站等），并对这些资源进行了整理分析，希望能对大家有所帮助。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sec-bit.github.io/blog/2019/11/07/zkp-learning-resources/" />
-<meta property="article:published_time" content="2019-11-07T08:00:00&#43;08:00"/>
-<meta property="article:modified_time" content="2019-11-09T14:50:26&#43;08:00"/><meta property="og:site_name" content="SECBIT Blog" />
-
+<meta property="og:image" content="https://sec-bit.github.io/blog/2019/11/07/zkp-learning-resources/cover.jpeg"/>
+<meta property="article:published_time" content="2019-11-07T08:00:00+08:00" />
+<meta property="article:modified_time" content="2019-11-09T14:50:26+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="零知识证明学习资源汇总">
 <meta itemprop="description" content="本文收集了关于零知识证明的一些学习资料（包括科普文章、论文、开源仓库及相关学习网站等），并对这些资源进行了整理分析，希望能对大家有所帮助。">
-
-
 <meta itemprop="datePublished" content="2019-11-07T08:00:00&#43;08:00" />
 <meta itemprop="dateModified" content="2019-11-09T14:50:26&#43;08:00" />
-<meta itemprop="wordCount" content="12941">
+<meta itemprop="wordCount" content="12940">
+<meta itemprop="image" content="https://sec-bit.github.io/blog/2019/11/07/zkp-learning-resources/cover.jpeg">
 
 
 
-<meta itemprop="keywords" content="Zero Knowledge Proof,tutorials," />
-<meta name="twitter:card" content="summary_large_image"/>
+<meta itemprop="keywords" content="Zero Knowledge Proof,tutorials," /><meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://sec-bit.github.io/blog/2019/11/07/zkp-learning-resources/cover.jpeg"/>
 <meta name="twitter:title" content="零知识证明学习资源汇总"/>
 <meta name="twitter:description" content="本文收集了关于零知识证明的一些学习资料（包括科普文章、论文、开源仓库及相关学习网站等），并对这些资源进行了整理分析，希望能对大家有所帮助。"/>
@@ -426,7 +424,7 @@ if (!doNotTrack) {
             <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
             
           </div>
-        <span class="more-meta"> 约 12941 字 </span>
+        <span class="more-meta"> 约 12940 字 </span>
           <span class="more-meta"> 预计阅读 26 分钟 </span>
 
         
@@ -443,265 +441,179 @@ if (!doNotTrack) {
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#1-故事中的零知识证明">1. 故事中的零知识证明</a></li>
-<li><a href="#2-深入理解零知识证明">2. 深入理解零知识证明</a></li>
-<li><a href="#3-零知识证明的发展">3. 零知识证明的发展</a></li>
-<li><a href="#4-zk-snarks-原理">4. zk-SNARKs 原理</a></li>
-<li><a href="#5-零知识证明协议">5. 零知识证明协议</a></li>
-<li><a href="#6-零知识证明在区块链领域的应用">6.  零知识证明在区块链领域的应用</a></li>
-<li><a href="#7-零知识证明相关的技术和漏洞分析文章">7. 零知识证明相关的技术和漏洞分析文章</a></li>
-<li><a href="#8-零知识证明开源仓库及介绍">8. 零知识证明开源仓库及介绍</a></li>
-<li><a href="#9-零知识证明相关论文">9. 零知识证明相关论文</a></li>
-<li><a href="#10-零知识证明学习资料推荐网站">10. 零知识证明学习资料推荐网站</a></li>
-<li><a href="#参考文献">参考文献</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#1-">1. 故事中的零知识证明</a></li>
+    <li><a href="#2-">2. 深入理解零知识证明</a></li>
+    <li><a href="#3-">3. 零知识证明的发展</a></li>
+    <li><a href="#4-zk-snarks-">4. zk-SNARKs 原理</a></li>
+    <li><a href="#5-">5. 零知识证明协议</a></li>
+    <li><a href="#6--">6.  零知识证明在区块链领域的应用</a></li>
+    <li><a href="#7-">7. 零知识证明相关的技术和漏洞分析文章</a></li>
+    <li><a href="#8-">8. 零知识证明开源仓库及介绍</a></li>
+    <li><a href="#9-">9. 零知识证明相关论文</a></li>
+    <li><a href="#10-">10. 零知识证明学习资料推荐网站</a></li>
+    <li><a href="#heading">参考文献</a></li>
+  </ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      
-
-<p>零知识证明技术是现代密码学三大基础之一，由 S.Goldwasser、S.Micali 及 C.Rackoff 在 20 世纪 80 年代初提出。早期的零知识证明由于其效率和可用性等限制，未得到很好的利用，仅停留在理论层面。直到近年来，零知识证明的理论研究才开始不断突破，同时区块链也为零知识证明创造了大展拳脚的机会，因而走进大众视野。</p>
-
+      <p>零知识证明技术是现代密码学三大基础之一，由 S.Goldwasser、S.Micali 及 C.Rackoff 在 20 世纪 80 年代初提出。早期的零知识证明由于其效率和可用性等限制，未得到很好的利用，仅停留在理论层面。直到近年来，零知识证明的理论研究才开始不断突破，同时区块链也为零知识证明创造了大展拳脚的机会，因而走进大众视野。</p>
 <p>零知识证明这项“黑科技”随着它的热度逐渐增加，相关的学习资源也慢慢丰富起来了。但是由于，一方面零知识证明背后的原理颇为复杂，且内容繁多；另一方面，针对零知识证明的学习资源质量参差不齐，尚未形成系统。因此对绝大多数读者来说，学习零知识证明的难度依然很大。</p>
-
 <p>本文收集了关于零知识证明的一些学习资料（包括科普文章，论文，开源仓库及相关学习网站等），并对这些资源进行了整理分析，希望能对大家有所帮助。</p>
-
 <p><em>由于整理时间有限和笔者自身知识的局限性，文章存在不足之处，欢迎纠正、补充和探讨。</em></p>
-
-<h2 id="1-故事中的零知识证明">1. 故事中的零知识证明</h2>
-
+<h2 id="1-">1. 故事中的零知识证明</h2>
 <p>初次接触零知识证明的小伙伴一定会问，究竟什么是零知识证明呢？它到底在做什么？</p>
-
 <p>推荐几篇适合小白的文章：</p>
-
 <ul>
-<li><strong>「推荐文章一」<a href="https://medium.com/qed-it/the-incredible-machine-4d1270d7363a">一个数独引发的惨案：零知识证明（Zero-Knowledge Proof）</a></strong></li>
-</ul>
-
+<li>
+<p><strong>「推荐文章一」<a href="https://medium.com/qed-it/the-incredible-machine-4d1270d7363a">一个数独引发的惨案：零知识证明（Zero-Knowledge Proof）</a></strong></p>
 <p>推荐值：❤️❤️❤️❤️❤️</p>
-
 <p>难度值：⭐️</p>
-
 <p>这篇文章的作者是著名的 Ghost 和 Spectre 这两个协议的创始团队的领队 Aviv Zohar。文章非常接地气且通俗易懂，通过三个好朋友一起玩数独游戏的故事介绍了什么是零知识证明。</p>
-
-<p>原文链接：<a href="https://medium.com/qed-it/the-incredible-machine-4d1270d7363a">https://medium.com/qed-it/the-incredible-machine-4d1270d7363a</a></p>
-
-<p>中文翻译：<a href="https://zhuanlan.zhihu.com/p/34072069">https://zhuanlan.zhihu.com/p/34072069</a></p>
-
+<p>原文链接：https://medium.com/qed-it/the-incredible-machine-4d1270d7363a</p>
+<p>中文翻译：https://zhuanlan.zhihu.com/p/34072069</p>
 <p>另外这篇文章中引用了两篇介绍零知识证明的论文，也值得看一看。</p>
-
-<ul>
-<li><strong>「推荐文章二」<a href="http://pages.cs.wisc.edu/~mkowalcz/628.pdf">How to explain zero-knowledge protocols to your children</a></strong></li>
-</ul>
-
+</li>
+<li>
+<p><strong>「推荐文章二」<a href="http://pages.cs.wisc.edu/~mkowalcz/628.pdf">How to explain zero-knowledge protocols to your children</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️</p>
-
 <p>这篇来自上个世纪的文章，正如它的标题一样，作者以给孩子讲故事的口吻，讲了一个阿里巴巴与四十大盗的故事，这个故事后来也成为了介绍零知识证明的经典故事。以故事的形式讲述零知识证明使得这篇文章理解起来也很简单。</p>
-
-<p>原文链接：<a href="http://pages.cs.wisc.edu/~mkowalcz/628.pdf">http://pages.cs.wisc.edu/~mkowalcz/628.pdf</a></p>
-
-<ul>
-<li><strong>「推荐文章三」<a href="http://www.wisdom.weizmann.ac.il/~naor/PAPERS/sudoku.pdf">Cryptographic and Physical Zero-Knowledge Proof Systems for Solutions of Sudoku Puzzles</a></strong></li>
-</ul>
-
+<p>原文链接：http://pages.cs.wisc.edu/~mkowalcz/628.pdf</p>
+</li>
+<li>
+<p><strong>「推荐文章三」<a href="http://www.wisdom.weizmann.ac.il/~naor/PAPERS/sudoku.pdf">Cryptographic and Physical Zero-Knowledge Proof Systems for Solutions of Sudoku Puzzles</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>如何在不泄漏任何信息的前提下向别人证明你有一个数独问题的答案呢？同样这个问题也是介绍零知识证明的经典案例。论文中提出了使用一个零知识证明协议解决这个问题的方案，这篇论文相比较于前两篇文章，理论性更强一些，篇幅更长，协议的介绍更为详细，但总体来说还算比较好理解。</p>
-
-<p>原文链接：<a href="http://www.wisdom.weizmann.ac.il/~naor/PAPERS/sudoku.pdf">http://www.wisdom.weizmann.ac.il/~naor/PAPERS/sudoku.pdf</a></p>
-
-<ul>
-<li><strong>「推荐文章四」<a href="https://medium.com/hackernoon/zero-knowledge-proofs-a-tale-of-two-friends-d7a0ffac3185">Zero knowledge proofs: a tale of two friends</a></strong></li>
-</ul>
-
+<p>原文链接：http://www.wisdom.weizmann.ac.il/~naor/PAPERS/sudoku.pdf</p>
+</li>
+<li>
+<p><strong>「推荐文章四」<a href="https://medium.com/hackernoon/zero-knowledge-proofs-a-tale-of-two-friends-d7a0ffac3185">Zero knowledge proofs: a tale of two friends</a></strong></p>
 <p>推荐值：❤️❤️</p>
-
 <p>难度值：⭐️⭐️</p>
-
 <p>与前面几篇文章类似，这篇文章也是通过讲故事的形式来向读者介绍零知识证明的。文中 Prover 要向 Verifier 证明其知道魔法的解法。这篇文章篇幅较短，内容理解起来难度较小。</p>
-
-<p>原文链接：<a href="https://medium.com/hackernoon/zero-knowledge-proofs-a-tale-of-two-friends-d7a0ffac3185">https://medium.com/hackernoon/zero-knowledge-proofs-a-tale-of-two-friends-d7a0ffac3185</a></p>
-
-<ul>
-<li><strong>「推荐文章五」<a href="https://medium.com/hackernoon/eli5-zero-knowledge-proof-78a276db9eff">Explain Like I’m 5: Zero Knowledge Proof (Halloween Edition)</a></strong></li>
-</ul>
-
+<p>原文链接：https://medium.com/hackernoon/zero-knowledge-proofs-a-tale-of-two-friends-d7a0ffac3185</p>
+</li>
+<li>
+<p><strong>「推荐文章五」<a href="https://medium.com/hackernoon/eli5-zero-knowledge-proof-78a276db9eff">Explain Like I’m 5: Zero Knowledge Proof (Halloween Edition)</a></strong></p>
 <p>推荐值：❤️❤️</p>
-
 <p>难度值：⭐️⭐️</p>
-
 <p>这同样是一篇讲故事的文章，哈哈~</p>
-
 <p>这篇文章讲述了一个糖果和百万富翁的故事（Candy bars and millionaires），文章同样篇幅较短，内容理解起来难度较小。</p>
-
-<p>原文链接：<a href="https://medium.com/hackernoon/eli5-zero-knowledge-proof-78a276db9eff">https://medium.com/hackernoon/eli5-zero-knowledge-proof-78a276db9eff</a></p>
-
+<p>原文链接：https://medium.com/hackernoon/eli5-zero-knowledge-proof-78a276db9eff</p>
+</li>
+</ul>
 <p>兴许是因为如何解释零知识证明的问题并不简单，所以绝大部分入门级的科普文章都是从讲故事开始的。</p>
-
-<h2 id="2-深入理解零知识证明">2. 深入理解零知识证明</h2>
-
+<h2 id="2-">2. 深入理解零知识证明</h2>
 <p>零知识证明技术涉及的知识点繁多，性质也各不相同。了解了什么是零知识证明以后，就需要对零知识证明更深刻的理解，推荐以下几篇零知识证明系列科普文。</p>
-
 <ul>
-<li><strong>「推荐文章六」零知识证明: 抛砖引玉</strong></li>
-</ul>
-
+<li>
+<p><strong>「推荐文章六」零知识证明: 抛砖引玉</strong></p>
 <p>推荐值：❤️❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>作者是 Zerocash 协议的创建者之一，密码学大神 Matthew Green[1]。这两篇文章几乎涵盖了学习零知识证明原理所有的基本概念，文章思路很清晰。</p>
-
 <ul>
-<li><p><a href="https://ethfans.org/posts/zero-knowledge-proofs-illustrated-primerhttps://blog.cryptographyengineering.com/2014/11/27/zero-knowledge-proofs-illustrated-primer/">零知识证明: 抛砖引玉</a></p>
-
+<li>
+<p><a href="https://ethfans.org/posts/zero-knowledge-proofs-illustrated-primerhttps://blog.cryptographyengineering.com/2014/11/27/zero-knowledge-proofs-illustrated-primer/">零知识证明: 抛砖引玉</a></p>
 <p>第一篇文章主要从零知识证明的起源开始讲起，然后同样借助了地图三染色和 “时光机”来对零知识证明进行介绍。</p>
-
-<p>原文链接：<a href="https://blog.cryptographyengineering.com/2014/11/27/zero-knowledge-proofs-illustrated-primer/">https://blog.cryptographyengineering.com/2014/11/27/zero-knowledge-proofs-illustrated-primer/</a></p>
-
-<p>中文翻译版本：<a href="https://ethfans.org/posts/zero-knowledge-proofs-illustrated-primer">https://ethfans.org/posts/zero-knowledge-proofs-illustrated-primer</a></p></li>
-
-<li><p><a href="https://blog.cryptographyengineering.com/2017/01/21/zero-knowledge-proofs-an-illustrated-primer-part-2/">零知识证明：抛砖引玉，Part-2</a></p>
-
+<p>原文链接：https://blog.cryptographyengineering.com/2014/11/27/zero-knowledge-proofs-illustrated-primer/</p>
+<p>中文翻译版本：https://ethfans.org/posts/zero-knowledge-proofs-illustrated-primer</p>
+</li>
+<li>
+<p><a href="https://blog.cryptographyengineering.com/2017/01/21/zero-knowledge-proofs-an-illustrated-primer-part-2/">零知识证明：抛砖引玉，Part-2</a></p>
 <p>这篇文章在第一篇的基础上，进一步对零知识证明的三个性质：可靠性，完整性和零知识，展开介绍。另外还结合 Schnorr 协议介绍了交互式和非交互式的概念。</p>
-
-<p>原文链接：<a href="https://blog.cryptographyengineering.com/2017/01/21/zero-knowledge-proofs-an-illustrated-primer-part-2/">https://blog.cryptographyengineering.com/2017/01/21/zero-knowledge-proofs-an-illustrated-primer-part-2/</a></p>
-
-<p>中文翻译版本：<a href="https://ethfans.org/posts/zero-knowledge-proofs-an-illustrated-primer-part-2">https://ethfans.org/posts/zero-knowledge-proofs-an-illustrated-primer-part-2</a></p></li>
-
-<li><p><strong>「推荐文章七」安比实验室零知识证明介绍系列文章</strong></p></li>
+<p>原文链接：https://blog.cryptographyengineering.com/2017/01/21/zero-knowledge-proofs-an-illustrated-primer-part-2/</p>
+<p>中文翻译版本：https://ethfans.org/posts/zero-knowledge-proofs-an-illustrated-primer-part-2</p>
+</li>
 </ul>
-
+</li>
+<li>
+<p><strong>「推荐文章七」安比实验室零知识证明介绍系列文章</strong></p>
 <p>推荐值：❤️❤️❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>这个系列的作者是安比实验室创始人郭宇，文章与以往的零知识证明科普文章的不同之处就是它没有单独去讲解零知识的基本原理。而且结合更多的概念和原理，更透彻得将零知识证明技术涉及得诸多原理逐一进行讲解，文章专业性较强，还包含了作者大量的思考，但理解起来也较为直观易懂，非常适合想要深入理解零知识证明的小伙伴。</p>
-
 <p>另外这个系列的文章还在持续更新中。</p>
-
 <ul>
-<li><p><a href="https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-and-proof/">探索零知识证明系列一：初识「零知识」与「证明」</a></p>
-
+<li>
+<p><a href="https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-and-proof/">探索零知识证明系列一：初识「零知识」与「证明」</a></p>
 <p>作为系列的第一篇，这篇文章首先介绍了「证明」的发展历程和「零知识」的作用，并举了一个地图三染色的例子，然后又对「信息」、「知识」和可满足电路的概念展开了介绍。</p>
-
-<p>原文链接：<a href="https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-and-proof/">https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-and-proof/</a></p></li>
-
-<li><p><a href="https://sec-bit.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/">探索零知识证明系列二：从「模拟」理解零知识证明：平行宇宙与时光倒流</a></p>
-
+<p>原文链接：https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-and-proof/</p>
+</li>
+<li>
+<p><a href="https://sec-bit.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/">探索零知识证明系列二：从「模拟」理解零知识证明：平行宇宙与时光倒流</a></p>
 <p>这篇文章介绍了零知识证明中的一个非常重要的概念——模拟（Simulator），「模拟」可以说是安全协议中核心的核心。文章中借助 “平行世界” 的假设去理解零知识读起来也非常有意思。</p>
-
-<p>原文链接：<a href="https://sec-bit.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/">https://sec-bit.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/</a></p></li>
-
-<li><p><a href="https://sec-bit.github.io/blog/2019/08/28/extractor-and-proof-of-knowledge/">探索零知识证明系列三：读心术：从零知识证明中提取「知识」</a></p>
-
+<p>原文链接：https://sec-bit.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/</p>
+</li>
+<li>
+<p><a href="https://sec-bit.github.io/blog/2019/08/28/extractor-and-proof-of-knowledge/">探索零知识证明系列三：读心术：从零知识证明中提取「知识」</a></p>
 <p>零知识证明有三个重要的性质：可靠性，完整性和零知识。这篇文章探讨了可靠性。文章解释了如何借助「抽取器」和时间倒流的超能力把 Alice 的「知识」完整地「抽取」出来，并可给出了一个与之相关攻击实例 —— ECDSA 签名攻击。</p>
-
-<p>原文链接：<a href="https://sec-bit.github.io/blog/2019/08/28/extractor-and-proof-of-knowledge/">https://sec-bit.github.io/blog/2019/08/28/extractor-and-proof-of-knowledge/</a></p></li>
-
-<li><p><a href="https://sec-bit.github.io/blog/2019/11/01/from-interactive-zkp-to-non-interactive-zkp/">探索零知识证明系列四：亚瑟王的「随机」挑战：从交互到非交互式零知识证明</a></p>
-
+<p>原文链接：https://sec-bit.github.io/blog/2019/08/28/extractor-and-proof-of-knowledge/</p>
+</li>
+<li>
+<p><a href="https://sec-bit.github.io/blog/2019/11/01/from-interactive-zkp-to-non-interactive-zkp/">探索零知识证明系列四：亚瑟王的「随机」挑战：从交互到非交互式零知识证明</a></p>
 <p>这篇文章主要在讲零知识证明的信任根基——随机挑战。文章对零知识证明协议在两种不同的形式（交互式和非交互式）下随机挑战的方式进行了介绍。另外文章还对交互和非交互形式展开了介绍。</p>
-
-<p>原文链接：<a href="https://sec-bit.github.io/blog/2019/11/01/from-interactive-zkp-to-non-interactive-zkp/">https://sec-bit.github.io/blog/2019/11/01/from-interactive-zkp-to-non-interactive-zkp/</a></p></li>
-
-<li><p><strong>「推荐文章八」<a href="https://zhuanlan.zhihu.com/p/29491567">零知识证明：一个略微严肃的科普</a></strong></p></li>
+<p>原文链接：https://sec-bit.github.io/blog/2019/11/01/from-interactive-zkp-to-non-interactive-zkp/</p>
+</li>
 </ul>
-
+</li>
+<li>
+<p><strong>「推荐文章八」<a href="https://zhuanlan.zhihu.com/p/29491567">零知识证明：一个略微严肃的科普</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️⭐️</p>
-
 <p>邓老师这篇“略微严肃”的科普，主要涉及两部分：1. 交互式证明的巨大威力；2. 零知识证明的定义和那些广泛流传的错误的例子</p>
-
-<p>原文链接：<a href="https://zhuanlan.zhihu.com/p/29491567">https://zhuanlan.zhihu.com/p/29491567</a></p>
-
-<ul>
-<li><strong>「推荐文章九」<a href="https://blog.aventus.io/zero-knowledge-proofs-a-laymans-introduction-7020b93beeda">Zero-Knowledge Proofs: A Layman’s Introduction</a></strong></li>
-</ul>
-
+<p>原文链接：https://zhuanlan.zhihu.com/p/29491567</p>
+</li>
+<li>
+<p><strong>「推荐文章九」<a href="https://blog.aventus.io/zero-knowledge-proofs-a-laymans-introduction-7020b93beeda">Zero-Knowledge Proofs: A Layman’s Introduction</a></strong></p>
 <p>推荐值：❤️❤️</p>
-
 <p>难度值：⭐️⭐️</p>
-
 <p>这篇文章首先介绍了零知识证明协议中的三个参与者（Creator，Prover，Verifier）以及 Proofs 和 Verification的概念，并对 zkSNARK （一类零知识证明协议）和椭圆曲线的相关资料进行了介绍。</p>
-
-<p>原文链接：<a href="https://blog.aventus.io/zero-knowledge-proofs-a-laymans-introduction-7020b93beeda">https://blog.aventus.io/zero-knowledge-proofs-a-laymans-introduction-7020b93beeda</a></p>
-
-<ul>
-<li><strong>「推荐文章十」<a href="https://zhuanlan.zhihu.com/p/33189921">白话零知识证明（一）</a></strong></li>
-</ul>
-
+<p>原文链接：https://blog.aventus.io/zero-knowledge-proofs-a-laymans-introduction-7020b93beeda</p>
+</li>
+<li>
+<p><strong>「推荐文章十」<a href="https://zhuanlan.zhihu.com/p/33189921">白话零知识证明（一）</a></strong></p>
 <p>推荐值：❤️❤️</p>
-
 <p>难度值：⭐️⭐️</p>
-
 <p>这篇来自秘猿科技的文章通过阿里巴巴的故事引出了零知识证明的一些概念，并对其进行了介绍。</p>
-
-<p>原文链接：<a href="https://zhuanlan.zhihu.com/p/33189921">https://zhuanlan.zhihu.com/p/33189921</a></p>
-
+<p>原文链接：https://zhuanlan.zhihu.com/p/33189921</p>
+</li>
+</ul>
 <p>零知识证明涉及很多很有意思的思想和原理，都很值得探讨。在此不得不感叹于数学与密码学的精妙之处，也不得不钦佩密码学家们的厉害。</p>
-
-<h2 id="3-零知识证明的发展">3. 零知识证明的发展</h2>
-
+<h2 id="3-">3. 零知识证明的发展</h2>
 <p>零知识证明的研究今年来一直有新的进展，密码学家们提出了各种不同的协议，推荐两篇文章介绍零知识证明研究的发展过程。</p>
-
 <ul>
-<li><strong>「推荐文章十一」<a href="https://zhuanlan.zhihu.com/p/31651393">区块链学习笔记 (1)：零知识证明的江湖</a></strong></li>
-</ul>
-
+<li>
+<p><strong>「推荐文章十一」<a href="https://zhuanlan.zhihu.com/p/31651393">区块链学习笔记 (1)：零知识证明的江湖</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️</p>
-
 <p>这篇文章讲了自 1895 年提出以来，零知识证明理论研究的发展过程，以及 zk-SNARKs 与零知识证明技术结合起来的发展过程。推荐给想了解零知识理论研究的发展过程的小伙伴。</p>
-
-<p>原文链接：<a href="https://zhuanlan.zhihu.com/p/31651393">https://zhuanlan.zhihu.com/p/31651393</a></p>
-
-<ul>
-<li><strong>「推荐文章十二」<a href="https://www.benthamsgaze.org/2019/05/22/efficient-cryptographic-arguments-and-proofs-or-how-i-became-a-fractional-monetary-unit/">Efficient Cryptographic Arguments and Proofs – Or How I Became a Fractional Monetary Unit</a></strong></li>
-</ul>
-
+<p>原文链接：https://zhuanlan.zhihu.com/p/31651393</p>
+</li>
+<li>
+<p><strong>「推荐文章十二」<a href="https://www.benthamsgaze.org/2019/05/22/efficient-cryptographic-arguments-and-proofs-or-how-i-became-a-fractional-monetary-unit/">Efficient Cryptographic Arguments and Proofs – Or How I Became a Fractional Monetary Unit</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️</p>
-
 <p>这篇文章来自UCL信息安全研究人员的博客 <a href="https://www.benthamsgaze.org/about/">Bentham’s Gaze</a>[2],文章介绍了自零知识证明提出以来，这群研究人员在理论研究上的研究历程及成果，包括知名的 bulletProof 和 zk-STARK 等。读完这篇文章相信会对大家深入理解零知识证明的诸多协议有所帮助。</p>
-
-<p>原文链接：<a href="https://www.benthamsgaze.org/2019/05/22/efficient-cryptographic-arguments-and-proofs-or-how-i-became-a-fractional-monetary-unit/">https://www.benthamsgaze.org/2019/05/22/efficient-cryptographic-arguments-and-proofs-or-how-i-became-a-fractional-monetary-unit/</a></p>
-
-<p>零知识证明迄今为止发展了三十多年，早期一直停留在理论层面，直到近十年才逐渐取得突破。随着越来越多研究人员的进场，相信这个领域未来还会有更多令人惊喜的成果。</p>
-
-<h2 id="4-zk-snarks-原理">4. zk-SNARKs 原理</h2>
-
-<p>作为零知识证明领域最知名的一类协议，zk-SNARKs 的理论研究和应用也最为广泛。推荐一些介绍 zk-SNARKs 的资料。</p>
-
-<ul>
-<li><strong>「推荐文章十三」V 神的 zk-SNARKs 科普文章</strong></li>
+<p>原文链接：https://www.benthamsgaze.org/2019/05/22/efficient-cryptographic-arguments-and-proofs-or-how-i-became-a-fractional-monetary-unit/</p>
+</li>
 </ul>
-
-<p>推荐值：❤️❤️❤️❤️</p>
-
-<p>难度值：⭐️⭐️⭐️⭐️</p>
-
-<p>V 神的这几篇文章应该算得上是流传最为广泛的 zk-SNARK 科普文了。不用多说，推荐阅读。</p>
-
+<p>零知识证明迄今为止发展了三十多年，早期一直停留在理论层面，直到近十年才逐渐取得突破。随着越来越多研究人员的进场，相信这个领域未来还会有更多令人惊喜的成果。</p>
+<h2 id="4-zk-snarks-">4. zk-SNARKs 原理</h2>
+<p>作为零知识证明领域最知名的一类协议，zk-SNARKs 的理论研究和应用也最为广泛。推荐一些介绍 zk-SNARKs 的资料。</p>
 <ul>
-<li><p><a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">Quadratic Arithmetic Programs: from Zero to Hero</a></p>
-
+<li>
+<p><strong>「推荐文章十三」V 神的 zk-SNARKs 科普文章</strong></p>
+<p>推荐值：❤️❤️❤️❤️</p>
+<p>难度值：⭐️⭐️⭐️⭐️</p>
+<p>V 神的这几篇文章应该算得上是流传最为广泛的 zk-SNARK 科普文了。不用多说，推荐阅读。</p>
+<ul>
+<li>
+<p><a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">Quadratic Arithmetic Programs: from Zero to Hero</a></p>
 <p>这篇文章详细介绍了 zk-SNARKs 的实现过程。文中将 zk-SNARKs 的实现分为以下几个步骤：</p>
-
 <ol>
 <li>computational problem —&gt; 电路</li>
 <li>电路 —&gt; R1CS</li>
@@ -710,34 +622,28 @@ if (!doNotTrack) {
 <li>Linear PCP —&gt; Linear Interactive Proof</li>
 <li>Linear Interactive Proof —&gt; zkSNARK</li>
 </ol>
-
-<p>原文链接：<a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649</a></p></li>
-
-<li><p><a href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">Exploring Elliptic Curve Pairings</a></p>
-
+<p>原文链接：https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649</p>
+</li>
+<li>
+<p><a href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">Exploring Elliptic Curve Pairings</a></p>
 <p>这篇文章介绍了椭圆曲线配对。</p>
-
-<p>原文链接：<a href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627</a></p></li>
-
-<li><p><a href="https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6">Zk-SNARKs: Under the Hood</a></p>
-
+<p>原文链接：https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627</p>
+</li>
+<li>
+<p><a href="https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6">Zk-SNARKs: Under the Hood</a></p>
 <p>这篇文章主要介绍了匹诺曹协议。</p>
-
-<p>原文链接：<a href="https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6">https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6</a></p></li>
-
-<li><p><strong>「推荐文章十四」<a href="https://z.cash/technology/zksnarks/">zcash 官方科普文</a></strong></p></li>
+<p>原文链接：https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6</p>
+</li>
 </ul>
-
+</li>
+<li>
+<p><strong>「推荐文章十四」<a href="https://z.cash/technology/zksnarks/">zcash 官方科普文</a></strong></p>
 <p>推荐值：❤️❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️⭐️</p>
-
 <p>这个系列的文章来自 zCash 官方博客。首先介绍了零知识的基本概念以及其应用到 zcash 中的大致思路。随后 7 篇文章分别对 7 个关键点进行了详细介绍（同态隐藏，多项式盲验证，KCA，完整的多项式盲验证，计算到多项式的转换，匹诺曹协议以及椭圆曲线配对），推荐给想深入了解 zk-SNARKs 实现原理的小伙伴。</p>
-
 <p>原文链接：</p>
-
 <ol>
-<li>What are zk-SNARKs?：<a href="https://z.cash/technology/zksnarks/">https://z.cash/technology/zksnarks/</a></li>
+<li>What are zk-SNARKs?：https://z.cash/technology/zksnarks/</li>
 <li>Explaining SNARKs Part I: Homomorphic Hidings <a href="https://electriccoin.co/blog/snark-explain/">https://electriccoin.co/blog/snark-explain/</a></li>
 <li>Explaining SNARKs Part II: Blind Evaluation of Polynomials <a href="https://electriccoin.co/blog/snark-explain2/">https://electriccoin.co/blog/snark-explain2/</a></li>
 <li>Explaining SNARKs Part III: The Knowledge of Coefficient Test and Assumption <a href="https://electriccoin.co/blog/snark-explain3/">https://electriccoin.co/blog/snark-explain3/</a></li>
@@ -745,543 +651,366 @@ if (!doNotTrack) {
 <li>Explaining SNARKs Part V: From Computations to Polynomials <a href="https://electriccoin.co/blog/snark-explain5/">https://electriccoin.co/blog/snark-explain5/</a></li>
 <li>Explaining SNARKs Part VI: The Pinocchio Protocol <a href="https://electriccoin.co/blog/snark-explain6/">https://electriccoin.co/blog/snark-explain6/</a></li>
 <li>Explaining SNARKs Part VII: Pairings of Elliptic Curves](<a href="https://electriccoin.co/blog/snark-explain7/">https://electriccoin.co/blog/snark-explain7/</a></li>
-<li>中文翻译版本链接：<a href="https://www.jianshu.com/p/b6a14c472cc1、https://www.jianshu.com/p/92f54fc08d58">https://www.jianshu.com/p/b6a14c472cc1、https://www.jianshu.com/p/92f54fc08d58</a></li>
+<li>中文翻译版本链接：https://www.jianshu.com/p/b6a14c472cc1、https://www.jianshu.com/p/92f54fc08d58</li>
 </ol>
-
-<ul>
-<li><strong>「推荐文章十五」<a href="https://arxiv.org/pdf/1906.07221.pdf">Why and How zk-SNARK Works</a></strong></li>
-</ul>
-
+</li>
+<li>
+<p><strong>「推荐文章十五」<a href="https://arxiv.org/pdf/1906.07221.pdf">Why and How zk-SNARK Works</a></strong></p>
 <p>推荐值：❤️❤️❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>作者将其学习 zk-SNARK 的经验总结成了一份 PDF 文档并分成 8 篇文章发布到了 Medium 上。与大部分的 zk-SNARK 科普文不同，这个系列的文章没有直接开始讲 zk-SNARK，而是从最基本的数学原理讲起，讲解得非常细致，特别适合数学和密码学基础相对薄弱的小伙伴。</p>
-
 <p>原文链接：</p>
-
 <ol>
-<li>PDF 完整版：<a href="https://arxiv.org/pdf/1906.07221.pdf">https://arxiv.org/pdf/1906.07221.pdf</a></li>
-<li>Why and How zk-SNARK Works 1: Introduction &amp; the Medium of a Proof：<a href="https://medium.com/@imolfar/why-and-how-zk-snark-works-1-introduction-the-medium-of-a-proof-d946e931160">https://medium.com/@imolfar/why-and-how-zk-snark-works-1-introduction-the-medium-of-a-proof-d946e931160</a></li>
-<li>Why and How zk-SNARK Works 2: Proving Knowledge of a Polynomial：<a href="https://medium.com/@imolfar/why-and-how-zk-snark-works-2-proving-knowledge-of-a-polynomial-f817760e2805">https://medium.com/@imolfar/why-and-how-zk-snark-works-2-proving-knowledge-of-a-polynomial-f817760e2805</a></li>
-<li>Why and How zk-SNARK Works 3: Non-interactivity &amp; Distributed Setup：<a href="https://medium.com/@imolfar/why-and-how-zk-snark-works-3-non-interactivity-distributed-setup-c0310c0e5d1c">https://medium.com/@imolfar/why-and-how-zk-snark-works-3-non-interactivity-distributed-setup-c0310c0e5d1c</a></li>
-<li>Why and How zk-SNARK Works 4: General-Purpose Computation：<a href="https://medium.com/@imolfar/why-and-how-zk-snark-works-4-general-purpose-computation-dcdc8081ee42">https://medium.com/@imolfar/why-and-how-zk-snark-works-4-general-purpose-computation-dcdc8081ee42</a></li>
-<li>Why and How zk-SNARK Works 5: Variable Polynomials：<a href="https://medium.com/@imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06859e30">https://medium.com/@imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06859e30</a></li>
-<li>Why and How zk-SNARK Works 6: Verifiable Computation Protocol：<a href="https://medium.com/@imolfar/why-and-how-zk-snark-works-6-verifiable-computation-protocol-1aa19f95a5cc">https://medium.com/@imolfar/why-and-how-zk-snark-works-6-verifiable-computation-protocol-1aa19f95a5cc</a></li>
-<li>Why and How zk-SNARK Works 7: Constraints and Public Inputs：<a href="https://medium.com/@imolfar/why-and-how-zk-snark-works-7-constraints-and-public-inputs-e95f6596dd1c">https://medium.com/@imolfar/why-and-how-zk-snark-works-7-constraints-and-public-inputs-e95f6596dd1c</a></li>
-<li>Why and How zk-SNARK Works 8: Zero-Knowledge Computation：<a href="https://medium.com/@imolfar/why-and-how-zk-snark-works-8-zero-knowledge-computation-f120339c2c55">https://medium.com/@imolfar/why-and-how-zk-snark-works-8-zero-knowledge-computation-f120339c2c55</a></li>
+<li>PDF 完整版：https://arxiv.org/pdf/1906.07221.pdf</li>
+<li>Why and How zk-SNARK Works 1: Introduction &amp; the Medium of a Proof：https://medium.com/@imolfar/why-and-how-zk-snark-works-1-introduction-the-medium-of-a-proof-d946e931160</li>
+<li>Why and How zk-SNARK Works 2: Proving Knowledge of a Polynomial：https://medium.com/@imolfar/why-and-how-zk-snark-works-2-proving-knowledge-of-a-polynomial-f817760e2805</li>
+<li>Why and How zk-SNARK Works 3: Non-interactivity &amp; Distributed Setup：https://medium.com/@imolfar/why-and-how-zk-snark-works-3-non-interactivity-distributed-setup-c0310c0e5d1c</li>
+<li>Why and How zk-SNARK Works 4: General-Purpose Computation：https://medium.com/@imolfar/why-and-how-zk-snark-works-4-general-purpose-computation-dcdc8081ee42</li>
+<li>Why and How zk-SNARK Works 5: Variable Polynomials：https://medium.com/@imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06859e30</li>
+<li>Why and How zk-SNARK Works 6: Verifiable Computation Protocol：https://medium.com/@imolfar/why-and-how-zk-snark-works-6-verifiable-computation-protocol-1aa19f95a5cc</li>
+<li>Why and How zk-SNARK Works 7: Constraints and Public Inputs：https://medium.com/@imolfar/why-and-how-zk-snark-works-7-constraints-and-public-inputs-e95f6596dd1c</li>
+<li>Why and How zk-SNARK Works 8: Zero-Knowledge Computation：https://medium.com/@imolfar/why-and-how-zk-snark-works-8-zero-knowledge-computation-f120339c2c55</li>
 </ol>
-
-<ul>
-<li><strong>「推荐文章十六」 <a href="https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell/">zkSNARKs in a nutshell</a></strong></li>
-</ul>
-
+</li>
+<li>
+<p><strong>「推荐文章十六」 <a href="https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell/">zkSNARKs in a nutshell</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>这篇文章对零知识证明做了总结，分成四个部分：</p>
-
 <ol>
 <li>编码成一个多项式问题</li>
 <li>简单随机抽样</li>
 <li>同态（Homomorphic）编码 / 加密</li>
 <li>零知识</li>
 </ol>
-
 <p>文章首先介绍了零知识证明，然后又讲解了zk-SNARKs 的实现，最后分析了将零知识证明结合到以太坊上的作用和方式。</p>
-
-<p>原文链接：<a href="https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell/">https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell/</a></p>
-
-<p>中文翻译版本：<a href="https://zhuanlan.zhihu.com/p/31780893">https://zhuanlan.zhihu.com/p/31780893</a></p>
-
-<ul>
-<li><strong>「推荐文章十七」<a href="https://medium.com/@weijiek/how-i-learned-zk-snarks-from-scratch-177a01c5514e">Zero-knowledge proofs, a board game, and leaky abstractions: how I learned zk-SNARKs from scratch</a></strong></li>
-</ul>
-
+<p>原文链接：https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell/</p>
+<p>中文翻译版本：https://zhuanlan.zhihu.com/p/31780893</p>
+</li>
+<li>
+<p><strong>「推荐文章十七」<a href="https://medium.com/@weijiek/how-i-learned-zk-snarks-from-scratch-177a01c5514e">Zero-knowledge proofs, a board game, and leaky abstractions: how I learned zk-SNARKs from scratch</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>作者坚持一个观点：学习新技能的一个很好的方法是用它建立一些东西。这篇文章就是在介绍作者是如何通过实现一个小的应用来学习 zk-SNARKs 的。文章主要介绍了作者的实现过程和他的思考，文中有很多好的经验时候大家学习。</p>
-
-<p>原文链接：<a href="https://medium.com/@weijiek/how-i-learned-zk-snarks-from-scratch-177a01c5514e">https://medium.com/@weijiek/how-i-learned-zk-snarks-from-scratch-177a01c5514e</a></p>
-
-<ul>
-<li><strong>「推荐文章十八」<a href="https://mp.weixin.qq.com/s/eU8mp81VhpV-g1x89-uZYA">零知识证明 - 从QSP到QAP</a></strong></li>
-</ul>
-
+<p>原文链接：https://medium.com/@weijiek/how-i-learned-zk-snarks-from-scratch-177a01c5514e</p>
+</li>
+<li>
+<p><strong>「推荐文章十八」<a href="https://mp.weixin.qq.com/s/eU8mp81VhpV-g1x89-uZYA">零知识证明 - 从QSP到QAP</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>这篇文章主要介绍了 QSP/QAP ，QAP 和 QSP 问题类似。QAP 问题的zkSNARK 的证明验证过程和 QSP 非常相似。对这部分感兴趣的小伙伴推荐读一读。</p>
-
-<p>原文链接：<a href="https://mp.weixin.qq.com/s/eU8mp81VhpV-g1x89-uZYA">https://mp.weixin.qq.com/s/eU8mp81VhpV-g1x89-uZYA</a></p>
-
-<p>&ldquo;零知识证明技术就像一个江湖，而 zk-SNARKs 是只是比较著名的门派。而在这个江湖中，还有很多其他的门派，他们风格各异，使用的武器也不尽相同。&rdquo;[3] zk-SNARKs 协议涉及的技术构件很多，也较为复杂，深入学习这部分确实需要下很多功夫。</p>
-
-<h2 id="5-零知识证明协议">5. 零知识证明协议</h2>
-
+<p>原文链接：https://mp.weixin.qq.com/s/eU8mp81VhpV-g1x89-uZYA</p>
+</li>
+</ul>
+<p>&ldquo;零知识证明技术就像一个江湖，而 zk-SNARKs 是只是比较著名的门派。而在这个江湖中，还有很多其他的门派，他们风格各异，使用的武器也不尽相同。&quot;[3] zk-SNARKs 协议涉及的技术构件很多，也较为复杂，深入学习这部分确实需要下很多功夫。</p>
+<h2 id="5-">5. 零知识证明协议</h2>
 <p>零知识证明协议很多，每个协议的实现也各不相同，有些协议已经应用到了实际的领域，有些还在探索中。推荐几篇介绍不错的文章。</p>
-
 <ul>
-<li><strong>「推荐文章十九」STARKs 科普</strong></li>
-</ul>
-
+<li>
+<p><strong>「推荐文章十九」STARKs 科普</strong></p>
 <p>推荐值：❤️❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️⭐️</p>
-
 <p>V 神的这个科普系列文章，非常详细得介绍了 STARKs 的实现，分成三个部分进行讲解。</p>
-
 <p>原文链接：</p>
-
 <ol>
-<li><p>STARKs, Part I: Proofs with Polynomials：<a href="https://vitalik.ca/general/2017/11/09/starks_part_1.html">https://vitalik.ca/general/2017/11/09/starks_part_1.html</a></p>
-
-<p>中文翻译版本：<a href="https://ethfans.org/posts/starks_part_1">https://ethfans.org/posts/starks_part_1</a></p></li>
-
-<li><p>STARKs, Part II: Thank Goodness It&rsquo;s FRI-day：<a href="https://vitalik.ca/general/2017/11/22/starks_part_2.html">https://vitalik.ca/general/2017/11/22/starks_part_2.html</a></p>
-
-<p>中文翻译版本：<a href="https://ethfans.org/posts/starks_part_2">https://ethfans.org/posts/starks_part_2</a></p></li>
-
-<li><p>STARKs, Part 3: Into the Weeds：<a href="https://vitalik.ca/general/2018/07/21/starks_part_3.html)">https://vitalik.ca/general/2018/07/21/starks_part_3.html)</a></p>
-
-<p>中文翻译版本：<a href="https://ethfans.org/posts/starks_part_3_1">https://ethfans.org/posts/starks_part_3_1</a></p>
-
-<p>中文翻译版本：<a href="https://ethfans.org/posts/starks_part_3_2">https://ethfans.org/posts/starks_part_3_2</a></p></li>
+<li>
+<p>STARKs, Part I: Proofs with Polynomials：https://vitalik.ca/general/2017/11/09/starks_part_1.html</p>
+<p>中文翻译版本：https://ethfans.org/posts/starks_part_1</p>
+</li>
+<li>
+<p>STARKs, Part II: Thank Goodness It's FRI-day：https://vitalik.ca/general/2017/11/22/starks_part_2.html</p>
+<p>中文翻译版本：https://ethfans.org/posts/starks_part_2</p>
+</li>
+<li>
+<p>STARKs, Part 3: Into the Weeds：https://vitalik.ca/general/2018/07/21/starks_part_3.html)</p>
+<p>中文翻译版本：https://ethfans.org/posts/starks_part_3_1</p>
+<p>中文翻译版本：https://ethfans.org/posts/starks_part_3_2</p>
+</li>
 </ol>
-
-<ul>
-<li><strong>「推荐文章二十」 <a href="https://vitalik.ca/general/2019/09/22/plonk.html">Understanding PLONK</a></strong></li>
-</ul>
-
+</li>
+<li>
+<p><strong>「推荐文章二十」 <a href="https://vitalik.ca/general/2019/09/22/plonk.html">Understanding PLONK</a></strong></p>
 <p>推荐值：❤️❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️⭐️</p>
-
 <p>这篇文章同样来自 V 神的博客，介绍了 PLONK 的工作原理。PLONK 是一种全新的零知识证明系统，支持通用或可更新的可信设置（trusted setup），作者是 Filecoin 母公司 Protocol Labs 的研究员 Ariel Gabizon 和以太坊隐私交易协议 Aztec Protocol 的两名研究人员 Zachary J. Williamson、Oana Ciobotaru。</p>
-
-<p>原文链接：<a href="https://vitalik.ca/general/2019/09/22/plonk.html">https://vitalik.ca/general/2019/09/22/plonk.html</a></p>
-
-<p>中文翻译版本：<a href="https://www.8btc.com/article/486086">https://www.8btc.com/article/486086</a></p>
-
-<ul>
-<li><strong>「推荐文章二十一」<a href="https://github.com/huyuguang/zkpblog/blob/master/groth09.md">Groth09 笔记</a></strong></li>
-</ul>
-
+<p>原文链接：https://vitalik.ca/general/2019/09/22/plonk.html</p>
+<p>中文翻译版本：https://www.8btc.com/article/486086</p>
+</li>
+<li>
+<p><strong>「推荐文章二十一」<a href="https://github.com/huyuguang/zkpblog/blob/master/groth09.md">Groth09 笔记</a></strong></p>
 <p>推荐值：❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>这篇文章作者huyuguang，文中对 Groth09 论文[4]的内容进行了总结，对大家学习 Groth09 有所帮助。</p>
-
-<p>原文链接：<a href="https://github.com/huyuguang/zkpblog/blob/master/groth09.md">https://github.com/huyuguang/zkpblog/blob/master/groth09.md</a></p>
-
-<ul>
-<li><strong>「推荐文章二十二」 零知识证明 - Groth16 算法介绍</strong></li>
-</ul>
-
+<p>原文链接：https://github.com/huyuguang/zkpblog/blob/master/groth09.md</p>
+</li>
+<li>
+<p><strong>「推荐文章二十二」 零知识证明 - Groth16 算法介绍</strong></p>
 <p>推荐值：❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>Star Li 的这两篇文章主要从工程应用理解的角度介绍了 Groth16 算法的证明和验证过程，推荐给学习 Groth16 算法的小伙伴。</p>
-
 <p>原文链接</p>
-
 <ol>
-<li>零知识证明 - Groth16 算法介绍：<a href="https://mp.weixin.qq.com/s/SguBb5vyAm2Vzht7WKgzug">https://mp.weixin.qq.com/s/SguBb5vyAm2Vzht7WKgzug</a></li>
-<li>零知识证明 - 有关 Groth16 的zk证明的理解：<a href="https://mp.weixin.qq.com/s/x1ggw3VplXAIeL87D5bUfw">https://mp.weixin.qq.com/s/x1ggw3VplXAIeL87D5bUfw</a></li>
+<li>零知识证明 - Groth16 算法介绍：https://mp.weixin.qq.com/s/SguBb5vyAm2Vzht7WKgzug</li>
+<li>零知识证明 - 有关 Groth16 的zk证明的理解：https://mp.weixin.qq.com/s/x1ggw3VplXAIeL87D5bUfw</li>
 </ol>
-
+</li>
+</ul>
 <p>对于零知识证明各个协议介绍的文章还比较有限，随着应用的增多，相信这方面的文章也会越来越多。</p>
-
-<h2 id="6-零知识证明在区块链领域的应用">6.  零知识证明在区块链领域的应用</h2>
-
+<h2 id="6--">6.  零知识证明在区块链领域的应用</h2>
 <p>零知识证明技术是随着区块链的发展逐渐走入大众视野的，目前零知识证明结合区块链的研究和应用也越来越多。</p>
-
 <ul>
-<li><strong>「推荐文章二十三」 <a href="https://www.odaily.com/post/5133827">一文读懂区块链中的零知识证明</a></strong></li>
-</ul>
-
+<li>
+<p><strong>「推荐文章二十三」 <a href="https://www.odaily.com/post/5133827">一文读懂区块链中的零知识证明</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>这篇来自BFTF技术社区联盟的文章介绍了零知识证明在 zcash 和门罗币上的应用。</p>
-
-<p>原文链接：<a href="https://www.odaily.com/post/5133827">https://www.odaily.com/post/5133827</a></p>
-
-<ul>
-<li><strong>「推荐文章二十四」<a href="https://medium.com/hackernoon/how-to-prove-that-you-know-something-without-revealing-it-zero-knowledge-proofs-zcash-ethereum-43ce35d4d1c5">How to prove that you know something, without revealing it? Zero-knowledge proofs, ZCash, Ethereum.</a></strong></li>
-</ul>
-
+<p>原文链接：https://www.odaily.com/post/5133827</p>
+</li>
+<li>
+<p><strong>「推荐文章二十四」<a href="https://medium.com/hackernoon/how-to-prove-that-you-know-something-without-revealing-it-zero-knowledge-proofs-zcash-ethereum-43ce35d4d1c5">How to prove that you know something, without revealing it? Zero-knowledge proofs, ZCash, Ethereum.</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️</p>
-
 <p>这篇文章介绍了零知识证明在 Zcash 和以太坊上的应用。</p>
-
-<p>原文链接：<a href="https://medium.com/hackernoon/how-to-prove-that-you-know-something-without-revealing-it-zero-knowledge-proofs-zcash-ethereum-43ce35d4d1c5">https://medium.com/hackernoon/how-to-prove-that-you-know-something-without-revealing-it-zero-knowledge-proofs-zcash-ethereum-43ce35d4d1c5</a></p>
-
-<ul>
-<li><strong>「推荐文章二十五」<a href="https://blog.keep.network/zero-knowledge-proofs-zcash-and-ethereum-f6d89fa7cba8">Zero-knowledge proofs, Zcash, and Ethereum</a></strong></li>
-</ul>
-
+<p>原文链接：https://medium.com/hackernoon/how-to-prove-that-you-know-something-without-revealing-it-zero-knowledge-proofs-zcash-ethereum-43ce35d4d1c5</p>
+</li>
+<li>
+<p><strong>「推荐文章二十五」<a href="https://blog.keep.network/zero-knowledge-proofs-zcash-and-ethereum-f6d89fa7cba8">Zero-knowledge proofs, Zcash, and Ethereum</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️</p>
-
 <p>这篇文章介绍了零知识证明在 Zcash 和以太坊上的应用。</p>
-
-<p>原文链接：<a href="https://blog.keep.network/zero-knowledge-proofs-zcash-and-ethereum-f6d89fa7cba8">https://blog.keep.network/zero-knowledge-proofs-zcash-and-ethereum-f6d89fa7cba8</a></p>
-
-<ul>
-<li><strong>「推荐文章二十六」<a href="https://mp.weixin.qq.com/s/9QccZtFcvGwne-NN4BBA5w">零知识证明 - zk-SNARK应用场景分析</a></strong></li>
-</ul>
-
+<p>原文链接：https://blog.keep.network/zero-knowledge-proofs-zcash-and-ethereum-f6d89fa7cba8</p>
+</li>
+<li>
+<p><strong>「推荐文章二十六」<a href="https://mp.weixin.qq.com/s/9QccZtFcvGwne-NN4BBA5w">零知识证明 - zk-SNARK应用场景分析</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️</p>
-
 <p>这篇文章介绍了零知识证明在 Zcash，Filecoin项目和 Loopring DEX 3.0 协议中的应用。</p>
-
-<p>原文链接：<a href="https://mp.weixin.qq.com/s/9QccZtFcvGwne-NN4BBA5w">https://mp.weixin.qq.com/s/9QccZtFcvGwne-NN4BBA5w</a></p>
-
-<ul>
-<li><strong>「推荐文章二十七」<a href="https://blog.cryptographyengineering.com/2013/04/11/zerocoin-making-bitcoin-anonymous/">Zerocoin: making Bitcoin anonymous</a></strong></li>
-</ul>
-
+<p>原文链接：https://mp.weixin.qq.com/s/9QccZtFcvGwne-NN4BBA5w</p>
+</li>
+<li>
+<p><strong>「推荐文章二十七」<a href="https://blog.cryptographyengineering.com/2013/04/11/zerocoin-making-bitcoin-anonymous/">Zerocoin: making Bitcoin anonymous</a></strong></p>
 <p>推荐值：❤️❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>这篇文章介绍了 Zerocoin 协议是如何利用 zk-SNARKs 在区块链上实现匿名的。</p>
-
-<p>原文链接：<a href="https://blog.cryptographyengineering.com/2013/04/11/zerocoin-making-bitcoin-anonymous/">https://blog.cryptographyengineering.com/2013/04/11/zerocoin-making-bitcoin-anonymous/</a></p>
-
-<ul>
-<li><strong>「推荐文章二十八」<a href="https://zhuanlan.zhihu.com/p/24440530">不是程序员也能看懂的ZCash零知识证明</a></strong></li>
-</ul>
-
+<p>原文链接：https://blog.cryptographyengineering.com/2013/04/11/zerocoin-making-bitcoin-anonymous/</p>
+</li>
+<li>
+<p><strong>「推荐文章二十八」<a href="https://zhuanlan.zhihu.com/p/24440530">不是程序员也能看懂的ZCash零知识证明</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>这篇文章使用比较通俗易懂的语言介绍了 zCash 如何利用零知识证明实现匿名交易的。</p>
-
-<p>原文链接：<a href="https://zhuanlan.zhihu.com/p/24440530">https://zhuanlan.zhihu.com/p/24440530</a></p>
-
-<ul>
-<li><strong>「推荐文章二十九」 <a href="https://www.coindesk.com/monero-to-become-first-billion-dollar-crypto-to-implement-bulletproofs-tech">Monero to Become First Billion-Dollar Crypto to Implement ‘Bulletproofs’ Tech</a></strong></li>
-</ul>
-
+<p>原文链接：https://zhuanlan.zhihu.com/p/24440530</p>
+</li>
+<li>
+<p><strong>「推荐文章二十九」 <a href="https://www.coindesk.com/monero-to-become-first-billion-dollar-crypto-to-implement-bulletproofs-tech">Monero to Become First Billion-Dollar Crypto to Implement ‘Bulletproofs’ Tech</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>这篇文章介绍了 Monero 如何使用 Bulletproofs 技术实现隐私特性的。</p>
-
-<p>原文链接：<a href="https://www.coindesk.com/monero-to-become-first-billion-dollar-crypto-to-implement-bulletproofs-tech">https://www.coindesk.com/monero-to-become-first-billion-dollar-crypto-to-implement-bulletproofs-tech</a></p>
-
-<ul>
-<li><strong>「推荐文章三十」 <a href="https://mp.weixin.qq.com/s/TCYDfOAle0K3D69eBm6HNw">zkPoD:区块链，零知识证明与形式化验证，实现无中介、零信任的公平交易</a></strong></li>
-</ul>
-
+<p>原文链接：https://www.coindesk.com/monero-to-become-first-billion-dollar-crypto-to-implement-bulletproofs-tech</p>
+</li>
+<li>
+<p><strong>「推荐文章三十」 <a href="https://mp.weixin.qq.com/s/TCYDfOAle0K3D69eBm6HNw">zkPoD:区块链，零知识证明与形式化验证，实现无中介、零信任的公平交易</a></strong></p>
 <p>推荐值：❤️❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>这是安比实验室今年发布的基于零知识证明的公平交易协议。</p>
-
-<p>原文链接：<a href="https://mp.weixin.qq.com/s/TCYDfOAle0K3D69eBm6HNw">https://mp.weixin.qq.com/s/TCYDfOAle0K3D69eBm6HNw</a></p>
-
-<ul>
-<li><strong>「推荐文章三十一」 <a href="https://mp.weixin.qq.com/s/oTbzyqtc-TzJXbMafj28DQ">零知识证明 - Loopring DEX 3.0</a></strong></li>
-</ul>
-
+<p>原文链接：https://mp.weixin.qq.com/s/TCYDfOAle0K3D69eBm6HNw</p>
+</li>
+<li>
+<p><strong>「推荐文章三十一」 <a href="https://mp.weixin.qq.com/s/oTbzyqtc-TzJXbMafj28DQ">零知识证明 - Loopring DEX 3.0</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>这篇文章介绍了 Loopring DEX 3.0 协议的零知识证明部分实现原理。</p>
-
-<p>原文链接：<a href="https://mp.weixin.qq.com/s/oTbzyqtc-TzJXbMafj28DQ">https://mp.weixin.qq.com/s/oTbzyqtc-TzJXbMafj28DQ</a></p>
-
+<p>原文链接：https://mp.weixin.qq.com/s/oTbzyqtc-TzJXbMafj28DQ</p>
+</li>
+</ul>
 <p>零知识证明的应用正在逐步增加，从最早的公链 zCash，Monero，到最近基于以太坊平台的 zkPoD, Loopring DEX 3.0应用等，零知识证明在区块链领域的应用将越来越多。</p>
-
-<h2 id="7-零知识证明相关的技术和漏洞分析文章">7. 零知识证明相关的技术和漏洞分析文章</h2>
-
+<h2 id="7-">7. 零知识证明相关的技术和漏洞分析文章</h2>
 <p>零知识证明技术涉及的知识内容很多，在实际的应用场景中，零知识证明的实现还存在诸多的挑战，协议安全，性能等等问题都有可能限制其发展。这一节推荐一些技术分析和漏洞分析的文章。</p>
-
 <ul>
-<li><strong>「推荐文章三十二」 A Marlin is One of the Fastest SNARKs in the Ocean</strong></li>
-</ul>
-
+<li>
+<p><strong>「推荐文章三十二」 A Marlin is One of the Fastest SNARKs in the Ocean</strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️⭐️</p>
-
 <p>这篇文章来自于博客 <a href="https://www.benthamsgaze.org/">Bentham’s Gaze</a>，文章观点认为 Marlin 是最快的 SNARKs 方案，并将其与其它的方案进行了比较。</p>
-
-<p>原文链接：<a href="https://www.benthamsgaze.org/2019/09/19/a-marlin-is-one-of-the-fastest-snarks-in-the-ocean/">https://www.benthamsgaze.org/2019/09/19/a-marlin-is-one-of-the-fastest-snarks-in-the-ocean/</a></p>
-
-<ul>
-<li><strong>「推荐文章三十三」<a href="https://www.benthamsgaze.org/2016/10/25/how-to-do-zero-knowledge-from-discrete-logs-in-under-7kb/">How to do Zero-Knowledge from Discrete-Logs in under 7kB</a></strong></li>
-</ul>
-
+<p>原文链接：https://www.benthamsgaze.org/2019/09/19/a-marlin-is-one-of-the-fastest-snarks-in-the-ocean/</p>
+</li>
+<li>
+<p><strong>「推荐文章三十三」<a href="https://www.benthamsgaze.org/2016/10/25/how-to-do-zero-knowledge-from-discrete-logs-in-under-7kb/">How to do Zero-Knowledge from Discrete-Logs in under 7kB</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>这篇文章同样来自于博客 <a href="https://www.benthamsgaze.org/">Bentham’s Gaze</a>，文章介绍了Groth09 论文中的优化方案。</p>
-
-<p>原文链接：<a href="https://www.benthamsgaze.org/2016/10/25/how-to-do-zero-knowledge-from-discrete-logs-in-under-7kb/">https://www.benthamsgaze.org/2016/10/25/how-to-do-zero-knowledge-from-discrete-logs-in-under-7kb/</a></p>
-
-<ul>
-<li><strong>「推荐文章三十四」<a href="https://sec-bit.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/">zkSNARK 合约「输入假名」漏洞致众多混币项目爆雷</a></strong></li>
-</ul>
-
+<p>原文链接：https://www.benthamsgaze.org/2016/10/25/how-to-do-zero-knowledge-from-discrete-logs-in-under-7kb/</p>
+</li>
+<li>
+<p><strong>「推荐文章三十四」<a href="https://sec-bit.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/">zkSNARK 合约「输入假名」漏洞致众多混币项目爆雷</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>这篇文章的作者是安比实验室 p0n1，文章介绍了大量零知识证明项目由于错误地使用了某个 zkSNARKs 合约库，引入「输入假名 (Input Aliasing) 」漏洞，可导致伪造证明、双花、重放等攻击行为发生，且攻击成本极低。</p>
-
-<p>原文链接：<a href="https://sec-bit.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/">https://sec-bit.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</a></p>
-
-<ul>
-<li><strong>「推荐文章三十五」<a href="https://zhuanlan.zhihu.com/p/87690026">硬核！360高级安全专家彭峙酿以Zcash为例，谈零知识性证明的安全和隐私问题</a></strong></li>
-</ul>
-
+<p>原文链接：https://sec-bit.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</p>
+</li>
+<li>
+<p><strong>「推荐文章三十五」<a href="https://zhuanlan.zhihu.com/p/87690026">硬核！360高级安全专家彭峙酿以Zcash为例，谈零知识性证明的安全和隐私问题</a></strong></p>
 <p>推荐值：❤️❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
 <p>这篇文章是对360高级安全专家彭峙酿博士在 CCF 会议上分享报告的整理。报告中介绍了比特币的隐私问题，零知识证明技术，zk-SNARKs，以及多个实现漏洞。报告干货满满。</p>
-
-<p>原文链接：<a href="https://zhuanlan.zhihu.com/p/87690026">https://zhuanlan.zhihu.com/p/87690026</a></p>
-
-<ul>
-<li><strong>「推荐文章三十六」<a href="https://github.com/huyuguang/zkpblog/blob/master/有限域.md">零知识证明中所涉及的有限域</a></strong></li>
-</ul>
-
+<p>原文链接：https://zhuanlan.zhihu.com/p/87690026</p>
+</li>
+<li>
+<p><strong>「推荐文章三十六」<a href="https://github.com/huyuguang/zkpblog/blob/master/%E6%9C%89%E9%99%90%E5%9F%9F.md">零知识证明中所涉及的有限域</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️⭐️</p>
-
 <p>有限域的计算是实现零知识证明协议的一个非常重要的环境，这篇文章对零知识证明中所涉及导的有限域的知识进行了介绍，非常有用。</p>
-
-<p>原文链接：<a href="https://github.com/huyuguang/zkpblog/blob/master/有限域.md">https://github.com/huyuguang/zkpblog/blob/master/有限域.md</a></p>
-
-<h2 id="8-零知识证明开源仓库及介绍">8. 零知识证明开源仓库及介绍</h2>
-
+<p>原文链接：https://github.com/huyuguang/zkpblog/blob/master/有限域.md</p>
+</li>
+</ul>
+<h2 id="8-">8. 零知识证明开源仓库及介绍</h2>
 <p>下面介绍几个热度比较高的零知识证明实现仓库及其源码分析文章，很多的零知识项目都是基于这几个仓库的代码做的。</p>
-
 <ul>
-<li><a href="https://github.com/scipr-lab/libsnark">libsnark</a></li>
-</ul>
-
+<li>
+<p><a href="https://github.com/scipr-lab/libsnark">libsnark</a></p>
 <p>libsnark 是实现一个 C++ 版本的零知识证明库。</p>
-
-<p>仓库链接：<a href="https://github.com/scipr-lab/libsnark">https://github.com/scipr-lab/libsnark</a></p>
-
+<p>仓库链接：https://github.com/scipr-lab/libsnark</p>
 <ul>
-<li><p><strong>「推荐文章三十七」<a href="https://mp.weixin.qq.com/s/UHqpfl6ImVwa4HtsiksqJA">零知识证明 - libsnark源代码分析</a></strong></p>
-
+<li>
+<p><strong>「推荐文章三十七」<a href="https://mp.weixin.qq.com/s/UHqpfl6ImVwa4HtsiksqJA">零知识证明 - libsnark源代码分析</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
-<p>原文链接：<a href="https://mp.weixin.qq.com/s/UHqpfl6ImVwa4HtsiksqJA">https://mp.weixin.qq.com/s/UHqpfl6ImVwa4HtsiksqJA</a></p></li>
-
-<li><p><strong>「推荐文章三十八」<a href="https://zhuanlan.zhihu.com/p/46477111">零知识证明实战：libsnark</a></strong></p>
-
+<p>原文链接：https://mp.weixin.qq.com/s/UHqpfl6ImVwa4HtsiksqJA</p>
+</li>
+<li>
+<p><strong>「推荐文章三十八」<a href="https://zhuanlan.zhihu.com/p/46477111">零知识证明实战：libsnark</a></strong></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
-<p>原文链接：<a href="https://zhuanlan.zhihu.com/p/46477111">https://zhuanlan.zhihu.com/p/46477111</a></p></li>
-
-<li><p><a href="https://github.com/zkcrypto/bellman">bellman</a></p></li>
+<p>原文链接：https://zhuanlan.zhihu.com/p/46477111</p>
+</li>
 </ul>
-
+</li>
+<li>
+<p><a href="https://github.com/zkcrypto/bellman">bellman</a></p>
 <p>bellman是Zcash团队用Rust语言开发的一个zk-SNARK软件库，实现了Groth16 算法。</p>
-
-<p>仓库链接：<a href="https://github.com/zkcrypto/bellman">https://github.com/zkcrypto/bellman</a></p>
-
+<p>仓库链接：https://github.com/zkcrypto/bellman</p>
 <ul>
-<li><p><strong>「推荐文章三十九」<a href="https://mp.weixin.qq.com/s/NvX11tNSEpV1DR-3PwpIAQ">零知识证明 - bellman源码分析</a></strong></p>
-
+<li>
+<p><strong>「推荐文章三十九」<a href="https://mp.weixin.qq.com/s/NvX11tNSEpV1DR-3PwpIAQ">零知识证明 - bellman源码分析</a></strong></p>
 <p>推荐值：❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️</p>
-
-<p>原文链接：<a href="https://github.com/zcash/librustzcash/tree/master/bellman">https://github.com/zcash/librustzcash/tree/master/bellman</a></p></li>
-
-<li><p><a href="https://github.com/iden3/snarkjs">snarkjs</a></p></li>
+<p>原文链接：https://github.com/zcash/librustzcash/tree/master/bellman</p>
+</li>
 </ul>
-
+</li>
+<li>
+<p><a href="https://github.com/iden3/snarkjs">snarkjs</a></p>
 <p>libsnark 是实现一个 javascript 版本的零知识证明库，实现了 Groth16。</p>
-
-<p>仓库链接：<a href="https://github.com/iden3/snarkjs">https://github.com/iden3/snarkjs</a></p>
-
-<h2 id="9-零知识证明相关论文">9. 零知识证明相关论文</h2>
-
+<p>仓库链接：https://github.com/iden3/snarkjs</p>
+</li>
+</ul>
+<h2 id="9-">9. 零知识证明相关论文</h2>
 <p>下面介绍一下零知识证明相关的学术论文，深入学习零知识证明研究成果的小伙伴可以去阅读以下的这些论文。</p>
-
 <p>推荐值：❤️❤️❤️</p>
-
 <p>难度值：⭐️⭐️⭐️⭐️⭐️</p>
-
 <ul>
-<li>1985 年，零知识证明技术首次被提出</li>
-</ul>
-
+<li>
+<p>1985 年，零知识证明技术首次被提出</p>
 <p>原文链接：<a href="https://epubs.siam.org/doi/10.1137/0218012">The Knowledge Complexity of Interactive Proof Systems</a></p>
-
-<ul>
-<li><p>BulletProof</p>
-
+</li>
+<li>
+<p>BulletProof</p>
 <ol>
-<li><a href="https://link.springer.com/chapter/10.1007/978-3-642-03356-8_12">Gro09 </a>提出了一种证明“向量内积”的方法：</li>
+<li>
+<p><a href="https://link.springer.com/chapter/10.1007/978-3-642-03356-8_12">Gro09 </a>提出了一种证明“向量内积”的方法：</p>
+<p>原文链接：https://link.springer.com/chapter/10.1007/978-3-642-03356-8_12</p>
+</li>
+<li>
+<p><a href="https://eprint.iacr.org/2016/263">BCC+16</a> 找到了一种将算数电路编码为向量的方法，从而把电路可满足性的证明转化为向量内积的证明：</p>
+<p>原文链接：https://eprint.iacr.org/2016/263</p>
+</li>
+<li>
+<p><a href="https://eprint.iacr.org/2017/1066">BulletProof</a>继续改进了这种方案：</p>
+<p>原文链接：https://eprint.iacr.org/2017/1066</p>
+</li>
 </ol>
-
-<p>原文链接：<a href="https://link.springer.com/chapter/10.1007/978-3-642-03356-8_12">https://link.springer.com/chapter/10.1007/978-3-642-03356-8_12</a></p>
-
+</li>
+<li>
+<p>zkSNARKs with trusted setup</p>
 <ol>
-<li><a href="https://eprint.iacr.org/2016/263">BCC+16</a> 找到了一种将算数电路编码为向量的方法，从而把电路可满足性的证明转化为向量内积的证明：</li>
+<li>
+<p><a href="https://link.springer.com/chapter/10.1007/978-3-642-17373-8_19">Groth10</a> 引入了preprocessing的步骤，通过可信第三方生成Common Reference String来实现无交互证明:</p>
+<p>原文链接：https://link.springer.com/chapter/10.1007/978-3-642-17373-8_19</p>
+</li>
+<li>
+<p><a href="https://eprint.iacr.org/2012/215">GGPR13</a> 引入了另一种算数电路编码方式，即Quadratic Arithmetic Program(QAP)，大大提升了证明的效率:</p>
+<p>原文链接：https://eprint.iacr.org/2012/215</p>
+</li>
+<li>
+<p><a href="https://eprint.iacr.org/2013/279">Pinocchio</a> 和 <a href="https://eprint.iacr.org/2016/260">Groth16</a> 等是在此基础上的改进:</p>
+<p>原文链接：https://eprint.iacr.org/2013/279</p>
+<p>原文链接：https://eprint.iacr.org/2016/260</p>
+</li>
 </ol>
-
-<p>原文链接：<a href="https://eprint.iacr.org/2016/263">https://eprint.iacr.org/2016/263</a></p>
-
-<ol>
-<li><a href="https://eprint.iacr.org/2017/1066">BulletProof</a>继续改进了这种方案：</li>
-</ol>
-
-<p>原文链接：<a href="https://eprint.iacr.org/2017/1066">https://eprint.iacr.org/2017/1066</a></p></li>
-
-<li><p>zkSNARKs with trusted setup</p>
-
-<ol>
-<li><a href="https://link.springer.com/chapter/10.1007/978-3-642-17373-8_19">Groth10</a> 引入了preprocessing的步骤，通过可信第三方生成Common Reference String来实现无交互证明:</li>
-</ol>
-
-<p>原文链接：<a href="https://link.springer.com/chapter/10.1007/978-3-642-17373-8_19">https://link.springer.com/chapter/10.1007/978-3-642-17373-8_19</a></p>
-
-<ol>
-<li><a href="https://eprint.iacr.org/2012/215">GGPR13</a> 引入了另一种算数电路编码方式，即Quadratic Arithmetic Program(QAP)，大大提升了证明的效率:</li>
-</ol>
-
-<p>原文链接：<a href="https://eprint.iacr.org/2012/215">https://eprint.iacr.org/2012/215</a></p>
-
-<ol>
-<li><a href="https://eprint.iacr.org/2013/279">Pinocchio</a> 和 <a href="https://eprint.iacr.org/2016/260">Groth16</a> 等是在此基础上的改进:</li>
-</ol>
-
-<p>原文链接：<a href="https://eprint.iacr.org/2013/279">https://eprint.iacr.org/2013/279</a></p>
-
-<p>原文链接：<a href="https://eprint.iacr.org/2016/260">https://eprint.iacr.org/2016/260</a></p></li>
-
-<li><p><a href="https://acmccs.github.io/papers/p2087-amesA.pdf">Ligero: Lightweight Sublinear Arguments Without a Trusted Setup</a>:</p></li>
+</li>
+<li>
+<p><a href="https://acmccs.github.io/papers/p2087-amesA.pdf">Ligero: Lightweight Sublinear Arguments Without a Trusted Setup</a>:</p>
+<p>原文链接：https://acmccs.github.io/papers/p2087-amesA.pdf</p>
+</li>
+<li>
+<p>PLONK:</p>
+<p>原文链接：https://eprint.iacr.org/2019/953</p>
+</li>
+<li>
+<p>Marlin</p>
+<p>原文链接：https://eprint.iacr.org/2019/1047.pdf</p>
+</li>
+<li>
+<p>Sonic</p>
+<p>原文链接：https://eprint.iacr.org/2019/099</p>
+</li>
+<li>
+<p>Libra</p>
+<p>原文链接：https://eprint.iacr.org/2019/317</p>
+</li>
+<li>
+<p>Hyrax</p>
+<p>原文链接：https://eprint.iacr.org/2017/1132.pdf</p>
+</li>
+<li>
+<p>zk-STARKs</p>
+<p>原文链接：https://eprint.iacr.org/2018/046</p>
+</li>
 </ul>
-
-<p>原文链接：<a href="https://acmccs.github.io/papers/p2087-amesA.pdf">https://acmccs.github.io/papers/p2087-amesA.pdf</a></p>
-
+<h2 id="10-">10. 零知识证明学习资料推荐网站</h2>
 <ul>
-<li>PLONK:</li>
-</ul>
-
-<p>原文链接：<a href="https://eprint.iacr.org/2019/953">https://eprint.iacr.org/2019/953</a></p>
-
-<ul>
-<li>Marlin</li>
-</ul>
-
-<p>原文链接：<a href="https://eprint.iacr.org/2019/1047.pdf">https://eprint.iacr.org/2019/1047.pdf</a></p>
-
-<ul>
-<li>Sonic</li>
-</ul>
-
-<p>原文链接：<a href="https://eprint.iacr.org/2019/099">https://eprint.iacr.org/2019/099</a></p>
-
-<ul>
-<li>Libra</li>
-</ul>
-
-<p>原文链接：<a href="https://eprint.iacr.org/2019/317">https://eprint.iacr.org/2019/317</a></p>
-
-<ul>
-<li>Hyrax</li>
-</ul>
-
-<p>原文链接：<a href="https://eprint.iacr.org/2017/1132.pdf">https://eprint.iacr.org/2017/1132.pdf</a></p>
-
-<ul>
-<li><p>zk-STARKs</p>
-
-<p>原文链接：<a href="https://eprint.iacr.org/2018/046">https://eprint.iacr.org/2018/046</a></p></li>
-</ul>
-
-<h2 id="10-零知识证明学习资料推荐网站">10. 零知识证明学习资料推荐网站</h2>
-
-<ul>
-<li><a href="https://github.com/matter-labs/awesome-zero-knowledge-proofs">awesome-zero-knowledge-proofs</a></li>
-</ul>
-
+<li>
+<p><a href="https://github.com/matter-labs/awesome-zero-knowledge-proofs">awesome-zero-knowledge-proofs</a></p>
 <p>推荐值：❤️❤️❤️❤️</p>
-
 <p>这是一个 Github 仓库，收录了一系列零知识证明的学习资料</p>
-
-<p>链接：<a href="https://github.com/matter-labs/awesome-zero-knowledge-proofs">https://github.com/matter-labs/awesome-zero-knowledge-proofs</a></p>
-
-<ul>
-<li><a href="https://zkp.science/">Zero-Knowledge Proofs</a></li>
-</ul>
-
+<p>链接：https://github.com/matter-labs/awesome-zero-knowledge-proofs</p>
+</li>
+<li>
+<p><a href="https://zkp.science/">Zero-Knowledge Proofs</a></p>
 <p>推荐值：❤️❤️❤️❤️</p>
-
 <p>这个网站也收录了一系列零知识证明的学习资料，相对来说学术性更强一些。</p>
-
 <p>链接：<a href="https://zkp.science/">https://zkp.science</a></p>
-
-<ul>
-<li><a href="https://zkproof.org/workshop2/abstracts.html">zkproof</a></li>
-</ul>
-
+</li>
+<li>
+<p><a href="https://zkproof.org/workshop2/abstracts.html">zkproof</a></p>
 <p>推荐值：❤️❤️❤️❤️</p>
-
 <p>ZKProof.org 是为规范零知识证明的使用而形成的一个组织，它的网站上有大量关于零知识证明的资料。</p>
-
-<p>链接：<a href="https://zkproof.org/">https://zkproof.org/</a></p>
-
-<ul>
-<li><a href="https://www.benthamsgaze.org">benthamsgaze.org</a></li>
-</ul>
-
+<p>链接：https://zkproof.org/</p>
+</li>
+<li>
+<p><a href="https://www.benthamsgaze.org">benthamsgaze.org</a></p>
 <p>推荐值：❤️❤️❤️</p>
-
 <p>这是一个来自UCL信息安全研究人员组成的团队的博客，它的博客上会经常发布一些零知识证明的文章。</p>
-
-<p>链接：<a href="https://www.benthamsgaze.org">https://www.benthamsgaze.org</a></p>
-
-<h2 id="参考文献">参考文献</h2>
-
+<p>链接：https://www.benthamsgaze.org</p>
+</li>
+</ul>
+<h2 id="heading">参考文献</h2>
 <p>[1] <a href="https://isi.jhu.edu/~mgreen/">https://isi.jhu.edu/~mgreen/</a></p>
-
 <p>[2] <a href="https://www.benthamsgaze.org/about">https://www.benthamsgaze.org/about</a></p>
-
 <p>[3] <a href="https://zhuanlan.zhihu.com/p/31651393">https://zhuanlan.zhihu.com/p/31651393</a></p>
-
 <p>[4] <a href="https://link.springer.com/chapter/10.1007/978-3-642-03356-8_12">https://link.springer.com/chapter/10.1007/978-3-642-03356-8_12</a></p>
-
 <p>[5] <a href="https://github.com/matter-labs/awesome-zero-knowledge-proofs">https://github.com/matter-labs/awesome-zero-knowledge-proofs</a></p>
-
-<p>[6] <a href="https://zkp.science/">https://zkp.science/</a></p>
-
+<p>[6] https://zkp.science/</p>
 <p>[7] <a href="https://zhuanlan.zhihu.com/p/89386868?utm_source=wechat_session&amp;utm_medium=social&amp;utm_oi=26765481213952">https://zhuanlan.zhihu.com/p/89386868?utm_source=wechat_session&amp;utm_medium=social&amp;utm_oi=26765481213952</a></p>
 
     </div>

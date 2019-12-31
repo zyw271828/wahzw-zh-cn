@@ -1,21 +1,39 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on SECBIT Blog</title>
     <link>https://sec-bit.github.io/blog/tags/</link>
     <description>Recent content in Tags on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 19 Dec 2019 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 25 Dec 2019 08:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://sec-bit.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>tutorials</title>
+      <link>https://sec-bit.github.io/blog/tags/tutorials/</link>
+      <pubDate>Wed, 25 Dec 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/tags/tutorials/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Zero Knowledge Proof</title>
       <link>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</link>
-      <pubDate>Thu, 19 Dec 2019 08:00:00 +0800</pubDate>
+      <pubDate>Wed, 25 Dec 2019 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>zkSNARKs</title>
+      <link>https://sec-bit.github.io/blog/tags/zksnarks/</link>
+      <pubDate>Wed, 25 Dec 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/tags/zksnarks/</guid>
       <description></description>
     </item>
     
@@ -34,24 +52,6 @@
       <pubDate>Thu, 19 Dec 2019 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/tags/privacy/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>zkSNARKs</title>
-      <link>https://sec-bit.github.io/blog/tags/zksnarks/</link>
-      <pubDate>Thu, 19 Dec 2019 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/tags/zksnarks/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tutorials</title>
-      <link>https://sec-bit.github.io/blog/tags/tutorials/</link>
-      <pubDate>Thu, 07 Nov 2019 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/tags/tutorials/</guid>
       <description></description>
     </item>
     
@@ -110,16 +110,7 @@
     </item>
     
     <item>
-      <title>Security</title>
-      <link>https://sec-bit.github.io/blog/tags/security/</link>
-      <pubDate>Mon, 28 Oct 2019 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/tags/security/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>blockchain</title>
+      <title>Blockchain</title>
       <link>https://sec-bit.github.io/blog/tags/blockchain/</link>
       <pubDate>Mon, 28 Oct 2019 08:00:00 +0800</pubDate>
       
@@ -133,6 +124,15 @@
       <pubDate>Mon, 28 Oct 2019 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/tags/quantum-computing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Security</title>
+      <link>https://sec-bit.github.io/blog/tags/security/</link>
+      <pubDate>Mon, 28 Oct 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/tags/security/</guid>
       <description></description>
     </item>
     

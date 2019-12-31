@@ -25,7 +25,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="SECBIT Labs" />
-  <meta name="description" content="The first round of Fomo3D has ended and the winner&amp;rsquo;s address is 0xa169, with a prize of 10,469.66 ethers.
+  <meta name="description" content="The first round of Fomo3D has ended and the winner&#39;s address is 0xa169, with a prize of 10,469.66 ethers.
 You may think that the winner is just an ordinary participant." />
 
   <meta name="keywords" content="Blockchain, Smart Contract, Zero Knowledge Proof" />
@@ -35,7 +35,7 @@ You may think that the winner is just an ordinary participant." />
 
 
 
-<meta name="generator" content="Hugo 0.55.4" />
+<meta name="generator" content="Hugo 0.62.0" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/" />
@@ -56,7 +56,7 @@ You may think that the winner is just an ordinary participant." />
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.0995afa14b62cd93e93cfc066b646c4c17a3eddca0e9d52a1d9dcf5d90aaacd3.css" integrity="sha256-CZWvoUtizZPpPPwGa2RsTBej7dyg6dUqHZ3PXZCqrNM=" media="screen" crossorigin="anonymous">
 
 
 
@@ -65,29 +65,27 @@ You may think that the winner is just an ordinary participant." />
 
 
 <meta property="og:title" content="How the winner got Fomo3D prize - A Detailed Explanation" />
-<meta property="og:description" content="The first round of Fomo3D has ended and the winner&rsquo;s address is 0xa169, with a prize of 10,469.66 ethers.
+<meta property="og:description" content="The first round of Fomo3D has ended and the winner&#39;s address is 0xa169, with a prize of 10,469.66 ethers.
 You may think that the winner is just an ordinary participant." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sec-bit.github.io/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/" />
-<meta property="article:published_time" content="2018-08-23T08:00:00&#43;08:00"/>
-<meta property="article:modified_time" content="2019-10-14T19:27:48&#43;08:00"/><meta property="og:site_name" content="SECBIT Blog" />
-
+<meta property="og:image" content="https://sec-bit.github.io/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/cover.jpeg"/>
+<meta property="article:published_time" content="2018-08-23T08:00:00+08:00" />
+<meta property="article:modified_time" content="2019-10-14T19:27:48+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="How the winner got Fomo3D prize - A Detailed Explanation">
-<meta itemprop="description" content="The first round of Fomo3D has ended and the winner&rsquo;s address is 0xa169, with a prize of 10,469.66 ethers.
+<meta itemprop="description" content="The first round of Fomo3D has ended and the winner&#39;s address is 0xa169, with a prize of 10,469.66 ethers.
 You may think that the winner is just an ordinary participant.">
-
-
 <meta itemprop="datePublished" content="2018-08-23T08:00:00&#43;08:00" />
 <meta itemprop="dateModified" content="2019-10-14T19:27:48&#43;08:00" />
 <meta itemprop="wordCount" content="1317">
+<meta itemprop="image" content="https://sec-bit.github.io/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/cover.jpeg">
 
 
 
-<meta itemprop="keywords" content="Smart Contract,Fomo3D,Vulnerability,DApp,Game,Blockchain," />
-<meta name="twitter:card" content="summary_large_image"/>
+<meta itemprop="keywords" content="Smart Contract,Fomo3D,Vulnerability,DApp,Game,Blockchain," /><meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://sec-bit.github.io/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/cover.jpeg"/>
 <meta name="twitter:title" content="How the winner got Fomo3D prize - A Detailed Explanation"/>
-<meta name="twitter:description" content="The first round of Fomo3D has ended and the winner&rsquo;s address is 0xa169, with a prize of 10,469.66 ethers.
+<meta name="twitter:description" content="The first round of Fomo3D has ended and the winner&#39;s address is 0xa169, with a prize of 10,469.66 ethers.
 You may think that the winner is just an ordinary participant."/>
 
 <!--[if lte IE 9]>
@@ -456,82 +454,50 @@ if (!doNotTrack) {
   <h2 class="post-toc-title">Table of Contents</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#a-series-of-abnormal-blocks-and-transactions">A Series of Abnormal Blocks and Transactions</a></li>
-<li><a href="#what-had-the-mysterious-contract-ever-done">What had the &lsquo;mysterious contract&rsquo; ever done?</a></li>
-<li><a href="#more-brilliant-hacks">More Brilliant Hacks</a></li>
-<li><a href="#other-techniques-and-details">Other techniques and details</a></li>
-<li><a href="#the-lucky-f2pool-mining-pool">The Lucky F2POOL Mining Pool</a></li>
-<li><a href="#the-future-of-smart-contract-game">The Future of Smart Contract Game</a></li>
-<li><a href="#references">References</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#a-series-of-abnormal-blocks-and-transactions">A Series of Abnormal Blocks and Transactions</a></li>
+    <li><a href="#what-had-the-mysterious-contract-ever-done">What had the &lsquo;mysterious contract&rsquo; ever done?</a></li>
+    <li><a href="#more-brilliant-hacks">More Brilliant Hacks</a></li>
+    <li><a href="#other-techniques-and-details">Other techniques and details</a></li>
+    <li><a href="#the-lucky-f2pool-mining-pool">The Lucky F2POOL Mining Pool</a></li>
+    <li><a href="#the-future-of-smart-contract-game">The Future of Smart Contract Game</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      
-
-<p>The first round of Fomo3D has ended and the winner&rsquo;s address is 0xa169, with a prize of 10,469.66 ethers.</p>
-
+      <p>The first round of Fomo3D has ended and the winner's address is 0xa169, with a prize of 10,469.66 ethers.</p>
 <p>You may think that the winner is just an ordinary participant.</p>
-
 <p>SECBIT Labs <strong>first found</strong> that the Fomo3D winner played a special attack trick to sharply decrease the number of transactions packed by miners near the end of the game (multiple blocks were involved), <strong>accelerating the approach of the game end</strong> and <strong>increasing the winning probability</strong>. SECBIT Labs also observed several similar abnormal blocks and transactions regarding to the last round of Last Winner.</p>
-
 <h2 id="a-series-of-abnormal-blocks-and-transactions">A Series of Abnormal Blocks and Transactions</h2>
-
-<p><img src="eng_pic/txns.jpg" alt="1" /></p>
-
+<p><img src="eng_pic/txns.jpg" alt="1"></p>
 <p>The picture shows that the block with height 6191896 packs the last key purchasing transaction of Fomo3D winner, containing 92 transactions which is normal.</p>
-
 <p>However, the number of transactions in the following 11 blocks (6191898～6191908) <strong>decreased sharply</strong> and the minimum block (6191906) <strong>only contained 3 transactions</strong>, which is abnormal.</p>
-
 <p>Take a look at these &lsquo;special&rsquo; blocks.</p>
-
-<p><img src="eng_pic/3txns-block.jpg" alt="2" /></p>
-
+<p><img src="eng_pic/3txns-block.jpg" alt="2"></p>
 <p>Here we can see that the block with height 6191906 only had 3 transactions sending to the same contract (calling the same <strong>mysterious contract</strong>), and the sum of the transaction fees <strong>is greater than 4 ethers</strong>.</p>
-
 <p><strong>The creator of this mysterious contract (0x18e1) is exactly the winner (0xa169)!</strong></p>
-
 <p>The person in charge of F2POOL told us that a transaction with high TxFee would enter and get packed in blocks first.</p>
-
 <p>This explains that the 11 blocks mentioned above possess excessive TxFee while they only pack few transactions. These blocks were processed by mining pools like SparkPool, Nanopool, Ethermine, BitClubPool, MiningPoolHub. Apparently, selecting transactions with high TxFee is in line with mining pools&rsquo; interest and it is widely applied throughout the industry [1].</p>
-
 <h2 id="what-had-the-mysterious-contract-ever-done">What had the &lsquo;mysterious contract&rsquo; ever done?</h2>
-
 <p>SECBIT Labs discovered that these abnormal transactions sent to the attack contract in related blocks all failed in the end.</p>
-
-<p><img src="eng_pic/bad-instr.jpg" alt="3" /></p>
-
+<p><img src="eng_pic/bad-instr.jpg" alt="3"></p>
 <p>We could see from the picture above that the final status is &lsquo;Fail&rsquo; and Etherscan has a warning of <code>Bad instruction</code> and the Gas Limit (4200000) is exhausted, which is half of the normal gas limit, sending high TxFee to the mining pool which packed the transaction.</p>
-
 <blockquote>
 <p>Gas limit in Ethereum represents the maximum approved gas in a single block to determine the number of transactions packed in the block. Usually, the block gas limit is set with certain strategies between miners and the common value is 8000000 [2].</p>
-
 <p>Each transaction in Ethreum also has a gas limit set by the transaction sender, which is the maximum gas consumed by the transaction. The actual gas consumption is determined by the actual transaction execution process. The sum of all transaction gas cannot exceed the block gas limit [3].</p>
 </blockquote>
-
 <p>We know that <strong>assert() in Ethereum smart contracts is used for asserting. When the result of asserting does not satisfy conditions, the gas would be exhausted.</strong> Etherscan would notify <code>Bad instruction</code> in case of this transaction, which is in fact caused by that the EVM encounters an undefined operator <code>0xfe</code> [4].</p>
-
 <p>The winner (attacker) made use of this feature and took up the block gas limit with few transactions.</p>
-
 <h2 id="more-brilliant-hacks">More Brilliant Hacks</h2>
-
 <p>Moreover, SECBIT Labs discovered that the mysterious contract would call <code>getCurrentRoundInfo()</code> in Fomo3D to get info of the current round like the time remaining and the last buyer.</p>
-
-<p><img src="eng_pic/getCurRndInfo.jpg" alt="img" /></p>
-
+<p><img src="eng_pic/getCurRndInfo.jpg" alt="img"></p>
 <p>The &lsquo;mysterious contract&rsquo; has not published its source code. By combining the result of reverse engineering, SECBIT Labs infers that the winner would call the method in the mysterious contract to query info, especially <strong>time round ends</strong> and <strong>current player in leads address</strong>. When the remaining time reaches a threshold and the last buyer is the attacker, call <code>assert()</code> to fail the transaction and use up all gas; when the remaining time is far from the threshold or the last buyer is someone else, do nothing, which takes little gas.</p>
-
 <p>The winner (attacker) made use of this approach and launched many similar <strong>mutable mysterious transactions</strong>: when the attacker has a high winning change, use these mysterious transactions which would <strong>get packed by mining pools first and take up the following blocks</strong>, leading to the situation that other key purchases cannot be packed in time, accelerating the approach of game end and increasing the attackers&rsquo; winning probability sharply.</p>
-
 <h2 id="other-techniques-and-details">Other techniques and details</h2>
-
 <ul>
 <li>SECBIT Labs observed that Fomo3D winner (attacker) created multiple similar mysterious contracts (attacking contracts) with transactions by different addresses to distract attention and decrease the chance of exposure. Each contract had many transactions and the one (0x18e1) making the attacker becoming the winner had more than 5000 transactions, which is of great efforts.</li>
 <li>When calling the mysterious contract (attacking contract), the winner (attacker) would try different gas limit from 170000 to 480000, which is a technique as well.</li>
@@ -544,35 +510,23 @@ if (!doNotTrack) {
 <li>The mysterious contract created by the winner (attacker) is trading with other Fomo3D-like games (e.g. Super Card) frequently, intending to get prizes with the same approach.</li>
 <li>There is simply no &lsquo;black swan&rsquo;, but only smart and diligent attackers. Please refer to &lsquo;Power Law Distribution&rsquo; and &lsquo;Game Fallacy&rsquo; [5].</li>
 </ul>
-
 <h2 id="the-lucky-f2pool-mining-pool">The Lucky F2POOL Mining Pool</h2>
-
 <p>Another point worth mentioning is that the winning transaction and the previous ones of two games (Fomo3D, Last Winner) were both packed by F2Pool.</p>
-
 <p>After a detailed discussion, SECBIT Labs and F2POOL all primarily affirms that it is merely a coincidence. F2POOL is lucky enough to see the winning round of two popular smart contract games.</p>
-
 <h2 id="the-future-of-smart-contract-game">The Future of Smart Contract Game</h2>
-
 <p>SECBIT Labs had reported attacks in Last Winner and other Fomo3d-like games that attackers made use of the airdrop bug in the original Fomo3D game to get much prize, along with vulnerabilities in Fomo3D Quick.</p>
-
 <p>While we are sighing at the special winning techniques, we are worrying about the future of smart contract games.</p>
-
 <p>As the most popular smart contract game in 2018, Fomo3D made many innovations in skills and laws, which is a great leap in smart contract game history. It is undeniable that the Fomo3D developing team has superior programming skills and strong feelings for decentralization.</p>
-
 <p>When Fomo3D was published, many people said that it was a truly fair decentralized game. However, attackers were still able to make use of deficiencies and received great paybacks.</p>
-
 <p>Limitations of skills, Greedy in humanity and information asymmetry all impede the birth of a truly secure, fair and transparent decentralized game. After Fomo3D, many copycats emerged without improvements in technologies and creativeness. The society is becoming more and more impetuous.</p>
-
 <p>As a fan of blockchain and smart contract, SECBIT Labs is eager to embrace a secure, fair, outstanding and interesting smart contract game in the future.</p>
-
 <h2 id="references">References</h2>
-
 <ul>
-<li>[1] <a href="https://ethereum.stackexchange.com/questions/15896/do-mining-pool-or-miners-decide-on-which-transaction-to-be-included-in-the-next">https://ethereum.stackexchange.com/questions/15896/do-mining-pool-or-miners-decide-on-which-transaction-to-be-included-in-the-next</a>, 2017/05/06</li>
-<li>[2] Accounts, Transactions, Gas, and Block Gas Limits in Ethereum, <a href="https://hudsonjameson.com/2017-06-27-accounts-transactions-gas-ethereum/">https://hudsonjameson.com/2017-06-27-accounts-transactions-gas-ethereum/</a>, 2017/06/27</li>
-<li>[3] Intro | Accounts, Transactions, Gas, and Block Gas Limits in Ethereum, <a href="https://ethfans.org/posts/479">https://ethfans.org/posts/479</a>, 2017/07/03</li>
-<li>[4] Revert(), Assert(), and Require() in Solidity, <a href="https://medium.com/blockchannel/the-use-of-revert-assert-and-require-in-solidity-and-the-new-revert-opcode-in-the-evm-1a3a7990e06e">https://medium.com/blockchannel/the-use-of-revert-assert-and-require-in-solidity-and-the-new-revert-opcode-in-the-evm-1a3a7990e06e</a>, 2017/09/28</li>
-<li>[5] Black Swan, <a href="https://book.douban.com/subject/3025921/">https://book.douban.com/subject/3025921/</a>, <sup>2008</sup>&frasl;<sub>05</sub></li>
+<li>[1] <a href="https://ethereum.stackexchange.com/questions/15896/do-mining-pool-or-miners-decide-on-which-transaction-to-be-included-in-the-next,">https://ethereum.stackexchange.com/questions/15896/do-mining-pool-or-miners-decide-on-which-transaction-to-be-included-in-the-next,</a> 2017/05/06</li>
+<li>[2] Accounts, Transactions, Gas, and Block Gas Limits in Ethereum, <a href="https://hudsonjameson.com/2017-06-27-accounts-transactions-gas-ethereum/,">https://hudsonjameson.com/2017-06-27-accounts-transactions-gas-ethereum/,</a> 2017/06/27</li>
+<li>[3] Intro | Accounts, Transactions, Gas, and Block Gas Limits in Ethereum, <a href="https://ethfans.org/posts/479,">https://ethfans.org/posts/479,</a> 2017/07/03</li>
+<li>[4] Revert(), Assert(), and Require() in Solidity, <a href="https://medium.com/blockchannel/the-use-of-revert-assert-and-require-in-solidity-and-the-new-revert-opcode-in-the-evm-1a3a7990e06e,">https://medium.com/blockchannel/the-use-of-revert-assert-and-require-in-solidity-and-the-new-revert-opcode-in-the-evm-1a3a7990e06e,</a> 2017/09/28</li>
+<li>[5] Black Swan, <a href="https://book.douban.com/subject/3025921/,">https://book.douban.com/subject/3025921/,</a> 2008/05</li>
 </ul>
 
     </div>

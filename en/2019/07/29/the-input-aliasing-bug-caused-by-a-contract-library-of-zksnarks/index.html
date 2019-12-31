@@ -34,7 +34,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.55.4" />
+<meta name="generator" content="Hugo 0.62.0" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/en/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/" />
@@ -55,7 +55,7 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.0995afa14b62cd93e93cfc066b646c4c17a3eddca0e9d52a1d9dcf5d90aaacd3.css" integrity="sha256-CZWvoUtizZPpPPwGa2RsTBej7dyg6dUqHZ3PXZCqrNM=" media="screen" crossorigin="anonymous">
 
 
 
@@ -67,21 +67,17 @@
 <meta property="og:description" content="Many zero-knowledge proof projects are threatened by attacks like faking proof, double spending and replaying due to the &lsquo;Input Aliasing&rsquo; bug caused by a contract library of zkSNARKs. This applies to many Ethereum open-source projects as well, including 3 most popular zkSNARKs library - snarkjs, ethsnarks, ZoKrates and 3 topical mixcoin apps - hopper, Heiswap, Miximus." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sec-bit.github.io/blog/en/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/" />
-<meta property="article:published_time" content="2019-07-29T08:00:00&#43;08:00"/>
-<meta property="article:modified_time" content="2019-10-28T17:10:04&#43;08:00"/><meta property="og:site_name" content="SECBIT Blog" />
-
+<meta property="article:published_time" content="2019-07-29T08:00:00+08:00" />
+<meta property="article:modified_time" content="2019-10-28T17:10:04+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="The &#39;Input Aliasing&#39; bug caused by a contract library of zkSNARKs">
 <meta itemprop="description" content="Many zero-knowledge proof projects are threatened by attacks like faking proof, double spending and replaying due to the &lsquo;Input Aliasing&rsquo; bug caused by a contract library of zkSNARKs. This applies to many Ethereum open-source projects as well, including 3 most popular zkSNARKs library - snarkjs, ethsnarks, ZoKrates and 3 topical mixcoin apps - hopper, Heiswap, Miximus.">
-
-
 <meta itemprop="datePublished" content="2019-07-29T08:00:00&#43;08:00" />
 <meta itemprop="dateModified" content="2019-10-28T17:10:04&#43;08:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="wordCount" content="1774">
 
 
 
-<meta itemprop="keywords" content="zkSNARKs,Zero Knowledge Proof,Vulnerability,Smart Contract," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="zkSNARKs,Zero Knowledge Proof,Vulnerability,Smart Contract," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="The &#39;Input Aliasing&#39; bug caused by a contract library of zkSNARKs"/>
 <meta name="twitter:description" content="Many zero-knowledge proof projects are threatened by attacks like faking proof, double spending and replaying due to the &lsquo;Input Aliasing&rsquo; bug caused by a contract library of zkSNARKs. This applies to many Ethereum open-source projects as well, including 3 most popular zkSNARKs library - snarkjs, ethsnarks, ZoKrates and 3 topical mixcoin apps - hopper, Heiswap, Miximus."/>
 
@@ -434,8 +430,8 @@ if (!doNotTrack) {
             <a href="https://sec-bit.github.io/blog/en/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
             
           </div>
-        <span class="more-meta"> 0 words </span>
-          <span class="more-meta"> 0 min read </span>
+        <span class="more-meta"> 1774 words </span>
+          <span class="more-meta"> 4 min read </span>
 
         
         
@@ -451,78 +447,53 @@ if (!doNotTrack) {
   <h2 class="post-toc-title">Table of Contents</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#double-spending-the-very-first-issue">Double Spending: The Very First Issue</a></li>
-<li><a href="#mixcoin-app-the-worst-hit-region">Mixcoin APP: The Worst-hit Region</a></li>
-<li><a href="#analysis-how-to-spend-the-money-5-times-anonymously">Analysis: How to Spend The Money 5 Times Anonymously?</a></li>
-<li><a href="#more-projects-affected">More Projects Affected</a></li>
-<li><a href="#solution-to-input-aliasing">Solution to &lsquo;Input Aliasing&rsquo;</a></li>
-<li><a href="#introspection">Introspection</a></li>
-<li><a href="#reference">Reference</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#double-spending-the-very-first-issue">Double Spending: The Very First Issue</a></li>
+    <li><a href="#mixcoin-app-the-worst-hit-region">Mixcoin APP: The Worst-hit Region</a></li>
+    <li><a href="#analysis-how-to-spend-the-money-5-times-anonymously">Analysis: How to Spend The Money 5 Times Anonymously?</a></li>
+    <li><a href="#more-projects-affected">More Projects Affected</a></li>
+    <li><a href="#solution-to-input-aliasing">Solution to &lsquo;Input Aliasing&rsquo;</a></li>
+    <li><a href="#introspection">Introspection</a></li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      
-
-<p>Many zero-knowledge proof projects are threatened by attacks like faking proof, double spending and replaying due to the &lsquo;Input Aliasing&rsquo; bug caused by a contract library of zkSNARKs. This applies to many Ethereum open-source projects as well, including 3 most popular zkSNARKs library - snarkjs, ethsnarks, ZoKrates and 3 topical mixcoin apps - hopper, Heiswap, Miximus.</p>
-
+      <p>Many zero-knowledge proof projects are threatened by attacks like faking proof, double spending and replaying due to the &lsquo;Input Aliasing&rsquo; bug caused by a contract library of zkSNARKs. This applies to many Ethereum open-source projects as well, including 3 most popular zkSNARKs library - snarkjs, ethsnarks, ZoKrates and 3 topical mixcoin apps - hopper, Heiswap, Miximus.</p>
 <h2 id="double-spending-the-very-first-issue">Double Spending: The Very First Issue</h2>
-
 <p>Semaphore is an anonymous signal system with zero-knowledge proof evolved from the mixcoin project by the famous developer &lsquo;barryWhiteHat&rsquo; .</p>
-
 <p>Russian developer &lsquo;poma&rsquo; first pointed out that <a href="https://github.com/kobigurk/semaphore/issues/16">it might contain double spending bug</a>[1].</p>
-
-<p><img src="poma-found.png" alt="" /></p>
-
+<p><img src="poma-found.png" alt=""></p>
 <p>The bug hides in <a href="https://github.com/kobigurk/semaphore/blob/602dd57abb43e48f490e92d7091695d717a63915/semaphorejs/contracts/Semaphore.sol#L83">line 83</a>[2] so please take a closer look:</p>
-
-<p><img src="semaphore_bug_full.png" alt="" /></p>
-
+<p><img src="semaphore_bug_full.png" alt=""></p>
 <p>This function requires the caller to constract a zero- knowledge proof to show he or she could take out money from the contract. Also, it reads <code>nullifiers_set</code> and check if a certain element of the proof is marked to prevent double spending. If the proof is in <code>nullifiers_set</code>, the contract would fail the check and the caller could not take money away. The developer suggests that people could not submit the same proof repeatedly for profit and this measure could prevent double spending and replaying.</p>
-
 <p>However, one essential problem is missed. The attacker could pass the zero-knowledge check in line 82 and bypass the double-spending check in line 83 by modifying a former successful proof with the &lsquo;Input Aliasing&rsquo; bug.</p>
-
 <p>This bug could be dated back to 2017 when Christian Reitwiessner, the creator of Solidity, provided a <a href="https://gist.github.com/chriseth/f9be9d9391efc5beb9704255a8e2989d">sample implementation</a>[3] of zkSNARKs contract cryptography. <strong>Later on, almost every ethereum contract with zkSNARKs referred to this implementation, thus they could all get attacked by this technique.</strong></p>
-
-<p><img src="attack-flow.jpg" alt="" /></p>
-
+<p><img src="attack-flow.jpg" alt=""></p>
 <h2 id="mixcoin-app-the-worst-hit-region">Mixcoin APP: The Worst-hit Region</h2>
-
 <p>The earliest and widest application of zero-knowledge proof in ethereum is mixcoin or anonymous transferring/private transaction. The ethereum itself does not support anonymous trading, while the community is craving for privacy protection. Therefore, many hot projects emerged as a result. Here we use mixcoin contract application as an example to show you the threat of &lsquo;Input Aliasing&rsquo; bug.</p>
-
 <p>There are 2 preconditions of mixcoin contracts or anonymous transferring:</p>
-
 <ol>
 <li>Prove that I have a certain number of money</li>
 <li>Prove that the certain money is not spent</li>
 </ol>
-
 <p>This is an explanation of the process for easier understanding:</p>
-
 <ol>
 <li>A would like to spend some money.</li>
 <li>A needs to prove ownership of this money. First, A shows a zkproof to prove that A knows the preimage of a hash (HashA), this hash is on the leaf of a tree with signal root, and the other hash of the preimage is HashB. HashA is the witness and HashB is the public statement. A is anonymous for not exposing HashA.</li>
 <li>The contract checks zkproof and checks if HashB is in <code>nullifiers_set</code>. If not, the money is not spent yet and could be used by A.</li>
 <li>If permission is given, the contract would put HashB into <code>nullifiers_set</code> to show that money of HashB is already spent.</li>
 </ol>
-
 <p>The code <code>verifyProof(a, b, c, input)</code> in line 82 above shows the legitimacy of the money. <code>input[]</code> is the public statement. <code>require(nullifiers_set[input[1]] == false)</code> in line 83 checks if the money is spent before.</p>
-
 <p><strong>Many zkSNARKs contracts, especially those involving mixcoin, have the same core logic of line 82 and 83. Therefore, they all have the same bug and might get attacked by &lsquo;Input Aliasing&rsquo;.</strong></p>
-
 <h2 id="analysis-how-to-spend-the-money-5-times-anonymously">Analysis: How to Spend The Money 5 Times Anonymously?</h2>
-
 <p>The function <code>verifyProof(a, b, c, input)</code> computes input parameters on the elliptic curve and applies a function called <code>scalar_mul()</code> to <a href="https://github.com/iden3/snarkjs/blob/0349d90824bd25688e3013ca26f7f73b51bc7755/templates/verifier_groth.sol#L202">implement scalar multiplication on the elliptic curve</a>[4].</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -548,65 +519,39 @@ if (!doNotTrack) {
         <span class="nx">input</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nx">s</span><span class="p">;</span>
         <span class="nx">bool</span> <span class="nx">success</span><span class="p">;</span>
         <span class="nx">assembly</span> <span class="p">{</span>
-            <span class="nx">success</span> <span class="o">:=</span> <span class="nx">call</span><span class="p">(</span><span class="nx">sub</span><span class="p">(</span><span class="nx">gas</span><span class="p">,</span> <span class="mi">2000</span><span class="p">),</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">input</span><span class="p">,</span> <span class="mh">0x80</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="mh">0x60</span><span class="p">)</span>
+            <span class="nx">success</span> <span class="o">:</span><span class="o">=</span> <span class="nx">call</span><span class="p">(</span><span class="nx">sub</span><span class="p">(</span><span class="nx">gas</span><span class="p">,</span> <span class="mi">2000</span><span class="p">)</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">input</span><span class="p">,</span> <span class="mh">0x80</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="mh">0x60</span><span class="p">)</span>
             <span class="c1">// Use &#34;invalid&#34; to make gas estimation work
-</span><span class="c1"></span>            <span class="k">switch</span> <span class="nx">success</span> <span class="k">case</span> <span class="mi">0</span> <span class="p">{</span> <span class="nx">invalid</span><span class="p">()</span> <span class="p">}</span>
+</span><span class="c1"></span>            <span class="k">switch</span> <span class="nx">success</span> <span class="k">case</span> <span class="mi">0</span> <span class="p">{</span> <span class="nx">invalid</span><span class="p">(</span><span class="p">)</span> <span class="p">}</span>
         <span class="p">}</span>
-        <span class="nx">require</span> <span class="p">(</span><span class="nx">success</span><span class="p">);</span>
+        <span class="nx">require</span> <span class="p">(</span><span class="nx">success</span><span class="p">)</span><span class="p">;</span>
     <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div>
-<p>We know that ethereum has some pre-compiled contract embedded for cryptographic computation on the elliptic curve to reduce the gas consumption of zkSNARKs verification. The implementation of <code>scalar_mul()</code> calls the No. 7 pre-compiled ethereum contract and realizes scalar multiplication[5] of elliptic curve alt_bn128 according to <a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-196.md">EIP 196</a>. The following graph is the definition in the yellow book, which we usually call ECMUL or ecc_mul.</p>
-
-<p><img src="./yellow_paper_ecmul.png" alt="以太坊黄皮书定义" /></p>
-
+</div><p>We know that ethereum has some pre-compiled contract embedded for cryptographic computation on the elliptic curve to reduce the gas consumption of zkSNARKs verification. The implementation of <code>scalar_mul()</code> calls the No. 7 pre-compiled ethereum contract and realizes scalar multiplication[5] of elliptic curve alt_bn128 according to <a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-196.md">EIP 196</a>. The following graph is the definition in the yellow book, which we usually call ECMUL or ecc_mul.</p>
+<p><img src="./yellow_paper_ecmul.png" alt="以太坊黄皮书定义"></p>
 <p>In cryptography, the range of elliptic curve <code>{x,y}</code> is a finite field based on mod p called Zp or Fp. In another word, the x and y from coordinate <code>{x,y}</code> of the elliptic curve are values in Fp. Some points from an elliptic curve form a relatively huge cyclic group and the sum of the points are called the order, <code>q</code>, of the group. The encryption based on the elliptic curve is performed within this cyclic group. If the cyclic group order <code>q</code> is a prime number, then the encryption could get performed in a mod q finite field <code>Fq</code>.</p>
-
 <p>Usually, we pick big cyclic groups as the base of encryption. Select a random non-infinite point of the cyclic group as the generator <code>G</code> (The group order <code>q</code> is usually a huge prime number, then picking any non-zero point is equival), and all other points could get generated by <code>G+G+....</code>. The number of elements in this group is <code>q</code> meaning that there are <code>q</code> points, and we could mark every point by <code>0,1,2,3,....q-1</code>. Here the point 0 is an infinite point, point 1 is <code>G</code> mentioned before - it is also called the base point, point 2 is <code>G+G</code> and point 3 is <code>G+G+G</code>.</p>
-
-<p>Now we have two ways to represent the first point. First one is to show the coordinate <code>{x,y}</code> and x,y here belongs to <code>Fp</code>. Second one is <code>n*G</code>. We only need to assign n since G is public, and n belongs to <code>Fq</code>.</p>
-
+<p>Now we have two ways to represent the first point. First one is to show the coordinate <code>{x,y}</code> and x,y here belongs to <code> Fp</code>. Second one is <code>n*G</code>. We only need to assign n since G is public, and n belongs to <code>Fq</code>.</p>
 <p>The signature of <code>scalar_mul(G1Point point, uint s)</code> shows it applies point as the generator and compute <code>point+point+.....+point</code> where there are n points in total. This is the second way of representation.</p>
-
 <p>Solidity smart contracts encode <code>Fq</code> by type uint256, while the maximum of uint256 is greater than <code>q</code>. Then there might me a scenario: <strong>multiple values</strong> of uint256 would map to the same value in <code>Fq</code> after mod. For example, <code>s</code> and <code>s + q</code> represents the same point <code>s</code> because point <code>q</code> is equivalent to point <code>0</code> in the cyclic group (each point corresponds to <code>0,1,2,3,....q-1</code>). Similarly, <code>s + 2q</code> and others all represents point <code>s</code>. <strong>The mechanism of inputting multiple big integers would correspond to the same value in <code>Fq</code> is what we call &lsquo;Input Aliasing&rsquo;, meaning that these integers are all aliases.</strong></p>
-
 <p>The elliptic curve implemented by No. 7 ethereum contract is <code>y^2 = ax^3+bx+c</code>. The p and q is:</p>
-
-<p><img src="yellow_paper_curve.png" alt="" /></p>
-
+<p><img src="yellow_paper_curve.png" alt=""></p>
 <p>The <code>q</code> value here is the group order above. Then, in the range of type uint256, there are <code>uint256_max/q</code> &mdash; no more than 5 integers represents the same point (5 &lsquo;Input Aliasing&rsquo;).</p>
-
 <p>What is this meaning? Let us go back to function <code>verifyProof(a, b, c, input)</code> calling <code>scalar_mul(G1Point point, uint s)</code> and every element in list <code>input[]</code> is actually <code>s</code>. For every <code>s</code> in range of type uint256, there are at most 4 other values returning the same value.</p>
-
 <p>Therefore, when the user submits a zero-knowledge proof to the contract, the contract would put <code>input[1]</code> (some <code>s</code>) to <code>nullifiers_set</code>. The user or other attackers could use the other 4 values to submit the proof again. <strong>These 4 values are not in <code>nullifiers_set</code> so the fake proof could pass the check, and 5 &lsquo;Input Aliasing&rsquo; enable spending the money 5 times with a low cost!</strong></p>
-
 <h2 id="more-projects-affected">More Projects Affected</h2>
-
 <p>Aside from semaphore, many other ethereum mixcoin and zkSNARKs projects have the same &lsquo;Input Aliasing&rsquo; issue.</p>
-
-<p>Among these projects, the most influential ones are the famous zkSNARKs library or framework projects including snarkjs, ethsnarks, ZoKrates and so on. Many applications would copy or refer to their code for developing, thus introducing the vulnerability. Therefore the 3 projects listed fixed this bug overnight, along with other mixcoin projects with zkSNARKs like hopper, Heiswap and Miximus. <strong>All these projects are highly welcomed in the community and Heiswap is called &lsquo;Vitalik&rsquo;s favorite project&rsquo;.</strong></p>
-
+<p>Among these projects, the most influential ones are the famous zkSNARKs library or framework projects including snarkjs, ethsnarks, ZoKrates and so on. Many applications would copy or refer to their code for developing, thus introducing the vulnerability. Therefore the 3 projects listed fixed this bug overnight, along with other mixcoin projects with zkSNARKs like hopper, Heiswap and Miximus. <strong>All these projects are highly welcomed in the community and Heiswap is called &lsquo;Vitalik's favorite project&rsquo;.</strong></p>
 <h2 id="solution-to-input-aliasing">Solution to &lsquo;Input Aliasing&rsquo;</h2>
-
 <p>In fact, all projects importing this zkSNARKs cryptography library should check their code to ensure security. So how to fix this issue?</p>
-
 <p>Fortunately, the solution is simple. We just need to add a check of input parameter range and enforce the input value is smaller than q value mentioned above. That is, banning &lsquo;Input Aliasing&rsquo; by preventing representation of the same point by multiple values.</p>
-
-<p><img src="scalar_fix.png" alt="" /></p>
-
+<p><img src="scalar_fix.png" alt=""></p>
 <h2 id="introspection">Introspection</h2>
-
 <p>This &lsquo;Input Aliasing&rsquo; bug requires our rethinking. Let us review the whole story first. Christian posted his zkSNARKs computing contract implementation to GitHub Gist in 2017. As a computation library, we could think that his implementation is secure without disobeying any cryptographic common senses, and perfectly fulfilled the job of proof verification in the contract. In fact, Christian, as the Solidity creator, would make no simple mistake here. However, 2 years later, this code snippet caused such a security risk. Countless colleagues and professionals have seen or used this 200 lines of code over 2 years without noticing any issue.</p>
-
-<p>What is really going wrong? Maybe a misunderstanding of the interface between low-level library implementors and developers. In another word: the implementor did not consider about developer&rsquo;s misusing; whereas the developers did not fully understand the low-level principles and made false security assumptions.</p>
-
+<p>What is really going wrong? Maybe a misunderstanding of the interface between low-level library implementors and developers. In another word: the implementor did not consider about developer's misusing; whereas the developers did not fully understand the low-level principles and made false security assumptions.</p>
 <p>Luckily, all common zkSNARKs contract libraries updated as soon as possible to ban &lsquo;Input Aliasing&rsquo; from low-level. <strong>SECBIT Lab holds the view that although updating libraries gets rid of security issues in the future, there still might be some developers unluckily get in touch with the bugged version code or tutorial (like tokens returning 0 due to integer overflow) if the seriousness is not broadcast widely.</strong></p>
-
 <p>&lsquo;Input Aliasing&rsquo; reminds us of &lsquo;Integer Overflow&rsquo; issues before. Two bugs share many propeties: originating from developers&rsquo; false assumptions; relating to Solidity type uint256; spreading widely; many vulnerable tutorial or library contract code existing online. Obviously, &lsquo;Input Aliasing&rsquo; is harder to find, longer to hide and more knowledge required (complex elliptic curves and cryptographic theories). SECBIT Lab predicts that more security issues are to come with the emergence of more applications with the development of zkSNARKs, zero-knowledge proof and privacy technologies. We hope that the community would learn from the experience and pay more attention to security in this new technology tide.</p>
-
 <h2 id="reference">Reference</h2>
-
 <ul>
 <li>[1] <a href="https://github.com/kobigurk/semaphore/issues/16">https://github.com/kobigurk/semaphore/issues/16</a></li>
 <li>[2] <a href="https://github.com/kobigurk/semaphore/blob/602dd57abb43e48f490e92d7091695d717a63915/semaphorejs/contracts/Semaphore.sol#L83">https://github.com/kobigurk/semaphore/blob/602dd57abb43e48f490e92d7091695d717a63915/semaphorejs/contracts/Semaphore.sol#L83</a></li>

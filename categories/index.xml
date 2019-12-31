@@ -1,14 +1,32 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on SECBIT Blog</title>
     <link>https://sec-bit.github.io/blog/categories/</link>
     <description>Recent content in Categories on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 19 Dec 2019 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 25 Dec 2019 08:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://sec-bit.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Zero Knowledge Proof</title>
+      <link>https://sec-bit.github.io/blog/categories/zero-knowledge-proof/</link>
+      <pubDate>Wed, 25 Dec 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/categories/zero-knowledge-proof/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>zkSNARKs</title>
+      <link>https://sec-bit.github.io/blog/categories/zksnarks/</link>
+      <pubDate>Wed, 25 Dec 2019 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/categories/zksnarks/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>privacy</title>
@@ -16,15 +34,6 @@
       <pubDate>Thu, 19 Dec 2019 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/categories/privacy/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Zero Knowledge Proof</title>
-      <link>https://sec-bit.github.io/blog/categories/zero-knowledge-proof/</link>
-      <pubDate>Thu, 07 Nov 2019 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/categories/zero-knowledge-proof/</guid>
       <description></description>
     </item>
     
@@ -52,15 +61,6 @@
       <pubDate>Mon, 29 Jul 2019 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/categories/vulnerability/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>zkSNARKs</title>
-      <link>https://sec-bit.github.io/blog/categories/zksnarks/</link>
-      <pubDate>Mon, 29 Jul 2019 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/categories/zksnarks/</guid>
       <description></description>
     </item>
     
