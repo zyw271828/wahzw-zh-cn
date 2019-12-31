@@ -71,12 +71,12 @@ You may think that the winner is just an ordinary participant." />
 <meta property="og:url" content="https://sec-bit.github.io/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/" />
 <meta property="og:image" content="https://sec-bit.github.io/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/cover.jpeg"/>
 <meta property="article:published_time" content="2018-08-23T08:00:00+08:00" />
-<meta property="article:modified_time" content="2019-10-14T19:27:48+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
+<meta property="article:modified_time" content="2019-12-31T17:00:52+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="How the winner got Fomo3D prize - A Detailed Explanation">
 <meta itemprop="description" content="The first round of Fomo3D has ended and the winner&#39;s address is 0xa169, with a prize of 10,469.66 ethers.
 You may think that the winner is just an ordinary participant.">
 <meta itemprop="datePublished" content="2018-08-23T08:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2019-10-14T19:27:48&#43;08:00" />
+<meta itemprop="dateModified" content="2019-12-31T17:00:52&#43;08:00" />
 <meta itemprop="wordCount" content="1317">
 <meta itemprop="image" content="https://sec-bit.github.io/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/cover.jpeg">
 
@@ -473,18 +473,18 @@ if (!doNotTrack) {
 <p>You may think that the winner is just an ordinary participant.</p>
 <p>SECBIT Labs <strong>first found</strong> that the Fomo3D winner played a special attack trick to sharply decrease the number of transactions packed by miners near the end of the game (multiple blocks were involved), <strong>accelerating the approach of the game end</strong> and <strong>increasing the winning probability</strong>. SECBIT Labs also observed several similar abnormal blocks and transactions regarding to the last round of Last Winner.</p>
 <h2 id="a-series-of-abnormal-blocks-and-transactions">A Series of Abnormal Blocks and Transactions</h2>
-<p><img src="eng_pic/txns.jpg" alt="1"></p>
+<p><img src="eng_pic/txns.en.jpg" alt="1"></p>
 <p>The picture shows that the block with height 6191896 packs the last key purchasing transaction of Fomo3D winner, containing 92 transactions which is normal.</p>
 <p>However, the number of transactions in the following 11 blocks (6191898～6191908) <strong>decreased sharply</strong> and the minimum block (6191906) <strong>only contained 3 transactions</strong>, which is abnormal.</p>
 <p>Take a look at these &lsquo;special&rsquo; blocks.</p>
-<p><img src="eng_pic/3txns-block.jpg" alt="2"></p>
+<p><img src="eng_pic/3txns-block.en.jpg" alt="2"></p>
 <p>Here we can see that the block with height 6191906 only had 3 transactions sending to the same contract (calling the same <strong>mysterious contract</strong>), and the sum of the transaction fees <strong>is greater than 4 ethers</strong>.</p>
 <p><strong>The creator of this mysterious contract (0x18e1) is exactly the winner (0xa169)!</strong></p>
 <p>The person in charge of F2POOL told us that a transaction with high TxFee would enter and get packed in blocks first.</p>
 <p>This explains that the 11 blocks mentioned above possess excessive TxFee while they only pack few transactions. These blocks were processed by mining pools like SparkPool, Nanopool, Ethermine, BitClubPool, MiningPoolHub. Apparently, selecting transactions with high TxFee is in line with mining pools&rsquo; interest and it is widely applied throughout the industry [1].</p>
 <h2 id="what-had-the-mysterious-contract-ever-done">What had the &lsquo;mysterious contract&rsquo; ever done?</h2>
 <p>SECBIT Labs discovered that these abnormal transactions sent to the attack contract in related blocks all failed in the end.</p>
-<p><img src="eng_pic/bad-instr.jpg" alt="3"></p>
+<p><img src="eng_pic/bad-instr.en.jpg" alt="3"></p>
 <p>We could see from the picture above that the final status is &lsquo;Fail&rsquo; and Etherscan has a warning of <code>Bad instruction</code> and the Gas Limit (4200000) is exhausted, which is half of the normal gas limit, sending high TxFee to the mining pool which packed the transaction.</p>
 <blockquote>
 <p>Gas limit in Ethereum represents the maximum approved gas in a single block to determine the number of transactions packed in the block. Usually, the block gas limit is set with certain strategies between miners and the common value is 8000000 [2].</p>
@@ -494,7 +494,7 @@ if (!doNotTrack) {
 <p>The winner (attacker) made use of this feature and took up the block gas limit with few transactions.</p>
 <h2 id="more-brilliant-hacks">More Brilliant Hacks</h2>
 <p>Moreover, SECBIT Labs discovered that the mysterious contract would call <code>getCurrentRoundInfo()</code> in Fomo3D to get info of the current round like the time remaining and the last buyer.</p>
-<p><img src="eng_pic/getCurRndInfo.jpg" alt="img"></p>
+<p><img src="eng_pic/getCurRndInfo.en.jpg" alt="img"></p>
 <p>The &lsquo;mysterious contract&rsquo; has not published its source code. By combining the result of reverse engineering, SECBIT Labs infers that the winner would call the method in the mysterious contract to query info, especially <strong>time round ends</strong> and <strong>current player in leads address</strong>. When the remaining time reaches a threshold and the last buyer is the attacker, call <code>assert()</code> to fail the transaction and use up all gas; when the remaining time is far from the threshold or the last buyer is someone else, do nothing, which takes little gas.</p>
 <p>The winner (attacker) made use of this approach and launched many similar <strong>mutable mysterious transactions</strong>: when the attacker has a high winning change, use these mysterious transactions which would <strong>get packed by mining pools first and take up the following blocks</strong>, leading to the situation that other key purchases cannot be packed in time, accelerating the approach of game end and increasing the attackers&rsquo; winning probability sharply.</p>
 <h2 id="other-techniques-and-details">Other techniques and details</h2>
@@ -541,13 +541,13 @@ if (!doNotTrack) {
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
     <span class="item-content">
-      2019-10-14
+      2019-12-31
       
-        <a href="https://github.com/sec-bit/blog/commit/4f60eb13e5f80d77eef0183706bf210012b4fb18" title="content: add one missing post">
-          (4f60eb1)
+        <a href="https://github.com/sec-bit/blog/commit/25fde84fbdc3e7865db540b0ec345e81ca7fa7ba" title="fomo3d: fix img for hugo v0.62">
+          (25fde84)
         </a>
         
-          <br>content: add one missing post
+          <br>fomo3d: fix img for hugo v0.62
         
       
     </span>
