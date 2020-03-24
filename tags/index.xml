@@ -5,15 +5,24 @@
     <link>https://sec-bit.github.io/blog/tags/</link>
     <description>Recent content in Tags on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 25 Dec 2019 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jan 2020 08:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://sec-bit.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>libsnark</title>
+      <link>https://sec-bit.github.io/blog/tags/libsnark/</link>
+      <pubDate>Fri, 03 Jan 2020 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/tags/libsnark/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>tutorials</title>
       <link>https://sec-bit.github.io/blog/tags/tutorials/</link>
-      <pubDate>Wed, 25 Dec 2019 08:00:00 +0800</pubDate>
+      <pubDate>Fri, 03 Jan 2020 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/tags/tutorials/</guid>
       <description></description>
@@ -22,16 +31,16 @@
     <item>
       <title>Zero Knowledge Proof</title>
       <link>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</link>
-      <pubDate>Wed, 25 Dec 2019 08:00:00 +0800</pubDate>
+      <pubDate>Fri, 03 Jan 2020 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>zkSNARKs</title>
+      <title>zksnarks</title>
       <link>https://sec-bit.github.io/blog/tags/zksnarks/</link>
-      <pubDate>Wed, 25 Dec 2019 08:00:00 +0800</pubDate>
+      <pubDate>Fri, 03 Jan 2020 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/tags/zksnarks/</guid>
       <description></description>
@@ -110,7 +119,7 @@
     </item>
     
     <item>
-      <title>Blockchain</title>
+      <title>blockchain</title>
       <link>https://sec-bit.github.io/blog/tags/blockchain/</link>
       <pubDate>Mon, 28 Oct 2019 08:00:00 +0800</pubDate>
       
@@ -128,7 +137,7 @@
     </item>
     
     <item>
-      <title>Security</title>
+      <title>security</title>
       <link>https://sec-bit.github.io/blog/tags/security/</link>
       <pubDate>Mon, 28 Oct 2019 08:00:00 +0800</pubDate>
       
@@ -178,15 +187,6 @@
       <pubDate>Mon, 29 Jul 2019 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/tags/smart-contract/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Vulnerability</title>
-      <link>https://sec-bit.github.io/blog/tags/vulnerability/</link>
-      <pubDate>Mon, 29 Jul 2019 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/tags/vulnerability/</guid>
       <description></description>
     </item>
     

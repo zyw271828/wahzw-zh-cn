@@ -5,10 +5,28 @@
     <link>https://sec-bit.github.io/blog/post/</link>
     <description>Recent content in Posts on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 25 Dec 2019 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jan 2020 08:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://sec-bit.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>零知识证明 Learn by Coding：libsnark 入门篇</title>
+      <link>https://sec-bit.github.io/blog/2020/01/03/zkp-learn-by-coding-libsnark-101/</link>
+      <pubDate>Fri, 03 Jan 2020 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/2020/01/03/zkp-learn-by-coding-libsnark-101/</guid>
+      <description>希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。</description>
+    </item>
+    
+    <item>
+      <title>从零开始学习 zk-SNARK（二）——多项式的非交互式零知识证明</title>
+      <link>https://sec-bit.github.io/blog/2020/01/01/learn-zk-snark-from-zero-part-two/</link>
+      <pubDate>Wed, 01 Jan 2020 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/2020/01/01/learn-zk-snark-from-zero-part-two/</guid>
+      <description>even@安比实验室: 上一篇文章中，作者介绍了如何利用多项式的性质来证明某个多项式的知识，相信大家已经对构造证明有了一些基本的认识。目前的证明协议仍然存在一些缺陷，本文将会针对这些薄弱项进行改进，进而最终构造出关于多项式的零知识证明协议。本文重点：KEA，交互式零知识证明，非交互式零知识证明和 Setup。</description>
+    </item>
     
     <item>
       <title>从零开始学习 zk-SNARK（一）——多项式的性质与证明</title>
@@ -171,15 +189,6 @@
       
       <guid>https://sec-bit.github.io/blog/2018/08/03/worldcup-miner-dilemma/</guid>
       <description>诺贝尔经济学奖获得者约翰.纳什(John F. Nash)在他的博士论文中提出的“纳什均衡”概念，完全颠覆了传统经济学家的固有观念，因此“纳什均衡”对经济学的影响被类比为“DNA双螺旋结构对生物科学的影响”。纳什均衡提供了一种分析社会和经济参与者行为的工具，安比(SECBIT)实验室的研究员利用均衡的概念来揭示世界杯比赛中消极比赛、比特币系统中矿工挖矿博弈，以及共识系统所面临的挑战背后所蕴含的均衡模型。</description>
-    </item>
-    
-    <item>
-      <title>ERC223及ERC827实现代码欠缺安全考虑</title>
-      <link>https://sec-bit.github.io/blog/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</link>
-      <pubDate>Sun, 24 Jun 2018 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</guid>
-      <description>ERC223, ERC827的部分实现代码引入了任意函数调用缺陷，可能会对使用这部分代码的合约带来安全漏洞。如果需要实现上述规范接口，请仔细检查实现代码。这种合约本身允许用户自定义 &lt;code&gt;call()&lt;/code&gt; 任意地址上任意函数的设计，十分危险。攻击者可以很容易地借用当前合约的身份来进行&lt;strong&gt;任何操作&lt;/strong&gt;，比如盗取Token或者绕开权限检查等。</description>
     </item>
     
   </channel>

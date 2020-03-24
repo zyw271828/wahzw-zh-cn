@@ -66,7 +66,7 @@
 <meta property="og:description" content="SECBIT THE WORLD" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://sec-bit.github.io/blog/" />
-<meta property="og:updated_time" content="2019-12-25T08:00:00+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
+<meta property="og:updated_time" content="2020-01-03T08:00:00+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="SECBIT Blog">
 <meta itemprop="description" content="SECBIT THE WORLD"><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="SECBIT Blog"/>
@@ -413,6 +413,97 @@ if (!doNotTrack) {
   <header class="post-header">
     <h1 class="post-title">
       
+      <a class="post-link" href="/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/">zkSNARKs 合约库「输入假名」漏洞致众多零知项目存在安全风险</a>
+    </h1>
+    
+<div class="post-meta">
+  
+  <div><a href="https://sec-bit.github.io/blog/en/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/">Read in English: The &#39;Input Aliasing&#39; bug caused by a contract library of zkSNARKs</a></div>
+  
+</div>
+
+    <div class="post-meta">
+      <time datetime="2019-07-29" class="post-time">
+        2019-07-29
+      </time>
+      <div class="post-category">
+          <a href="https://sec-bit.github.io/blog/categories/zksnarks/"> zkSNARKs </a>
+          <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
+          <a href="https://sec-bit.github.io/blog/categories/vulnerability/"> Vulnerability </a>
+          
+        </div>
+      <span class="more-meta"> 约 3671 字 </span>
+      <span class="more-meta"> 预计阅读 8 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+
+    <p>
+        <img src="/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/scalar_fix.png"><br>
+    </p>
+
+    
+    <div class="post-summary">
+      大量零知识证明项目由于错误地使用了某个 zkSNARKs 合约库，引入「输入假名 (Input Aliasing) 」漏洞，可导致伪造证明、双花、重放等攻击行为发生，且攻击成本极低。众多以太坊社区开源项目受影响，其中包括三大最常用的 zkSNARKs 零知开发库 snarkjs、ethsnarks、ZoKrates，以及近期大热的三个混币（匿名转账）应用 hopper、Heiswap、Miximus。
+    </div>
+    <div class="read-more">
+      <a href="/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/blog/2019/07/24/zkpod-explained-pod-tiny/">PoD-Tiny——实现零信任交易的最简协议</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2019-07-24" class="post-time">
+        2019-07-24
+      </time>
+      <div class="post-category">
+          <a href="https://sec-bit.github.io/blog/categories/zkpod/"> zkPoD </a>
+          <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
+          
+        </div>
+      <span class="more-meta"> 约 6168 字 </span>
+      <span class="more-meta"> 预计阅读 13 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+
+    <p>
+        <img src="/blog/2019/07/24/zkpod-explained-pod-tiny/pod-tiny-5.png"><br>
+    </p>
+
+    
+    <div class="post-summary">
+      zkPoD 是一个全新的实现 ZKCP 目标的方案。目前 zkPoD 已经支持上 GB 的数据，支持低 TPS 公链，也支持高 TPS 联盟链；既支持二进制数据，也支持带有内部丰富类型与结构的表格数据。与传统的「受信第三方」相比，zkPoD 利用区块链来作为一个「Trustless 第三方」，实现了的「零信任公平交易」。本文介绍一个极简的 PoD 协议——PoD-Tiny，这个协议简化了很多问题，并不实用，但是可以帮助读者快速理解 PoD 的原理和面临的挑战。
+    </div>
+    <div class="read-more">
+      <a href="/blog/2019/07/24/zkpod-explained-pod-tiny/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
       <a class="post-link" href="/blog/2019/07/14/zkpod-short-intro/">zkPoD：区块链，零知识证明与形式化验证，实现无中介、零信任的公平交易</a>
     </h1>
     
@@ -542,90 +633,6 @@ if (!doNotTrack) {
 </article>
 
   
-    <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title">
-      
-      <a class="post-link" href="/blog/2018/10/24/formal-verification-background/">Don’t Test, Verify —— 哪个故事真正符合你对形式化验证的想象？</a>
-    </h1>
-    
-    <div class="post-meta">
-      <time datetime="2018-10-24" class="post-time">
-        2018-10-24
-      </time>
-      <div class="post-category">
-          <a href="https://sec-bit.github.io/blog/categories/formal-verification/"> Formal Verification </a>
-          
-        </div>
-      <span class="more-meta"> 约 4896 字 </span>
-      <span class="more-meta"> 预计阅读 10 分钟 </span>
-      
-      
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-
-    <p>
-        <img src="/blog/2018/10/24/formal-verification-background/2-little-bird.jpg"><br>
-    </p>
-
-    
-    <div class="post-summary">
-      世界上是否有一种技术可以保证计算机程序绝对安全，能够完全抵挡住黑客的进攻？
-    </div>
-    <div class="read-more">
-      <a href="/blog/2018/10/24/formal-verification-background/" class="read-more-link">阅读全文</a>
-    </div>
-    
-  </div>
-</article>
-
-  
-    <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title">
-      
-      <a class="post-link" href="/blog/2018/09/29/bitcoin-p2pk2-p2sh-addr-pywallet-bug/">是谁控制了比特币，是你？还是钱包？BTC地址与交易原理剖析</a>
-    </h1>
-    
-    <div class="post-meta">
-      <time datetime="2018-09-29" class="post-time">
-        2018-09-29
-      </time>
-      <div class="post-category">
-          <a href="https://sec-bit.github.io/blog/categories/blockchain/"> Blockchain </a>
-          <a href="https://sec-bit.github.io/blog/categories/bitcoin/"> Bitcoin </a>
-          <a href="https://sec-bit.github.io/blog/categories/vulnerability/"> Vulnerability </a>
-          
-        </div>
-      <span class="more-meta"> 约 6397 字 </span>
-      <span class="more-meta"> 预计阅读 13 分钟 </span>
-      
-      
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-
-    <p>
-        <img src="/blog/2018/09/29/bitcoin-p2pk2-p2sh-addr-pywallet-bug/imgs/cover.jpeg"><br>
-    </p>
-
-    
-    <div class="post-summary">
-      安比（SECBIT）实验室在对数字钱包源码审计时，发现一个名为 pywallet 的比特币钱包开源库包含了一个严重缺陷。如果向 pywallet 生成的 OmniLayer 收款地址转账，将导致资产永久丢失。
-    </div>
-    <div class="read-more">
-      <a href="/blog/2018/09/29/bitcoin-p2pk2-p2sh-addr-pywallet-bug/" class="read-more-link">阅读全文</a>
-    </div>
-    
-  </div>
-</article>
-
-  
 </section>
 
 
@@ -665,6 +672,10 @@ if (!doNotTrack) {
       
       <li >
         <a href="/blog/page/4/">4</a>
+      </li>
+      
+      <li >
+        <a href="/blog/page/5/">5</a>
       </li>
       
     </ul>
@@ -755,7 +766,7 @@ if (!doNotTrack) {
     &copy;
     
       2018 -
-    2019
+    2020
     <span class="heart">
       
       <i class="iconfont">
