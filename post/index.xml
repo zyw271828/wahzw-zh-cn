@@ -5,10 +5,19 @@
     <link>https://sec-bit.github.io/blog/post/</link>
     <description>Recent content in Posts on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 03 Jan 2020 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 08 Jan 2020 08:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://sec-bit.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>云中「秘密」：构建非交互式零知识证明</title>
+      <link>https://sec-bit.github.io/blog/2020/01/08/nizk-by-crs/</link>
+      <pubDate>Wed, 08 Jan 2020 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/2020/01/08/nizk-by-crs/</guid>
+      <description>之前我们介绍了如何采用「随机预言机」来扮演一个虚拟的「第三方」角色，实现虚拟的「交互」与「随机挑战」。本文将深入讲述另一种方法实现非交互式零知识证明，即如何通过一段共享的字符串去除「交互」与「隐藏随机性」。这个字符串必须事先由「第三方」来随机产生，这就是传说中的「公共参考串」（Common Reference String，简称 CRS）。</description>
+    </item>
     
     <item>
       <title>零知识证明 Learn by Coding：libsnark 入门篇</title>
@@ -180,15 +189,6 @@
       
       <guid>https://sec-bit.github.io/blog/2018/08/20/last-winner-of-lastwinner/</guid>
       <description>Last Winner（类 Fomo3D）游戏大火，导致以太坊异常拥堵，Gas 费用暴涨。大量以太币资金入场。Last Winner 游戏合约存在大量非正常交易，并且伴随着大量合约的创建与自毁，与正常人类调用行为特征偏离很大，这引起了我们的高度警惕。</description>
-    </item>
-    
-    <item>
-      <title>从世界杯小组赛消极比赛，到矿工博弈及共识算法，博弈论解释了一切</title>
-      <link>https://sec-bit.github.io/blog/2018/08/03/worldcup-miner-dilemma/</link>
-      <pubDate>Fri, 03 Aug 2018 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/2018/08/03/worldcup-miner-dilemma/</guid>
-      <description>诺贝尔经济学奖获得者约翰.纳什(John F. Nash)在他的博士论文中提出的“纳什均衡”概念，完全颠覆了传统经济学家的固有观念，因此“纳什均衡”对经济学的影响被类比为“DNA双螺旋结构对生物科学的影响”。纳什均衡提供了一种分析社会和经济参与者行为的工具，安比(SECBIT)实验室的研究员利用均衡的概念来揭示世界杯比赛中消极比赛、比特币系统中矿工挖矿博弈，以及共识系统所面临的挑战背后所蕴含的均衡模型。</description>
     </item>
     
   </channel>

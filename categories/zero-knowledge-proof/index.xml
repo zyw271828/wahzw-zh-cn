@@ -5,10 +5,19 @@
     <link>https://sec-bit.github.io/blog/categories/zero-knowledge-proof/</link>
     <description>Recent content in Zero Knowledge Proof on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 03 Jan 2020 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 08 Jan 2020 08:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>云中「秘密」：构建非交互式零知识证明</title>
+      <link>https://sec-bit.github.io/blog/2020/01/08/nizk-by-crs/</link>
+      <pubDate>Wed, 08 Jan 2020 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/2020/01/08/nizk-by-crs/</guid>
+      <description>之前我们介绍了如何采用「随机预言机」来扮演一个虚拟的「第三方」角色，实现虚拟的「交互」与「随机挑战」。本文将深入讲述另一种方法实现非交互式零知识证明，即如何通过一段共享的字符串去除「交互」与「隐藏随机性」。这个字符串必须事先由「第三方」来随机产生，这就是传说中的「公共参考串」（Common Reference String，简称 CRS）。</description>
+    </item>
     
     <item>
       <title>零知识证明 Learn by Coding：libsnark 入门篇</title>

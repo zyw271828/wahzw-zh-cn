@@ -5,10 +5,37 @@
     <link>https://sec-bit.github.io/blog/tags/</link>
     <description>Recent content in Tags on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 03 Jan 2020 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 08 Jan 2020 08:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://sec-bit.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Common Reference String</title>
+      <link>https://sec-bit.github.io/blog/tags/common-reference-string/</link>
+      <pubDate>Wed, 08 Jan 2020 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/tags/common-reference-string/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>NIZK</title>
+      <link>https://sec-bit.github.io/blog/tags/nizk/</link>
+      <pubDate>Wed, 08 Jan 2020 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/tags/nizk/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Zero Knowledge Proof</title>
+      <link>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</link>
+      <pubDate>Wed, 08 Jan 2020 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>libsnark</title>
@@ -29,16 +56,7 @@
     </item>
     
     <item>
-      <title>Zero Knowledge Proof</title>
-      <link>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</link>
-      <pubDate>Fri, 03 Jan 2020 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>zksnarks</title>
+      <title>zkSNARKs</title>
       <link>https://sec-bit.github.io/blog/tags/zksnarks/</link>
       <pubDate>Fri, 03 Jan 2020 08:00:00 +0800</pubDate>
       
@@ -65,29 +83,11 @@
     </item>
     
     <item>
-      <title>Common Reference String</title>
-      <link>https://sec-bit.github.io/blog/tags/common-reference-string/</link>
-      <pubDate>Fri, 01 Nov 2019 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/tags/common-reference-string/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Fiat-Shamir</title>
       <link>https://sec-bit.github.io/blog/tags/fiat-shamir/</link>
       <pubDate>Fri, 01 Nov 2019 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/tags/fiat-shamir/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>NIZK</title>
-      <link>https://sec-bit.github.io/blog/tags/nizk/</link>
-      <pubDate>Fri, 01 Nov 2019 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/tags/nizk/</guid>
       <description></description>
     </item>
     
@@ -119,7 +119,7 @@
     </item>
     
     <item>
-      <title>blockchain</title>
+      <title>Blockchain</title>
       <link>https://sec-bit.github.io/blog/tags/blockchain/</link>
       <pubDate>Mon, 28 Oct 2019 08:00:00 +0800</pubDate>
       

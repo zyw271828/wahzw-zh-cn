@@ -51,14 +51,14 @@
   </url>
   
   <url>
-    <loc>https://sec-bit.github.io/blog/en/categories/zero-knowledge-proof/</loc>
+    <loc>https://sec-bit.github.io/blog/en/tags/zero-knowledge-proof/</loc>
     <lastmod>2019-10-28T17:10:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://sec-bit.github.io/blog/en/tags/zero-knowledge-proof/</loc>
+    <loc>https://sec-bit.github.io/blog/en/categories/zero-knowledge-proof/</loc>
     <lastmod>2019-10-28T17:10:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
