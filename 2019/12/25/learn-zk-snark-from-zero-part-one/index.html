@@ -66,11 +66,11 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sec-bit.github.io/blog/2019/12/25/learn-zk-snark-from-zero-part-one/" />
 <meta property="article:published_time" content="2019-12-25T08:00:00+08:00" />
-<meta property="article:modified_time" content="2019-12-31T16:43:28+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
+<meta property="article:modified_time" content="2020-06-06T13:56:17+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="从零开始学习 zk-SNARK（一）——多项式的性质与证明">
 <meta itemprop="description" content="当我第一次了解到 zk-SNARK 技术是如何将这些东西完美地融合在一起的时候，就被数学之美震撼到了，并且随着我发现的维度越多，好奇心就越强烈。在这篇文章中，我主要就基于一些实例简洁明了地阐明 zk-SNARK ，并对这里面的很多问题做出了解释，并利用这种方式分享了我的经验，进而让更多人也能够欣赏到这项最先进的技术以及它的创新之处，最终欣赏到数学之美。">
 <meta itemprop="datePublished" content="2019-12-25T08:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2019-12-31T16:43:28&#43;08:00" />
+<meta itemprop="dateModified" content="2020-06-06T13:56:17&#43;08:00" />
 <meta itemprop="wordCount" content="8890">
 
 
@@ -711,7 +711,7 @@ $$</p>
 <p>计算多项式 $h(x) = p(x)/t(x)$</p>
 </li>
 <li>
-<p>使用加密值 $g^{s^0}$，$g^{s^1}$，…，$g^{g^d}$ 和系数 $c_0$，$c_1$，…，$c_n$ 计算</p>
+<p>使用加密值 $g^{s^0}$，$g^{s^1}$，…，$g^{s^d}$ 和系数 $c_0$，$c_1$，…，$c_n$ 计算</p>
 <p>$E(p(s)) = g^{p(s)} = (g^{s^d})^{c_d}…(g^{s^1})^{c_1} *(g^{s^0})^{c_0}$</p>
 <p>然后同样计算 $E(h(s)) = g^{h(s)}$</p>
 </li>
@@ -767,13 +767,13 @@ $$</p>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-      2019-12-31
+      2020-06-06
       
-        <a href="https://github.com/sec-bit/blog/commit/2b7e69a61c6b5f4dc70565860bc9f7e7369d125c" title="learn zkSNARK from 0: math and img">
-          (2b7e69a)
+        <a href="https://github.com/sec-bit/blog/commit/d2d2c4779c68e2f8a0e9e99176cb0eb7aa5563bd" title="fix typo">
+          (d2d2c47)
         </a>
         
-          <br>learn zkSNARK from 0: math and img
+          <br>fix typo
         
       
     </span>
