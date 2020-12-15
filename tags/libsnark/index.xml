@@ -5,11 +5,7 @@
     <link>https://sec-bit.github.io/blog/tags/libsnark/</link>
     <description>Recent content in libsnark on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 03 Jan 2020 08:00:00 +0800</lastBuildDate>
-    
-	<atom:link href="https://sec-bit.github.io/blog/tags/libsnark/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Fri, 03 Jan 2020 08:00:00 +0800</lastBuildDate><atom:link href="https://sec-bit.github.io/blog/tags/libsnark/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>零知识证明 Learn by Coding：libsnark 入门篇</title>
       <link>https://sec-bit.github.io/blog/2020/01/03/zkp-learn-by-coding-libsnark-101/</link>

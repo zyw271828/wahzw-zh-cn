@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.62.0" />
+<meta name="generator" content="Hugo 0.75.1" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2019/11/01/from-interactive-zkp-to-non-interactive-zkp/" />
@@ -53,7 +53,7 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.0995afa14b62cd93e93cfc066b646c4c17a3eddca0e9d52a1d9dcf5d90aaacd3.css" integrity="sha256-CZWvoUtizZPpPPwGa2RsTBej7dyg6dUqHZ3PXZCqrNM=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
 
 
 
@@ -70,14 +70,15 @@
 <meta property="article:modified_time" content="2019-11-01T18:07:38+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="亚瑟王的「随机」挑战：从交互到非交互式零知识证明">
 <meta itemprop="description" content="通过随机数挑战是交互式零知识证明的「信任根基」。但，「交互过程」会限制应用场景。如果能将交互式零知识证明变成「非交互」？这会非常非常激动人心。所谓的非交互可以看成是只有「一轮」的证明过程，即Alice 直接发一个证明给 Bob 进行验证。">
-<meta itemprop="datePublished" content="2019-11-01T08:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2019-11-01T18:07:38&#43;08:00" />
+<meta itemprop="datePublished" content="2019-11-01T08:00:00+08:00" />
+<meta itemprop="dateModified" content="2019-11-01T18:07:38+08:00" />
 <meta itemprop="wordCount" content="9967">
 <meta itemprop="image" content="https://sec-bit.github.io/blog/2019/11/01/from-interactive-zkp-to-non-interactive-zkp/cover.jpg">
 
 
 
-<meta itemprop="keywords" content="Zero Knowledge Proof,Fiat-Shamir,Public-Coin,Common Reference String,Random Oracle Model,NIZK," /><meta name="twitter:card" content="summary_large_image"/>
+<meta itemprop="keywords" content="Zero Knowledge Proof,Fiat-Shamir,Public-Coin,Common Reference String,Random Oracle Model,NIZK," />
+<meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://sec-bit.github.io/blog/2019/11/01/from-interactive-zkp-to-non-interactive-zkp/cover.jpg"/>
 <meta name="twitter:title" content="亚瑟王的「随机」挑战：从交互到非交互式零知识证明"/>
 <meta name="twitter:description" content="通过随机数挑战是交互式零知识证明的「信任根基」。但，「交互过程」会限制应用场景。如果能将交互式零知识证明变成「非交互」？这会非常非常激动人心。所谓的非交互可以看成是只有「一轮」的证明过程，即Alice 直接发一个证明给 Bob 进行验证。"/>
@@ -442,19 +443,19 @@ if (!doNotTrack) {
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#heading">交互与挑战</a></li>
-    <li><a href="#heading-1">「非交互」带来的困惑</a></li>
-    <li><a href="#-schnorr-">回顾 Schnorr 协议</a></li>
-    <li><a href="#-nizk-">从 NIZK 角度看数字签名</a></li>
-    <li><a href="#--">重建信任 —— 随机预言精灵</a></li>
-    <li><a href="#---1">构造根基 —— 被绑架的精灵</a></li>
-    <li><a href="#fiat-shamir----public-coin--nizk">Fiat-Shamir 变换 —— 从 Public-Coin 到 NIZK</a></li>
-    <li><a href="#fiat-shamir-">小心：Fiat-Shamir 变换中的安全隐患</a></li>
-    <li><a href="#heading-2">交互的威力</a></li>
-    <li><a href="#---2">公共参考串 —— 另一种「信任根基」</a></li>
-    <li><a href="#heading-3">未完待续</a>
+    <li><a href="#交互与挑战">交互与挑战</a></li>
+    <li><a href="#非交互带来的困惑">「非交互」带来的困惑</a></li>
+    <li><a href="#回顾-schnorr-协议">回顾 Schnorr 协议</a></li>
+    <li><a href="#从-nizk-角度看数字签名">从 NIZK 角度看数字签名</a></li>
+    <li><a href="#重建信任--随机预言精灵">重建信任 —— 随机预言精灵</a></li>
+    <li><a href="#构造根基--被绑架的精灵">构造根基 —— 被绑架的精灵</a></li>
+    <li><a href="#fiat-shamir-变换--从-public-coin-到-nizk">Fiat-Shamir 变换 —— 从 Public-Coin 到 NIZK</a></li>
+    <li><a href="#小心fiat-shamir-变换中的安全隐患">小心：Fiat-Shamir 变换中的安全隐患</a></li>
+    <li><a href="#交互的威力">交互的威力</a></li>
+    <li><a href="#公共参考串--另一种信任根基">公共参考串 —— 另一种「信任根基」</a></li>
+    <li><a href="#未完待续">未完待续</a>
       <ul>
-        <li><a href="#heading-4">参考文献</a></li>
+        <li><a href="#参考文献">参考文献</a></li>
       </ul>
     </li>
   </ul>
@@ -466,13 +467,13 @@ if (!doNotTrack) {
     <div class="post-content">
       <p><em>探索零知识证明系列（四）</em></p>
 <blockquote>
-<p>“Challenges are at times an indication of Lord's trust in you.”   挑战，有时是上天信任你的一种表现。― <strong>D. Todd Christofferson</strong></p>
+<p>“Challenges are at times an indication of Lord&rsquo;s trust in you.”   挑战，有时是上天信任你的一种表现。― <strong>D. Todd Christofferson</strong></p>
 </blockquote>
 <p>本文继续长篇大论零知识证明背后的机制原理，希望帮助大家理解这一类「现代密码学工具」的大致轮廓。本文约8000字，少量数学公式。</p>
 <p><a href="https://github.com/sec-bit/learning-zkp/blob/master/zkp-intro/1/zkp-back.md">系列一：初识「零知识」与「证明」</a></p>
 <p><a href="https://github.com/sec-bit/learning-zkp/blob/master/zkp-intro/2/zkp-simu.md">系列二：理解「模拟」</a></p>
 <p><a href="https://github.com/sec-bit/learning-zkp/blob/master/zkp-intro/3/zkp-pok.md">系列三：寻找「知识」</a></p>
-<h2 id="heading">交互与挑战</h2>
+<h2 id="交互与挑战">交互与挑战</h2>
 <p>我们之前介绍的零知识证明系统都是「交互式」的，需要验证者 Bob 在交互中提供一个或若干个「随机数」来挑战，比如「地图三染色问题」（参看『系列二』）中，验证者 Bob 需要「不断地」随机挑选一条边来挑战 Alice 的答案，直到 Bob 满意为止，而 Alice 的作弊概率会「指数级」地衰减。而让 Bob 相信证明的「基础」取决于 Bob 所挑选的随机数是不是足够随机。如果 Alice 能够提前预测到 Bob 的随机数，灾难就会发生，现实世界就会退化成「理想世界」，而 Alice 就可以立即升级成「模拟器」，通过超能力来愚弄 Bob。</p>
 <p>而『系列三』中，我们分析了 Schnorr 协议，协议中虽然验证者 Bob 只需要挑选一个随机数 <code>c</code> 来挑战 Alice ，让她计算一个值 <code>z</code>，但 Bob 绝对不能让 Alice 有能力来预测到 <code>c</code> 的任何知识，否则，Alice 也会变身成模拟器。</p>
 <p>随机数的重要性不言而喻：</p>
@@ -484,7 +485,7 @@ if (!doNotTrack) {
 <p>在区块链世界，「NIZK」可以作为共识协议的一部分。因为一个交易<strong>需要多个矿工进行校验</strong>。设想下，如果交易的发送者和每个矿工都要交互一下，让矿工进行挑战，那么共识过程将奇慢无比。而非交互式零知识证明则<strong>可以直接广播给所有的矿工节点</strong>，让他们自行验证。</p>
 <p>可能有朋友会问：只让一个矿工挑战不就够了吗？把矿工和交易发送者的交互脚本编码成证明，然后广播给其他矿工，然后其他矿工就直接相信这个挑战过程是可信的，不也可以吗？但是，很显然，这里需要相信第一个交互矿工作为可信第三方，第三方？似乎不是一个好主意……</p>
 <p>而非交互式零知识证明，以下我们直接说「NIZK」，似乎就很理想了，没有第三方赚差价。</p>
-<h2 id="heading-1">「非交互」带来的困惑</h2>
+<h2 id="非交互带来的困惑">「非交互」带来的困惑</h2>
 <p>非交互式零知识证明，NIZK，如果存在，那么它要比交互式证明强大得多。</p>
 <ul>
 <li>交互式证明，只能取信于一个验证者；而 NIZK 可以取信于多个验证者，以至所有人。</li>
@@ -521,7 +522,7 @@ if (!doNotTrack) {
 <p>Wait ……，协议交互不是只有两方吗？ Alice 和 Bob，哪来第三方？</p>
 <p>需要用特殊的方式引入第三方，而且方法不止一种，我们先研究第一种。</p>
 <p>（泪目：不是说的好好的，咱们不引入第三方吗？）</p>
-<h2 id="-schnorr-">回顾 Schnorr 协议</h2>
+<h2 id="回顾-schnorr-协议">回顾 Schnorr 协议</h2>
 <p>我们再看一下老朋友——Schnorr 协议，它是一个三步协议：第一步，Alice 发送一个承诺，然后第二步 Bob 发送随机数挑战，第三步，Alice 回应挑战。</p>
 <p><img src="img/schnorr.png" alt=""></p>
 <p>我们来看，如何把一个三步的 Schnorr 协议变成一步。</p>
@@ -544,7 +545,7 @@ if (!doNotTrack) {
 <p><img src="img/schnorr-nizk.png" alt="schnorr-nizk"></p>
 <p>看上图，我们利用 Hash 函数，把三步 Schnorr 协议合并为了一步。Alice 可以直接发送：<code>(R, c, z)</code>。又因为 Bob 拥有 <code>PK</code>，于是 Bob 可以自行计算出 <code>c</code>，于是 Alice 可以只发送 <code>(R, z)</code> 即可。</p>
 <p>我们把上面这个方案稍微变下形，就得到了「数字签名」方案。所谓的数字签名，就是「我」向「你」出示一个字符串，比如「白日依山尽，黄河入海流」，然后为了证明这句诗是我出示的，我需要签署某样东西。这个东西能证明我的身份和这句诗进行了关联。</p>
-<h2 id="-nizk-">从 NIZK 角度看数字签名</h2>
+<h2 id="从-nizk-角度看数字签名">从 NIZK 角度看数字签名</h2>
 <p>不严格地说，数字签名方案相当于在证明（1）我拥有私钥，并且（2）私钥和消息进行了关联计算。</p>
 <p>我首先要证明我的身份，那么这个简单，这正是 Schnorr 协议的功能，能够向对方证明「我拥有私钥」这个陈述。并且这个证明过程是零知识的：不泄露关于「私钥」的任何知识。</p>
 <p>那么如何和这句唐诗关联呢？我们修改下计算 <code>c</code> 的过程：</p>
@@ -562,9 +563,9 @@ c = Hash(m, R)
 <p><em>注：这里严格点讲，为了保证数字签名的不可伪造性，需要证明 Schnorr 协议满足「Simulation Soundness」这个更强的性质。这点请参考文献[2]</em></p>
 <p><img src="img/schnorr-sig.png" alt=""></p>
 <p>上图就是大家所熟知的数字签名方案 —— Schnorr 签名方案[1]。在这里还有一个优化，Alice 发给 Bob 的内容不是 <code>(R, z)</code> 而是 <code>(c, z)</code>，这是因为 <code>R</code> 可以通过 <code>c</code>, <code>z</code> 计算出来。</p>
-<p><em>注：为什么说这是一个「优化」呢？目前针对椭圆曲线的攻击方法有 Shanks 算法、Lambda 算法 还有 Pollard's rho 算法， 请大家记住他们的算法复杂度大约都是 $O(\sqrt{n})$[3]，<code>n</code> 是有限域大小的位数。假设我们采用了非常接近 <code>2^256</code> 的有限域，也就是说 <code>z</code> 是 256bit，那么椭圆曲线群的大小也差不多要接近 256bit，这样一来，把 <code>2^256</code> 开平方根后就是 <code>2^128</code>，所以说 256bit 椭圆曲线群的安全性只有 128bit。那么，挑战数  <code>c</code> 也只需要 128bit 就足够了。这样 Alice 发送 <code>c</code> 要比发送 <code>R</code> 要更节省空间，而后者至少需要 256bit。<code>c</code> 和 <code>z</code>两个数值加起来总共 384bit。相比现在流行的 ECDSA 签名方案来说，可以节省<code>1/4</code> 的宝贵空间。现在比特币开发团队已经准备将 ECDSA 签名方案改为一种类 Schnorr 协议的签名方案——muSig[4]，可以实现更灵活地支持多签和聚合。</em></p>
+<p><em>注：为什么说这是一个「优化」呢？目前针对椭圆曲线的攻击方法有 Shanks 算法、Lambda 算法 还有 Pollard&rsquo;s rho 算法， 请大家记住他们的算法复杂度大约都是 $O(\sqrt{n})$[3]，<code>n</code> 是有限域大小的位数。假设我们采用了非常接近 <code>2^256</code> 的有限域，也就是说 <code>z</code> 是 256bit，那么椭圆曲线群的大小也差不多要接近 256bit，这样一来，把 <code>2^256</code> 开平方根后就是 <code>2^128</code>，所以说 256bit 椭圆曲线群的安全性只有 128bit。那么，挑战数  <code>c</code> 也只需要 128bit 就足够了。这样 Alice 发送 <code>c</code> 要比发送 <code>R</code> 要更节省空间，而后者至少需要 256bit。<code>c</code> 和 <code>z</code>两个数值加起来总共 384bit。相比现在流行的 ECDSA 签名方案来说，可以节省<code>1/4</code> 的宝贵空间。现在比特币开发团队已经准备将 ECDSA 签名方案改为一种类 Schnorr 协议的签名方案——muSig[4]，可以实现更灵活地支持多签和聚合。</em></p>
 <p>而采用 Hash 函数的方法来把一个交互式的证明系统变成非交互式的方法被称为 Fiat-Shamir 变换[5]，它由密码学老前辈 Amos Fiat 和 Adi Shamir 两人在 1986 年提出。</p>
-<h2 id="--">重建信任 —— 随机预言精灵</h2>
+<h2 id="重建信任--随机预言精灵">重建信任 —— 随机预言精灵</h2>
 <p>前文提到，失去了挑战，似乎失去了证明的「信任根基」。而在 Schnorr 签名方案中，Hash 函数担负起了「挑战者」的角色，这个角色有一个非常学术的名字：「随机预言机」（Random Oracle）[6]。</p>
 <p>可是这里为何用 Hash？实际上当 Alice 要产生公共随机数时，需要一个叫做「随机预言机」的玩意儿，这是什么？</p>
 <p>开脑洞时间到！</p>
@@ -589,7 +590,7 @@ c = Hash(m, R)
 <p>因为这个假设无法被证明，所以我们只能信任这个假设，或者说当做一个公理来用。插一句， Hash 函数的广义抗碰撞性质决定了它的输出可以模拟随机数，同时在很多情况下（并非所有），对 Hash 函数实施攻击难度很高，于是许多的密码学家都在大胆使用。</p>
 <p>不使用这个假设的安全模型叫做「标准模型」，而使用这个假设的安全模型当然不能叫「非标准模型」，它有个好听的专有名词，叫做「随机预言模型」。</p>
 <p>世界上有两种不同类型的人，喜欢甜豆花的，不喜欢甜豆花的。同样，世界上的密码学家分为两种，喜欢随机预言模型的，和不喜欢随机预言模型的[6]。</p>
-<h2 id="---1">构造根基 —— 被绑架的精灵</h2>
+<h2 id="构造根基--被绑架的精灵">构造根基 —— 被绑架的精灵</h2>
 <p>Schnorr 协议经过 Fiat-Shamir  变换之后，就具有 NIZK 性质。这不同于我们证明过的 SHVZK，SHVZK 要求验证者诚实，而 NIZK 则不再对验证者有任何不现实的要求，因为验证者不参与交互，所谓要求诚实的验证者这个问题就不复存在。</p>
 <p><em>注：如果验证者 Bob 不诚实会怎样？那么 Bob 有可能抽取出 Alice 的知识。但是对于三步 Schnorr 协议而言，它是否满足「零知识」，目前还处于未知状态。我们在系列三中只证明了它满足一个比较弱的性质：SHVZK</em>。</p>
 <p>但是，当 Schnorr 协议摇身一变，变成非交互零知识证明系统之后，就真正的「零知识」了。</p>
@@ -633,7 +634,7 @@ c = Hash(m, R)
 <pre class="chroma"><code class="language-fallback" data-lang="fallback">sk = (z1 - z2)/(c1 - c2)
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="fiat-shamir----public-coin--nizk">Fiat-Shamir 变换 —— 从 Public-Coin 到 NIZK</h2>
+</div><h2 id="fiat-shamir-变换--从-public-coin-到-nizk">Fiat-Shamir 变换 —— 从 Public-Coin 到 NIZK</h2>
 <p>不仅仅对于 Schnorr 协议，对于任意的 「Public-Coin 协议」，都可以用 Fiat-Shamir 变换来把整个协议「压缩」成一步交互，也就是一个非交互式的证明系统，这个变换技巧最早来自于 Amos Fiat 与 Adi Shamir 两人的论文『How to Prove Yourself: Practical Solutions to Identification and Signature Problems.』，发表在 1986 年的 Crypto 会议上[5]。也有一说，这个技巧来源于 Manuel Blum[6].</p>
 <p>重复一遍，在 Public-coin 协议中，验证者 Bob 只做一类事情，就是产生一个随机数，然后挑战 Alice 。通过 Fiat-Shamir 变换，可以把 Bob 每一次的「挑战行为」用一次「随机预言」来代替。</p>
 <p>而在具体实现中，随机预言需要用一个具有密码学安全强度的 Hash 函数（不能随便选，一定要采用密码学安全的 Hash），而 Hash 函数的参数应该是之前所有的上下文输入。下面是一个示例图，大家可以迅速理解这个 Fiat-Shamir 变换的做法。</p>
@@ -646,12 +647,12 @@ c = Hash(m, R)
 <p>这与我们在<a href="https://github.com/sec-bit/learning-zkp/blob/master/zkp-intro/1/zkp-back.md">『系列一』</a>中提到的交互式证明系统（Interactive Proof System，简称 <code>IP</code>）有些神似，但又不同。<code>IP</code> 由 Goldwasser，Micali 与 Rackoff（简称GMR）在 1985 年正式提出，它的证明能力覆盖很大一类的计算复杂性问题。而不同的地方在于：在 <code>IP</code> 的定义中，证明者 Prover 和 验证者 Verifier 都是可以抛硬币的图灵机，Verifier 可以偷偷抛硬币，并对 Prover 隐藏；而在 Arthur-Merlin 游戏中，国王只能抛硬币，不仅如此，而且抛硬币的结果总会被 Merlin 知道。</p>
 <p>但是，Fiat-Shamir 变换只能在「随机预言模型」下证明安全，而用 Hash 函数实现随机预言的过程是否安全是缺少安全性证明的。不仅如此，「随机预言模型」下安全的协议可能是有不安全的，已经有人找到了一些反例[8]；更不幸的是，S. Goldwasser 与 Y. Tauman 在 2003 年证明了 Fiat-Shamir 变换本身也是<strong>存在安全反例</strong>的[9]。但是这并不意味着 Fiat-Shamir 变换不能用，只是在使用过程中要非常小心，不能盲目套用。</p>
 <p>尽管如此，人们无法抵挡 Fiat-Shamir 变换的诱惑，其使用极其广泛。值得一提的是，最热的通用非交互零知识证明 zkSNARK 的各种方案中，Fiat-Shamir 变换比比皆是。比如大家可能耳熟能详的 Bulletproofs（子弹证明），此外还有一些暂时还不那么有名的通用零知识证明方案，比如 Hyrax，Ligero，Supersonic，Libra 等（我们后续会抽丝剥茧，逐一解读）。</p>
-<h2 id="fiat-shamir-">小心：Fiat-Shamir 变换中的安全隐患</h2>
+<h2 id="小心fiat-shamir-变换中的安全隐患">小心：Fiat-Shamir 变换中的安全隐患</h2>
 <p>在 Fiat-Shamir 变换中，要尤其注意喂给 Hash 函数的参数，在实际的代码实现中，就有这样的案例，漏掉了 Hash 函数的部分参数：</p>
 <p>比如在 <code>A, Hash(A), B, Hash(B)</code> 中，第二个 Hash 函数就漏掉了参数A，正确的做法应该是<code>A, Hash(A), B, Hash(A,B) </code>。这一类的做法会引入严重的安全漏洞，比如在瑞士的电子投票系统 SwissPost-Scytl 中，就在 Fiat-Shamir 变换的实现代码中多次漏掉了本来应该存在的参数，导致了攻击者不仅可以随意作废选票，还可以任意伪造选票，达到舞弊的目的[10]。因此在工程实现中，请务必注意。</p>
 <p>细心读者也许会回看一下 Schnorr 签名，大家会发现 Schnorr 签名中的 Hash 算法似乎也漏掉了一个参数 <code>PK</code>，并不是严格的 Fiat-Shamir 变换，这被称为 Weak Fiat-Shamir 变换[11]，不过这个特例并没有安全问题[3]，请未成年人不要随意模仿。</p>
 <p>最近一些学者开始在标准模型下研究如何严格证明 Fiat-Shamir 变换的安全性，目前要么引入额外的强安全假设，要么针对某个特定协议进行证明，但似乎进展并不大。</p>
-<h2 id="heading-2">交互的威力</h2>
+<h2 id="交互的威力">交互的威力</h2>
 <p>话说在1985年，当 GMR 三人的论文历经多次被拒之后终于被 STOC’85 接受，另一篇类似的工作也同时被 STOC'85 接受，这就是来自于匈牙利罗兰大学的 László Babai，与来自以色列理工的 Shlomo Moran 两人撰写的论文『Arthur-Merlin Games: A Randomized Proof System, and a Hierarchy of Complexity Classes』[7]，引入了 Public-coin 交互式协议（顾名思义，Verifier 只公开抛硬币）。</p>
 <p>国王 Arthur 的方法很简单，通过反复地「随机」挑战来检验 Merlin 的论断，这符合我们前面讲述过的直觉：采用随机挑战来构建信任的「根基」。Babai 在论文中证明了一个有趣的结论：<code>AM[k]=AM[2]</code>，其中 <code>k</code> 表示交互的次数，交互多次产生的效果居然和交互两次等价。所谓交互两次是指：Arthur 发一个挑战数，然后 Merlin 回应。</p>
 <p><em>注：还有一类的问题属于 <code>MA</code>，这一类问题的交互顺序与 <code>AM</code>不同，<code>MA</code>中是 Merlin 先给出证明，然后 Arthur 抛硬币检验。已证明：MA 能处理的问题是 AM 的子集。</em></p>
@@ -666,10 +667,10 @@ c = Hash(m, R)
 <p>它解释了「有效证明」这个概念的计算理论特征，并且解释了「交互式证明系统」这个概念所能涵盖的计算能力。</p>
 <p><em>注：NP 类 是 PSPACE 类的子集，前者大家比较熟悉，后者关联游戏或者下棋中的制胜策略[13]。</em></p>
 <p>而 L. Babai 于是写了一篇文章，名为「Email and the unexpected power of interaction」（电子邮件与交互的始料未及的威力）[14]，详细阐述了这一整个月在「邮件交互」中精彩纷呈的学术竞赛，以及关于「交互证明」的来龙去脉。</p>
-<h2 id="---2">公共参考串 —— 另一种「信任根基」</h2>
+<h2 id="公共参考串--另一种信任根基">公共参考串 —— 另一种「信任根基」</h2>
 <p>除了采用「随机预言机」之外，非交互零知识证明系统采用「公共参考串」（Common Reference String），简称「CRS」，完成随机挑战。它是在证明者 Alice 在构造 NIZK 证明之前由一个受信任的第三方产生的随机字符串，CRS 必须由一个受信任的第三方来完成，同时共享给 Alice 和 验证者 Bob。</p>
 <p>是的，你没看错，这里又出现了「第三方」！虽然第三方不直接参与证明，但是他要保证随机字符串产生过程的可信。而产生 CRS 的过程也被称为「Trusted Setup」，这是大家又爱又恨的玩意儿。显然，在现实场景中引入第三方会让人头疼。CRS 到底用来作什么？Trusted Setup 的信任何去何从？这部分内容将留给本系列的下一篇。</p>
-<h2 id="heading-3">未完待续</h2>
+<h2 id="未完待续">未完待续</h2>
 <p>非交互式零知识证明 NIZK 的「信任根基」也需要某种形式的随机「挑战」，一种「挑战」形式是交给「随机预言精灵」；另一种「挑战」是通过 Alice 与 Bob 双方共享的随机字符串来实现。两种挑战形式本质上都引入了第三方，并且两者都必须提供可以让「模拟器」利用的「后门」，以使得让模拟器在「理想世界」中具有某种「优势」，而这种优势在「现实世界」中必须失效。</p>
 <p>NIZK 散发着无穷魅力，让我不时惊叹，在过去三十多年里，先驱们所探寻到的精妙结论，同时还有如此之多的未知角落，在等待灵感之光的照射。</p>
 <p>本系列文章在 Github 上的<a href="https://github.com/sec-bit/learning-zkp/">项目仓库</a>收到了第一个 Pull Request，来自Jingyu Hu(colortigerhu)，只改了个把字，但那一瞬间，我感受到了生命力。知识交流，思想碰撞，很迷人，不是吗？</p>
@@ -678,7 +679,7 @@ c = Hash(m, R)
 </blockquote>
 <p>*致谢：特别感谢丁晟超，刘巍然，陈宇的专业建议和指正，感谢安比实验室小伙伴们(p0n1, even, aphasiayc, Vawheter, yghu, mr) 的修改建议。</p>
 <p><em>致谢：自Nisan发起的密码学研究轶事参考自邓老师的文章[15]。</em></p>
-<h3 id="heading-4">参考文献</h3>
+<h3 id="参考文献">参考文献</h3>
 <ul>
 <li>
 <p>[1] Schnorr, Claus-Peter. &ldquo;Efficient signature generation by smart cards.&rdquo; Journal of cryptology 4.3 (1991): 161-174.</p>

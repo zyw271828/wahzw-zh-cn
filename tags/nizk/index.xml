@@ -5,11 +5,7 @@
     <link>https://sec-bit.github.io/blog/tags/nizk/</link>
     <description>Recent content in NIZK on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 08 Jan 2020 08:00:00 +0800</lastBuildDate>
-    
-	<atom:link href="https://sec-bit.github.io/blog/tags/nizk/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 08 Jan 2020 08:00:00 +0800</lastBuildDate><atom:link href="https://sec-bit.github.io/blog/tags/nizk/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>云中「秘密」：构建非交互式零知识证明</title>
       <link>https://sec-bit.github.io/blog/2020/01/08/nizk-by-crs/</link>

@@ -5,11 +5,7 @@
     <link>https://sec-bit.github.io/blog/en/tags/erc827/</link>
     <description>Recent content in ERC827 on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 24 Jun 2018 08:00:00 +0800</lastBuildDate>
-    
-	<atom:link href="https://sec-bit.github.io/blog/en/tags/erc827/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 24 Jun 2018 08:00:00 +0800</lastBuildDate><atom:link href="https://sec-bit.github.io/blog/en/tags/erc827/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Lacking Insights in ERC223 &amp; ERC827 Implementation</title>
       <link>https://sec-bit.github.io/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</link>

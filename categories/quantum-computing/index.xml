@@ -5,11 +5,7 @@
     <link>https://sec-bit.github.io/blog/categories/quantum-computing/</link>
     <description>Recent content in quantum computing on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 28 Oct 2019 08:00:00 +0800</lastBuildDate>
-    
-	<atom:link href="https://sec-bit.github.io/blog/categories/quantum-computing/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 28 Oct 2019 08:00:00 +0800</lastBuildDate><atom:link href="https://sec-bit.github.io/blog/categories/quantum-computing/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>如果量子计算时代到来，我们的比特币安全吗？</title>
       <link>https://sec-bit.github.io/blog/2019/10/28/bitcoin-safety-in-the-coming-era-of-quantum-computing/</link>

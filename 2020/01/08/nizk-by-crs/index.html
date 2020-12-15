@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.62.0" />
+<meta name="generator" content="Hugo 0.75.1" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2020/01/08/nizk-by-crs/" />
@@ -53,7 +53,7 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.0995afa14b62cd93e93cfc066b646c4c17a3eddca0e9d52a1d9dcf5d90aaacd3.css" integrity="sha256-CZWvoUtizZPpPPwGa2RsTBej7dyg6dUqHZ3PXZCqrNM=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
 
 
 
@@ -69,13 +69,14 @@
 <meta property="article:modified_time" content="2020-03-24T13:27:20+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="云中「秘密」：构建非交互式零知识证明">
 <meta itemprop="description" content="之前我们介绍了如何采用「随机预言机」来扮演一个虚拟的「第三方」角色，实现虚拟的「交互」与「随机挑战」。本文将深入讲述另一种方法实现非交互式零知识证明，即如何通过一段共享的字符串去除「交互」与「隐藏随机性」。这个字符串必须事先由「第三方」来随机产生，这就是传说中的「公共参考串」（Common Reference String，简称 CRS）。">
-<meta itemprop="datePublished" content="2020-01-08T08:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2020-03-24T13:27:20&#43;08:00" />
-<meta itemprop="wordCount" content="14223">
+<meta itemprop="datePublished" content="2020-01-08T08:00:00+08:00" />
+<meta itemprop="dateModified" content="2020-03-24T13:27:20+08:00" />
+<meta itemprop="wordCount" content="14235">
 
 
 
-<meta itemprop="keywords" content="Zero Knowledge Proof,Common Reference String,NIZK," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="Zero Knowledge Proof,Common Reference String,NIZK," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="云中「秘密」：构建非交互式零知识证明"/>
 <meta name="twitter:description" content="之前我们介绍了如何采用「随机预言机」来扮演一个虚拟的「第三方」角色，实现虚拟的「交互」与「随机挑战」。本文将深入讲述另一种方法实现非交互式零知识证明，即如何通过一段共享的字符串去除「交互」与「隐藏随机性」。这个字符串必须事先由「第三方」来随机产生，这就是传说中的「公共参考串」（Common Reference String，简称 CRS）。"/>
 
@@ -421,7 +422,7 @@ if (!doNotTrack) {
             <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
             
           </div>
-        <span class="more-meta"> 约 14223 字 </span>
+        <span class="more-meta"> 约 14235 字 </span>
           <span class="more-meta"> 预计阅读 29 分钟 </span>
 
         
@@ -439,22 +440,22 @@ if (!doNotTrack) {
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#crs-">CRS 的前世今生</a></li>
-    <li><a href="#heading">哈密尔顿环路问题</a>
+    <li><a href="#crs-的前世今生">CRS 的前世今生</a></li>
+    <li><a href="#哈密尔顿环路问题">哈密尔顿环路问题</a>
       <ul>
-        <li><a href="#zk-ham-">ZK-HAM 协议</a></li>
-        <li><a href="#zk-ham-zk-ham-2">ZK-HAM 的变形：ZK-HAM-2</a></li>
+        <li><a href="#zk-ham-协议">ZK-HAM 协议</a></li>
+        <li><a href="#zk-ham-的变形zk-ham-2">ZK-HAM 的变形：ZK-HAM-2</a></li>
       </ul>
     </li>
-    <li><a href="#hidden-bits">云中的秘密：Hidden Bits</a></li>
-    <li><a href="#heading-1">升级随机性</a></li>
-    <li><a href="#fls--hidden-bits--nizk">FLS 变换：从 Hidden Bits 到 NIZK</a></li>
-    <li><a href="#-trapdoor-permutation">寻找理想的 Trapdoor Permutation</a></li>
-    <li><a href="#nizk-proofs---nizk-arguments">NIZK Proofs  与 NIZK Arguments</a></li>
-    <li><a href="#heading-2">没有秘密的世界</a></li>
-    <li><a href="#heading-3">未完待续</a>
+    <li><a href="#云中的秘密hidden-bits">云中的秘密：Hidden Bits</a></li>
+    <li><a href="#升级随机性">升级随机性</a></li>
+    <li><a href="#fls-变换从-hidden-bits-到-nizk">FLS 变换：从 Hidden Bits 到 NIZK</a></li>
+    <li><a href="#寻找理想的-trapdoor-permutation">寻找理想的 Trapdoor Permutation</a></li>
+    <li><a href="#nizk-proofs--与-nizk-arguments">NIZK Proofs  与 NIZK Arguments</a></li>
+    <li><a href="#没有秘密的世界">没有秘密的世界</a></li>
+    <li><a href="#未完待续">未完待续</a>
       <ul>
-        <li><a href="#heading-4">参考文献</a></li>
+        <li><a href="#参考文献">参考文献</a></li>
       </ul>
     </li>
   </ul>
@@ -478,7 +479,7 @@ if (!doNotTrack) {
 <li>「隐藏随机性」：验证者产生让证明者无法预测的随机数进行挑战</li>
 </ol>
 <p>然而对于非交互式零知识证明—— NIZK 来说，如何实现上面两点？在 <a href="https://github.com/sec-bit/learning-zkp/blob/master/zkp-intro/4/zkp-rom.md">系列四</a> 我们介绍了如何采用「随机预言机」来扮演一个虚拟的「第三方」角色，实现虚拟的「交互」与「随机挑战」。本文将深入讲述另一种方法，如何通过一段共享的字符串去除「交互」与「隐藏随机性」。这个字符串必须事先由「第三方」来随机产生，这就是传说中的「公共参考串」（Common Reference String，简称 CRS）。</p>
-<h2 id="crs-">CRS 的前世今生</h2>
+<h2 id="crs-的前世今生">CRS 的前世今生</h2>
 <p>假如我们不借助任何其它手段，限定证明者 Prover 和验证者 Verifier 只能进行「一次交互」来实现「零知识证明」，那么他们只能证明「平凡」问题，也就是计算复杂类 <code>BPP</code>（<strong>Bounded-error Probabilistic Polynomial time</strong>），而这个复杂度类大家一般猜想可能等价于 <code>P</code>（但还悬而未决，没有被证明！<code>BPP</code> 可以理解为 <code>P</code> + <code>Randomness</code>）。</p>
 <p><em>注：如果 Prover 与 Verifier 只做一次交互，在这样的 NIZK 系统中，我们很容易能构造一个 Decision Procedure —— Verify(x, Sim(x))，来证明和证伪定理，因此只能证明平凡问题 BPP。</em></p>
 <p>平凡问题虽然也可以零知识证明，但没有意义！怎么理解呢？因为验证者直接可以在多项式时间内根据「输出」求解出「秘密输入」，虽然验证者能够求解，但是「证明」本身并没有额外为验证者提供更多的「知识」。换句话说，不需要证明者出示证明，验证者就知道命题为真，于是证明过程也是零知识的。</p>
@@ -502,10 +503,10 @@ if (!doNotTrack) {
 <p>Jens Groth 在 2010 年基于 KEA（Knowledge of Exponent Assumption） 假设与 Pairing 提出了一种新的 NIZK Arguments 方案[Gorth10b]，这也是后续许许多多 zkSNARKs 方案的起点。这里的 CRS 由一对对的 （<code>g^x^n, g^⍺x^n</code>） 构成，被用来实现「知识承诺」。其中 <code>x</code> 与 <code>⍺</code> 是两个随机数，在产生完 CRS 之后，必须被「遗忘」。有些人把这部分需要遗忘的随机数叫做「Toxic Wastes」，这容易误导读者。他们不仅无毒无害，而且非常有用。他们是被藏入 CRS 的「秘密」，是模拟器的武器。如果模拟器得到了 <code>x</code> 与 <code>⍺</code>，就能伪造证明，从而保证证明的零知识。而对于抽取器，他能直接通过 KEA 假设内建的抽取函数来抽取知识。</p>
 <p>最新的 Sonic 方案[MBK+19]又在 [Groth10b] 的基础上实现了 Updateable CRS。如果任何人担心 CRS 中的秘密已经被泄露了，他就可以在原有 CRS 基础上打一个补丁，继续往里藏一个秘密，这样就能保证 CRS 的安全性。这里的 CRS 还是「Universal 全局」 的，即 CRS 只需要生成一次，就可以应付所有的命题证明。 这个方案后续被最新的 Plonk[GWC19]，Marlin[CHMMVW19] 等方案采用。</p>
 <p>接下来，我们就从一个简单的例子开始，理解如何基于 CRS 来构造 NIZK。在这之前，我们需要介绍一个 NP-Complete 问题——哈密尔顿环路问题。</p>
-<h2 id="heading">哈密尔顿环路问题</h2>
+<h2 id="哈密尔顿环路问题">哈密尔顿环路问题</h2>
 <p>想象出一个地图中有若干个城市，城市与城市间可以有公路。</p>
-<p>假如给你一副地图，让你找出一条路径，不重复地走遍所有的公路（假设每条公路都是风景美如明信片的 Parkway，或许你想不重复地吃遍每条公路边上的麦当劳，出于某种情怀）。相信你会马上兴奋起来，这不就是小时候学过的「一笔画」么？判断一个地图能否一笔画，这是小学生做的数学题，我们可以计算每个城市连接的公路个数，根据奇偶性分成「奇点」与「偶点」。如果一个地图中存在两个奇点城市，那么你只能从一个奇点城市出发，遍历所有的公路，并且最终到达另一个奇点城市。这条路径就被称为「欧拉路径」（Euler's Path）。</p>
-<p>如果一个地图中所有的城市都是偶点，那么你可以从任意一个城市出发，轻松地找出一条路径，不重复地遍历所有的公路，并且回到起点。这个环路被称为「欧拉环路」（Euler's Circuit）。</p>
+<p>假如给你一副地图，让你找出一条路径，不重复地走遍所有的公路（假设每条公路都是风景美如明信片的 Parkway，或许你想不重复地吃遍每条公路边上的麦当劳，出于某种情怀）。相信你会马上兴奋起来，这不就是小时候学过的「一笔画」么？判断一个地图能否一笔画，这是小学生做的数学题，我们可以计算每个城市连接的公路个数，根据奇偶性分成「奇点」与「偶点」。如果一个地图中存在两个奇点城市，那么你只能从一个奇点城市出发，遍历所有的公路，并且最终到达另一个奇点城市。这条路径就被称为「欧拉路径」（Euler&rsquo;s Path）。</p>
+<p>如果一个地图中所有的城市都是偶点，那么你可以从任意一个城市出发，轻松地找出一条路径，不重复地遍历所有的公路，并且回到起点。这个环路被称为「欧拉环路」（Euler&rsquo;s Circuit）。</p>
 <p>而如果地图存在超过2个以上的奇点，那么就不存在欧拉回路，比如著名的哥德斯堡七桥问题。</p>
 <p>著名的哥德斯堡七桥问题就是这么描述，如果不重复地穿过下面七座桥。</p>
 <p><img src="img/konigsberg.jpg" alt=""></p>
@@ -519,7 +520,7 @@ if (!doNotTrack) {
 <p>我们用一个矩阵 <code>V * V </code> 的矩阵来表示这个地图，凡是两个城市<code>（A, B）</code>有公路相连接，那么就在<code>(A, B)</code> 和 <code>(B, A)</code>里面填上 <code>1</code>，否则填 <code>0</code>。这个矩阵被称为「邻接矩阵」，我们可以把这个邻接矩阵拍扁，就变成了一个 <code>0/1</code> 比特串。</p>
 <p>寻找「哈密尔顿环路」是一个 <code>NP-Complete</code> 问题，换句话说，不存在一个算法使得计算机在 <code>poly(n)</code> 多项式时间内找到环路。但是，计算机可以在多项式时间内检验一个路径是否是「哈密尔顿环路」。比如这个地图中就有一个带方向的哈密尔顿环路，我们一眼就能验证这个环路确实穿过了每一个城市。如果一个地图有哈密尔顿环路，那么它的矩阵一定是满足下面的特征：每一行一定有一个<code>1</code>，每一列一定也有一个<code>1</code>。</p>
 <p><img src="img/ham.png" alt=""></p>
-<h3 id="zk-ham-">ZK-HAM 协议</h3>
+<h3 id="zk-ham-协议">ZK-HAM 协议</h3>
 <p>我们下面给出一个三步交互的 <code>Sigma</code> 协议，Alice 向 Bob 证明她「知道」上面这个地图 <code>G</code> 的哈密尔顿环路。</p>
 <ul>
 <li>公共输入：<code>G</code> 为一个有 6 个顶点的地图，表示为一个 <code>6*6</code> 的邻接矩阵</li>
@@ -548,7 +549,7 @@ if (!doNotTrack) {
 <li>第三步：Alice 根据 Bob 的随机挑战，做出两种不同的回应。如果 Bob 挑战 <code>0</code>，那么Alice 打开第一步的承诺，表示自己在第一步没有作弊；如果 Bob 挑战 <code>1</code>，那么 Alice 只解密暴露出哈密尔顿环路的边（公路），其它边则不需解密。Bob 可以轻易地检查地图上露出来的那些边是否构成了一个不重复地经过所有城市的环路。</li>
 </ul>
 <p>如果这个 Sigma 协议只走一遍的话， Alice 作弊的概率是 50%，如果重复 n 遍，Alice 作弊概率会指数级减小。大家可以试着用「模拟器」和「抽取器」的方法来证明这个协议的「零知识」与「可靠性」。</p>
-<h3 id="zk-ham-zk-ham-2">ZK-HAM 的变形：ZK-HAM-2</h3>
+<h3 id="zk-ham-的变形zk-ham-2">ZK-HAM 的变形：ZK-HAM-2</h3>
 <p>接下来把上面的这个三步协议改动一下。大家先考虑下这样一个简单事实：如果一个仅包含环路的子图 <code>C</code> 是 图 <code>G</code>的子图，<code>C &lt;= G</code>那么说明 <code>G</code> 包含哈密尔顿环路。</p>
 <p>这个事实等价于另一个事实：一个哈密尔顿图 <code>G</code> 的补集 <code>!G</code> 是环路子图 <code>C</code> 的补集 <code>!C</code> 的子图。</p>
 <p>【名词解释】图的补集：所谓补集就是这样一个新地图，顶点保持不变，旧地图上的边在新地图中不存在，而新地图中的公路在旧地图中不存在，但是两个图重合在一起，就变成了一个完全图（完全图是指任意两个顶点之间都存在一条边）。</p>
@@ -592,7 +593,7 @@ if (!doNotTrack) {
 <p>我们接下来把 <code>ZK-HAM-2</code> 协议的第一步和第二步推到一个事先准备的字符串中，然后只让 Alice 发送第三步的内容给 Bob。如下图所示：</p>
 <p><img src="img/3ham7.png" alt=""></p>
 <p>请注意，这里还不算是一个 NIZK 系统，因为这个共享字符串并不能对 Bob 公开，否则 Bob 就能算出环路 <code>C</code>。接下来，我们要解释一个新概念：「隐藏比特」（Hidden Bits）[FLS90]。Hidden Bits 是这样一串随机比特，它们对于验证者 Bob 隐藏，但是对于证明者 Alice 公开。然后在证明过程中，Alice 可以选择性地揭示一部分比特展示给 Bob 看。这是构造 NIZK 证明系统的一个利器，下面我们需要再继续深入 ……</p>
-<h2 id="hidden-bits">云中的秘密：Hidden Bits</h2>
+<h2 id="云中的秘密hidden-bits">云中的秘密：Hidden Bits</h2>
 <p>让我们再次开下脑洞，想象天上有朵云，云后面藏着一串随机产生的比特值，不是 <code>0</code> 就是 <code>1</code>，然后 Alice （证明者）带着一个「超级眼镜」，于是能够看到云后面所有的随机比特串，但是 Bob （验证者）却看不到。同时 Alice 手里还有一个「超级手电筒」，她可以打开手电筒用激光穿透云层，让 Bob 也能看见其中某个或某些比特。当然，Bob 能看到的比特的选择权完全在 Alice 手中。</p>
 <p>云朵中隐藏的比特串就是所谓的 <strong>Hidden Bits</strong>。</p>
 <p><img src="img/hiddenbits.png" alt=""></p>
@@ -626,7 +627,7 @@ if (!doNotTrack) {
 </ol>
 <p>大家发现了，关键是，天上隐藏的比特必须是一个可信的字符串，所谓「可信」，就是指它确实应该是一个哈密尔顿环路子图。那么第三方需要可信。</p>
 <p>可是，这样一个第三方是不是难以令人满意？Alice 和 Bob 要绝对信任他，不会和对手串谋。如果他和 Alice 串谋，可以把隐藏比特串直接设置为全 <code>0</code>；或者他和 Bob 串谋，直接把这个比特串给 Bob 看。这个协议看起来不错，但是很难实用。我们接下来要对这个简单协议进行升级。</p>
-<h2 id="heading-1">升级随机性</h2>
+<h2 id="升级随机性">升级随机性</h2>
 <p>第一个升级是让隐藏比特串变成一个「一致性均匀分布」的随机的隐藏比特串，是一个看起来相当随机的比特串，而不是一个刻意摆放好的哈密尔顿子图。</p>
 <p>完全随机意味着比特串中的 <code>0</code> 的个数和 <code>1</code>出现的概率大概接近。那么接下来一个难题是如何让随机比特串中能出现一个随机的哈密尔顿环路子图矩阵。方法非常简单粗暴：产生一个足够长的随机串，然后从头扫描，直到找到一个随机的哈密尔顿环路为止。</p>
 <p>可是……这个成功概率是不是非常非常小？我们下面给出一个概率没那么小的一种寻找方法。</p>
@@ -653,7 +654,7 @@ if (!doNotTrack) {
 </ul>
 <p>对于这个协议，Bob 已经不再担心第三方是否作弊，故意产生一个全零的比特串，但是 Alice 仍然担心一旦第三方和 Bob 串谋，那么知识就彻底泄露了。</p>
 <p>不仅如此，现在的协议还有个很强的限制，Alice 不能在看到隐藏比特之后再选择需要证明的 <code>G</code>，否则 Alice 就可以作弊。如果一个证明者选择证明的「命题」与 CRS 无关，那么这个证明者被称为 Non-adaptive Adversary。</p>
-<h2 id="fls--hidden-bits--nizk">FLS 变换：从 Hidden Bits 到 NIZK</h2>
+<h2 id="fls-变换从-hidden-bits-到-nizk">FLS 变换：从 Hidden Bits 到 NIZK</h2>
 <p>接下来，我们再次升级协议，把「隐藏比特串」中的隐藏特性去除，变成「公共参考串」CRS。这里我们要借助一个密码学工具 —— Trapdoor Permutation，陷门置换。</p>
 <p>所谓的陷门置换是指一个置换函数 <code>F(x)</code>，<code>x</code>是一个集合 <code>S</code> 中的元素，然后函数 <code>F(x)</code> 把<code>x</code> 映射到 <code>S</code> 中的另一个元素 <code>y</code>。同时 <code>F(x)</code> 满足单向性，即通过 <code>y</code> 很难反算出 <code>x</code>；但是如果谁拥有陷门 <code>t</code>，就能实现反向计算<code>F^(-1)(t,y)=x</code>。陷门置换还可以匹配一个 Hardcore Predicate，<code>h(x)=0/1</code>，它能根据 <code>S</code> 集合中的元素产生一个一致性分布的 <code>0/1</code>比特。介绍完毕，大家是不是有点晕，没关系，晕一晕就习惯了。总之一句话，陷门置换可以对公共参考串和Hidden Bits 进行相互转换。</p>
 <p>先假设有这样的密码学工具，然后我们升级协议。</p>
@@ -684,12 +685,12 @@ if (!doNotTrack) {
 <p>对于「可靠性」，事情变得不那么简单了。因为现在 Alice 有能力挑选 <code>(F,h,t)</code>，Alice 可以挑选一个对自己有利，甚至作弊的 <code>(F, h, t)</code>，使得她可以控制一次协议运行的 Hidden Bits <code>{b}</code>的结果。对于本节升级后的新协议而言，需要重复很多遍，以致于虽然 Alice 可以控制一次协议运行的 Hidden Bits，但是她对其它若干次协议运行的 Hidden Bits 无能为力。换句话说，Alice 无论如何挑选 <code>(F, h, t)</code> 都无法完全掌控多次的协议运行。</p>
 <p>这个升级变换理论上可以支持任意的 Hidden Bits 模型下的非交互式零知识证明，被称为 FLS Protocol。FLS 变换有很多的好处：首先，这个随机产生的 CRS 可以多次使用，实现所谓的「Multi-Theorem NIZK」；其次，可以实现「Adaptive Soundness」，即 Alice 可以先看到 CRS，然后再选择要证明的内容。最后，这个协议还是「Adaptive Zero-Knowledge」，即 Bob 也可以先看到 CRS，然后再选择要证明的内容给 Alice。</p>
 <p><em>注：Adaptive Adversary 是比较符合现实世界的安全情况，比如第二类CCA安全。因为 CRS 是公开的，攻击者可以先分析 CRS，再决定如何发起攻击。</em></p>
-<h2 id="-trapdoor-permutation">寻找理想的 Trapdoor Permutation</h2>
+<h2 id="寻找理想的-trapdoor-permutation">寻找理想的 Trapdoor Permutation</h2>
 <p>陷门置换 Trapdoor Permutation 最早出现在姚期智老师的论文「Theory and Application of Trapdoor Functions」[Yao82]中，是公钥密码学的重要基础。在上一节给出的 FLS 变换中，需要一个理想化的 Trapdoor Permutation，所谓的理想化是指，每一个 n-bit 字符串都能唯一变成另一个 n-bit 字符串，并且不会出现「多对一」的映射关系。Alice 需要随机抽样一个 Index，发给 Bob，然后 Bob 要能检查出这个 Index 所对应的 <code>F()</code> 是否是一个「完美」的置换。问题来了，怎么 Bob 怎么能在多项式时间内检查出来呢？如果 Bob 不能检查，那么 Alice 就可以抽样一个不完美的 Permutation（比如一个「多对一」的函数），从而可能作弊，破坏「Soundness」这个性质，Bellare 和 Yung 发表在 1996 年的论文最早注意到了这一点，但是并没有完全解决这个问题[BY96]。</p>
 <p>如何找到一个桥梁，能够将 Trapdoor Permutation 合适地抽象出来，同时能够对接到密码学工具的实现上，是一个及其有挑战性的工作。随后各路密码学家（包括 Oded Goldreich） 在这方面研究了很长时间，发表了许许多多的论文 ，各种不同类型的 Trapdoor Permutation 被定义、被研究，但是仍然不能让人满意。直到最近（2018年）一个工作是 Ran Canetti 与 Amit Lichtenberg 提出了 Certifiable Injective Trapdoor Function 这样一个新类型[RL18]，并证明了这种 Trapdoor Permutation 终于能满足 FLS 变换要求。但这是不是故事的结束呢？理论密码学家们估计不会停下探索的脚步。</p>
 <p>除了基于 Trapdoor Permutation 的 FLS 变换 ，还有各式各样的解决方案来升级 Hidden Bits Model，比如采用 Invariant Signature[BG90]，或 Verifiable Random Generator [DN00] 来实现 Hidden Bits 的变换，或者弱可验证随机函数 [BGRV09]， 还有一种叫做 publicly-verifiable trapdoor predicates 的方案[CHK03]。</p>
 <p>三十年来，密码学家们发明的 NIZK 方案有很多，但 Hidden Bits 方法是目前已知唯一的办法，(1) 基于「一致性分布」的共享 CRS，(2) 实现任意 NP 语言的 NIZK Proofs（Not Arguments!）。</p>
-<h2 id="nizk-proofs---nizk-arguments">NIZK Proofs  与 NIZK Arguments</h2>
+<h2 id="nizk-proofs--与-nizk-arguments">NIZK Proofs  与 NIZK Arguments</h2>
 <p>在本文中，我们构造的 NIZK 「证明」系统的可靠性属于「Statistical Soundness」，而零知识则属于「Computational Zero-Knowledge」。这意味着什么呢？这意味着，不管证明者 Alice 的算力有多强大（甚至超多项式），Alice 仍然无法作弊。但是，如果验证者 Bob 拥有超强的计算能力，那么是存在这种可能性：Bob 从证明中抽取到有价值的「知识」。</p>
 <p>这又意味着什么？</p>
 <p>这意味着，对于 NIZK Proofs 来说，它的长度肯定要比「知识」长，知识即 <code>NP</code> 问题中的 <code>witness</code>。只要 Bob 算力够强，他就可以把证明解密。对于「抽取器」而言，它也需要在没有交互的情况下抽取 <code>witness</code> 。证明最短的 NIZK Proofs 当属 Greg Gentry 等人采用「全同态加密」技术构造的 NIZK 方案了 [GGI+14]，证明长度只是稍稍大于 witness 的长度。</p>
@@ -699,7 +700,7 @@ if (!doNotTrack) {
 <p>假如说我们要公开一个 NIZK 证明到 Github上，假如过了一百年以后，Github 网站还在，而未来计算机的计算能力已经有了质的飞跃，这时候，一个 NIZK Proof 可能会被算力攻破，泄露知识，而 NIZK Argument 则很大可能性上还保持安全性。</p>
 <p>现在流行的热词 —— zkSNARK 中的 <code>AR</code>正是指代 Argument。</p>
 <p>NIZK Argument 可以实现 <code>O(1)</code> 常数级长度的证明，即与 <code>witness</code> 的长度无关。然而这需要隐藏更多的秘密到 CRS 中。</p>
-<h2 id="heading-2">没有秘密的世界</h2>
+<h2 id="没有秘密的世界">没有秘密的世界</h2>
 <p>1956 年，哥德尔在一封寄给冯诺依曼的信中提到了一个著名的问题，「P 是否等于 NP」。后来，这个问题被 Clay 研究所列为七个千禧年难题之一，悬赏百万美金。</p>
 <p>零知识证明系统正是为了保护 witness 不泄露的前提下，实现 <code>NP</code> 问题的验证。那如果一旦证明了「P == NP」，这会意味着什么？这意味着 witness 不再有多大意义了，反正一个图灵机也可以在多项式时间内找到 witness。零知识证明试图保护的 witness 也变得徒劳无益。</p>
 <p>事实上，如果「P == NP」，现有的公钥密码学、对称加密 AES 与 SM4、哈希算法所依赖的难解问题都可能坍塌，我们可能很难保存秘密。不仅如此，</p>
@@ -721,7 +722,7 @@ if (!doNotTrack) {
 <p><img src="img/private_eye.png" alt=""></p>
 <p>每个人都无地自容，惶惶不可终日，然后逐渐地，大家都选择隐藏自己，人们出门都要戴上面具，以小心翼翼地保护自己的身份，甚至一个人可以选择使用多个身份，国家法律规定任何偷窥行为都将被严惩，获取信息成为了一种至少无上的权力，照相机需要被严格管控，互联网不再存在，人们通讯又回到了电话亭时代 ……</p>
 <p>这会是人类的终极命运么？</p>
-<h2 id="heading-3">未完待续</h2>
+<h2 id="未完待续">未完待续</h2>
 <p>本文开头提到了「隐藏随机性」并不是必要的，我们来回想下 Hidden Bits 模型。这些 Hidden Bits 并没有对 Prover 隐藏，而是敞开了让 Prover 知道，但是由于 Hidden Bits 是「一致性随机分布」的字符串， 所以即使让 Prover 知道了，他仍然逃不过随机挑战的火力。然而在流行的 zkSNARK 方案中，并没有采用「一致性随机分布」的 CRS，而是一组结构化的随机数。不管怎样，用 CRS 来构建「信任根基」的秘密，就是藏在其中的「秘密」。</p>
 <p>这符合直觉，保守「秘密」也是一种信任。因为 Alice 不知道 CRS 中隐藏的秘密后门，所以无法作弊。同样，Bob 不知道 CRS 中的秘密，也就没办法获得「知识」。同样，人与人之间的协作既要建立在公开透明的基础上，也要保守秘密。</p>
 <blockquote>
@@ -729,7 +730,7 @@ if (!doNotTrack) {
 </blockquote>
 <p><em>致谢：感谢陈宇，丁晟超，张宇鹏，胡红钢，刘巍然，何德彪，万志国等老师的专业建议和指正，感谢安比实验室小伙伴（p0n1, even, valuka, Vawheter, yghu, mr）的修改建议。本文内容不代表他们观点。</em></p>
 <p>最后附上漫画书的链接：<a href="http://panelsyndicate.com/comics/tpeye">http://panelsyndicate.com/comics/tpeye</a> 作者甚至把创作过程的邮件和草图都放了出来，大家可以体验一下窥视制作过程的快感。</p>
-<h3 id="heading-4">参考文献</h3>
+<h3 id="参考文献">参考文献</h3>
 <ul>
 <li>[Aar06] Aaronson, Scott. <em>Reasons to believe</em>, 2006. <a href="https://www.scottaaronson.com/blog/?p=122">https://www.scottaaronson.com/blog/?p=122</a></li>
 <li>[BFM88] Blum, Manuel, Paul Feldman, and Silvio Micali. &ldquo;Non-interactive zero-knowledge and its applications.&rdquo; STOC'88. 1988.</li>
@@ -741,7 +742,7 @@ if (!doNotTrack) {
 <li>[CHMMVW19] Chiesa, Alessandro, et al. <em>Marlin: Preprocessing zksnarks with universal and updatable srs</em>. Cryptology ePrint Archive, Report 2019/1047, 2019, <a href="https://eprint.iacr.org/2019/1047,">https://eprint.iacr.org/2019/1047,</a> 2019.</li>
 <li>[DN00] Dwork, Cynthia, and Moni Naor. &ldquo;Zaps and their applications.&rdquo; <em>Proceedings 41st Annual Symposium on Foundations of Computer Science</em>. IEEE, 2000.</li>
 <li>[FLS90] Feige, Uriel, Dror Lapidot, and Adi Shamir. &ldquo;Multiple non-interactive zero knowledge proofs based on a single random string.&rdquo; <em>Proceedings [1990] 31st Annual Symposium on Foundations of Computer Science</em>. IEEE, 1990.</li>
-<li>[For04] Fortnow, Lance. &ldquo;What if P = NP?&quot;. 2004. <a href="https://blog.computationalcomplexity.org/2004/05/what-if-p-np.html">https://blog.computationalcomplexity.org/2004/05/what-if-p-np.html</a></li>
+<li>[For04] Fortnow, Lance. &ldquo;What if P = NP?&rdquo;. 2004. <a href="https://blog.computationalcomplexity.org/2004/05/what-if-p-np.html">https://blog.computationalcomplexity.org/2004/05/what-if-p-np.html</a></li>
 <li>[For09] Fortnow, Lance. &ldquo;The status of the P versus NP problem.&rdquo; <em>Communications of the ACM</em> 52.9 (2009): 78-86.</li>
 <li>[Groth10a] Groth, Jens. &ldquo;Short non-interactive zero-knowledge proofs.&rdquo; <em>International Conference on the Theory and Application of Cryptology and Information Security</em>. Springer, Berlin, Heidelberg, 2010.</li>
 <li>[Groth10b] Groth, Jens. &ldquo;Short pairing-based non-interactive zero-knowledge arguments.&rdquo; <em>International Conference on the Theory and Application of Cryptology and Information Security</em>. Springer, Berlin, Heidelberg, 2010.</li>
@@ -799,9 +800,22 @@ if (!doNotTrack) {
       
       <nav class="post-nav">
         
+          <a class="prev" href="/blog/2020/01/15/learn-zk-snark-from-zero-part-four/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">从零开始学习 zk-SNARK（四）——多项式的约束</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
         
-          <a class="next" href="/blog/2020/01/03/zkp-learn-by-coding-libsnark-101/">
-            <span class="next-text nav-default">零知识证明 Learn by Coding：libsnark 入门篇</span>
+          <a class="next" href="/blog/2020/01/08/learn-zk-snark-from-zero-part-three/">
+            <span class="next-text nav-default">从零开始学习 zk-SNARK（三）——从程序到多项式的构造</span>
             <span class="prev-text nav-mobile">下一篇</span>
             
             <i class="iconfont">

@@ -5,11 +5,7 @@
     <link>https://sec-bit.github.io/blog/tags/proof/</link>
     <description>Recent content in Proof on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 31 Jul 2019 08:00:00 +0800</lastBuildDate>
-    
-	<atom:link href="https://sec-bit.github.io/blog/tags/proof/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 31 Jul 2019 08:00:00 +0800</lastBuildDate><atom:link href="https://sec-bit.github.io/blog/tags/proof/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>初识「零知识」与「证明」</title>
       <link>https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-and-proof/</link>

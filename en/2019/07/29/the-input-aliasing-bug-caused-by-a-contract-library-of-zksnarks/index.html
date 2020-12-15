@@ -34,7 +34,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.62.0" />
+<meta name="generator" content="Hugo 0.75.1" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/en/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/" />
@@ -55,7 +55,7 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.0995afa14b62cd93e93cfc066b646c4c17a3eddca0e9d52a1d9dcf5d90aaacd3.css" integrity="sha256-CZWvoUtizZPpPPwGa2RsTBej7dyg6dUqHZ3PXZCqrNM=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
 
 
 
@@ -71,13 +71,14 @@
 <meta property="article:modified_time" content="2019-10-28T17:10:04+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="The &#39;Input Aliasing&#39; bug caused by a contract library of zkSNARKs">
 <meta itemprop="description" content="Many zero-knowledge proof projects are threatened by attacks like faking proof, double spending and replaying due to the &lsquo;Input Aliasing&rsquo; bug caused by a contract library of zkSNARKs. This applies to many Ethereum open-source projects as well, including 3 most popular zkSNARKs library - snarkjs, ethsnarks, ZoKrates and 3 topical mixcoin apps - hopper, Heiswap, Miximus.">
-<meta itemprop="datePublished" content="2019-07-29T08:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2019-10-28T17:10:04&#43;08:00" />
+<meta itemprop="datePublished" content="2019-07-29T08:00:00+08:00" />
+<meta itemprop="dateModified" content="2019-10-28T17:10:04+08:00" />
 <meta itemprop="wordCount" content="1774">
 
 
 
-<meta itemprop="keywords" content="zkSNARKs,Zero Knowledge Proof,Vulnerability,Smart Contract," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="zkSNARKs,Zero Knowledge Proof,Vulnerability,Smart Contract," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="The &#39;Input Aliasing&#39; bug caused by a contract library of zkSNARKs"/>
 <meta name="twitter:description" content="Many zero-knowledge proof projects are threatened by attacks like faking proof, double spending and replaying due to the &lsquo;Input Aliasing&rsquo; bug caused by a contract library of zkSNARKs. This applies to many Ethereum open-source projects as well, including 3 most popular zkSNARKs library - snarkjs, ethsnarks, ZoKrates and 3 topical mixcoin apps - hopper, Heiswap, Miximus."/>
 
@@ -519,11 +520,11 @@ if (!doNotTrack) {
         <span class="nx">input</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nx">s</span><span class="p">;</span>
         <span class="nx">bool</span> <span class="nx">success</span><span class="p">;</span>
         <span class="nx">assembly</span> <span class="p">{</span>
-            <span class="nx">success</span> <span class="o">:</span><span class="o">=</span> <span class="nx">call</span><span class="p">(</span><span class="nx">sub</span><span class="p">(</span><span class="nx">gas</span><span class="p">,</span> <span class="mi">2000</span><span class="p">)</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">input</span><span class="p">,</span> <span class="mh">0x80</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="mh">0x60</span><span class="p">)</span>
+            <span class="nx">success</span> <span class="o">:=</span> <span class="nx">call</span><span class="p">(</span><span class="nx">sub</span><span class="p">(</span><span class="nx">gas</span><span class="p">,</span> <span class="mi">2000</span><span class="p">),</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">input</span><span class="p">,</span> <span class="mh">0x80</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="mh">0x60</span><span class="p">)</span>
             <span class="c1">// Use &#34;invalid&#34; to make gas estimation work
-</span><span class="c1"></span>            <span class="k">switch</span> <span class="nx">success</span> <span class="k">case</span> <span class="mi">0</span> <span class="p">{</span> <span class="nx">invalid</span><span class="p">(</span><span class="p">)</span> <span class="p">}</span>
+</span><span class="c1"></span>            <span class="k">switch</span> <span class="nx">success</span> <span class="k">case</span> <span class="mi">0</span> <span class="p">{</span> <span class="nx">invalid</span><span class="p">()</span> <span class="p">}</span>
         <span class="p">}</span>
-        <span class="nx">require</span> <span class="p">(</span><span class="nx">success</span><span class="p">)</span><span class="p">;</span>
+        <span class="nx">require</span> <span class="p">(</span><span class="nx">success</span><span class="p">);</span>
     <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
@@ -541,16 +542,16 @@ if (!doNotTrack) {
 <p>Therefore, when the user submits a zero-knowledge proof to the contract, the contract would put <code>input[1]</code> (some <code>s</code>) to <code>nullifiers_set</code>. The user or other attackers could use the other 4 values to submit the proof again. <strong>These 4 values are not in <code>nullifiers_set</code> so the fake proof could pass the check, and 5 &lsquo;Input Aliasing&rsquo; enable spending the money 5 times with a low cost!</strong></p>
 <h2 id="more-projects-affected">More Projects Affected</h2>
 <p>Aside from semaphore, many other ethereum mixcoin and zkSNARKs projects have the same &lsquo;Input Aliasing&rsquo; issue.</p>
-<p>Among these projects, the most influential ones are the famous zkSNARKs library or framework projects including snarkjs, ethsnarks, ZoKrates and so on. Many applications would copy or refer to their code for developing, thus introducing the vulnerability. Therefore the 3 projects listed fixed this bug overnight, along with other mixcoin projects with zkSNARKs like hopper, Heiswap and Miximus. <strong>All these projects are highly welcomed in the community and Heiswap is called &lsquo;Vitalik's favorite project&rsquo;.</strong></p>
+<p>Among these projects, the most influential ones are the famous zkSNARKs library or framework projects including snarkjs, ethsnarks, ZoKrates and so on. Many applications would copy or refer to their code for developing, thus introducing the vulnerability. Therefore the 3 projects listed fixed this bug overnight, along with other mixcoin projects with zkSNARKs like hopper, Heiswap and Miximus. <strong>All these projects are highly welcomed in the community and Heiswap is called &lsquo;Vitalik&rsquo;s favorite project&rsquo;.</strong></p>
 <h2 id="solution-to-input-aliasing">Solution to &lsquo;Input Aliasing&rsquo;</h2>
 <p>In fact, all projects importing this zkSNARKs cryptography library should check their code to ensure security. So how to fix this issue?</p>
 <p>Fortunately, the solution is simple. We just need to add a check of input parameter range and enforce the input value is smaller than q value mentioned above. That is, banning &lsquo;Input Aliasing&rsquo; by preventing representation of the same point by multiple values.</p>
 <p><img src="scalar_fix.png" alt=""></p>
 <h2 id="introspection">Introspection</h2>
 <p>This &lsquo;Input Aliasing&rsquo; bug requires our rethinking. Let us review the whole story first. Christian posted his zkSNARKs computing contract implementation to GitHub Gist in 2017. As a computation library, we could think that his implementation is secure without disobeying any cryptographic common senses, and perfectly fulfilled the job of proof verification in the contract. In fact, Christian, as the Solidity creator, would make no simple mistake here. However, 2 years later, this code snippet caused such a security risk. Countless colleagues and professionals have seen or used this 200 lines of code over 2 years without noticing any issue.</p>
-<p>What is really going wrong? Maybe a misunderstanding of the interface between low-level library implementors and developers. In another word: the implementor did not consider about developer's misusing; whereas the developers did not fully understand the low-level principles and made false security assumptions.</p>
+<p>What is really going wrong? Maybe a misunderstanding of the interface between low-level library implementors and developers. In another word: the implementor did not consider about developer&rsquo;s misusing; whereas the developers did not fully understand the low-level principles and made false security assumptions.</p>
 <p>Luckily, all common zkSNARKs contract libraries updated as soon as possible to ban &lsquo;Input Aliasing&rsquo; from low-level. <strong>SECBIT Lab holds the view that although updating libraries gets rid of security issues in the future, there still might be some developers unluckily get in touch with the bugged version code or tutorial (like tokens returning 0 due to integer overflow) if the seriousness is not broadcast widely.</strong></p>
-<p>&lsquo;Input Aliasing&rsquo; reminds us of &lsquo;Integer Overflow&rsquo; issues before. Two bugs share many propeties: originating from developers&rsquo; false assumptions; relating to Solidity type uint256; spreading widely; many vulnerable tutorial or library contract code existing online. Obviously, &lsquo;Input Aliasing&rsquo; is harder to find, longer to hide and more knowledge required (complex elliptic curves and cryptographic theories). SECBIT Lab predicts that more security issues are to come with the emergence of more applications with the development of zkSNARKs, zero-knowledge proof and privacy technologies. We hope that the community would learn from the experience and pay more attention to security in this new technology tide.</p>
+<p>&lsquo;Input Aliasing&rsquo; reminds us of &lsquo;Integer Overflow&rsquo; issues before. Two bugs share many propeties: originating from developers' false assumptions; relating to Solidity type uint256; spreading widely; many vulnerable tutorial or library contract code existing online. Obviously, &lsquo;Input Aliasing&rsquo; is harder to find, longer to hide and more knowledge required (complex elliptic curves and cryptographic theories). SECBIT Lab predicts that more security issues are to come with the emergence of more applications with the development of zkSNARKs, zero-knowledge proof and privacy technologies. We hope that the community would learn from the experience and pay more attention to security in this new technology tide.</p>
 <h2 id="reference">Reference</h2>
 <ul>
 <li>[1] <a href="https://github.com/kobigurk/semaphore/issues/16">https://github.com/kobigurk/semaphore/issues/16</a></li>

@@ -5,11 +5,7 @@
     <link>https://sec-bit.github.io/blog/tags/erc223/</link>
     <description>Recent content in ERC223 on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 24 Jun 2018 08:00:00 +0800</lastBuildDate>
-    
-	<atom:link href="https://sec-bit.github.io/blog/tags/erc223/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 24 Jun 2018 08:00:00 +0800</lastBuildDate><atom:link href="https://sec-bit.github.io/blog/tags/erc223/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ERC223及ERC827实现代码欠缺安全考虑</title>
       <link>https://sec-bit.github.io/blog/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</link>

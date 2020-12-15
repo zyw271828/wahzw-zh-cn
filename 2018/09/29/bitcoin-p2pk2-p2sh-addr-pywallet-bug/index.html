@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.62.0" />
+<meta name="generator" content="Hugo 0.75.1" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2018/09/29/bitcoin-p2pk2-p2sh-addr-pywallet-bug/" />
@@ -53,7 +53,7 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.0995afa14b62cd93e93cfc066b646c4c17a3eddca0e9d52a1d9dcf5d90aaacd3.css" integrity="sha256-CZWvoUtizZPpPPwGa2RsTBej7dyg6dUqHZ3PXZCqrNM=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
 
 
 
@@ -69,13 +69,14 @@
 <meta property="article:modified_time" content="2019-10-12T18:48:30+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="是谁控制了比特币，是你？还是钱包？BTC地址与交易原理剖析">
 <meta itemprop="description" content="安比（SECBIT）实验室在对数字钱包源码审计时，发现一个名为 pywallet 的比特币钱包开源库包含了一个严重缺陷。如果向 pywallet 生成的 OmniLayer 收款地址转账，将导致资产永久丢失。">
-<meta itemprop="datePublished" content="2018-09-29T08:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2019-10-12T18:48:30&#43;08:00" />
+<meta itemprop="datePublished" content="2018-09-29T08:00:00+08:00" />
+<meta itemprop="dateModified" content="2019-10-12T18:48:30+08:00" />
 <meta itemprop="wordCount" content="6397">
 
 
 
-<meta itemprop="keywords" content="Bitcoin,Crypto Wallet,Vulnerability,Address," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="Bitcoin,Crypto Wallet,Vulnerability,Address," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="是谁控制了比特币，是你？还是钱包？BTC地址与交易原理剖析"/>
 <meta name="twitter:description" content="安比（SECBIT）实验室在对数字钱包源码审计时，发现一个名为 pywallet 的比特币钱包开源库包含了一个严重缺陷。如果向 pywallet 生成的 OmniLayer 收款地址转账，将导致资产永久丢失。"/>
 
@@ -446,11 +447,11 @@ if (!doNotTrack) {
         <li></li>
       </ul>
     </li>
-    <li><a href="#p2pkh">P2PKH——中本聪的伟大发明</a></li>
-    <li><a href="#p2sh">P2SH——后中本聪时代的重大创新</a></li>
-    <li><a href="#heading-1">被锁死的币是否有挽回可能</a></li>
-    <li><a href="#segwit">SegWit——全新时代来临</a></li>
-    <li><a href="#heading-2">对三个问题的回复</a></li>
+    <li><a href="#p2pkh中本聪的伟大发明">P2PKH——中本聪的伟大发明</a></li>
+    <li><a href="#p2sh后中本聪时代的重大创新">P2SH——后中本聪时代的重大创新</a></li>
+    <li><a href="#被锁死的币是否有挽回可能">被锁死的币是否有挽回可能</a></li>
+    <li><a href="#segwit全新时代来临">SegWit——全新时代来临</a></li>
+    <li><a href="#对三个问题的回复">对三个问题的回复</a></li>
   </ul>
 </nav>
   </div>
@@ -478,7 +479,7 @@ if (!doNotTrack) {
 </ul>
 <p>开源库 pywallet 颠倒了地址前缀，将 <em>1-地址</em> 错误地设置为 <em>3-地址</em>。因此原本要转给 <em>1-地址</em> 的资产会误转入 <em>3-地址</em>。当账户持有者以 <em>1-地址</em> 的验证方式，也就是私钥签名去取出资产的时候，区块链网络却以 <em>3-地址</em> 执行脚本的方式去执行验证，导致用户无法正常取出资产！</p>
 <p><em>请慎重使用 pywallet 开源库！！</em></p>
-<h4 id="heading">真相：比特币从未真正实现过转账功能</h4>
+<h4 id="真相比特币从未真正实现过转账功能">真相：比特币从未真正实现过转账功能</h4>
 <p>这一点出乎很多人的意料，由于比特币的实现基于 UTXO 模型，与我们直观理解的账户模型不一样。zer0to0ne 解释说，<strong>实际上比特币从未真正实现过通常意义上的转账功能</strong>。中本聪只给比特币设计了一系列比特币脚本操作符和比特币脚本执行器，而所谓的转账过程实际是由一段比特币脚本锁定、解锁过程来模拟。这与日常生活中的账本概念（或称之为账户模型）不一样。</p>
 <p>为了便于理解，我们可以把比特币区块链上的资产交易比喻成 <strong>将资产锁进保险箱</strong>，只有持有保险箱钥匙的人（即收款人）才能拿出保险箱中的资产进行交易。举个例子，如果 Alice 要向 Bob 支付一笔资产，Alice 将这笔资产锁进一个保险箱中，只有 Bob 才有这个保险箱的钥匙，即只有Bob才能取出这笔资产。如果 Bob 要取出资产，那么要求 Bob 必须同时花掉这笔资产（即锁入另一个保险箱）。在 Bob 没有取出资产前，资产并不真正属于 Bob。设想如果 Bob 丢了钥匙，那么将无法再取出资产。 换句话说，这笔资产还在保险箱中保存的时候，既不属于Alice，也不完全属于Bob。当然，Alice 也可以把资产放入任何人都可以打开的保险箱中，这也被称之为 Anyone-Can-Spend 交易。</p>
 <p>由于比特币区块链上的收款地址不同，保险箱的类型也有所不同。**不同类型的保险箱需要不同类型的钥匙来开启。**付款人为收款人定制一个保险箱，将资产放入保险箱中并上锁，再将保险箱丢到公共场所。而保险箱有两种开启方法：</p>
@@ -488,10 +489,10 @@ if (!doNotTrack) {
 </ul>
 <p>回到这一节的问题：为什么说比特币从未实现真正意义上的转账功能。答案很简单，因为比特币系统中根本就不存在账户的概念，账户之间的转账也无从谈起。一个人能在未来打开多少个保险箱，也是未知数。</p>
 <p>通过上面的解释，我们可知：当 pywallet 开源库误将 <em>1-地址</em> 识别为 <em>3-地址</em> 时，就好像将原本的<em>1-类保险箱</em> 改造成了<em>3-类保险箱</em>，而账户持有者还是拿着 <em>1-类保险箱</em> 的钥匙去解锁，那么自然无法打开保险箱。那么之前 zer0to0ne 发现的被误锁住的 OmniLayer 数字资产是否能恢复？</p>
-<h4 id="-1---3--">是否存在一种可能性，采用 <em>1-地址</em> 的钥匙去开启 <em>3-保险箱</em> ?</h4>
+<h4 id="是否存在一种可能性采用-1-地址-的钥匙去开启-3-保险箱-">是否存在一种可能性，采用 <em>1-地址</em> 的钥匙去开启 <em>3-保险箱</em> ?</h4>
 <p>zer0to0ne 接着向我们详细解释了两个重要概念 P2PKH（Pay to Public Key Hash） 与 P2SH （Pay to Script Hash）的来龙去脉。这两个名词分别代表了两种不同的比特币交易类型。</p>
 <p>下面是 zer0to0ne 的精彩技术细节分析</p>
-<h2 id="p2pkh">P2PKH——中本聪的伟大发明</h2>
+<h2 id="p2pkh中本聪的伟大发明">P2PKH——中本聪的伟大发明</h2>
 <p>Pay to Public Key Hash 顾名思义，是将比特币放入一个保险箱，钥匙孔为公钥 Hash（Public Key Hash）。我们最常见到的 <em>1-地址</em> 本质上就是 Public Key Hash 的一种编码。<em>1-地址</em> 的生成过程也很简单，将公钥经过<code>Hash160</code>运算得到 Public Key Hash，在 Public Key Hash 头部补上前缀 0x00，Hash 尾部补上校验和，经过<code>Base58</code>便得到了1开头的比特币地址。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -541,7 +542,7 @@ OP_CHECKSIG
 <p>数字签名除了持有私钥的人，谁也无法伪造，执行至此，一笔比特币P2PKH交易已经安全地完成了。</p>
 <p>再解释一遍：当 Bob 要花费 Alice 给他的比特币时，Bob 只有用正确的钥匙才能打开 Alice 留给他的保险箱，把钱放入 Bob 新构造的一个保险箱里。</p>
 <p>这时候一些聪明的读者会注意到<strong>一个细节</strong>：如果 Bob 取出钥匙，在还未打开保险箱的时刻，区块链上的任何矿工都能看得见这把钥匙的形状，理论上他们是可以立即复制一把钥匙，把 Alice 留给 Bob 的保险箱打开并花掉（俗称 Front-running 攻击）。真的可以这样做吗？<strong>显然中本聪考虑了这个问题</strong>，这把钥匙中的交易签名是 Bob 发起的交易的完整签名。假设 Bob 要将 Alice 构造的保险箱中的比特币 装入一个新的保险箱（留给Charlie），这时候 Bob 出示的钥匙包含了 Charlie 的公钥Hash，矿工虽然可以复制 Bob 的钥匙，但是这把钥匙已经隐藏了下一个新保险箱的关键信息，因此矿工无法使用这个复制钥匙来完成别的动作（无法挪用数字签名）。</p>
-<h2 id="p2sh">P2SH——后中本聪时代的重大创新</h2>
+<h2 id="p2sh后中本聪时代的重大创新">P2SH——后中本聪时代的重大创新</h2>
 <p>中本聪设计了一个这么强大的脚本系统，只用来构造转账交易似乎太浪费了，我们试试用其他指令构造一些特别的锁定脚本，并使用其他方式来解锁。</p>
 <p>例如我们可以构造一个用 Hash 原象（Pre-image）来解锁交易的脚本：</p>
 <div class="highlight"><div class="chroma">
@@ -584,12 +585,12 @@ OP_EQUAL
 <p>我们可以在 Script 中加入数字签名检查的指令，或者多重签名检查功能，甚至智能合约都可以在P2SH的基础上进行开发，既使用了强大的比特币脚本，又能让交易保持精简。**并且由于 P2SH 交易地址中只存有 Script Hash，相当于保险箱上只有 Hash。**在交易被成功花费之前，任何人都无法知晓 Script 内容，很好的保护了隐私。</p>
 <p><strong>P2SH在2012年4月1日激活，开启了比特币的P2SH时代</strong></p>
 <p>现在全世界的 <em>3-类保险箱</em> 经过了升级，再也不怕钥匙被复制了，因为保险箱的钥匙会内置芯片。升级后的保险箱除了能够校验钥匙形状，更能读取钥匙中内置的芯片的数据，芯片中的内容会影响钥匙的形状。Bob制作了一个能够校验钥匙芯片中数字签名的保险箱，让Alice把钱放进这个保险箱然后锁起来。Bob开启保险箱的钥匙形状虽然可以被复制，但是这把钥匙内置了芯片，芯片中可以包含各种高级约束条件，保证钥匙不会被越权滥用。保险箱会在校验完形状后，会执行钥匙芯片内的程序查有效性，只有两个检查都通过才能开启保险箱。</p>
-<h2 id="heading-1">被锁死的币是否有挽回可能</h2>
+<h2 id="被锁死的币是否有挽回可能">被锁死的币是否有挽回可能</h2>
 <p>再回到开头的那个问题，zer0to0ne 遇到的钱包错误锁死资产的事故，能否采用 <em>1-地址</em> 的钥匙去开启 <em>3-保险箱</em> ，挽救保险箱中的资产呢?</p>
 <p>这个问题可以解释为：Alice 按照 Bob 的要求制作了一个 <em>3-类保险箱</em>，但是这个保险箱是被 pywallet 错误修改的，实际上 Bob 的本意是需要一个 <em>1-类保险箱</em> ，因为 Bob 手里只有一个<em>1-类保险箱</em> 的钥匙。</p>
 <p>当 Bob 请求 Alice 把比特币锁定到 <em>3-类保险箱</em> 时，这个保险箱就需要同时校验钥匙形状和钥匙芯片内容了，但是 Bob 的<em>1-类保险箱</em> 的钥匙形状是 Public Key 决定的，在保险箱误变为 <em>3-类保险箱</em> 后，钥匙形状校验却没有改变，也没有相应的钥匙芯片内容。</p>
 <p>Bob 尝试在钥匙芯片中写入Public Key，使得钥匙形状和锁匹配，但是芯片中的Public Key 却无法被保险箱正确执行，所以 Bob 可能再也无法将他的比特币从保险箱中解锁了。</p>
-<h2 id="segwit">SegWit——全新时代来临</h2>
+<h2 id="segwit全新时代来临">SegWit——全新时代来临</h2>
 <p>比特币开核心发者 Eric Lombrozo, Johnson Lau, Pieter Wuille 提出来了一种全新的概念，隔离见证（Segregated Witness，简称SegWit）。这是一种有效缓解比特币区块拥堵的技术，并且彻底解决了交易延展性问题（Transaction Malleability）。</p>
 <p>在SegWit升级之前，每一个用完的钥匙都插在保险箱上，钥匙占据了一定的体积导致仓库无法密集堆积这些用完的保险箱，总是要为了露在外面一大截的钥匙腾空间。那我们想想能不能把钥匙体积减小，并且用足够廉价的材料来制作，节约成本。</p>
 <p>于是便有了隔离见证（Segregated Witness简称SegWit），它干脆直接把锁从保险箱上移走，变成一个远程无线校验的保险箱，用户可以把钥匙统一插在远离保险箱的地方来远程开启对应的保险箱。</p>
@@ -617,7 +618,7 @@ OP_EQUAL
 <blockquote>
 <p>SegWit 为比特币扩容做出了贡献的同时，也同时在保持向前兼容性上面付出了一些代价。在原生 SegWit 交易被广泛采用之前，使用了混乱的 P2SH 兼容技术。如果未来比特币全部统一到 <em>bc1-地址</em> ，那么就可以彻底避免使用 P2SH 包裹技术，并且最大限度地利用区块容量。</p>
 </blockquote>
-<h2 id="heading-2">对三个问题的回复</h2>
+<h2 id="对三个问题的回复">对三个问题的回复</h2>
 <blockquote>
 <p>比特币地址有 1 打头地址 ，也有 3 打头的地址，你知道这两者有什么区别吗？</p>
 </blockquote>

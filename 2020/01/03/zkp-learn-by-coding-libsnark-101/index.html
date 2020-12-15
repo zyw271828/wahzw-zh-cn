@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.62.0" />
+<meta name="generator" content="Hugo 0.75.1" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2020/01/03/zkp-learn-by-coding-libsnark-101/" />
@@ -53,7 +53,7 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.0995afa14b62cd93e93cfc066b646c4c17a3eddca0e9d52a1d9dcf5d90aaacd3.css" integrity="sha256-CZWvoUtizZPpPPwGa2RsTBej7dyg6dUqHZ3PXZCqrNM=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
 
 
 
@@ -69,13 +69,14 @@
 <meta property="article:modified_time" content="2020-03-24T13:12:58+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="零知识证明 Learn by Coding：libsnark 入门篇">
 <meta itemprop="description" content="希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。">
-<meta itemprop="datePublished" content="2020-01-03T08:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2020-03-24T13:12:58&#43;08:00" />
+<meta itemprop="datePublished" content="2020-01-03T08:00:00+08:00" />
+<meta itemprop="dateModified" content="2020-03-24T13:12:58+08:00" />
 <meta itemprop="wordCount" content="6611">
 
 
 
-<meta itemprop="keywords" content="Zero Knowledge Proof,zksnarks,libsnark,tutorials," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="Zero Knowledge Proof,zksnarks,libsnark,tutorials," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="零知识证明 Learn by Coding：libsnark 入门篇"/>
 <meta name="twitter:description" content="希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。"/>
 
@@ -440,17 +441,17 @@ if (!doNotTrack) {
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#1-zk-snarks--libsnark-">1. zk-SNARKs 和 libsnark 背景简介</a></li>
-    <li><a href="#2-">2. 基本原理与步骤</a></li>
-    <li><a href="#3--zk-snarks-">3. 搭建 zk-SNARKs 应用开发环境</a></li>
-    <li><a href="#4-">4. 理解示例代码</a></li>
-    <li><a href="#5-">5. 再次上手实践</a></li>
-    <li><a href="#6-whats-next">6. What's NEXT?</a></li>
-    <li><a href="#7-">7. 附录</a>
+    <li><a href="#1-zk-snarks-和-libsnark-背景简介">1. zk-SNARKs 和 libsnark 背景简介</a></li>
+    <li><a href="#2-基本原理与步骤">2. 基本原理与步骤</a></li>
+    <li><a href="#3-搭建-zk-snarks-应用开发环境">3. 搭建 zk-SNARKs 应用开发环境</a></li>
+    <li><a href="#4-理解示例代码">4. 理解示例代码</a></li>
+    <li><a href="#5-再次上手实践">5. 再次上手实践</a></li>
+    <li><a href="#6-whats-next">6. What&rsquo;s NEXT?</a></li>
+    <li><a href="#7-附录">7. 附录</a>
       <ul>
-        <li><a href="#maincpp">main.cpp</a></li>
-        <li><a href="#testcpp">test.cpp</a></li>
-        <li><a href="#rangecpp">range.cpp</a></li>
+        <li><a href="#maincpp"><code>main.cpp</code></a></li>
+        <li><a href="#testcpp"><code>test.cpp</code></a></li>
+        <li><a href="#rangecpp"><code>range.cpp</code></a></li>
       </ul>
     </li>
   </ul>
@@ -462,7 +463,7 @@ if (!doNotTrack) {
     <div class="post-content">
       <p>libsnark 是目前实现 zk-SNARKs 电路最重要的框架，在众多私密交易或隐私计算相关项目间广泛应用，其中最著名当然要数 Zcash。Zcash 在 Sapling 版本升级前一直使用 libsnark 来实现电路（之后才替换为 bellman）。毫不夸张地说，libsnark 支撑并促进了 zk-SNARKs 技术的<strong>首次大规模应用</strong>，填补了零知识证明技术从最新理论到工程实现间的空缺。</p>
 <p>希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。</p>
-<h2 id="1-zk-snarks--libsnark-">1. zk-SNARKs 和 libsnark 背景简介</h2>
+<h2 id="1-zk-snarks-和-libsnark-背景简介">1. zk-SNARKs 和 libsnark 背景简介</h2>
 <p>零知识证明，可能是目前最具应用前景和想象力的密码学黑科技。而 zk-SNARKs 正是一类零知识证明方案的简称，全称为 Zero-Knowledge Succinct Non-interactive Arguments of Knowledge。这一名字几乎包含了其所有技术特征，即可以在不泄露任何其他信息的前提下证明一个命题的正确性，并且最终生成的证明具有简洁性（Succinct），也就是说最终生成的证明足够小，并且与计算量大小无关，是一个常数。用白话说就是，你理论上可以在不暴露任何隐私的情况下向其他所有人证明某件事，并且生成的证明体积很小，校验成本很低，与需要证明的内容计算量无关。听起来简直太美好了！</p>
 <p>zk-SNARKs 能应用到很多场景，比如隐私保护、区块链扩容、可验证计算等。本文不介绍 zk-SNARKS 和零知识证明的理论细节，不熟悉或想深入了解的同学可阅读其他文章或论文。</p>
 <p>如 Vitalik 写的关于 zk-SNARKs 著名的三篇博文。</p>
@@ -511,7 +512,7 @@ if (!doNotTrack) {
 <li><code>zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark</code> 对应的是 <code>Groth16</code></li>
 </ul>
 <p>如果想研究这两个协议的实现细节可直接从这两个目录入手。<code>ppzksnark</code> 是指 <em>preprocessing zkSNARK</em>。这里的 <code>pp/preprocessing</code> 其实就是指我们常说的 trusted setup，即在证明生成和验证之前，需要通过一个生成算法来创建相关的公共参数（proving key 和 verification key）。我们也把这个提前生成的参数称为 「公共参考串」（Common Reference String），或简称为 <a href="https://sec-bit.github.io/blog/2019/11/01/from-interactive-zkp-to-non-interactive-zkp">CRS</a>。</p>
-<h2 id="2-">2. 基本原理与步骤</h2>
+<h2 id="2-基本原理与步骤">2. 基本原理与步骤</h2>
 <p>利用 libsnark 库开发 zk-SNARKs 应用从原理上可简要概括为以下四个步骤：</p>
 <ol>
 <li>将待证明的命题表达为 R1CS (Rank One Constraint System)</li>
@@ -529,7 +530,7 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">C</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">out</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="p">(</span> <span class="nx">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="nx">x</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">==</span> <span class="nx">out</span> <span class="p">)</span><span class="p">;</span>
+  <span class="k">return</span> <span class="p">(</span> <span class="nx">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="nx">x</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">==</span> <span class="nx">out</span> <span class="p">);</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
@@ -542,7 +543,7 @@ if (!doNotTrack) {
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">lambda</span> <span class="o">&lt;</span><span class="o">-</span> <span class="nx">random</span><span class="p">(</span><span class="p">)</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">lambda</span> <span class="o">&lt;-</span> <span class="nx">random</span><span class="p">()</span>
 
 <span class="p">(</span><span class="nx">pk</span><span class="p">,</span> <span class="nx">vk</span><span class="p">)</span> <span class="o">=</span> <span class="nx">G</span><span class="p">(</span><span class="nx">C</span><span class="p">,</span> <span class="nx">lambda</span><span class="p">)</span>
 </code></pre></td></tr></table>
@@ -563,12 +564,12 @@ if (!doNotTrack) {
 <pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">V</span><span class="p">(</span><span class="nx">vk</span><span class="p">,</span> <span class="nx">out</span><span class="p">,</span> <span class="nx">proof</span><span class="p">)</span> <span class="o">?</span><span class="o">=</span> <span class="kc">true</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">V</span><span class="p">(</span><span class="nx">vk</span><span class="p">,</span> <span class="nx">out</span><span class="p">,</span> <span class="nx">proof</span><span class="p">)</span> <span class="o">?=</span> <span class="kc">true</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>而<strong>开发者主要工作量就集中在第一步</strong>，需要按照 libsnark 的接口规则手写 C++ 电路代码来描述命题，由代码构造 R1CS 约束。整个过程也即对应下图的 Computation -&gt; Arithmetic Circuit -&gt; R1CS。</p>
 <p><img src="img/flow.png" alt="flow"></p>
-<h2 id="3--zk-snarks-">3. 搭建 zk-SNARKs 应用开发环境</h2>
+<h2 id="3-搭建-zk-snarks-应用开发环境">3. 搭建 zk-SNARKs 应用开发环境</h2>
 <p>下面进入动手环节，快速上手 libsnark，跑通例子。</p>
 <p>先下载本文对应的 libsnark 最小可用例子代码库 <code>libsnark_abc</code>。</p>
 <div class="highlight"><div class="chroma">
@@ -652,7 +653,7 @@ range
 </div><p>最终出现如下日志，则说明一切正常。<strong>你已顺利拥有了 zkSNARK 应用开发环境，并成功跑了第一个 zk-SNARKs 的 demo</strong>。</p>
 <p><img src="img/run-main.png" alt="run-main"></p>
 <hr>
-<h2 id="4-">4. 理解示例代码</h2>
+<h2 id="4-理解示例代码">4. 理解示例代码</h2>
 <p>下面我们一起来仔细瞅瞅代码。示例项目包含了 3 份代码（也可查看文末附录）。</p>
 <p><strong>不妨先看看 <code>src/main.cpp</code></strong>。这个例子来自 Howard Wu 的 <a href="https://github.com/howardwu/libsnark-tutorial">libsnark_tutorial</a>，他也是 libsnark 作者之一哦。本文 <code>libsnark_abc</code> 的项目结构就是依照他的 <code>libsnark_tutorial</code> 搭建，属于“官方推荐风格” ，请放心食用 😆。</p>
 <p>只有区区几十行代码，其中 <code>run_r1cs_gg_ppzksnark()</code> 是主要部分。很容易发现，真正起作用的实质代码只有下面 5 行。</p>
@@ -669,15 +670,15 @@ range
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">r1cs_gg_ppzksnark_keypair</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span> <span class="n">keypair</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_generator</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example</span><span class="p">.</span><span class="n">constraint_system</span><span class="p">)</span><span class="p">;</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">r1cs_gg_ppzksnark_keypair</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span> <span class="n">keypair</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_generator</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example</span><span class="p">.</span><span class="n">constraint_system</span><span class="p">);</span>
 
-<span class="n">r1cs_gg_ppzksnark_processed_verification_key</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span> <span class="n">pvk</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_verifier_process_vk</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">keypair</span><span class="p">.</span><span class="n">vk</span><span class="p">)</span><span class="p">;</span>
+<span class="n">r1cs_gg_ppzksnark_processed_verification_key</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span> <span class="n">pvk</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_verifier_process_vk</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">keypair</span><span class="p">.</span><span class="n">vk</span><span class="p">);</span>
 
-<span class="n">r1cs_gg_ppzksnark_proof</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span> <span class="n">proof</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_prover</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">keypair</span><span class="p">.</span><span class="n">pk</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">primary_input</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">auxiliary_input</span><span class="p">)</span><span class="p">;</span>
+<span class="n">r1cs_gg_ppzksnark_proof</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span> <span class="n">proof</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_prover</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">keypair</span><span class="p">.</span><span class="n">pk</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">primary_input</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">auxiliary_input</span><span class="p">);</span>
 
-<span class="k">const</span> <span class="kt">bool</span> <span class="n">ans</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_verifier_strong_IC</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">keypair</span><span class="p">.</span><span class="n">vk</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">primary_input</span><span class="p">,</span> <span class="n">proof</span><span class="p">)</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">bool</span> <span class="n">ans</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_verifier_strong_IC</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">keypair</span><span class="p">.</span><span class="n">vk</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">primary_input</span><span class="p">,</span> <span class="n">proof</span><span class="p">);</span>
 
-<span class="k">const</span> <span class="kt">bool</span> <span class="n">ans2</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_online_verifier_strong_IC</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">pvk</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">primary_input</span><span class="p">,</span> <span class="n">proof</span><span class="p">)</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">bool</span> <span class="n">ans2</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_online_verifier_strong_IC</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">pvk</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">primary_input</span><span class="p">,</span> <span class="n">proof</span><span class="p">);</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>仅从“超长”的函数名就能看出来每步是在做什么，但是却看不到如何构造电路的细节。实际上这里仅仅是调用了自带的 <code>r1cs_example</code>，隐去了实现细节。</p>
@@ -690,9 +691,9 @@ range
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;</span><span class="cp">
-</span><span class="cp"></span><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;</span><span class="cp">
-</span><span class="cp"></span><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;libsnark/gadgetlib1/pb_variable.hpp&gt;</span><span class="cp">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;libsnark/gadgetlib1/pb_variable.hpp&gt;</span><span class="cp">
 </span></code></pre></td></tr></table>
 </div>
 </div><p>前面提到 <code>r1cs_gg_ppzksnark</code> 对应的是 Groth16 方案。这里加了 <code>gg</code> 是为了区别 <code>r1cs_ppzksnark</code>（也就是 BCTV14a 方案），表示 Generic Group Model（通用群模型）。Groth16 安全性证明依赖 Generic Group Model，以更强的安全假设换得了更好的性能和更短的证明。</p>
@@ -704,8 +705,8 @@ range
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">typedef</span> <span class="n">libff</span><span class="o">:</span><span class="o">:</span><span class="n">Fr</span><span class="o">&lt;</span><span class="n">default_r1cs_gg_ppzksnark_pp</span><span class="o">&gt;</span> <span class="n">FieldT</span><span class="p">;</span>
-<span class="n">default_r1cs_gg_ppzksnark_pp</span><span class="o">:</span><span class="o">:</span><span class="n">init_public_params</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">typedef</span> <span class="n">libff</span><span class="o">::</span><span class="n">Fr</span><span class="o">&lt;</span><span class="n">default_r1cs_gg_ppzksnark_pp</span><span class="o">&gt;</span> <span class="n">FieldT</span><span class="p">;</span>
+<span class="n">default_r1cs_gg_ppzksnark_pp</span><span class="o">::</span><span class="n">init_public_params</span><span class="p">();</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>接下来就需要明确「待证命题」是什么。这里不妨沿用之前的例子，证明秘密 <code>x</code> 满足等式 <code>x^3 + x + 5 == out</code>。这实际也是 Vitalik 博文 <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">&ldquo;Quadratic Arithmetic Programs: from Zero to Hero&rdquo;</a> 中用的例子。如果对下面的变化陌生，可尝试阅读该博文。</p>
@@ -761,12 +762,12 @@ sym_2 + 5 = out
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C++" data-lang="C++"><span class="n">out</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="sa"></span><span class="s">&#34;</span><span class="s">out</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
-<span class="n">x</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="sa"></span><span class="s">&#34;</span><span class="s">x</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
-<span class="n">sym_1</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="sa"></span><span class="s">&#34;</span><span class="s">sym_1</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
-<span class="n">y</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="sa"></span><span class="s">&#34;</span><span class="s">y</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
-<span class="n">sym_2</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="sa"></span><span class="s">&#34;</span><span class="s">sym_2</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
-<span class="n">pb</span><span class="p">.</span><span class="n">set_input_sizes</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="p">;</span>
+<pre class="chroma"><code class="language-C++" data-lang="C++"><span class="n">out</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;out&#34;</span><span class="p">);</span>
+<span class="n">x</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;x&#34;</span><span class="p">);</span>
+<span class="n">sym_1</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;sym_1&#34;</span><span class="p">);</span>
+<span class="n">y</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;y&#34;</span><span class="p">);</span>
+<span class="n">sym_2</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;sym_2&#34;</span><span class="p">);</span>
+<span class="n">pb</span><span class="p">.</span><span class="n">set_input_sizes</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>注意，<strong>此处第一个与 <code>pb</code> 连接的是 <code>out</code> 变量</strong>。我们知道 zk-SNARKs 中有 public input 和 private witness 的概念，分别对应 libsnark 中的 primary 和 auxiliary 变量。那么如何在代码中进行区分呢？我们需要借助 <code>set_input_sizes(n)</code> 来声明与 protoboard 连接的 public/primary 变量的个数 <code>n</code>。在这里 <code>n = 1</code>，表明与 <code>pb</code> 连接的<strong>前 <code>n = 1</code> 个变量</strong>是 public 的，其余都是 private 的。</p>
@@ -784,13 +785,13 @@ sym_2 + 5 = out
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-C++" data-lang="C++"><span class="c1">// x*x = sym_1
-</span><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">sym_1</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+</span><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">sym_1</span><span class="p">));</span>
 <span class="c1">// sym_1 * x = y
-</span><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">sym_1</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+</span><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">sym_1</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">));</span>
 <span class="c1">// y + x = sym_2
-</span><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sym_2</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+</span><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sym_2</span><span class="p">));</span>
 <span class="c1">// sym_2 + 5 = ~out
-</span><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">sym_2</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+</span><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">sym_2</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">out</span><span class="p">));</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>至此，变量间的约束也已添加完成，针对命题的电路已构建完毕。下面进入前文提到的“四个步骤”中的<strong>第二步</strong>：使用生成算法（<em><strong>G</strong></em>）为该命题生成公共参数（<code>pk</code> 和 <code>vk</code>），即 trusted setup。生成出来的 proving key 和 verification key 分别可以通过 <code>keypair.pk</code> 和 <code>keypair.vk</code> 获得。</p>
@@ -845,7 +846,7 @@ pb.val(sym_2) = 30;
 <p><img src="img/test-output.png" alt="test_output"></p>
 <p>实际应用中，trusted setup、prove、verify 会由不同角色分别开展，最终实现的效果就是 <code>prover</code> 给 <code>verifier</code> 一段简短的 <code>proof</code> 和 <code>public input</code>，<code>verifier</code> 可以自行校验某命题是否成立。对于前面的例子，就是能在不知道方程的解 <code>x</code> 具体是多少的情况下，验证 <code>prover</code> 知道一个秘密的 <code>x</code> 可以使得 <code>x^3 + x + 5 = out</code> 成立。</p>
 <p>通过短短的几十行代码，你就可以很轻易地操控学术界 zk-SNARKs 最新研究成果。</p>
-<h2 id="5-">5. 再次上手实践</h2>
+<h2 id="5-再次上手实践">5. 再次上手实践</h2>
 <p>经过上面的例子，我们已经了解了利用 libsnark 库开发 zk-SNARKs 电路的所有重要步骤。</p>
 <p>现在不妨用新的例子来巩固一下：<strong>在不泄露秘密数字大小的前提下，证明数字小于 <code>60</code></strong>。</p>
 <p>这个在常规程序里用一个运算符就能完成的事情，在 libsnark 下面应该如何表示呢？</p>
@@ -926,7 +927,7 @@ cmp.generate_r1cs_witness();
 </div>
 </div><p>其余部分和上一个例子一致，即可在不泄露秘密数字大小的前提下，证明某数字小于 <code>60</code>。同理，就实现一个对数值作最大和最小值限定的 “range proof”。</p>
 <p>在强大基础库的帮助下，我们又用更短的代码实现了证明需求。</p>
-<h2 id="6-whats-next">6. What's NEXT?</h2>
+<h2 id="6-whats-next">6. What&rsquo;s NEXT?</h2>
 <p>读到这里，相信大家都对 libsnark 的使用方法和 zk-SNARKs 电路开发有了一个初步的了解。</p>
 <p>你或许已经发现，libsnark 的使用方法较简单，而真正的重点在于 zk-SNARKs 电路开发。正如前面提过的，必须用代码“精确”描述待证命题中的所有约束，“漏掉”或“写错”约束都会让证明内容与原本意图大相径庭，从而导致证明无意义。</p>
 <p>如何正确高效地把真实业务逻辑转化为 zk-SNARKs 电路代码，这正是我们开发者需要不断研究和练习的。</p>
@@ -934,7 +935,7 @@ cmp.generate_r1cs_witness();
 <p>不论多复杂的电路实现，都是通过一个个更简单地「电路组件」组合封装而形成。因此 libsnark 自带的基础库是一个非常重要的学习资料——既要学习它们的使用方法，又要研究其实现原理。</p>
 <p>我们也能通过阅读其他项目的电路实现来了解如何将 ZKP 应用到实际业务中，如 HarryR 的 <a href="https://github.com/HarryR/ethsnarks-miximus">ethsnarks-miximus</a> 和 Loopring 的 <a href="https://github.com/Loopring/protocol3-circuits">protocol3-circuits</a>。从这些项目中可以学习到如何工程化地开发更大规模的电路，以及与电路性能相关的各种设计优化细节，同时对电路约束规模会有更深刻的理解。</p>
 <p>同时也欢迎大家继续关注安比实验室「零知识证明 Learn by Coding：libsnark 系列」后续文章，下次我们将尝试从 zk-SNARKs 与智能合约的结合、电路模块化开发、更复杂的 libsnark 实现案例、电路开发过程中容易踩的坑等角度来进一步讨论。</p>
-<h2 id="7-">7. 附录</h2>
+<h2 id="7-附录">7. 附录</h2>
 <h3 id="maincpp"><code>main.cpp</code></h3>
 <p>第一个例子 <code>main.cpp</code>，调用 libsnark 官方 example 的示例代码。通过该例子可了解 libsnark 的基本使用流程和主要函数。</p>
 <div class="highlight"><div class="chroma">
@@ -1370,7 +1371,7 @@ int main () {
       
       <nav class="post-nav">
         
-          <a class="prev" href="/blog/2020/01/08/nizk-by-crs/">
+          <a class="prev" href="/blog/2020/01/08/learn-zk-snark-from-zero-part-three/">
             
             <i class="iconfont">
               <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -1380,7 +1381,7 @@ int main () {
 </svg>
 
             </i>
-            <span class="prev-text nav-default">云中「秘密」：构建非交互式零知识证明</span>
+            <span class="prev-text nav-default">从零开始学习 zk-SNARK（三）——从程序到多项式的构造</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
         

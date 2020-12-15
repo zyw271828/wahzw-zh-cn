@@ -5,10 +5,33 @@
     <link>https://sec-bit.github.io/blog/tags/</link>
     <description>Recent content in Tags on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 08 Jan 2020 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 22 Jan 2020 08:00:00 +0800</lastBuildDate><atom:link href="https://sec-bit.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>tutorials</title>
+      <link>https://sec-bit.github.io/blog/tags/tutorials/</link>
+      <pubDate>Wed, 22 Jan 2020 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/tags/tutorials/</guid>
+      <description></description>
+    </item>
     
-	<atom:link href="https://sec-bit.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Zero Knowledge Proof</title>
+      <link>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</link>
+      <pubDate>Wed, 22 Jan 2020 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</guid>
+      <description></description>
+    </item>
     
+    <item>
+      <title>zkSNARKs</title>
+      <link>https://sec-bit.github.io/blog/tags/zksnarks/</link>
+      <pubDate>Wed, 22 Jan 2020 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/tags/zksnarks/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Common Reference String</title>
@@ -29,38 +52,11 @@
     </item>
     
     <item>
-      <title>Zero Knowledge Proof</title>
-      <link>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</link>
-      <pubDate>Wed, 08 Jan 2020 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>libsnark</title>
       <link>https://sec-bit.github.io/blog/tags/libsnark/</link>
       <pubDate>Fri, 03 Jan 2020 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/tags/libsnark/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tutorials</title>
-      <link>https://sec-bit.github.io/blog/tags/tutorials/</link>
-      <pubDate>Fri, 03 Jan 2020 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/tags/tutorials/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>zksnarks</title>
-      <link>https://sec-bit.github.io/blog/tags/zksnarks/</link>
-      <pubDate>Fri, 03 Jan 2020 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/tags/zksnarks/</guid>
       <description></description>
     </item>
     
@@ -110,7 +106,7 @@
     </item>
     
     <item>
-      <title>bitcoin</title>
+      <title>Bitcoin</title>
       <link>https://sec-bit.github.io/blog/tags/bitcoin/</link>
       <pubDate>Mon, 28 Oct 2019 08:00:00 +0800</pubDate>
       
@@ -119,7 +115,7 @@
     </item>
     
     <item>
-      <title>blockchain</title>
+      <title>Blockchain</title>
       <link>https://sec-bit.github.io/blog/tags/blockchain/</link>
       <pubDate>Mon, 28 Oct 2019 08:00:00 +0800</pubDate>
       

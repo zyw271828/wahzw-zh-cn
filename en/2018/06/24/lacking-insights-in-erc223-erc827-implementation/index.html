@@ -34,7 +34,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.62.0" />
+<meta name="generator" content="Hugo 0.75.1" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/" />
@@ -55,7 +55,7 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.0995afa14b62cd93e93cfc066b646c4c17a3eddca0e9d52a1d9dcf5d90aaacd3.css" integrity="sha256-CZWvoUtizZPpPPwGa2RsTBej7dyg6dUqHZ3PXZCqrNM=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
 
 
 
@@ -71,13 +71,14 @@
 <meta property="article:modified_time" content="2019-10-12T18:48:30+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="Lacking Insights in ERC223 &amp; ERC827 Implementation">
 <meta itemprop="description" content="This bug originates from a common practice: calling an arbitrary function appointed by the contract caller from another contract after invoking a function in the current one, while the bug in ATN contract reveals the danger of this approach: the contract caller could bypass authority checks or attack others with the identity of contract itself via this feature.">
-<meta itemprop="datePublished" content="2018-06-24T08:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2019-10-12T18:48:30&#43;08:00" />
+<meta itemprop="datePublished" content="2018-06-24T08:00:00+08:00" />
+<meta itemprop="dateModified" content="2019-10-12T18:48:30+08:00" />
 <meta itemprop="wordCount" content="2205">
 
 
 
-<meta itemprop="keywords" content="ERC223,ERC827,Smart Contract,Vulnerability," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="ERC223,ERC827,Smart Contract,Vulnerability," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Lacking Insights in ERC223 &amp; ERC827 Implementation"/>
 <meta name="twitter:description" content="This bug originates from a common practice: calling an arbitrary function appointed by the contract caller from another contract after invoking a function in the current one, while the bug in ATN contract reveals the danger of this approach: the contract caller could bypass authority checks or attack others with the identity of contract itself via this feature."/>
 
@@ -450,14 +451,14 @@ if (!doNotTrack) {
     <li>
       <ul>
         <li><a href="#analysis-on-atn-incident">Analysis on ATN Incident</a></li>
-        <li><a href="#danger-of-abusing-custom-call">Danger of Abusing CUSTOM_CALL</a></li>
-        <li><a href="#inconsistency-between-erc223s-draft--interface">Inconsistency Between ERC223's Draft & Interface</a></li>
+        <li><a href="#danger-of-abusing-custom_call">Danger of Abusing CUSTOM_CALL</a></li>
+        <li><a href="#inconsistency-between-erc223s-draft--interface">Inconsistency Between ERC223&rsquo;s Draft &amp; Interface</a></li>
         <li><a href="#other-bugs-in-erc223-implementation">Other Bugs in ERC223 Implementation</a></li>
       </ul>
     </li>
     <li><a href="#mechanism-of-passing-parameters-in-evm">Mechanism of Passing Parameters in EVM</a></li>
     <li><a href="#risky-erc827-implementation">Risky ERC827 Implementation</a></li>
-    <li><a href="#correct-erc20--erc721-implementation-on-receivercall">Correct ERC20 & ERC721 Implementation on &lsquo;receiverCall&rsquo;</a></li>
+    <li><a href="#correct-erc20--erc721-implementation-on-receivercall">Correct ERC20 &amp; ERC721 Implementation on &lsquo;receiverCall&rsquo;</a></li>
     <li><a href="#conclusion">Conclusion</a></li>
     <li><a href="#reference">Reference</a></li>
   </ul>
@@ -468,7 +469,7 @@ if (!doNotTrack) {
     
     <div class="post-content">
       <blockquote>
-<p>An Analysis of ATN Token's CUSTOM_CALL Bug</p>
+<p>An Analysis of ATN Token&rsquo;s CUSTOM_CALL Bug</p>
 </blockquote>
 <p>On June 20th, 2018, AI Technology Network (ATN) reported an attack on ATN smart contract: an hacker set his address as <code>owner</code> via a bug in ATN Token contracts and issued 11 million ATN tokens for himself on May 11th, 2018. ATN team located the bug, discovered the hacking method and upgraded the contract in no time [1]. The hacker made use of passing custom fallback functions in ERC223 contracts along with <code>ds-auth</code> approving check, then called the function of this contract when ERC223 contract invoked this CUSTOM_CALL. Afterwards, &lsquo;隐形人真忙&rsquo; of Baidu Security also shared experience of &lsquo;call injection attack in Ethereum smart contracts&rsquo; in Xianzhi Security Summit. This bug originates from a common practice: calling an arbitrary function appointed by the contract caller from another contract after invoking a function in the current one, while the bug in ATN contract reveals the danger of this approach: the contract caller could bypass authority checks or attack others with the identity of contract itself via this feature.</p>
 <p>Number of ERC20 contracts with similar vulnerabilities deployed on Ethereum at present: 146</p>
@@ -513,14 +514,14 @@ if (!doNotTrack) {
   <span class="kd">function</span> <span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">uint</span> <span class="nx">codeLength</span><span class="p">;</span>
         <span class="nx">assembly</span> <span class="p">{</span>
-            <span class="nx">codeLength</span> <span class="o">:</span><span class="o">=</span> <span class="nx">extcodesize</span><span class="p">(</span><span class="nx">_to</span><span class="p">)</span>
+            <span class="nx">codeLength</span> <span class="o">:=</span> <span class="nx">extcodesize</span><span class="p">(</span><span class="nx">_to</span><span class="p">)</span>
         <span class="p">}</span>
-        <span class="nx">balances</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">=</span> <span class="nx">balances</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">_value</span><span class="p">)</span><span class="p">;</span>
-        <span class="nx">balances</span><span class="p">[</span><span class="nx">_to</span><span class="p">]</span> <span class="o">=</span> <span class="nx">balances</span><span class="p">[</span><span class="nx">_to</span><span class="p">]</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">_value</span><span class="p">)</span><span class="p">;</span>
+        <span class="nx">balances</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">=</span> <span class="nx">balances</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">].</span><span class="nx">sub</span><span class="p">(</span><span class="nx">_value</span><span class="p">);</span>
+        <span class="nx">balances</span><span class="p">[</span><span class="nx">_to</span><span class="p">]</span> <span class="o">=</span> <span class="nx">balances</span><span class="p">[</span><span class="nx">_to</span><span class="p">].</span><span class="nx">add</span><span class="p">(</span><span class="nx">_value</span><span class="p">);</span>
         <span class="k">if</span><span class="p">(</span><span class="nx">codeLength</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
             <span class="c1">// Require proper transaction handling.
-</span><span class="c1"></span>            <span class="nx">ERC223Receiver</span> <span class="nx">receiver</span> <span class="o">=</span> <span class="nx">ERC223Receiver</span><span class="p">(</span><span class="nx">_to</span><span class="p">)</span><span class="p">;</span>
-            <span class="nx">receiver</span><span class="p">.</span><span class="nx">tokenFallback</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">_data</span><span class="p">)</span><span class="p">;</span>
+</span><span class="c1"></span>            <span class="nx">ERC223Receiver</span> <span class="nx">receiver</span> <span class="o">=</span> <span class="nx">ERC223Receiver</span><span class="p">(</span><span class="nx">_to</span><span class="p">);</span>
+            <span class="nx">receiver</span><span class="p">.</span><span class="nx">tokenFallback</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">_data</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -558,8 +559,8 @@ if (!doNotTrack) {
     <span class="kr">public</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="p">...</span>
-    <span class="nx">ERC223ReceivingContract</span> <span class="nx">receiver</span> <span class="o">=</span> <span class="nx">ERC223ReceivingContract</span><span class="p">(</span><span class="nx">_to</span><span class="p">)</span><span class="p">;</span>
-    <span class="nx">receiving</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="p">(</span><span class="nx">byte4</span><span class="p">(</span><span class="nx">keccak256</span><span class="p">(</span><span class="nx">_custom_fallback</span><span class="p">)</span><span class="p">)</span><span class="p">,</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">amout</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span><span class="p">;</span>
+    <span class="nx">ERC223ReceivingContract</span> <span class="nx">receiver</span> <span class="o">=</span> <span class="nx">ERC223ReceivingContract</span><span class="p">(</span><span class="nx">_to</span><span class="p">);</span>
+    <span class="nx">receiving</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)(</span><span class="nx">byte4</span><span class="p">(</span><span class="nx">keccak256</span><span class="p">(</span><span class="nx">_custom_fallback</span><span class="p">)),</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">amout</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
     <span class="p">...</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -592,14 +593,14 @@ if (!doNotTrack) {
     <span class="kr">public</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> 
 <span class="p">{</span>
     <span class="p">...</span>
-    <span class="nx">assert</span><span class="p">(</span><span class="nx">_to</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="p">(</span><span class="nx">bytes4</span><span class="p">(</span><span class="nx">keccak256</span><span class="p">(</span><span class="nx">_custom_fallback</span><span class="p">)</span><span class="p">)</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">_data</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+    <span class="nx">assert</span><span class="p">(</span><span class="nx">_to</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)(</span><span class="nx">bytes4</span><span class="p">(</span><span class="nx">keccak256</span><span class="p">(</span><span class="nx">_custom_fallback</span><span class="p">)),</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">_data</span><span class="p">));</span>
     <span class="p">...</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>This is actually risky. &lsquo;<em>A Guide to Smart Contract Security Best Practices</em>&rsquo; by ConsenSys urges developers avoiding contract external calling. The hacker passed <code>setOwner(address)</code> as <code>_custom_fallback</code> in this attack and the target address <code>_to</code> was exactly ATN contract itself, thus invoking <code>setOwner(address)</code> of ATN contract indirectly. <code>msg.sender</code> became ATN Token contract itself so as to pass the test <code>isAuthorized()</code> in <code>ds-auth</code>.</p>
 <p>EVM does not check the number of parameters when reading them. After the hacker called <code>setOwner(adddress)</code>, EVM only read <code>_from</code> on left. Therefore no error would emerge on differences between parameter numbers and the required sum by the function when applying low-level <code>call()</code> for parameter passing. The hacker had no difficulty constructing attacking parameters as a result.</p>
-<h3 id="danger-of-abusing-custom-call">Danger of Abusing CUSTOM_CALL</h3>
+<h3 id="danger-of-abusing-custom_call">Danger of Abusing CUSTOM_CALL</h3>
 <p>Back to <code>_custom_fallback</code> implementation. As a common Token interface, the designer should, in our opinion, take as many cases as possible into account to get rid of introducing potential risks and vulnerabilities. Suppose <code>_custom_fallback</code> interface above gets accepted widely, more similar security problems are yet to come. A robust interface design should be simple, easy-handling and straightforward. The <code>tokenFallback()</code> interface in the draft could have dealt with the ERC20 issue intended for, whereas introducing <code>_custom_fallback</code> would disrupt developers and become abused.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -629,26 +630,26 @@ if (!doNotTrack) {
     <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span><span class="p">)</span>
   <span class="p">{</span>
     <span class="c1">// require(_spender != address(this));
-</span><span class="c1"></span>    <span class="nx">approve</span><span class="p">(</span><span class="nx">_spender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">)</span><span class="p">;</span>
-    <span class="nx">require</span><span class="p">(</span><span class="nx">_spender</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span><span class="p">(</span><span class="nx">_data</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+</span><span class="c1"></span>    <span class="nx">approve</span><span class="p">(</span><span class="nx">_spender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
+    <span class="nx">require</span><span class="p">(</span><span class="nx">_spender</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">value</span><span class="p">)(</span><span class="nx">_data</span><span class="p">));</span>
     <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
   <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>In most cases, when we pass a smart contract address to ERC20 <code>approve()</code>, the other side cannot get relevant notifications for next steps and  a common solution is <code>receiverCall</code>. The snippet above is one implementation and unluckily contains severe CUSTOM_CALL abusing. After executing <code>approveAndCall()</code>, it would run other operations defined by <code>_spender</code>.</p>
 <p>Pay attention to this one.</p>
-<p>Consequences: These types of contracts are designed to permit users defining <code>call()</code> with functions on any addresses, which is highly risky. By capturing the contract's identity, hackers could easily conduct <strong>any operations</strong>.</p>
+<p>Consequences: These types of contracts are designed to permit users defining <code>call()</code> with functions on any addresses, which is highly risky. By capturing the contract&rsquo;s identity, hackers could easily conduct <strong>any operations</strong>.</p>
 <p>This often leads to 3 dangerous results:</p>
 <ul>
 <li><strong>First</strong>：Allow an attacker to steal tokens in other contracts with the identity of a buggy contract</li>
 <li><strong>Second</strong>：Bypass authority checks in the contract with the help of <code>ds-auth</code></li>
 <li><strong>Third</strong>：Allow an attacker to steal approved tokens in other accounts with the identity of a buggy contract</li>
 </ul>
-<p>An example of first one: Suppose buggy contract A has B/C/D tokens, a hacker could set <code>_spender</code> address to a target token contract (e.g. B's address) and select <code>_data</code> for calling <code>transfer(address,uint256)</code>, there would not be any barrier for the hacker to transfer out A's tokens with the identity of contract A. <code>_spender != address(this)</code> in code above could only protect A Token.</p>
+<p>An example of first one: Suppose buggy contract A has B/C/D tokens, a hacker could set <code>_spender</code> address to a target token contract (e.g. B&rsquo;s address) and select <code>_data</code> for calling <code>transfer(address,uint256)</code>, there would not be any barrier for the hacker to transfer out A&rsquo;s tokens with the identity of contract A. <code>_spender != address(this)</code> in code above could only protect A Token.</p>
 <p>If smart contracts managing all kinds of tokens allow custom <code>call()</code>, tokens inside them are all in danger.</p>
-<p>An example of second one: The hacker in ATN incident made use of the contract's identity to bypass <code>ds-auth</code> authority restriction.</p>
+<p>An example of second one: The hacker in ATN incident made use of the contract&rsquo;s identity to bypass <code>ds-auth</code> authority restriction.</p>
 <p>An example of third one: Imagine that a user X approve buggy contract A of managing 10,000 B tokens, a hacker could steal B calling <code>transferFrom</code> via this bug.</p>
-<h3 id="inconsistency-between-erc223s-draft--interface">Inconsistency Between ERC223's Draft &amp; Interface</h3>
+<h3 id="inconsistency-between-erc223s-draft--interface">Inconsistency Between ERC223&rsquo;s Draft &amp; Interface</h3>
 <p>With further investigation, we found no description of using <code>_custom_fallback</code> in ERC223 interface draft.</p>
 <p>This is the interface defined by the draft:</p>
 <div class="highlight"><div class="chroma">
@@ -664,10 +665,10 @@ if (!doNotTrack) {
 <td class="lntd">
 <pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">contract</span> <span class="nx">ERC223Interface</span> <span class="p">{</span>
     <span class="nx">uint</span> <span class="kr">public</span> <span class="nx">totalSupply</span><span class="p">;</span>
-    <span class="kd">function</span> <span class="nx">balanceOf</span><span class="p">(</span><span class="nx">address</span> <span class="nx">who</span><span class="p">)</span> <span class="nx">constant</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">uint</span><span class="p">)</span><span class="p">;</span>
-    <span class="kd">function</span> <span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">)</span><span class="p">;</span>
-    <span class="kd">function</span> <span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">data</span><span class="p">)</span><span class="p">;</span>
-    <span class="nx">event</span> <span class="nx">Transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">data</span><span class="p">)</span><span class="p">;</span>
+    <span class="kd">function</span> <span class="nx">balanceOf</span><span class="p">(</span><span class="nx">address</span> <span class="nx">who</span><span class="p">)</span> <span class="nx">constant</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">uint</span><span class="p">);</span>
+    <span class="kd">function</span> <span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">);</span>
+    <span class="kd">function</span> <span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">data</span><span class="p">);</span>
+    <span class="nx">event</span> <span class="nx">Transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">data</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
@@ -688,7 +689,7 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// ERC223_Token.sol#L70
-</span><span class="c1"></span><span class="nx">assert</span><span class="p">(</span><span class="nx">_to</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="p">(</span><span class="nx">bytes4</span><span class="p">(</span><span class="nx">keccak256</span><span class="p">(</span><span class="nx">_custom_fallback</span><span class="p">)</span><span class="p">)</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">_data</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+</span><span class="c1"></span><span class="nx">assert</span><span class="p">(</span><span class="nx">_to</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)(</span><span class="nx">bytes4</span><span class="p">(</span><span class="nx">keccak256</span><span class="p">(</span><span class="nx">_custom_fallback</span><span class="p">)),</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">_data</span><span class="p">));</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>Under certain circumstances, errors would arise in event handling indexed bytes variables [7].</p>
@@ -699,12 +700,12 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// ERC223_Interface.sol#L18
-</span><span class="c1"></span><span class="nx">event</span> <span class="nx">Transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">indexed</span> <span class="nx">data</span><span class="p">)</span><span class="p">;</span> 
+</span><span class="c1"></span><span class="nx">event</span> <span class="nx">Transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">indexed</span> <span class="nx">data</span><span class="p">);</span> 
 </code></pre></td></tr></table>
 </div>
 </div><p>It is safe to say ERC223 Recommended branch is not reliable, please try not to apply the code.</p>
 <h2 id="mechanism-of-passing-parameters-in-evm">Mechanism of Passing Parameters in EVM</h2>
-<p>To better understand this vulnerability, we would explore EVM's mechanism of calling functions and passing parameters. Take a look at this sample</p>
+<p>To better understand this vulnerability, we would explore EVM&rsquo;s mechanism of calling functions and passing parameters. Take a look at this sample</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -715,13 +716,13 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">contract</span> <span class="nx">A</span><span class="p">{</span>
-    <span class="kd">function</span> <span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">value</span><span class="p">)</span><span class="p">{</span>
+    <span class="kd">function</span> <span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">value</span><span class="p">){</span>
   	      <span class="k">return</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>First comes an introduction to parameter passing in EVM: When calling a function, if it has parameters, we need to construct the input according to types appointed by ABI normally. For example, if Ethereum invokes <code>transfer()</code> in the form of <code>transfer(address to, uint256 value)</code>, it takes first 4 bytes of function signature's hash value as <code>function selector</code> and computes <code>sha3(transfer(address,uint256))</code>, then the result is <code>0xA9059CBB</code>, plus the address of <code>to</code>, the 256 bits becomes</p>
+</div><p>First comes an introduction to parameter passing in EVM: When calling a function, if it has parameters, we need to construct the input according to types appointed by ABI normally. For example, if Ethereum invokes <code>transfer()</code> in the form of <code>transfer(address to, uint256 value)</code>, it takes first 4 bytes of function signature&rsquo;s hash value as <code>function selector</code> and computes <code>sha3(transfer(address,uint256))</code>, then the result is <code>0xA9059CBB</code>, plus the address of <code>to</code>, the 256 bits becomes</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -767,15 +768,15 @@ if (!doNotTrack) {
 <pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">transferAndCall</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">,</span><span class="nx">bytes</span> <span class="nx">_data</span><span class="p">)</span>
     <span class="kr">public</span> <span class="nx">payable</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="nx">require</span><span class="p">(</span><span class="nx">_to</span> <span class="o">!=</span> <span class="nx">address</span><span class="p">(</span><span class="k">this</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
-    <span class="kr">super</span><span class="p">.</span><span class="nx">transfer</span><span class="p">(</span><span class="nx">_to</span><span class="p">,</span> <span class="nx">_value</span><span class="p">)</span><span class="p">;</span>
-    <span class="nx">require</span><span class="p">(</span><span class="nx">_to</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span><span class="p">(</span><span class="nx">_data</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+    <span class="nx">require</span><span class="p">(</span><span class="nx">_to</span> <span class="o">!=</span> <span class="nx">address</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+    <span class="kr">super</span><span class="p">.</span><span class="nx">transfer</span><span class="p">(</span><span class="nx">_to</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
+    <span class="nx">require</span><span class="p">(</span><span class="nx">_to</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">value</span><span class="p">)(</span><span class="nx">_data</span><span class="p">));</span>
     <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>After the program finished transaction in <code>transferAndCall()</code>, it would call a function on <code>_to</code> address with parameters set by callers. Since the check <code>_to != address(this)</code>, the code cannot bypass the authority check combined with <code>ds-auth</code> library(<code>second result</code>), while might introduce <code>first result</code> and <code>second result</code> above, managing buggy contracts&rsquo; tokens(attack other contracts via &lsquo;this&rsquo; contract).</p>
-<p>Aside from this, numerous ERC20 Token contracts implement similar <code>call()</code> which is highly risky. It permits attackers stealing contracts&rsquo; tokens and bypassing authority checks in some cases.</p>
+</div><p>After the program finished transaction in <code>transferAndCall()</code>, it would call a function on <code>_to</code> address with parameters set by callers. Since the check <code>_to != address(this)</code>, the code cannot bypass the authority check combined with <code>ds-auth</code> library(<code>second result</code>), while might introduce <code>first result</code> and <code>second result</code> above, managing buggy contracts' tokens(attack other contracts via &lsquo;this&rsquo; contract).</p>
+<p>Aside from this, numerous ERC20 Token contracts implement similar <code>call()</code> which is highly risky. It permits attackers stealing contracts' tokens and bypassing authority checks in some cases.</p>
 <h2 id="correct-erc20--erc721-implementation-on-receivercall">Correct ERC20 &amp; ERC721 Implementation on &lsquo;receiverCall&rsquo;</h2>
 <p>A correct &lsquo;receiverCall&rsquo; program should hard-code the signature of called function to prevent from getting <strong>arbitrarily appointed</strong> by an attacker. Here are 2 correct &lsquo;receiverCall&rsquo; examples:</p>
 <ol>
@@ -798,9 +799,9 @@ if (!doNotTrack) {
 <pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">approveAndCall</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_spender</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">_extraData</span><span class="p">)</span>
     <span class="kr">public</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> 
 <span class="p">{</span>
-    <span class="nx">tokenRecipient</span> <span class="nx">spender</span> <span class="o">=</span> <span class="nx">tokenRecipient</span><span class="p">(</span><span class="nx">_spender</span><span class="p">)</span><span class="p">;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">approve</span><span class="p">(</span><span class="nx">_spender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">spender</span><span class="p">.</span><span class="nx">receiveApproval</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">_extraData</span><span class="p">)</span><span class="p">;</span>
+    <span class="nx">tokenRecipient</span> <span class="nx">spender</span> <span class="o">=</span> <span class="nx">tokenRecipient</span><span class="p">(</span><span class="nx">_spender</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">approve</span><span class="p">(</span><span class="nx">_spender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">spender</span><span class="p">.</span><span class="nx">receiveApproval</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">_extraData</span><span class="p">);</span>
         <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -828,13 +829,13 @@ if (!doNotTrack) {
 <td class="lntd">
 <pre class="chroma"><code class="language-js" data-lang="js"><span class="cm">/* Approves and then calls the receiving contract */</span>
 <span class="kd">function</span> <span class="nx">approveAndCall</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_spender</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">_extraData</span><span class="p">)</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">allowed</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span><span class="p">[</span><span class="nx">_spender</span><span class="p">]</span> <span class="o">=</span> <span class="nx">_value</span><span class="p">;</span>
-    <span class="nx">Approval</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_spender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">)</span><span class="p">;</span>
+    <span class="nx">allowed</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">][</span><span class="nx">_spender</span><span class="p">]</span> <span class="o">=</span> <span class="nx">_value</span><span class="p">;</span>
+    <span class="nx">Approval</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_spender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
 
     <span class="c1">//call the receiveApproval function on the contract you want to be notified. This crafts the function signature manually so one doesn&#39;t have to include a contract in here just for this.
 </span><span class="c1"></span>    <span class="c1">//receiveApproval(address _from, uint256 _value, address _tokenContract, bytes _extraData)
 </span><span class="c1"></span>    <span class="c1">//it is assumed that when does this that the call *should* succeed, otherwise one would use vanilla approve instead.
-</span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">_spender</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">bytes4</span><span class="p">(</span><span class="nx">bytes32</span><span class="p">(</span><span class="nx">sha3</span><span class="p">(</span><span class="s2">&#34;receiveApproval(address,uint256,address,bytes)&#34;</span><span class="p">)</span><span class="p">)</span><span class="p">)</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">_extraData</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span> <span class="k">throw</span><span class="p">;</span> <span class="p">}</span>
+</span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">_spender</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">bytes4</span><span class="p">(</span><span class="nx">bytes32</span><span class="p">(</span><span class="nx">sha3</span><span class="p">(</span><span class="s2">&#34;receiveApproval(address,uint256,address,bytes)&#34;</span><span class="p">))),</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">_extraData</span><span class="p">))</span> <span class="p">{</span> <span class="k">throw</span><span class="p">;</span> <span class="p">}</span>
     <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
     <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -852,7 +853,7 @@ if (!doNotTrack) {
 <li>ERC223 standard acts differently from interface definition and two branches in official repo are implemented inconsistently. Be cautious with <strong>official code</strong></li>
 <li>ERC827 is vulnerable as well</li>
 <li>Be careful using low-level call</li>
-<li>EVM's mechanism on calling contract functions needs to be well understood</li>
+<li>EVM&rsquo;s mechanism on calling contract functions needs to be well understood</li>
 </ul>
 <h2 id="reference">Reference</h2>
 <ul>

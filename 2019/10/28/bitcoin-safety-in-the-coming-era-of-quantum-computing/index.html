@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.62.0" />
+<meta name="generator" content="Hugo 0.75.1" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2019/10/28/bitcoin-safety-in-the-coming-era-of-quantum-computing/" />
@@ -53,7 +53,7 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.0995afa14b62cd93e93cfc066b646c4c17a3eddca0e9d52a1d9dcf5d90aaacd3.css" integrity="sha256-CZWvoUtizZPpPPwGa2RsTBej7dyg6dUqHZ3PXZCqrNM=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
 
 
 
@@ -70,14 +70,15 @@
 <meta property="article:modified_time" content="2019-10-28T17:24:57+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="如果量子计算时代到来，我们的比特币安全吗？">
 <meta itemprop="description" content="量子时代的到来不可避免，巨大的变革将会带来无尽的机会，区块链、密码学与数字资产安全无疑是未来十年的焦点，请扔掉包袱，与我们一起前行。">
-<meta itemprop="datePublished" content="2019-10-28T08:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2019-10-28T17:24:57&#43;08:00" />
+<meta itemprop="datePublished" content="2019-10-28T08:00:00+08:00" />
+<meta itemprop="dateModified" content="2019-10-28T17:24:57+08:00" />
 <meta itemprop="wordCount" content="3602">
 <meta itemprop="image" content="https://sec-bit.github.io/blog/2019/10/28/bitcoin-safety-in-the-coming-era-of-quantum-computing/cover.jpg">
 
 
 
-<meta itemprop="keywords" content="blockchain,security,bitcoin,quantum computing," /><meta name="twitter:card" content="summary_large_image"/>
+<meta itemprop="keywords" content="blockchain,security,bitcoin,quantum computing," />
+<meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://sec-bit.github.io/blog/2019/10/28/bitcoin-safety-in-the-coming-era-of-quantum-computing/cover.jpg"/>
 <meta name="twitter:title" content="如果量子计算时代到来，我们的比特币安全吗？"/>
 <meta name="twitter:description" content="量子时代的到来不可避免，巨大的变革将会带来无尽的机会，区块链、密码学与数字资产安全无疑是未来十年的焦点，请扔掉包袱，与我们一起前行。"/>
@@ -443,10 +444,10 @@ if (!doNotTrack) {
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#heading">比特币中的密码算法</a></li>
-    <li><a href="#heading-1">我们的比特币安全吗？</a></li>
-    <li><a href="#heading-2">量子计算下的安全：格密码</a></li>
-    <li><a href="#heading-3">参考资料</a></li>
+    <li><a href="#比特币中的密码算法">比特币中的密码算法</a></li>
+    <li><a href="#我们的比特币安全吗">我们的比特币安全吗？</a></li>
+    <li><a href="#量子计算下的安全格密码">量子计算下的安全：格密码</a></li>
+    <li><a href="#参考资料">参考资料</a></li>
   </ul>
 </nav>
   </div>
@@ -463,7 +464,7 @@ if (!doNotTrack) {
 <p>每次有量子计算的新闻出现时，人们都要担心一次比特币。原因很简单，比特币是基于密码学的，而密码学之所以能够成立，是基于某种计算上的不可能性。如果量子计算把原本不可能或难以实现的计算变成可以计算，那么这种密码学的方法就会失效。</p>
 <p>但<strong>这种担心是多余的</strong>。原因同样简单：我们只要有量子计算也无法完成的计算，不就可以吗？以这种计算为基础构建的密码学方法（ <em>量子安全密码学</em> ），量子计算也就无法破解，然后把比特币升级到该密码学方法之下即可。</p>
 <p>「格困难问题」就是典型的代表，即便对于量子计算，它也保持着计算上的不可能性。基于人类的「无知」，我们很大程度上总可以找到方法生活在密码学的保护之下。</p>
-<h2 id="heading">比特币中的密码算法</h2>
+<h2 id="比特币中的密码算法">比特币中的密码算法</h2>
 <p>我们知道比特币钱包地址对应一个公钥和一个私钥，只有拥有私钥才能动用该钱包中的比特币，但私钥是安全的，它无法通过钱包地址或公钥被计算出来。</p>
 <p>这是如何实现的？让我们从台球厅开始。</p>
 <p>你去台球厅打台球，把一个球放在台球桌底边的一个位置上，就叫它 A 点，然后你把这个球打出去，假设你击球的力气超级大，那么球从 A 点出发，总会撞到台球桌某条边上的一个点，然后又会从该点弹到台球桌另一条边上的另一个点……它可能这样弹了 B 次（ <em>比如一万次</em> ），最后停在了台球桌某条边的一个点上，就叫它 C 点。</p>
@@ -487,7 +488,7 @@ if (!doNotTrack) {
 <p>目前在量子算法里可以加速计算SHA-256 的是Lov Grover 在1996年提出来的 Grover 算法，它可以将暴力搜索的性能提高到平方倍。假设我们要在一个 N× N 的巨大方格里寻找一根针，经典计算机需要逐一搜索每一个方格，最坏情况下需要搜索N×N 次；但Grover 算法即使是在最坏的情况下也只需要搜索 N 次。</p>
 </blockquote>
 <p><strong>总结一下</strong>：比特币中有两种基础密码算法，一是椭圆曲线算法，一是哈希函数 SHA-256。目前能够找到前者的高效量子计算方法，实现破解；但并没有找到后者的高效量子计算方法。当然，破解的前提是量子计算真的发展到足够强大，要知道，谷歌最新的量子芯片只有 54 个量子比特。</p>
-<h2 id="heading-1">我们的比特币安全吗？</h2>
+<h2 id="我们的比特币安全吗">我们的比特币安全吗？</h2>
 <p>如果进入到量子计算时代，我们只需要用抗量子计算的密码学算法生成公钥、私钥、钱包地址即可。但假如用户未能升级公钥私钥，他们钱包中的比特币是否就一定会被窃取？答案是否定的。</p>
 <p>大致有如下几种情况：</p>
 <ol>
@@ -505,7 +506,7 @@ if (!doNotTrack) {
 <p>据统计截止到当前，<strong>有将近 500 万个比特币是存放于公钥暴露的地址中的</strong>，此外还有将近 177 万个比特币使用的是 P2PK 地址，这是最早期的比特币账户格式，公钥是公开的，其中就包括被认为是中本聪的账户。<strong>如果这些比特币不更换地址，它们是在量子计算攻击范围内的</strong>。（数据来源：安比实验室）</p>
 <p>除了钱包地址，在比特币系统中还有一个重要的地方使用到了 SHA-256，那就是挖矿。挖矿就是暴力破解哈希函数的过程，通过调整输入值「撞」出落在目标区间的输出值。</p>
 <p>如前文所述，从理论上讲，<strong>量子计算机芯片在暴力搜索时是可以「碾压」经典计算机芯片的</strong>，但我们同样需要考虑到它的技术发展水平和芯片制作工艺。此外，芯片本就是随着技术的发展不断升级的，<strong>量子计算对挖矿的影响更多的是芯片升级的经济问题，而不是安全问题</strong>。</p>
-<h2 id="heading-2">量子计算下的安全：格密码</h2>
+<h2 id="量子计算下的安全格密码">量子计算下的安全：格密码</h2>
 <p>在量子计算发展的同时，量子安全密码学也在飞速发展，这其中最具代表性的是「<strong>格密码</strong>」，它是基于格的密码体制（ <em>lattice-based cryptography</em> ）。</p>
 <p>「格」是一个系数为整数的向量空间，可以把它理解成一个高维度空间，它有两个基本的「格困难问题」，一是<strong>最短向量问题</strong>，一是<strong>最近向量问题</strong>，求解这类问题需要指数时间的复杂度，那么如果因子为多项式，这类问题就不存在多项式时间算法，对于量子计算也是一种计算上的不可能性。</p>
 <p>这听起来有些抽象，也许可以这么去理解：用笔在一张 A4 纸上画出很多黑色的点，然后换支笔在纸上画下一个红色的点，我们需要做的是找到距离红点最近的黑点，这很容易；现在从 A4 纸这个二维空间到一个三维空间，想象一下空间里漂浮着很多黑色的点，这时放一个红色的点进去，同样是去找距离红点最近的黑点，这并不算很难，但<strong>相对于二维空间，其困难度已经不在一个级别了</strong>。</p>
@@ -514,7 +515,7 @@ if (!doNotTrack) {
 <p><strong>在椭圆曲线算法中，因为「离散对数困难问题」，传统计算机无法通过公钥计算出私钥；在格密码的算法中，因为「格困难问题」，量子计算机也无法通过公钥算出私钥。</strong></p>
 <p>格密码发展很快，基于格我们不仅有抗量子计算的公钥和私钥，还有抗量子计算的对应于经典密码概念的一系列密码学算法或协议，它们可以被用于数字签名、密钥交换、零知识证明等等应用领域。</p>
 <p>「宇宙相信加密。加密容易，解密难。」在可以预见的未来，依然如此。所以，不用担心，对于比特币是这样，对于区块链也是。</p>
-<h2 id="heading-3">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 <p>[1] Arute, Frank, Kunal Arya, Ryan Babbush,Dave Bacon, Joseph C. Bardin, Rami Barends, Rupak Biswas et al. &ldquo;Quantumsupremacy using a programmable superconducting processor.&rdquo; Nature 574,no. 7779 (2019): 505-510.</p>
 <p>[2] Andreas M. Antonopoulos答疑量子计算问题：
 <a href="http://www.youtube.com/watch?v=eo7mwcsUbdo">www.youtube.com/watch?v=eo7mwcsUbdo</a>；www.youtube.com/watch?v=wlzJyp3Qm7s</p>

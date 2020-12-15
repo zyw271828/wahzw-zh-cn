@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>bitcoin on SECBIT Blog</title>
+    <title>Bitcoin on SECBIT Blog</title>
     <link>https://sec-bit.github.io/blog/tags/bitcoin/</link>
-    <description>Recent content in bitcoin on SECBIT Blog</description>
+    <description>Recent content in Bitcoin on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 28 Oct 2019 08:00:00 +0800</lastBuildDate>
-    
-	<atom:link href="https://sec-bit.github.io/blog/tags/bitcoin/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 28 Oct 2019 08:00:00 +0800</lastBuildDate><atom:link href="https://sec-bit.github.io/blog/tags/bitcoin/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>如果量子计算时代到来，我们的比特币安全吗？</title>
       <link>https://sec-bit.github.io/blog/2019/10/28/bitcoin-safety-in-the-coming-era-of-quantum-computing/</link>

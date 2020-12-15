@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.62.0" />
+<meta name="generator" content="Hugo 0.75.1" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2019/07/24/zkpod-explained-pod-tiny/" />
@@ -53,7 +53,7 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.0995afa14b62cd93e93cfc066b646c4c17a3eddca0e9d52a1d9dcf5d90aaacd3.css" integrity="sha256-CZWvoUtizZPpPPwGa2RsTBej7dyg6dUqHZ3PXZCqrNM=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
 
 
 
@@ -69,13 +69,14 @@
 <meta property="article:modified_time" content="2019-10-12T18:48:30+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="PoD-Tiny——实现零信任交易的最简协议">
 <meta itemprop="description" content="zkPoD 是一个全新的实现 ZKCP 目标的方案。目前 zkPoD 已经支持上 GB 的数据，支持低 TPS 公链，也支持高 TPS 联盟链；既支持二进制数据，也支持带有内部丰富类型与结构的表格数据。与传统的「受信第三方」相比，zkPoD 利用区块链来作为一个「Trustless 第三方」，实现了的「零信任公平交易」。本文介绍一个极简的 PoD 协议——PoD-Tiny，这个协议简化了很多问题，并不实用，但是可以帮助读者快速理解 PoD 的原理和面临的挑战。">
-<meta itemprop="datePublished" content="2019-07-24T08:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2019-10-12T18:48:30&#43;08:00" />
+<meta itemprop="datePublished" content="2019-07-24T08:00:00+08:00" />
+<meta itemprop="dateModified" content="2019-10-12T18:48:30+08:00" />
 <meta itemprop="wordCount" content="6168">
 
 
 
-<meta itemprop="keywords" content="Blockchain,zkPoD,Zero Knowledge Proof,Formal Verification,Fair Exchange," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="Blockchain,zkPoD,Zero Knowledge Proof,Formal Verification,Fair Exchange," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="PoD-Tiny——实现零信任交易的最简协议"/>
 <meta name="twitter:description" content="zkPoD 是一个全新的实现 ZKCP 目标的方案。目前 zkPoD 已经支持上 GB 的数据，支持低 TPS 公链，也支持高 TPS 联盟链；既支持二进制数据，也支持带有内部丰富类型与结构的表格数据。与传统的「受信第三方」相比，zkPoD 利用区块链来作为一个「Trustless 第三方」，实现了的「零信任公平交易」。本文介绍一个极简的 PoD 协议——PoD-Tiny，这个协议简化了很多问题，并不实用，但是可以帮助读者快速理解 PoD 的原理和面临的挑战。"/>
 
@@ -440,26 +441,26 @@ if (!doNotTrack) {
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#zkpod-">导言：zkPoD 是什么？</a>
+    <li><a href="#导言zkpod-是什么">导言：zkPoD 是什么？</a>
       <ul>
         <li></li>
       </ul>
     </li>
-    <li><a href="#authenticator">锁定数据的特征：Authenticator</a></li>
-    <li><a href="#schnorr---">插播科普：Schnorr 协议 与 「零知识」</a></li>
-    <li><a href="#pod-tiny-pod-">PoD-Tiny：一个简单的 PoD 协议</a>
+    <li><a href="#锁定数据的特征authenticator">锁定数据的特征：Authenticator</a></li>
+    <li><a href="#插播科普schnorr-协议-与-零知识">插播科普：Schnorr 协议 与 「零知识」</a></li>
+    <li><a href="#pod-tiny一个简单的-pod-协议">PoD-Tiny：一个简单的 PoD 协议</a>
       <ul>
-        <li><a href="#heading-1">协议：</a></li>
-        <li><a href="#heading-2">协议的安全性与公平性分析</a></li>
+        <li><a href="#协议">协议：</a></li>
+        <li><a href="#协议的安全性与公平性分析">协议的安全性与公平性分析</a></li>
       </ul>
     </li>
-    <li><a href="#heading-3">压缩到最简协议</a>
+    <li><a href="#压缩到最简协议">压缩到最简协议</a>
       <ul>
         <li></li>
       </ul>
     </li>
-    <li><a href="#heading-6">迈向实用性的挑战：安全与性能</a></li>
-    <li><a href="#heading-7">写在最后</a></li>
+    <li><a href="#迈向实用性的挑战安全与性能">迈向实用性的挑战：安全与性能</a></li>
+    <li><a href="#写在最后">写在最后</a></li>
   </ul>
 </nav>
   </div>
@@ -471,13 +472,13 @@ if (!doNotTrack) {
 <p><em>zkPoD 原理解读系列（一）</em></p>
 </blockquote>
 <p>本文面向有一定密码学基础，或者对密码学感兴趣的读者。文中虽然有大量数学公式出现，但是都比较简单易于理解。</p>
-<h2 id="zkpod-">导言：zkPoD 是什么？</h2>
+<h2 id="导言zkpod-是什么">导言：zkPoD 是什么？</h2>
 <p>zkPoD 实现了去中心化的「零知识有条件支付」，支持上 GB 数据的零信任公平交易。关于「零知识有条件支付」的概念请看这篇概述文章 <a href="%E6%AD%A4%E5%A4%84%E8%AF%B7%E6%8D%A2%E6%88%90%E5%85%AC%E5%8F%B7%E6%96%87%E7%AB%A0%E9%93%BE%E6%8E%A5">『zkPoD：区块链，零知识证明与形式化验证，实现无中介、零信任的公平交易』</a>。zkPoD 是一个全新的实现 ZKCP 目标的方案。目前 zkPoD 已经支持上 GB 的数据，支持低 TPS 公链，也支持高 TPS 联盟链；既支持二进制数据，也支持带有内部丰富类型与结构的表格数据。与传统的「受信第三方」相比，zkPoD 利用区块链来作为一个「Trustless 第三方」，实现了的「零信任公平交易」。</p>
 <blockquote>
 <p>zkPoD 也是一个实现数据与价值双向流通的底层基础协议</p>
 </blockquote>
 <p>zkPoD 开源代码与更多文档请见：https://github.com/sec-bit/zkPoD-node</p>
-<h4 id="proof-of-delivery-pod-">Proof-of Delivery (PoD) 协议</h4>
+<h4 id="proof-of-delivery-pod-协议">Proof-of Delivery (PoD) 协议</h4>
 <p>PoD 是实现 zkPoD系统的核心协议。PoD 协议实现了借用区块链智能合约来进行「数据」和 「Token」的原子交换，并且保证买卖双方的公平性。PoD 并没有像 ZKCP[1] 那样采用单一的 zkSNARK 方案来实现原子交换，而是利用了 Pedersen Commitment，Schnorr Protocol 等密码学经典方案来实现。这样 PoD 可以做得更高效，同时易扩展。同时 PoD 协议的目标做到「可证安全」、「可证公平」。利用形式化的证明来构建坚实的「信任根基」。</p>
 <p>本文介绍一个极简的 PoD 协议——PoD-Tiny，这个协议简化了很多问题，并不实用，但是可以帮助读者快速理解 PoD 的原理和面临的挑战。</p>
 <p>假设我是卖家，而你需要从我手里买一个数据文件，这个协议的一个大致流程是：</p>
@@ -487,7 +488,7 @@ if (!doNotTrack) {
 <li>步骤三：我用「密钥」<strong>交换</strong>「智能合约」手里的「Token」，然后你紧接着可以从智能合约中读取「密钥」进行「数据」<strong>解密</strong></li>
 </ul>
 <p>是不是很简单？聪明的你此刻正在高度怀疑这个过程是不是哪有问题。</p>
-<h4 id="heading">「公平交易」中的关键问题</h4>
+<h4 id="公平交易中的关键问题">「公平交易」中的关键问题</h4>
 <ul>
 <li><strong>关键问题(1)</strong>：你收到的加密数据确实是你想要的数据</li>
 <li><strong>关键问题(2)</strong>：你收到加密数据之后，不付钱就跑路怎么办</li>
@@ -495,7 +496,7 @@ if (!doNotTrack) {
 <li><strong>关键问题(4)</strong>：我出示真密钥之后，必须要能拿到 Token</li>
 </ul>
 <p>我们接下来就抽丝剥茧，讨论下上面这几个关键问题，帮忙大家理解 <strong>PoD-Tiny 是怎么巧妙解决这些问题的</strong>。</p>
-<h2 id="authenticator">锁定数据的特征：Authenticator</h2>
+<h2 id="锁定数据的特征authenticator">锁定数据的特征：Authenticator</h2>
 <p>对于<strong>关键问题(1)</strong>，我们需要一个锚点，什么是你想要的数据。这里简单起见，假设我们事先约定了一个数据文件的唯一标签，或者特征。然后你购买的数据需要能和这个标签一一对应。</p>
 <p>一般来说，大家喜欢用 Hash 来标记对一个字符串的特征，比如计算</p>
 <div class="highlight"><div class="chroma">
@@ -532,7 +533,7 @@ $\overline{m}$ 就是加密数据。我可以把 $K= g^k$ 也发给你，这样�
 <li><strong>关键问题(2)</strong>：你收到加密数据之后，不付钱就跑路怎么办</li>
 </ul>
 <p>解决这个问题是核心方法是「零知识证明」。如果买家拿到加密数据之后，从中分析不出来任何多余的信息，那么就不会损害卖家利益，也就能解决关键问题(2)。简单讲，如果加密数据是零知识的，就不怕买家拿了加密数据不给钱就跑路。所谓的「零知识」，大家可以这么通俗理解：买家拿到的加密数据后，就像拿到一堆随机数一样，没有任何信息量。怎么做到零知识呢？PoD-Tiny 使用了一个经典的 Schnorr 协议。</p>
-<h2 id="schnorr---">插播科普：Schnorr 协议 与 「零知识」</h2>
+<h2 id="插播科普schnorr-协议-与-零知识">插播科普：Schnorr 协议 与 「零知识」</h2>
 <p>Schnorr 协议是非常经典的教课书例子，我这里快速带大家过一遍这个协议。Schnorr 协议的用途之一是用来做身份认证，它是一个两方安全协议，一方证明者「Alice」 ，向另一方「验证者」Bob证明她拥有一个公钥对应的私钥。</p>
 <p>首先 Alice 产生一对「公私钥」，$(pk, sk)$。然后 Bob 持有 Alice 的公钥 $pk$。当 Alice 要向 Bob 证明身份时，他们会通过一个「三步交互协议」来完成证明：证明 Alice 拥有私钥 $sk$。如果 Bob 接受了这个证明，那么 Bob 会认为 对面证明她有私钥的人就是 Alice。下面简单描述下这个协议：</p>
 <p><img src="schnorr.png" alt=""></p>
@@ -551,11 +552,11 @@ $\overline{m}$ 就是加密数据。我可以把 $K= g^k$ 也发给你，这样�
 </ol>
 <p>其中第三个性质就是「零知识」，这个性质保证了：在这个协议交互过程中，Bob 无论如何都不会得到关于私钥的任何信息。</p>
 <p><strong>注</strong>:严格地讲， Schnorr 协议并不是「Full-ZK」，只能保证「HVZK」，这是一个相对弱一些的零知识性质。不过大家暂时不用纠结这一点，Schnorr 协议可以通过一些技巧升级为「Full-ZK」。</p>
-<h2 id="pod-tiny-pod-">PoD-Tiny：一个简单的 PoD 协议</h2>
+<h2 id="pod-tiny一个简单的-pod-协议">PoD-Tiny：一个简单的 PoD 协议</h2>
 <p>如果大家已经大概记住了 Schnorr 协议的细节，那么我来展示一个协议叫做 PoD-Tiny。</p>
 <p>PoD-Tiny 是一个非常简化的 PoD 协议，虽然不实用，但帮助大家理解 PoD 协议的工作原理。</p>
 <p>协议描述：假设 Alice 拥有一个数据明文 $m$，然后 Bob 拥有这个数据的 Authenticator（$\sigma_m$），这里还有一个 「Trustless 第三方」，我们暂且叫她 Julia。请大家记住：她是一个智能合约。</p>
-<h3 id="heading-1">协议：</h3>
+<h3 id="协议">协议：</h3>
 <p>开场前的道具：$m$, $\sigma_m$, $g$, 一个随机数产生器  $Rand(\cdot)$</p>
 <p>角色：</p>
 <ul>
@@ -592,7 +593,7 @@ $\overline{m}$ 就是加密数据。我可以把 $K= g^k$ 也发给你，这样�
 <li><strong>关键问题(4)</strong>：Alice 出示真密钥之后，必须要能拿到 Token</li>
 </ul>
 <p>在协议的第六步，Julia 要检验公式(3)。在 Alice 出示正确的 $r$ 的情况下，如果等式不成立，那么只有两种情况：（1）Julia 故意捣乱， （2）$R$ 的值不正确。对于前一种情况，需要保证 Julia 的合约代码确实没有漏洞，功能正常，这个需要额外采用「形式化验证」的方法来解决。对于后一种情况，这里需要 Alice 在第六步先检查一下，在第五步中 Bob 提交的 $R$ 是不是一个正确的值。这里请注意：Julia 是一个公开的智能合约，她拿到的任何数据都是公开可见的，她的任何内部状态与计算过程都是公开可见的。</p>
-<h3 id="heading-2">协议的安全性与公平性分析</h3>
+<h3 id="协议的安全性与公平性分析">协议的安全性与公平性分析</h3>
 <p>如果我们不考虑多次交易，PoD-Tiny 是一个「公平」的交易协议。我们接下来依次分析下为何这个协议是公平的。</p>
 <p>我们首先考虑 Alice 有哪些作弊手段：</p>
 <ol>
@@ -609,10 +610,10 @@ $\overline{m}$ 就是加密数据。我可以把 $K= g^k$ 也发给你，这样�
 </ol>
 <p>分析：如果 Bob 采用作弊手段 B1，那么 Bob 是无法从加密数据中得到任何信息的，因为协议的前三步是「零知识的」（准确地说：Honest Verifier Zero-Knowledge）。如果 Bob 采用手段 B2，Alice 可以在第六步检查下 Julia 手里的「数据交付收据」$R$ 是不是和她在第一步发给 Bob 的相同，一旦 Bob 提交错误的收据，Alice 可以直接退出协议，拒绝出示密钥。同样，如果 Bob 采用手段 B3，Alice 可以在第六步的时候检查 Bob保存在 Julia 处的 Token 是否足够，如果不足则直接退出协议。</p>
 <p>最后，Julia 有没有可能作弊呢？Julia 是智能合约，她的任何行为和内部状态都能被任何人读取，那么通过 Julia 是有可能产生信息泄露的，从而对 Alice 或者 Bob 不利。但是请大家注意下，Julia 其实并不接触任何和数据明文 $m$ 相关的信息，也就从链上不会泄露 $m$ 的信息。Julia 接触到的信息只有两个，$R$ 和 $r$。</p>
-<h2 id="heading-3">压缩到最简协议</h2>
+<h2 id="压缩到最简协议">压缩到最简协议</h2>
 <p>我们数一数上面的协议的交互步骤总共有五步，分别是 Alice 与 Bob交互三次，Bob 与 Julia 交互一次，Alice 与 Julia 交互一次。安全协议里面有一个叫做 Fiat-Shamir Heuristic 变换，它可以将
 PoD-Tiny 协议中的前三步，直接「压缩」成为一步。</p>
-<h4 id="heading-4">压缩前：</h4>
+<h4 id="压缩前">压缩前：</h4>
 <table>
 <thead>
 <tr>
@@ -649,7 +650,7 @@ PoD-Tiny 协议中的前三步，直接「压缩」成为一步。</p>
 </tr>
 </tbody>
 </table>
-<h4 id="heading-5">压缩后：</h4>
+<h4 id="压缩后">压缩后：</h4>
 <table>
 <thead>
 <tr>
@@ -679,7 +680,7 @@ PoD-Tiny 协议中的前三步，直接「压缩」成为一步。</p>
 <p>我们发现最主要的不同是，在压缩后的PoD-Tiny 中挑战数不再由 Bob 产生，而是由 Alice 产生。这里大家可能会产生疑问，这样做会不会对 Bob 不公平？这相当于 三步的 Schnorr 协议直接压缩成一步就完成了。这里先下个结论：压缩后的协议保持零知识的性质，仍然对双方公平。原因是，压缩前的协议可以证明 HVZK(Honest Verifier Zero-Knowledge)；压缩后的协议可以证明出 NIZK (Non-Interactive Zero-Knowledge)。但是安全性在压缩前后的对比会比较 Subtle，这里不再展开。</p>
 <p>经过压缩，最后这个协议变得不可思议地简洁：</p>
 <p><img src="pod-tiny.png" alt=""></p>
-<h2 id="heading-6">迈向实用性的挑战：安全与性能</h2>
+<h2 id="迈向实用性的挑战安全与性能">迈向实用性的挑战：安全与性能</h2>
 <p>最简协议 PoD-Tiny 只是万里长征的第一步，当面对纷繁冗杂的现实世界，要将理论变成代码时，会面临许许多多的问题。这些问题会相互纠缠在一起，反过来又会影响着协议在理论层面的设计。</p>
 <ul>
 <li>如何支持长度超过 1MB 的数据，甚至上 GB</li>
@@ -688,7 +689,7 @@ PoD-Tiny 协议中的前三步，直接「压缩」成为一步。</p>
 <li>如何支持数据的复杂同态计算</li>
 </ul>
 <p>zkPoD 在工程阶段做了不少的和安全和性能相关的改进和创新。请关注我们的后续文章，说说我们的感悟和体会。</p>
-<h2 id="heading-7">写在最后</h2>
+<h2 id="写在最后">写在最后</h2>
 <blockquote>
 <p>区块链到底能做什么？我在最近一年里看到了很多相当「悲观」的论调，我想 PoD 协议应该会给这些怀疑论者带来些许启发。区块链在 PoD 协议中起到了一个第三方的关键角色，而且让这个协议变得不可思议的简洁，这是我们始料未及。</p>
 </blockquote>

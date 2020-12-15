@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.62.0" />
+<meta name="generator" content="Hugo 0.75.1" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2019/12/25/learn-zk-snark-from-zero-part-one/" />
@@ -53,7 +53,7 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.0995afa14b62cd93e93cfc066b646c4c17a3eddca0e9d52a1d9dcf5d90aaacd3.css" integrity="sha256-CZWvoUtizZPpPPwGa2RsTBej7dyg6dUqHZ3PXZCqrNM=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
 
 
 
@@ -69,13 +69,14 @@
 <meta property="article:modified_time" content="2020-06-06T13:56:17+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="从零开始学习 zk-SNARK（一）——多项式的性质与证明">
 <meta itemprop="description" content="当我第一次了解到 zk-SNARK 技术是如何将这些东西完美地融合在一起的时候，就被数学之美震撼到了，并且随着我发现的维度越多，好奇心就越强烈。在这篇文章中，我主要就基于一些实例简洁明了地阐明 zk-SNARK ，并对这里面的很多问题做出了解释，并利用这种方式分享了我的经验，进而让更多人也能够欣赏到这项最先进的技术以及它的创新之处，最终欣赏到数学之美。">
-<meta itemprop="datePublished" content="2019-12-25T08:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2020-06-06T13:56:17&#43;08:00" />
+<meta itemprop="datePublished" content="2019-12-25T08:00:00+08:00" />
+<meta itemprop="dateModified" content="2020-06-06T13:56:17+08:00" />
 <meta itemprop="wordCount" content="8890">
 
 
 
-<meta itemprop="keywords" content="Zero Knowledge Proof,tutorials,zkSNARKs," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="Zero Knowledge Proof,tutorials,zkSNARKs," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="从零开始学习 zk-SNARK（一）——多项式的性质与证明"/>
 <meta name="twitter:description" content="当我第一次了解到 zk-SNARK 技术是如何将这些东西完美地融合在一起的时候，就被数学之美震撼到了，并且随着我发现的维度越多，好奇心就越强烈。在这篇文章中，我主要就基于一些实例简洁明了地阐明 zk-SNARK ，并对这里面的很多问题做出了解释，并利用这种方式分享了我的经验，进而让更多人也能够欣赏到这项最先进的技术以及它的创新之处，最终欣赏到数学之美。"/>
 
@@ -440,16 +441,16 @@ if (!doNotTrack) {
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#heading">序言和介绍</a></li>
-    <li><a href="#heading-1">证明的媒介</a></li>
-    <li><a href="#heading-2">证明多项式的知识</a></li>
-    <li><a href="#heading-3">因式分解</a></li>
-    <li><a href="#heading-4">模糊计算</a>
+    <li><a href="#序言和介绍">序言和介绍</a></li>
+    <li><a href="#证明的媒介">证明的媒介</a></li>
+    <li><a href="#证明多项式的知识">证明多项式的知识</a></li>
+    <li><a href="#因式分解">因式分解</a></li>
+    <li><a href="#模糊计算">模糊计算</a>
       <ul>
-        <li><a href="#heading-5">同态加密</a></li>
-        <li><a href="#heading-6">模运算</a></li>
-        <li><a href="#heading-7">强同态加密</a></li>
-        <li><a href="#heading-8">加密多项式</a></li>
+        <li><a href="#同态加密">同态加密</a></li>
+        <li><a href="#模运算">模运算</a></li>
+        <li><a href="#强同态加密">强同态加密</a></li>
+        <li><a href="#加密多项式">加密多项式</a></li>
       </ul>
     </li>
   </ul>
@@ -472,7 +473,7 @@ if (!doNotTrack) {
 <p>翻译 &amp; 注解：even@安比实验室（even@secbit.io）</p>
 <p>校对：valuka@安比实验室</p>
 <p>本系列文章已获作者中文翻译授权。</p>
-<h2 id="heading">序言和介绍</h2>
+<h2 id="序言和介绍">序言和介绍</h2>
 <p>尽管最初计划写短一些，但现在已经写了几十页了，不过这篇文章读起来几乎不需要什么预备知识，并且你也可以随意跳过熟悉的部分。如果你不熟悉文中使用的某些数学符号也不需要担心，文中将会对这些符号逐个进行介绍。</p>
 <p><em>Zero-knowledge</em> <em>succinct non-interactive arguments of knowledge</em> (<em>zk-SNARK</em>) 确实是一种非常精妙的方法，它可以在不揭示任何信息的前提下证明某个论断为真。但首要问题是，它为什么有用？</p>
 <p>其实零知识证明在无数的应用中都具备优势，包括：</p>
@@ -519,7 +520,7 @@ if (!doNotTrack) {
 <li>零知识 —— 协议的交互仅仅揭露「陈述」是否正确而不泄漏任何其它的信息</li>
 </ul>
 <p>zk-SNARK 这个术语本身是在 [Bit+11] 中引入的，它在[Gro10]的基础上，又遵循了匹诺曹协议[Gen+12; Par+13] 使其能够适用于通用的计算。</p>
-<h2 id="heading-1">证明的媒介</h2>
+<h2 id="证明的媒介">证明的媒介</h2>
 <p>这里我们先不要去管零知识，非交互性，其形式和适用性这些概念，就从尝试证明一些简单的东西开始。</p>
 <p>想象一下我们有一个长度为10 的位数组，现在要向 verifier（例如，程序）证明这样一个陈述：所有的位都被设置成了 1。</p>
 <p><img src="img/1_qYcj1rieth4Rkaphwx3tGw.png" alt=""></p>
@@ -557,7 +558,7 @@ if (!doNotTrack) {
 <p>even@安比实验室: 这一节告诉了我们多项式的一个重要性质：我们不可能找到共享连续段的两条不相等曲线，也就是任何多项式在任意点的计算结果都可以看做是其唯一身份的表示。也就是说只要能证明多项式上的某个随机点就可以证明这个多项式（只有在知道了多项式，才能算出这个点对于的值），这个性质是我们下面所有证明的核心。</p>
 <p>这就是 Schwatz-Zippel 定理，它可以扩展到多变量多项式，即在一个多维空间内形成一个曲面。这个定理会在多个零知识证明方案的证明中反复出现。</p>
 </blockquote>
-<h2 id="heading-2">证明多项式的知识</h2>
+<h2 id="证明多项式的知识">证明多项式的知识</h2>
 <p>我们的讨论从证明多项式的知识开始，再将证明协议逐步转换成一种通用的方法，在这个过程中我们也将发现多项式的很多其它性质。</p>
 <p>但是到目前为止，我们的协议还只是一个很弱的证明，因为协议中并没有采取任何措施去保证参与方必须按照协议的规则生成证明，所以参与方只能互相信任。例如，prover 并不需要知道多项式，也可能通过其它方式得到正确的答案。而且，如果 verifier 要验证的多项式的解的取值范围不够大，比如我们前文说的 10，那个就可以去猜一个数字，猜对答案的概率是不可忽略不计的。因而我们必须要解决协议中的这个缺陷，在解决问题之前首先来想一下，<strong>知道多项式意味着什么呢？</strong></p>
 <p>多项式可以用下面的形式来表示（其中 <em>n</em> 指的是多项式的阶）：</p>
@@ -570,7 +571,7 @@ $$</p>
 <blockquote>
 <p>even@安比实验室: 这一节告诉了我们多项式的一个本质——多项式的「知识」就是多项式的系数。所谓「知道」多项式就是指「知道」多项式的系数。</p>
 </blockquote>
-<h2 id="heading-3">因式分解</h2>
+<h2 id="因式分解">因式分解</h2>
 <p>代数的基本定理表明了任意的一个多项式只要它有解，就可以将它分解成线性多项式（即，一个阶数为 1 的多项式代表一条线），因此，我们可以把任意有效的多项式看成是其因式的乘积：</p>
 <p>$(x-a_0)(x-a_1)…(x-a_n) = 0$</p>
 <p>也就是说如果任意一个因式为 0，那么整个等式都为 0，也就是说式子中所有的 $a_s$ 就是多项式的所有解。</p>
@@ -627,9 +628,9 @@ $$</p>
 <li>协议并没有对 prover 的多项式阶数进行约束</li>
 </ol>
 </blockquote>
-<h2 id="heading-4">模糊计算</h2>
+<h2 id="模糊计算">模糊计算</h2>
 <p>Remark 3.1 中的前两个问题是由于 <strong>暴露了原始值</strong> 而导致的，也就是 prover 知道了 <em>r</em> 和 <em>t(r)</em>。但如果 verifier 给出的这个值像放在黑盒里一样不可见的话就完美了，也就是一个人即使不破坏协议，也依然能在这些模糊的值上面完成计算。有点类似哈希函数，从计算结果就很难再回到原始值上。</p>
-<h3 id="heading-5">同态加密</h3>
+<h3 id="同态加密">同态加密</h3>
 <p>这也就是要设计同态加密的原因。它允许加密一个值并在密文上进行算术运算。获取加密的同态性质的方法有多种，我们来介绍一个简单的方法。</p>
 <p>总体思路就是我们选择一个基础的（基数需要具有某些特定的属性）的自然数 <em>g</em>（如 5），然后我们以要加密的值为指数对 <em>g</em> 进行求幂。例如，如果我们要对 3 进行加密：</p>
 <p>$5^3=125$</p>
@@ -640,7 +641,7 @@ $$</p>
 <p>同样的，我们还可以通过相除提取加密的数字，例如：5-3</p>
 <p>$\frac{5^5}{5^3}  = 5^5 \cdot 5^{-3} = 5^{5-3} =5^2 =25$</p>
 <p>不过由于基数 5 是公开的，很容易就可以找到被加密的数字。只要将密文一直除以 5，直到结果为 1，那么做除法的次数也就是被加密值的数。</p>
-<h3 id="heading-6">模运算</h3>
+<h3 id="模运算">模运算</h3>
 <p>这里就到了模运算发挥作用的地方了。模运算的思路如下：除了我们所选择的组成有限集合的前 n 个自然数（即，<em>0</em>，<em>1</em>，…，<em>n</em>-<em>1</em>）以外，任何超出此范围的给定整数，我们就将它“缠绕”起来。例如，我们选择前六个数。为了说明这一点，可以把它看做一个有六个单位大小相等刻度的圆；这就是我们所说的范围（通常指的是有限域）。</p>
 <p><img src="img/1_q-GtshK0LkZMg5PSj44FvA.png" alt="img"></p>
 <p>现在我们看一下数字八应该在哪里。打个比方，我们可以把它看成一条长度为 8 的绳子。<img src="img/1_WbT1Eie_Frg1vdqcfi_uig.png" alt="img"></p>
@@ -663,7 +664,7 @@ $$</p>
 <p><em>2 × 1 = 1 mod 6</em></p>
 <p><em>……</em></p>
 <p>没有模运算的话，计算结果的大小会给找出原始值提供一些线索。除非这里既能把信息隐藏起来，又可以保留常见的算术属性。</p>
-<h3 id="heading-7">强同态加密</h3>
+<h3 id="强同态加密">强同态加密</h3>
 <p>我们再回到同态加密上，使用模运算，例如取模 7，我们可以得到：</p>
 <p>$5^1 =5(mod \quad 7)$</p>
 <p>$5^2 =4(mod \quad 7)$</p>
@@ -688,7 +689,7 @@ $$</p>
 <blockquote>
 <p>even@安比实验室：通过模运算形成的集合被称为「有限域」，而通过计算指数再进行模运算形成的集合构成「循环群」。常见的同态加密方式除了整数幂取模之外，还有椭圆曲线上的倍乘。</p>
 </blockquote>
-<h3 id="heading-8">加密多项式</h3>
+<h3 id="加密多项式">加密多项式</h3>
 <p>配合这些工具，我们现在就可以在加密的随机数 <em>x</em> 上做运算并相应地修改<em>零知识</em> 协议了。</p>
 <p>我们来看一下如何计算多项式 <em>p(x) = x³ – 3x² + 2x</em>。我们前面明确了，知道一个多项式就是知道它的系数，也就是这个例子中知道：1，-3，2。因为同态加密并不允许再对加密值求幂，所以我们必须要给出 <em>x</em> 的 1 到 3 次幂取加密值：<em>E</em>(<em>x</em>)<em>，E</em>(<em>x</em>²)<em>，E</em>(<em>x</em>³)，那么我们要计算的加密多项式就是：</p>
 <p>$$E(x^{3})^{1} · E(x^{2})^{-3} · E(x)^{2} = (g^{x^{3}})^{1} · (g^{x^{2}})^{-3} · (g^x)^2 =  g^{1x^3} · g^{-3x^2} · g^{2x} = g^{x^3-3x^2+2x} $$</p>

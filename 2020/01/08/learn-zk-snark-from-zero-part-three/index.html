@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>从零开始学习 zk-SNARK（三）——从程序到多项式的构造 - SECBIT Blog</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Maksym Petkus，翻译 & 注解：even@安比实验室（even@secbit.io）" />
+  <meta name="description" content="前文主要介绍了如何构造多项式的零知识证明协议，现在将开始探讨如何构造更通用的协议。本节主要是讲如何将一组计算的证明转换为多项式进行证明。本文重点主要包括：多项式的算术性质，多项式插值等。" />
+
+  <meta name="keywords" content="Blockchain, Smart Contract, Zero Knowledge Proof" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.75.1" />
+
+
+<link rel="canonical" href="https://sec-bit.github.io/blog/2020/01/08/learn-zk-snark-from-zero-part-three/" />
+
+
+
+
+
+<link rel="icon" href="/blog/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
+
+
+
+
+<link rel="stylesheet" href="/blog/css/custom.css">
+
+
+<meta property="og:title" content="从零开始学习 zk-SNARK（三）——从程序到多项式的构造" />
+<meta property="og:description" content="前文主要介绍了如何构造多项式的零知识证明协议，现在将开始探讨如何构造更通用的协议。本节主要是讲如何将一组计算的证明转换为多项式进行证明。本文重点主要包括：多项式的算术性质，多项式插值等。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sec-bit.github.io/blog/2020/01/08/learn-zk-snark-from-zero-part-three/" />
+<meta property="article:published_time" content="2020-01-08T08:00:00+08:00" />
+<meta property="article:modified_time" content="2020-12-15T19:40:44+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
+<meta itemprop="name" content="从零开始学习 zk-SNARK（三）——从程序到多项式的构造">
+<meta itemprop="description" content="前文主要介绍了如何构造多项式的零知识证明协议，现在将开始探讨如何构造更通用的协议。本节主要是讲如何将一组计算的证明转换为多项式进行证明。本文重点主要包括：多项式的算术性质，多项式插值等。">
+<meta itemprop="datePublished" content="2020-01-08T08:00:00+08:00" />
+<meta itemprop="dateModified" content="2020-12-15T19:40:44+08:00" />
+<meta itemprop="wordCount" content="8937">
+
+
+
+<meta itemprop="keywords" content="Zero Knowledge Proof,tutorials,zkSNARKs," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="从零开始学习 zk-SNARK（三）——从程序到多项式的构造"/>
+<meta name="twitter:description" content="前文主要介绍了如何构造多项式的零知识证明协议，现在将开始探讨如何构造更通用的协议。本节主要是讲如何将一组计算的证明转换为多项式进行证明。本文重点主要包括：多项式的算术性质，多项式插值等。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-149859278-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        renderMathInElement(document.body,
+            {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false },
+                ]
+            }
+        );
+    });
+</script>
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/blog/" class="logo">SECBIT Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://sec-bit.github.io/blog/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://sec-bit.github.io/blog/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://sec-bit.github.io/blog/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://sec-bit.github.io/blog/categories/">分类</a>
+          
+        
+      </li>
+    <li class="mobile-menu-item">
+        
+        <div class="mobile-menu-parent mobile-menu-item-lang">
+          <span class="mobile-submenu-open"></span>
+          <a href="#">
+            
+            <i class="iconfont">
+              <svg height="16" width="16" version="1.1" viewBox="0 0 128 128">
+  <path d="m 64.719501,1.4279814 c -34.694029,0 -62.8192028,28.1251726 -62.8192028,62.8192016 0,34.694036 28.1251738,62.819207 62.8192028,62.819207 4.245691,0 8.392744,-0.42239 12.402214,-1.2253 -1.616124,-0.77296 -1.792473,-6.57213 -0.194346,-9.87848 1.779059,-3.68082 7.361625,-13.00555 1.840404,-16.134231 -5.521221,-3.12869 -3.98755,-4.53968 -7.361625,-8.15914 -3.374083,-3.61947 -1.994181,-4.16357 -2.208492,-5.09179 -0.736158,-3.19004 3.251385,-7.975096 3.435429,-8.465866 0.184043,-0.490781 0.184043,-2.331182 0.122689,-2.883308 -0.06131,-0.552125 -2.515051,-2.024446 -3.12852,-2.085791 -0.613469,-0.06133 -0.920209,0.98154 -1.77906,1.042896 -0.858856,0.06133 -4.601018,-2.269838 -5.39853,-2.883308 -0.797504,-0.61346 -1.165591,-2.085792 -2.269828,-3.190033 -1.104247,-1.104252 -1.226945,-0.24539 -2.944651,-0.920206 -1.717714,-0.674812 -7.238935,-2.69926 -11.471867,-4.416975 -4.23294,-1.717714 -4.601019,-4.125615 -4.662365,-5.827954 -0.06131,-1.702333 -2.57657,-4.171587 -3.756227,-5.950646 -1.179335,-1.77906 -1.396914,-4.232932 -1.826339,-3.680809 -0.429425,0.552114 2.208484,6.993538 1.77906,7.177582 -0.429425,0.184043 -1.349635,-1.77906 -2.576572,-3.374083 -1.226936,-1.595016 1.28829,-0.736159 -2.637915,-8.465864 -3.926198,-7.729705 1.226944,-11.671284 1.472324,-15.704806 0.24539,-4.033514 3.312738,1.472325 1.717715,-1.104238 -1.595016,-2.576571 0.122697,-7.975094 -1.104246,-9.938197 -1.226936,-1.963102 -8.220475,2.208492 -8.220475,2.208492 0.184036,-1.901758 6.134682,-5.153142 10.428966,-8.1591366 4.294277,-3.005996 6.91682,-0.674813 10.367621,0.4294236 3.450803,1.104246 3.680817,0.736167 2.515226,-0.368079 -1.165591,-1.1042446 0.49077,-1.6563686 3.190031,-1.2269356 2.699269,0.429425 3.435428,3.6808086 7.545669,3.3740746 4.110242,-0.306735 0.429425,0.797511 0.981548,1.840412 0.552123,1.042892 -0.613468,0.920202 -3.312729,2.760607 -2.699262,1.840403 0.06131,1.840403 4.846407,5.337177 4.785055,3.496773 3.312729,-2.331183 2.821952,-4.907753 -0.490777,-2.576563 3.496773,-0.552115 3.496773,-0.552115 2.944651,1.963094 2.400546,0.107972 4.547684,0.782784 2.147139,0.674814 7.967076,5.597286 7.967076,5.597286 -7.300273,3.98755 -2.699261,4.416975 -1.472325,5.337178 1.226937,0.920202 -2.515218,2.699261 -2.515218,2.699261 -1.53367,-1.53367 -1.779059,0.06131 -2.760614,0.613476 -0.981548,0.552115 -0.06131,1.963095 -0.06131,1.963095 -5.076415,0.797512 -3.926198,6.13469 -3.864852,7.422971 0.06131,1.288289 -3.251385,3.251384 -4.110242,5.091796 -0.858857,1.840405 2.208491,5.827948 0.613468,6.073336 -1.595016,0.24539 -3.190031,-6.011991 -11.778601,-3.680808 -2.589322,0.702954 -8.343174,3.680808 -5.275824,9.754153 3.06734,6.073336 8.15913,-1.717714 9.876843,-0.858857 1.717714,0.858857 -0.490778,4.72371 -0.122691,4.785055 0.368079,0.06131 4.8464,0.168662 5.09179,5.398522 0.245388,5.229868 6.809502,4.785065 8.220482,4.907755 1.410972,0.12269 6.134682,-3.864859 6.809502,-4.048894 0.674815,-0.184034 3.374076,-2.453876 9.263377,0.920195 5.889301,3.374089 8.895296,2.883308 10.919743,4.294285 2.02445,1.410987 0.61347,4.232939 2.51523,5.153134 1.90175,0.920217 9.50876,-0.306736 11.41051,2.821966 1.90176,3.1287 -7.8524,18.833491 -10.91974,20.551201 -3.06734,1.71772 -4.478321,5.64392 -7.545665,8.15913 -3.067349,2.51523 -7.361625,5.62854 -11.410522,8.03646 -3.583968,2.1311 -4.228845,5.949 -5.825333,7.15419 28.11404,-6.24545 49.13623,-31.328971 49.13623,-61.323497 0,-34.694029 -28.125171,-62.8192016 -62.819206,-62.8192016 z M 79.442753,60.382331 c -0.858857,0.245389 -2.637917,1.840405 -6.993547,-0.736166 -4.35563,-2.576564 -7.361625,-2.085794 -7.729705,-2.515218 0,0 -0.368079,-1.0429 1.533671,-1.226937 3.905098,-0.378065 8.833951,3.619464 9.938196,3.680809 1.104246,0.06131 1.656361,-1.104245 3.619464,-0.471631 1.963103,0.631953 0.490777,1.023755 -0.368079,1.269143 z M 58.891546,7.6853614 c -0.427786,-0.311152 0.354344,-0.669418 0.82058,-1.288281 0.269103,-0.357613 0.0695,-0.951289 0.406356,-1.28829 0.92021,-0.920203 5.459876,-2.208485 4.572225,0.306734 -0.887321,2.515226 -5.12434,2.760614 -5.799161,2.269837 z m 10.98109,7.9750936 c -1.533672,-0.06131 -5.14381,-0.442837 -4.478321,-1.104246 2.591952,-2.576563 -0.981548,-3.312729 -3.190039,-3.496766 -2.208485,-0.184043 -3.128687,-1.4109786 -2.02444,-1.5336776 1.104237,-0.12269 5.521213,0.06139 6.257379,0.6748206 0.736158,0.613469 4.723709,2.208485 4.969099,3.374076 0.24538,1.16559 0,2.147138 -1.533678,2.085793 z M 83.184914,15.23103 c -1.226943,0.981547 -7.400887,-3.521968 -8.588569,-4.539674 -5.153134,-4.4169746 -7.913742,-2.9446486 -8.995903,-3.6808086 -1.082485,-0.736166 -0.696897,-1.717713 0.959464,-3.190039 1.656369,-1.472325 6.318732,0.490778 9.017994,0.797512 2.699262,0.306734 5.827955,2.392527 5.889301,4.871925 0.06131,2.4792256 2.944649,4.7595296 1.717713,5.7410846 z" />
+</svg>
+
+            </i>
+            语言
+          </a>
+        </div>
+        <ul class="mobile-submenu-list">
+          
+            <li>
+              
+                <a href="https://sec-bit.github.io/blog/en/">English</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="https://sec-bit.github.io/blog/"><strong>中文</strong></a>
+              
+            </li>
+          
+        </ul>
+      </li>
+
+    
+      <li class="mobile-menu-item">
+        <a id="openSearchMobile" class="mobile-menu-item-link menu-item-search" href="#">
+          <i class="iconfont">
+            <svg version="1.1" viewBox="0 0 1024 1024"
+  xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M973.81454219 973.81454219a91.78207815 91.78207815 0 0 1-129.80999631 0l-161.97482118-161.97482118a425.48527711 425.48527711 0 0 1-230.35931791 68.16531768 428.3346319 428.3346319 0 1 1 428.3346319-428.3346319 425.48527711 425.48527711 0 0 1-68.16531768 230.35931791l162.02961656 161.97482118a91.83687354 91.83687354 0 0 1-0.05479538 129.80999631zM451.67040679 145.69361559a305.97679241 305.97679241 0 1 0 0 611.95358361 305.97679241 305.97679241 0 0 0 0-611.95358361z">
+  </path>
+</svg>
+
+          </i>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/blog/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/blog/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+    
+<div class="modal-dialog">
+    
+    <div class="modal-content">
+      <div id="closeSearch" title="Close" class="close">X</div>
+      <div class="modal-header">
+        <div class="modal-title">Search</div>
+      </div>
+      <div class="modal-body">
+          <script>
+            (function() {
+              var cx = '013402755253274635861:4rj70y1whw3';
+              var gcse = document.createElement('script');
+              gcse.type = 'text/javascript';
+              gcse.async = true;
+              gcse.src = (document.location.protocol == 'https:' ? 'https:' :
+                  'http:') +
+                '//cse.google.com/cse.js?cx=' + cx;
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(gcse, s);
+            })();
+          </script>
+          <gcse:search></gcse:search>
+      </div>
+    </div>
+</div>
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/blog/" class="logo">
+    
+      SECBIT Blog
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://sec-bit.github.io/blog/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://sec-bit.github.io/blog/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://sec-bit.github.io/blog/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://sec-bit.github.io/blog/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    <li class="menu-item">
+        
+        <a class="menu-item-link menu-parent menu-item-lang" href="#">
+          
+          <i class="iconfont">
+            <svg height="16" width="16" version="1.1" viewBox="0 0 128 128">
+  <path d="m 64.719501,1.4279814 c -34.694029,0 -62.8192028,28.1251726 -62.8192028,62.8192016 0,34.694036 28.1251738,62.819207 62.8192028,62.819207 4.245691,0 8.392744,-0.42239 12.402214,-1.2253 -1.616124,-0.77296 -1.792473,-6.57213 -0.194346,-9.87848 1.779059,-3.68082 7.361625,-13.00555 1.840404,-16.134231 -5.521221,-3.12869 -3.98755,-4.53968 -7.361625,-8.15914 -3.374083,-3.61947 -1.994181,-4.16357 -2.208492,-5.09179 -0.736158,-3.19004 3.251385,-7.975096 3.435429,-8.465866 0.184043,-0.490781 0.184043,-2.331182 0.122689,-2.883308 -0.06131,-0.552125 -2.515051,-2.024446 -3.12852,-2.085791 -0.613469,-0.06133 -0.920209,0.98154 -1.77906,1.042896 -0.858856,0.06133 -4.601018,-2.269838 -5.39853,-2.883308 -0.797504,-0.61346 -1.165591,-2.085792 -2.269828,-3.190033 -1.104247,-1.104252 -1.226945,-0.24539 -2.944651,-0.920206 -1.717714,-0.674812 -7.238935,-2.69926 -11.471867,-4.416975 -4.23294,-1.717714 -4.601019,-4.125615 -4.662365,-5.827954 -0.06131,-1.702333 -2.57657,-4.171587 -3.756227,-5.950646 -1.179335,-1.77906 -1.396914,-4.232932 -1.826339,-3.680809 -0.429425,0.552114 2.208484,6.993538 1.77906,7.177582 -0.429425,0.184043 -1.349635,-1.77906 -2.576572,-3.374083 -1.226936,-1.595016 1.28829,-0.736159 -2.637915,-8.465864 -3.926198,-7.729705 1.226944,-11.671284 1.472324,-15.704806 0.24539,-4.033514 3.312738,1.472325 1.717715,-1.104238 -1.595016,-2.576571 0.122697,-7.975094 -1.104246,-9.938197 -1.226936,-1.963102 -8.220475,2.208492 -8.220475,2.208492 0.184036,-1.901758 6.134682,-5.153142 10.428966,-8.1591366 4.294277,-3.005996 6.91682,-0.674813 10.367621,0.4294236 3.450803,1.104246 3.680817,0.736167 2.515226,-0.368079 -1.165591,-1.1042446 0.49077,-1.6563686 3.190031,-1.2269356 2.699269,0.429425 3.435428,3.6808086 7.545669,3.3740746 4.110242,-0.306735 0.429425,0.797511 0.981548,1.840412 0.552123,1.042892 -0.613468,0.920202 -3.312729,2.760607 -2.699262,1.840403 0.06131,1.840403 4.846407,5.337177 4.785055,3.496773 3.312729,-2.331183 2.821952,-4.907753 -0.490777,-2.576563 3.496773,-0.552115 3.496773,-0.552115 2.944651,1.963094 2.400546,0.107972 4.547684,0.782784 2.147139,0.674814 7.967076,5.597286 7.967076,5.597286 -7.300273,3.98755 -2.699261,4.416975 -1.472325,5.337178 1.226937,0.920202 -2.515218,2.699261 -2.515218,2.699261 -1.53367,-1.53367 -1.779059,0.06131 -2.760614,0.613476 -0.981548,0.552115 -0.06131,1.963095 -0.06131,1.963095 -5.076415,0.797512 -3.926198,6.13469 -3.864852,7.422971 0.06131,1.288289 -3.251385,3.251384 -4.110242,5.091796 -0.858857,1.840405 2.208491,5.827948 0.613468,6.073336 -1.595016,0.24539 -3.190031,-6.011991 -11.778601,-3.680808 -2.589322,0.702954 -8.343174,3.680808 -5.275824,9.754153 3.06734,6.073336 8.15913,-1.717714 9.876843,-0.858857 1.717714,0.858857 -0.490778,4.72371 -0.122691,4.785055 0.368079,0.06131 4.8464,0.168662 5.09179,5.398522 0.245388,5.229868 6.809502,4.785065 8.220482,4.907755 1.410972,0.12269 6.134682,-3.864859 6.809502,-4.048894 0.674815,-0.184034 3.374076,-2.453876 9.263377,0.920195 5.889301,3.374089 8.895296,2.883308 10.919743,4.294285 2.02445,1.410987 0.61347,4.232939 2.51523,5.153134 1.90175,0.920217 9.50876,-0.306736 11.41051,2.821966 1.90176,3.1287 -7.8524,18.833491 -10.91974,20.551201 -3.06734,1.71772 -4.478321,5.64392 -7.545665,8.15913 -3.067349,2.51523 -7.361625,5.62854 -11.410522,8.03646 -3.583968,2.1311 -4.228845,5.949 -5.825333,7.15419 28.11404,-6.24545 49.13623,-31.328971 49.13623,-61.323497 0,-34.694029 -28.125171,-62.8192016 -62.819206,-62.8192016 z M 79.442753,60.382331 c -0.858857,0.245389 -2.637917,1.840405 -6.993547,-0.736166 -4.35563,-2.576564 -7.361625,-2.085794 -7.729705,-2.515218 0,0 -0.368079,-1.0429 1.533671,-1.226937 3.905098,-0.378065 8.833951,3.619464 9.938196,3.680809 1.104246,0.06131 1.656361,-1.104245 3.619464,-0.471631 1.963103,0.631953 0.490777,1.023755 -0.368079,1.269143 z M 58.891546,7.6853614 c -0.427786,-0.311152 0.354344,-0.669418 0.82058,-1.288281 0.269103,-0.357613 0.0695,-0.951289 0.406356,-1.28829 0.92021,-0.920203 5.459876,-2.208485 4.572225,0.306734 -0.887321,2.515226 -5.12434,2.760614 -5.799161,2.269837 z m 10.98109,7.9750936 c -1.533672,-0.06131 -5.14381,-0.442837 -4.478321,-1.104246 2.591952,-2.576563 -0.981548,-3.312729 -3.190039,-3.496766 -2.208485,-0.184043 -3.128687,-1.4109786 -2.02444,-1.5336776 1.104237,-0.12269 5.521213,0.06139 6.257379,0.6748206 0.736158,0.613469 4.723709,2.208485 4.969099,3.374076 0.24538,1.16559 0,2.147138 -1.533678,2.085793 z M 83.184914,15.23103 c -1.226943,0.981547 -7.400887,-3.521968 -8.588569,-4.539674 -5.153134,-4.4169746 -7.913742,-2.9446486 -8.995903,-3.6808086 -1.082485,-0.736166 -0.696897,-1.717713 0.959464,-3.190039 1.656369,-1.472325 6.318732,0.490778 9.017994,0.797512 2.699262,0.306734 5.827955,2.392527 5.889301,4.871925 0.06131,2.4792256 2.944649,4.7595296 1.717713,5.7410846 z" />
+</svg>
+
+          </i>
+          中文
+        </a>
+        <ul class="submenu">
+          
+            
+              <li>
+                <a href="https://sec-bit.github.io/blog/en/">English</a>
+              </li>
+            
+          
+            
+          
+        </ul>
+      </li>
+    
+
+    
+      <li class="menu-item">
+        <a id="openSearch" class="menu-item-link menu-item-search" href="#">
+          <i class="iconfont">
+            <svg version="1.1" viewBox="0 0 1024 1024"
+  xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M973.81454219 973.81454219a91.78207815 91.78207815 0 0 1-129.80999631 0l-161.97482118-161.97482118a425.48527711 425.48527711 0 0 1-230.35931791 68.16531768 428.3346319 428.3346319 0 1 1 428.3346319-428.3346319 425.48527711 425.48527711 0 0 1-68.16531768 230.35931791l162.02961656 161.97482118a91.83687354 91.83687354 0 0 1-0.05479538 129.80999631zM451.67040679 145.69361559a305.97679241 305.97679241 0 1 0 0 611.95358361 305.97679241 305.97679241 0 0 0 0-611.95358361z">
+  </path>
+</svg>
+
+          </i>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">从零开始学习 zk-SNARK（三）——从程序到多项式的构造</h1>
+      
+      <div class="post-meta">
+        <time datetime="2020-01-08" class="post-time">
+          2020-01-08
+        </time>
+        <div class="post-category">
+            <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
+            <a href="https://sec-bit.github.io/blog/categories/zksnarks/"> zkSNARKs </a>
+            
+          </div>
+        <span class="more-meta"> 约 8937 字 </span>
+          <span class="more-meta"> 预计阅读 18 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <blockquote>
+<p>even@安比实验室：前文主要介绍了如何构造多项式的零知识证明协议，现在将开始探讨如何构造更通用的协议。本节主要是讲如何将一组计算的证明转换为多项式进行证明。本文重点主要包括：多项式的算术性质，多项式插值等。</p>
+</blockquote>
+<p>作者：Maksym Petkus</p>
+<p>翻译 &amp; 注解：even@安比实验室（even@secbit.io）</p>
+<p>校对：valuka@安比实验室</p>
+<p>本系列文章已获作者中文翻译授权。</p>
+<p>前面我们已经理顺了一个zk-SNARK 简单方案的思路，它包含了 zk-SNARK 大部分内在机制，现在我们继续完善方案，使它能执行零知识程序。</p>
+<h2 id="计算">计算</h2>
+<p>来看一段用伪代码写的简单程序</p>
+<pre class="pseudocode"><code>Algorithm 1: Operation depends on an input
+————————————————————————————————————————————————————————————————————
+
+function calc(w, a, b)       
+    if w then      
+        return a × b       
+    else       
+        return a + b       
+    end if      
+end function</code></pre>
+<p>从高处看，这段程序和我们协议里面的多项式并没有什么关系。我们现在就需要找到一种方式来将程序转换成多项式。第一步是将程序转换成数学语言，这个相对简单一些，声明可以表达成下面的形式（假定 <em>w</em> 是 0 或 1）：</p>
+<p><em>f(w,a,b) = w(a · b)+(1-w)(a+b)​</em></p>
+<p>执行 <code>calc(1, 4, 2)</code> 和对 <em>f (1, 4, 2)</em> 求值都可以得到相同的结果：8。如果执行 <code>calc(0, 4, 2)</code> 和 <em>f(0,4,2)</em> 也都能够得到 6。<strong>其实我们可以用这种方法表达任何形式的有限程序</strong>。</p>
+<p>接下来（上面的例子）需要我们证明的是,对于表达式 <em>f(w,a,b)</em> ，输入为 (<em>1</em>, <em>4</em>, <em>2</em>) 时输出为 8，换句话说，我们要校验多项式：</p>
+<p><em>w(a · b)+(1-w)(a+b) = 8​</em></p>
+<blockquote>
+<p>even@安比实验室: 猜想一下，是否只要是能够用多项式表示的程序都可以做证明？</p>
+</blockquote>
+<h2 id="单个基本计算">单个基本计算</h2>
+<p>尽管已经将程序转换成了由数学语言表达的一般计算形式，我们还是需要再把它翻译成多项式。我们先来仔细研究一下计算的本质。任何计算的内核都是由以下形式的基本运算组成的：</p>
+<p><span class="math inline">\(左操作数 \quad 运算操作符 \quad 右操作数 \quad = 输出\)</span></p>
+<p>两个操作数（即值）与一个运算符（即+,<em>–,</em>×<em>,</em>÷）放在一起执行运算。例如操作数是 2 和 3，运算符为乘，那么运算出来就是 2 × 3 = 6。由于任何复杂的计算（或者程序）都是由一系列这样的基本运算组成的，所以首先我们需要知道在多项式中单个运算是怎么表示的。</p>
+<h3 id="多项式的算术性质">多项式的算术性质</h3>
+<p>我们先来看一下如何将多项式和算术运算关联起来。例如有两个多项式 <em>f(x)</em> 和 <em>g(x)</em>，尝试将他们相乘使得 <em>h</em>(<em>x</em>) = <em>f</em>(<em>x</em>) × <em>g</em>(<em>x</em>)，在任意一个 <em>x</em>= <em>r</em> 处 <em>h(x)</em> 的计算结果都是 <em>f(r)</em> 和 <em>g(r)</em> 的乘积。再看一下如下两个多项式 <em>f(x) = 2x<sup>2</sup> – 9x+ 10</em> 和 <em>g(x) = – 4x<sup>2</sup> + 15x – 9</em>。以图形的形式展示：</p>
+<p><img src="img/3/1*zURb98IOmtMOxlIprp8xOQ.png" /></p>
+<p>当 x = 1 时 <em>f(1) = 2 – 9 + 10 = 3</em>, <em>g(1) = – 4 + 15 – 9 = 2</em>。把两个多项式相乘： <em>h(x) = f(x) × g(x) = – 8x<sup>4</sup> + 66x<sup>3</sup> – 193x<sup>2</sup> + 231x– 90</em>。从图中可以看出相乘的结果：</p>
+<p><img src="img/3/1*yBmMsuYRemhrLCc8PNuBaQ.png" /></p>
+<p><em>x</em> = 1 时，计算 <em>f(x) × g(x)</em> 结果为：<em>h(1) = – 8 + 66 – 193 + 231 – 90 = 6</em>，也就是说当 <em>x</em> = 1时，<em>h(x)</em> 就是 <em>f</em>(<em>x</em>) 和 <em>g</em>(<em>x</em>) 相乘的结果 ，在 <em>x</em> 取其它值的时候也一样。</p>
+<p>同样的如果我们将 <em>f</em>(<em>x</em>) 和 <em>g</em>(<em>x</em>) 相加，在 <em>x</em>=1 处的计算结果就是 5。</p>
+<p><img src="img/3/1*YIHfveOVrQVdjqbabMYw2Q.png" /></p>
+<p><em>注意：在其它的 x<sub>s</sub> 取值处，多项式相加的计算结果也是将两者多项式的值加在一起的结果，例如你可以验证一下 x=2， x=3 处的结果。</em></p>
+<p><strong>如果我们可以将操作数的值表示为多项式(我们也确实可以这么做)，那么利用算术属性，我们就能够得到操作数的计算结果了。</strong></p>
+<blockquote>
+<p>even@安比实验室: 回忆一下，在本系列的第一篇——多项式的性质与证明中，我们曾经说过“任何多项式在任意点的计算结果都可以看做是其唯一身份的表示。”</p>
+<p>反过来当我们知道某个多项式的时候，是不是也就意味着我们知道多项式上某个点的取值。这就是借助多项式来完成证明的依据。</p>
+</blockquote>
+<h2 id="限制运算">限制运算</h2>
+<p>如果一个 prover 声称某两个数字的乘积，verifier 要怎样去验证呢？为了证明单个计算的正确性，我们就必须首先确保所提供的操作数的输出（结果）的正确性。我们再来看一下运算的形式：</p>
+<p><em>左操作数 运算符 右操作数 输出​</em></p>
+<p>类似得我们也可以将其表示为一个运算多项式</p>
+<p><em>l(x) 运算符 r(x) = o(x)​</em></p>
+<p>在一些选定的取值 <em>a</em> 处的运算:</p>
+<ul>
+<li><em>l</em>(<em>x</em>) — 表示（运算结果为）左操作数</li>
+<li><em>r</em>(<em>x</em>) — 表示（运算结果为）右操作数</li>
+<li><em>o</em>(<em>x</em>) — 表示运算结果（输出）</li>
+</ul>
+<p>因而在计算过程中如果操作数和结果都可以用多项式的形式正确地表示出来，那么 <em>l(a) <strong>operator</strong> r(a) = o(a)</em> 就能够成立。也就是说假如<em>输出多项式</em> <em>o(x)</em> 所代表的值是由<em>运算符</em> 在<em>操作数多项式</em> <em>l(x)</em> 和 <em>r(x)</em> 上进行<strong>乘法</strong>运算得出的正确结果，那么我们把<em>输出多项式</em> <em>o(x)</em> 放到等式的左边就能够得到： <em>l(a) <strong>operator</strong> r(a) – o(a) = 0</em>，这也就表明了当取值为 <em>a</em> 时<em>多项式</em> <em>l(x) <strong>operator</strong> r(x) – o(x)</em> 计算结果为 0 。那么只要多项式是有效的，<em>运算多项式</em> 就一定有一个根 <em>a</em>。因此，根据前面的基础这个多项式里面一定包含因式<em>(x-a)</em> （可以看<strong>因式分解</strong>一节），这就是我们要证明的<em>目标多项式</em>，即 <em>t</em>(<em>x</em>) = <em>x – a</em>。</p>
+<p>例如，我们来看一个运算：3×2=6</p>
+<p>可以用一个简单的多项式表示它： <em>l</em>(<em>x</em>) = 3<em>x</em>, <em>r</em>(<em>x</em>) = 2<em>x</em>, <em>o</em>(<em>x</em>) = 6<em>x</em>，取 <em>a=1</em> 进行计算，即 <em>l</em>(1) = 3；<em>r</em>(1) = 2；<em>o</em>(1) = 6。</p>
+<figure>
+<img src="img/3/1*c-MTFle20kE2N4V7_oIuPw.png" alt="" /><figcaption>img</figcaption>
+</figure>
+<p>这个运算多项式就变成了：</p>
+<p><em>l(x) × r(x) = o(x)</em></p>
+<p><em>3x × 2x =6x</em></p>
+<p><em>6x² -6x =0</em></p>
+<p>在图上表示为：</p>
+<figure>
+<img src="img/3/1*8inYSIOVem2TWfwblR3j3g.png" alt="" /><figcaption>img</figcaption>
+</figure>
+<p>注意，这个多项式有一个因子 <em>(x = 1)</em> ：</p>
+<p><em>6x² -6x = 6x(x-1)</em></p>
+<p>因而如果 prover 用 <em>l</em>(<em>x</em>)<em>, r</em>(<em>x</em>)<em>, o</em>(<em>x</em>) 这些多项式来代替 <em>p</em>(<em>x</em>) ，因为它们依然可以被 <em>t(x)</em> 整除，所以 verifier 就可以认为它们是有效的。相反，如果 prover 尝试用 4 来代替输出值去欺骗 verifier ，即 <em>o</em>(<em>x</em>) = 4<em>x</em>，那么运算多项式就变成了 <em>6x<sup>2</sup> – 4x= 0</em>：</p>
+<p><img src="img/3/1*jacXf4SAhn3OpOyeqR6EOA.png" /></p>
+<p>图中这个多项式并没有 <em>x</em>=1 的解，因而 <em>l</em>(<em>x</em>) × <em>r</em>(<em>x</em>) – <em>o</em>(<em>x</em>) 就不能被 <em>t(x)</em> 整除：</p>
+<p><img src="img/3/div.png" /></p>
+<p>因而 verifier 不能接受这个<em>不一致的计算结果</em>（就像<strong>因式分解</strong>这一章描述的那样）</p>
+<blockquote>
+<p>even@安比实验室: 在前面的协议中，我们要证明的多项式是 p(x) = t(x)h(x)，这里我们修改 p(x)，使得 p(x) = l(x)r(x)-o(x)。这里t(x)目标多项式的根就是对应能够计算出数学表达式的值的 x。</p>
+<p>上面例子里面取 x=1 这个特殊值作为运算编码的位置。当然这里的 1 可以换成任何别的值，比如说换成 x=2，3，或101 等等。在[GGPR]与[PHGR]论文中，这个取值是一个随机值，被称为 “root”。</p>
+</blockquote>
+<h2 id="运算的证明">运算的证明</h2>
+<p>现在我们来修改一下最新协议使它支持单个乘法计算的证明。回到前面<strong>多项式的 SNARK</strong>一章，我们已经能够证明多项式 <em>p(x)</em> 的知识了，只不过现在要计算的是三个多项式 <em>l</em>(<em>x</em>)<em>, r</em>(<em>x</em>)<em>, o</em>(<em>x</em>)的知识。我们可以定义 <em>p</em>(<em>x</em>) = <em>l</em>(<em>x</em>) × <em>r</em>(<em>x</em>) – <em>o</em>(<em>x</em>)，但这里存在两个争议点。首先，在我们的协议中证明阶段是不能做加密值乘法计算的（即， <em>l</em>(<em>s</em>) × <em>r</em>(<em>s</em>)），因为配对只能用一次，这个要用在校验多项式的约束上。第二，这里给证明者留下了一个可以修改多项式结构但依然保留有效因式 <em>t(x)</em> 的机会，例如可以令 <em>p</em>(<em>x</em>) = <em>l</em>(<em>x</em>) 或者 <em>p</em>(<em>x</em>) = <em>l</em>(<em>x</em>) – <em>r</em>(<em>x</em>) 甚至是 <em>p</em>(<em>x</em>) = <em>l</em>(<em>x</em>) × <em>r</em>(<em>x</em>) + <em>o</em>(<em>x</em>)，只要这里的 <em>p(x)</em> 还保留着根 <em>a</em> 就可以了。这个修改本质上是让证明的内容变成了别的声明，所以这样是不行的。</p>
+<p>所以 prover 必须要分别提供多项式 <em>l</em>(<em>s</em>), <em>r</em>(<em>s</em>), <em>o</em>(<em>s</em>) 值的证明，即协议必须修改要证明的<em>多项式的知识</em>。verifier 在加密空间中要验证的是 <em>l</em>(<em>s</em>) × <em>r</em>(<em>s</em>) – <em>o</em>(<em>s</em>) = <em>t</em>(<em>s</em>)<em>h</em>(<em>s</em>)。verifier 可以使用密码学配对来执行乘法，但还有一个小问题就是做减法(– <em>o</em>(<em>x</em>))是非常昂贵的计算（这需要去找到一个 <em>gᵒ⁽ˢ⁾</em> 的逆向转换），这里我们可以把 <em>o</em>(<em>x</em>) 移到等式右边来： <em>l</em>(<em>x</em>)<em>r</em>(<em>x</em>) = <em>t</em>(<em>x</em>)<em>h</em>(<em>x</em>) + <em>o</em>(<em>x</em>)。在加密空间中，verifier 的验证就可以转换成：</p>
+<p><em>e(g<sup>l(s)</sup>, g<sup>r(s)</sup>) = e(g<sup>t(s)</sup>,g<sup>h(s)</sup>) · e(g<sup>o(s)</sup>,g)</em></p>
+<p><em>e(g,g)<sup>l(s)r(s)</sup> =e(g,g)<sup>t(s)h(s)</sup> ·e(g,g)<sup>o(s)</sup></em></p>
+<p><em>e(g,g)<sup>l(s)r(s)</sup> =e(g,g)<sup>t(s)h(s)+o(s)</sup></em></p>
+<p><em>注意：回忆一下加密配对的结果是支持通过乘法实现加密值的相加的，参见 <strong>加密值相乘</strong> 这一章节</em></p>
+<p>保持 <em>setup</em> 阶段不变，协议更新为：</p>
+<ul>
+<li><p>证明</p>
+<ul>
+<li>分配对应的系数给 <span class="math inline">\(l(x)\)</span>，<span class="math inline">\(r(x)\)</span>，<span class="math inline">\(o(x)\)</span></li>
+<li>计算多项式 <span class="math inline">\(h(x) = \frac{l(x) \times r(x)-o(x)}{t(x)}\)</span></li>
+<li>使用 <span class="math inline">\(\{g^{s^i}\}_{i\in[d]}\)</span> 计算加密多项式 <span class="math inline">\(g^{l(s)},g^{r(s)},g^{o(s)}\)</span> 和 <span class="math inline">\(g^{h(s)}\)</span></li>
+<li>使用 <span class="math inline">\(\{g^{\alpha s^i}\}_{i\in{0,…,d}}\)</span> 计算加密多项式 <span class="math inline">\(g^{αl(s)},g^{αr(s)},g^{αo(s)}\)</span></li>
+<li>设置证明 <span class="math inline">\(π = (g^{l(s)},g^{r(s)},g^{o(s)},g^{h(s)},g^{αl(s)},g^{αr(s)},g^{αo(s)})\)</span></li>
+</ul></li>
+<li><p>验证</p>
+<ul>
+<li><p>定义证明 <span class="math inline">\(π\)</span> 为 <span class="math inline">\((g^l,g^r,g^o,g^h,g^{l&#39;},g^{r&#39;},g^{o&#39;})\)</span></p></li>
+<li><p>检查多项式约束</p>
+<p><span class="math inline">\(e(g^{l&#39;},g) = e(g^l,g^α)\)</span></p>
+<p><span class="math inline">\(e(g^{r&#39;},g) = e(g^r,g^α)\)</span></p>
+<p><span class="math inline">\(e(g^{o&#39;},g) = e(g^o,g^α)\)</span></p></li>
+<li><p>检查运算的有效性 <span class="math inline">\(e(g^l,g^r) = e(g^{t(s)},g^h) \cdot e(g^o,g)\)</span></p></li>
+</ul></li>
+</ul>
+<p>这个协议就能够证明两个值相乘的计算结果是正确的了。</p>
+<p>你可能注意到了在这个新的协议中我们放弃了<em>零知识</em> 部分。这么做是为了简化协议的变换。后面的章节我们会再变回零知识。</p>
+<blockquote>
+<p>even@安比实验室：上面例子里面取 x=1 这个特殊值作为运算编码的位置。当然这里的 1 可以换成任何别的值，比如说换成 x=2，3，或101 等等。在[GGPR]与[PHGR]论文中，这个取值是一个随机值，被称为 “root”。</p>
+</blockquote>
+<h2 id="多个运算">多个运算</h2>
+<p>现在我们已经能够证明单个算术运算了，但是要怎么扩展到多个运算上呢（这是我们的最终目标）？我们来尝试一下增加一个基本运算。想一想计算 <em>a</em> × <em>b</em> × <em>c</em> 乘积的需求，在元素操作模型中，这代表着两个操作：</p>
+<p><em><font style="color:green">a</font> × <font style="color:blue">b</font> = <font style="color:red">r<sub>1</sub></font></em></p>
+<p><em><font style="color:green">r<sub>1</sub></font> × <font style="color:blue">c</font> = <font style="color:red">r<sub>2</sub></font></em></p>
+<p>前面的讨论中我们通过对运算符多项式在任意取值 x 处 ，例如1，计算一个对应值，来表示一个操作数或者结果。有了这个性质的多项式并不会约束我们在不同 x 取值处用多项式来表示其他值。如示例中的 2，即：</p>
+<p><img src="img/3/1*mVveHukkAvK1sDSNgkP_Hw.png" /></p>
+<p>这种独立性允许我们一次同时<em>执行</em> 两个运算并且又不会把这两者搞乱，即相互之间不会妨碍。这个多项式算术的结果就变成了：</p>
+<p><img src="img/3/1*8Z3PDChGgZm87PjtxyIetw.png" /></p>
+<p>可以看出这个多项式有两个根 <em>x</em>=1 和 <em>x</em>=2。因而也就是两次计算都被正确执行了。</p>
+<blockquote>
+<p>even@安比实验室：这里的示例为了理解方便，选择了 x=1, x=2 两个位置。记住在完整的 zkSNARK 方案中，这些 “root” 值必须为有限域内的随机数，否则就会引入安全漏洞。</p>
+</blockquote>
+<p>我们再来看一个有三个乘法运算的例子 2 × 1 × 3 × 2，它按照下面的步骤执行：</p>
+<p><em><font style="color:green">2</font> × <font style="color:blue">1</font> = <font style="color:red">2</font></em></p>
+<p><em><font style="color:green">2</font> × <font style="color:blue">3</font> = <font style="color:red">6</font></em></p>
+<p><em><font style="color:green">6</font> × <font style="color:blue">2</font> = <font style="color:red">12</font></em></p>
+<p>我们要把它们表示为操作数多项式，对于由 <em>x</em> <em>∈ {1</em>, <em>2</em>, <em>3</em>} 所表示的计算， <em>l</em>(<em>x</em>) 相应的要等于 2，2 和 6。即通过点 (<em>1</em>, <em>2)</em>, <em>(2</em>, <em>2)</em>, <em>(3</em>, <em>6</em>)，同样的 <em>r</em>(<em>x</em>) ∋ (<em>1</em>, <em>1)</em>,<em>(2</em>, <em>3)</em>,<em>(3</em>,<em>2</em>) ，<em>o</em>(<em>x</em>) ∋ (<em>1</em>, <em>2)</em>, <em>(2</em>, <em>6)</em>, <em>(3</em>, <em>12</em>)。</p>
+<p>但是，我们要怎么找到经过这些点的多项式呢？对于任何包含超过一个点的例子，就必须要使用特定的数学方法了。</p>
+<h3 id="多项式插值">多项式插值</h3>
+<p>为了构造<em>操作数</em> 和 <em>输出多项式</em>，我们需要一种方法来用给定的一组点去构造一个能经过所有这些点的<em>弯曲</em> 多项式，这叫<em>插值</em>。有几种不同的方法可以算出这个多项式：</p>
+<ul>
+<li>一组未知方程</li>
+<li>牛顿多项式</li>
+<li>内维尔算法</li>
+<li>拉格朗日多项式</li>
+<li>快速傅里叶变换</li>
+</ul>
+<p>我们以第一个方法为例。这个方法的思路是存在一个<em>系数未知</em> ，阶数至多为 <em>n</em> 的特定的多项式 <em>p(x)</em> 能够经过给定的 <em>n</em>+1 个点，对于每个点 {(<em>xᵢ</em>, <em>yᵢ</em>)}, <em>i</em> ∈ [n+1]来说，多项式在 <em>xᵢ</em> 处的计算结果都等于 <em>yᵢ</em>，即对于所有的 i，<em>p(xᵢ) = yᵢ</em> 。在我们的例子中，三个点就可以变成一个用以下形式所表示的阶数为 2 的多项式：<em>ax<sup>2</sup> + bx +c =y</em>。</p>
+<p>我们令<em>左运算多项式</em>（绿色标出的）在每个点处与多项式结果值相等，然后对每个系数用其它术语表示出来再计算等式：</p>
+<p><img src="./img/3/eq1.png" /></p>
+<p>因而 <em>左操作数多项式</em> 就是：</p>
+<p><em><font style="color:green">l(x)</font></em> <em>= 2x<sup>2</sup>-6x+6</em></p>
+<p>它和下面的图对应：</p>
+<p><img src="img/3/1*hAFtc6UZWhr34FA-ljVJ8w.png" /></p>
+<p>我们用相同的方式再计算 <em>r</em>(<em>x</em>) 和 <em>o</em>(<em>x</em>)：</p>
+<p><span class="math inline">\(\textcolor{blue}{r(x)}=\frac{-3x^2+13x-8}{2}; \quad \textcolor{red}{o(x)}=x^2+x\)</span></p>
+<p><img src="img/3/1*Cc3KRiEfoYsyoD098-X3DQ.png" /></p>
+<h3 id="含有多个运算的多项式">含有多个运算的多项式</h3>
+<p>现在我们有了代表三个运算的操作数多项式，再进一步看一下怎么去校验每个计算的正确性。回到 verifier 寻找等式 <em>l</em>(<em>x</em>) · <em>r</em>(<em>x</em>) – <em>o</em>(<em>x</em>) = <em>t</em>(<em>x</em>)<em>h</em>(<em>x</em>) 的过程。在这个例子中，因为计算是在点 <em>x</em> <em>∈ {1</em>, <em>2</em>, <em>3</em>} 处被表示出来的，所以目标多项式在这些 <em>x<sub>s</sub>​</em> 点处的计算结果必须为 0，换句话说， <em>t</em>(<em>x</em>)的根必须是 1，2 和 3，它的基本形式就是：</p>
+<p><img src="img/3/1*h8i-j98fBxmFSraGWadrJA.png" /></p>
+<p>第一步将 <em>l(x)</em> 和 <em>r(x)</em> 相乘得到结果：</p>
+<p><img src="img/3/1*bsT-MgxaGDGJxWPZKk37Rw.png" /></p>
+<p>第二步：从 <em>l</em>(<em>x</em>) × <em>r</em>(<em>x</em>) 的结果中将 <em>o</em>(<em>x</em>) 减去：</p>
+<p><img src="img/3/1*hs7NGn66W8Isu26jtVpDrw.png" /></p>
+<p>这里就已经可以看出每一个操作数相乘都对应了正确的结果。最后一步 prover 要算出一个有效因式：</p>
+<p><span class="math inline">\(h(x) = \frac{l(x) \times r(x) -o(x)}{t(x)} = \frac{-3x^4 +22x^3 -57x^2 +63x -24}{(x-1)(x-2)(x-3)}\)</span></p>
+<p>通过长除法可以算出：</p>
+<p><img src="./img/3/div2.png" /></p>
+<p>代入<em>h</em>(<em>x</em>) = – 3<em>x</em>+ 4<em>a</em>，verifier 可以计算 <em>t</em>(<em>x</em>)<em>h</em>(<em>x</em>)：</p>
+<p><img src="img/3/1*NEpiDG9xLK_purIz175KXA.png" /></p>
+<p>现在显然 <em>l</em>(<em>x</em>) × <em>r</em>(<em>x</em>) – <em>o</em>(<em>x</em>) = <em>t</em>(<em>x</em>)<em>h</em>(<em>x</em>) ，这就是我们要证明的内容。</p>
+<blockquote>
+<p>even@安比实验室: 这里只需要一组多项式 <em>l</em>(<em>x</em>)，<em>r</em>(<em>x</em>)， <em>o</em>(<em>x</em>) 就可以将所有计算的约束关系表示出来了，有几个计算也就对应着目标多项式 t(x) 有几个根。</p>
+<p>当前的协议似乎存在一些缺陷，多项式只能证明 prover 拥有一组多项式 <em>l</em>(<em>x</em>)，<em>r</em>(<em>x</em>)， <em>o</em>(<em>x</em>) ，在 t(x) 的几个根的取值处 <em>l</em>(<em>x</em>)·<em>r</em>(<em>x</em>)= <em>o</em>(<em>x</em>)，无法证明这组多项式符合我们要证明的数学表达式：</p>
+<p>1）多个计算关系之间也是分开表示的，这些算式之间的关系也同样无法进行约束</p>
+<p>2）由于 prover 生成的证明中只有计算结果，左操作数，右操作数，输出在计算中混用也不会被发现</p>
+<p>3）由于左操作数，右操作数，输出是分开表示的，互相之间的关系无法进行约束</p>
+</blockquote>
+<h2 id="变量多项式">变量多项式</h2>
+<p>有了前文介绍的方法来解决证明多个计算多项式的问题，我们就可以一次证明多个运算（如上百万个甚至更多）了，但是这个方案还有一个关键的缺点。</p>
+<p><strong>如果证明中执行的“程序”在不同运算中使用了相同的变量作为操作数或输出</strong>，例如：</p>
+<p><em><font style="color:green">a</font> × <font style="color:blue">b</font> = <font style="color:red">r<sub>1</sub></font></em></p>
+<p><em><font style="color:green">a</font> × <font style="color:blue">c</font> = <font style="color:red">r<sub>2</sub></font></em></p>
+<p>这里 <em>a</em> 代表两个运算中的左操作符多项式，如：</p>
+<p><img src="img/3/1*PMNd1I7dYeJhSqF8MD5wCg.png" /></p>
+<p>然而，因为我们的协议中是允许 prover 为多项式设置任何系数的，所以他可以不受限制得为不同计算（即，用一些 <em>x</em> 表示的多项式）中的 <em>a</em> 设置不同的值，即：</p>
+<p><img src="img/3/1*HO_ZD_vp-c7LZK-IDxJo3A.png" /></p>
+<p><strong>这个自由打破了一致性</strong>，有空间允许 prover 能去证明了一些并非 verifier 感兴趣的其它无关的程序执行。因而我们必须要确保每一个变量在所有运算中出现的地方都只有一个取值。</p>
+<p><em>注意：文中的变量与常规的计算机科学中变量的定义不同，这里的变量是不可改变的而且每次执行都只赋值一次。</em></p>
+<blockquote>
+<p>even@安比实验室：请务必注意“变量”的定义，它是程序中的变量，但是却又不能改，这不是很矛盾吗？其实，这里变量是指本文开头的示例伪代码中的那些不会被修改的变量。在 zkSNARK 论文中，这个「变量」其实有一个对应的名词叫做 assignment，是算术电路的「赋值」。而所有的assignments 是一个算术电路可满足性问题的解，包含了算术电路的输入值以及电路运算过程中输出的中间结果值。</p>
+</blockquote>
+<h3 id="单个变量的操作数多项式">单个变量的操作数多项式</h3>
+<p>我们来看一个简单的例子（就是当前的例子），在<em>左操作符多项式 l(x)</em> 表示的所有左操作数中只包含一个变量（即 <em>a</em>）。我们要找出是否有可以确保这个多项式在每一个运算中 <em>a</em> 都相同的方法。prover 可以设置不同值是因为他可以任意控制 <em>x</em> 的每个次幂的系数。因而如果这些系数是固定的，就可以解决问题了。</p>
+<p>我们来仔细看看包含相等值的多项式。例如检查一下下面两个多项式，他们分别都表示了有两个相等值对应的运算（即在 x=1 和 x=2 处），这里第一个多项式的值为 1，第二个多项式的值为 2：</p>
+<p><img src="img/3/1*sVoDxQA6KHkuEJAZvsL8xQ.png" /></p>
+<p>注意每个多项式中相应的系数是成比例的，也就是第二个多项式的系数是第一个的两倍大，即：</p>
+<p><em>2x<sup>2</sup>-6x+6=2×(x<sup>2</sup> -3x+3)</em></p>
+<p>那么由于多项式的算术性质，如果我们想要同时地改变多项式中所有的值我们就需要改变它的比例，如果我们用一个数字乘以多项式，那么在每一个可能的 <em>x</em> 处的计算结果也要和相同的数字相乘（即，等比例变换）。为了验证这一点，我们尝试用 3 或者其它数字来乘第一个多项式。</p>
+<p>因此，<strong>如果 verifier 需要在所有计算中强制 prover 设置相同的值，他就要限制 prover 只能修改比例而不是单个系数</strong>。</p>
+<p>所以怎么保持系数比例不变呢？对于这个问题我们可以先思考一下在<em>左运算多项式</em> 中我们提供的证明是什么。是 <em>l(x)</em> 在一些秘密值 <em>s</em> 处的加密值：<em>g<sup>l(s)</sup></em>，即，一个被加密了的数。我们已经从 <strong>限制多项式</strong> 这一节中知道了怎样通过一个<em>α</em>-变换去限制 prover 只能使用 verifier 提供的 s 的幂做计算，来使得单个运算能够满足同态乘法。</p>
+<p>和限制单个求幂值相似，verfier 可以一次限制完整的多项式。而不只是提供单独的加密及其 α-移位 <em>g<sup>s<sup>1</sup></sup></em>,<em>g<sup>s<sup>2</sup></sup></em>,…,<em>g<sup>s<sup>d</sup></sup></em>,<em>g<sup>αs<sup>1</sup></sup></em>,<em>g<sup>αs<sup>2</sup></sup></em>,…,<em>g<sup>αs<sup>d</sup></sup></em>。</p>
+<p>那么协议的过程就是：</p>
+<ul>
+<li>Setup
+<ul>
+<li>使用对应的系数构造相应的<em>操作符多项式 l(x)</em></li>
+<li>选择随机数 <em>α</em> 和 <em>s</em></li>
+<li>使用加密的 <em>l(s)</em> 和它的”转换“：<span class="math inline">\((g^{l(s)},g^{αl(s)})\)</span> 来设置 <em>proving key</em></li>
+<li>设置 <em>verification key</em>：<span class="math inline">\((g^α)\)</span></li>
+</ul></li>
+<li>proving
+<ul>
+<li>对于操作数值 <em>v</em>
+<ul>
+<li>乘以操作数多项式：<span class="math inline">\((g^{l(s)})^v\)</span></li>
+<li>乘以变换后的操作数多项式：<span class="math inline">\((g^{αl(s)})^v\)</span></li>
+</ul></li>
+<li>提供 <em>操作数多项式</em> 的乘法证明： <span class="math inline">\((g^{vl(s)},g^{vαl(s)})\)</span></li>
+</ul></li>
+<li>verification
+<ul>
+<li>解析证明为 <span class="math inline">\((g^l,g^{l&#39;})\)</span></li>
+<li>验证比例：<span class="math inline">\(e(g^{l&#39;},g) = e(g^l,g^α)\)</span></li>
+</ul></li>
+</ul>
+<p>prover 需要返回同样的<em>α</em>-转换关系，因为无法从 proving key 中恢复出 <em>α</em> 所以保持这个变换的唯一方法就是用同一个值去分别乘以这两个加密值：<em>g<sup>l(s)</sup></em> 和 <em>g<sup>αl(s)</sup></em>。这个 prover 就无法修改 <em>l(x)</em> 的单个系数了，例如如果多项式为 l(x) = ax<sup>2</sup> + <em>bx</em>+ c ，prover 只可以用一个值 <em>v</em> 去修改整个多项式： v⋅(ax<sup>2</sup> + <em>bx</em>+ <em>c</em>) = v⋅ax<sup>2</sup> + <em>v⋅bx</em>+ v⋅c。<em>配对</em> 使其不能与另一个多项式做乘法，所以也就无法提供 <em>s</em> 的单个求幂值的 <em>α-</em>变换。 prover 不能做加法或者减法因为：</p>
+<p><span class="math inline">\(g^{α(l(x)+a&#39;x^2+c&#39;)} \not= g^{αl(x)} \cdot g^{a&#39;x^2} \cdot g^{c&#39;}\)</span> 这里也同样需要未加密的 <em>α</em> 的知识。</p>
+<p>现在有了这个协议，不过怎么去构造<em>操作数多项式 l(x)</em> 呢？由于任何整数都可以通过乘以 1 得到它本身，所以多项式中对应的每个计算结果都应该为 1，即：</p>
+<p><img src="img/3/1*OD_cyAXNCBB62DVBe815qA.png" /></p>
+<p>然后再让 prover 在其上”分配“一个值 a ：</p>
+<p><img src="img/3/1*qNsslAIXLSPq5MWf4TCpqw.png" /></p>
+<p><strong>Remark 4.1</strong> <em>由于 verification key 包含了加密了的 α，所以可以用多项式加（或者减）任意一个值 v’，即：</em></p>
+<p><span class="math inline">\(g^{vl(s)} \cdot g^{v&#39;} = g^{vl(s)+v&#39;}\)</span></p>
+<p><span class="math inline">\(g^{αvl(s)} \cdot (g^α)^{v&#39;} = g^{α(vl(s)+v&#39;)}\)</span></p>
+<p><span class="math inline">\(e(g^{α(vl(s)+v&#39;)},g) = e(g^{vl(s)+v&#39;},g^α)\)</span></p>
+<p><em>因而可以修改多项式使其超出 verifier 的预期以及证明一个不同的声明，后面的章节我们将会解决掉这个问题。</em></p>
+<blockquote>
+<p><span class="citation" data-cites="even">@even</span><span class="citation" data-cites="安比实验室">@安比实验室</span>：这一小节是解决这样一个问题，算术电路中一个 input wire 或者 output wire可能同时会作为多个门的输入wire，如何确保约束这些公用wire的问题。</p>
+<p>由于要证明的数学表达式是公开的，那么各个算式之间的约束关系也就是公开的，那么我们就可以把构造多项式的工作交给 setup 环节，这样 prover 只要填上对应的数值就可以了。</p>
+<p>上文这个方法就限制了在同一个操作数多项式上，不同的计算式中使用的同一个值的约束关系；同样若一个操作数多项式中用到了多个值，也可以将这些值全都加起来，如下文所述。</p>
+</blockquote>
+<h3 id="多变量的操作数多项式">多变量的操作数多项式</h3>
+<p>因为只有当所有的左操作数使用同一个变量的时候我们才可以设置一个值。但是如果左操作数中再多一个值 <em>d</em> 要怎么做呢：</p>
+<p><img src="img/3/1*yAqgTjn5LB4qh465LhM6hA.png" /></p>
+<p>假如我们还使用相同的方法，我们无法分别得为每一个变量设置值，并且让这些变量乘到一起去。也就是说这个受限的多项式只能支持一个变量的情况。我们可以把<em>操作数多项式 l(x)</em> 分成<em>操作数的变量多项式</em></p>
+<p><span class="math inline">\(l_a(x)\)</span> 和 <span class="math inline">\(l_d(x)\)</span><em>（注意下标）</em></p>
+<p>这与上一节的方法一致，<em>变量 a</em> 和 <em>b</em> 可以被<em>赋值</em> 并分别进行约束，然后加在一起就可以表示所有的左操作数变量了。因为我们将<em>操作数的变量多项式</em> 加在了一起，所以我们就要能够确保在每次计算中相加后的结果只表示所有<em>操作符多项式</em> 中的一个。</p>
+<p>有了这个算术性质我们就可以逐一构造<em>操作数变量多项式</em> 了，这样如果<em>变量</em> 多项式在一个对应运算中被用做操作数，那么这一项就置为 1，否则就置为 0。0 跟任何值相乘结果都是零，当把他们相加在一起的时候也就可以忽略掉这一项。在我们的例子中这些变量多项式必须满足以下计算：</p>
+<p><em>l<sub>a</sub>(1) =1, l<sub>a</sub>(2)=1, l<sub>a</sub>(3)=0</em></p>
+<p><em>l<sub>d</sub>(x)=0, l<sub>d</sub>(2)=0, l<sub>d</sub>(3)=1</em></p>
+<p>图中表示为：</p>
+<p><img src="img/3/1*mPS0DWApQpziFbz9Almi1Q.png" /></p>
+<p>于是我们就可以将每个变量分开设置值，然后把他们加在一起来计算出操作数多项式，例如当 <em>a = 3</em> 和 <em>d= 2</em> 时：</p>
+<p><img src="img/3/1*haDU8bsgI7xwmxHTVZUODw.png" /></p>
+<p><em>注意：我们在一个值的后面使用下标表示它代表的变量，如, 3<sub>a</sub> 是一个用 3 实例化的变量 a。</em></p>
+<p>现在起我们用大写字母来表示这个复杂的 <em>操作符多项式</em>，即</p>
+<p><em>L(x) = al<sub>a</sub>(x) + dl<sub>d</sub>(x)</em></p>
+<p>计算结果为 <em>L</em>，也就是 <em>L=L(s)</em>。仅当每一个<em>操作数的变量多项式</em> 是由 verifier 约束的，结果才有效，与左多项式相关的交互应该相应得更改为：</p>
+<ul>
+<li><p>Setup</p>
+<ul>
+<li>构造 <span class="math inline">\(l_a(x)\)</span>，<span class="math inline">\(l_b(x)\)</span> 使得它能够在对应的 “计算 x” 处为 1，在其他地方为 0。</li>
+<li>选择随机数 <span class="math inline">\(s\)</span>，<span class="math inline">\(α\)</span></li>
+<li>计算并加密 <em>未赋值的变量多项式</em>： <span class="math inline">\(g^{l_a(s)}\)</span>，<span class="math inline">\(g^{l_d(s)}\)</span></li>
+<li>计算变换后的这些多项式： <span class="math inline">\(g^{αl_a(s)}\)</span>，<span class="math inline">\(g^{αl_d(s)}\)</span></li>
+<li>设置 <em>proving key</em>：<span class="math inline">\((g^{l_a(s)},g^{l_d(s)},g^{αl_a(s)},g^{αl_d(s)})\)</span></li>
+<li>设置 <em>verification key</em>：<span class="math inline">\((g^α)\)</span></li>
+</ul></li>
+<li><p>Proving</p>
+<ul>
+<li>为变量多项式赋值 a 和 d：<span class="math inline">\(（g^{l_a(s)}）^a\)</span>，<span class="math inline">\((g^{l_d(s)})^d\)</span></li>
+<li>对变换后的变量多项式做同样的赋值： <span class="math inline">\((g^{αl_a(s)})^a\)</span>，<span class="math inline">\((g^{αl_d(s)})^d\)</span></li>
+<li>把所有赋值好的变量多项式加起来变成操作数多项式的形式：<span class="math inline">\(g^{L(s)}=g^{al_a(s)} \cdot g^{dl_d(s)} = g^{al_a(s)+dl_d(s)}\)</span></li>
+<li>提供左操作数的有效证明：<span class="math inline">\((g^{L(s)},g^{αL(s)})\)</span></li>
+</ul></li>
+<li><p>Verification</p>
+<ul>
+<li><p>解析证明为 <span class="math inline">\(（g^L,g^{L’}）\)</span></p></li>
+<li><p>验证提供的多项式是否是最初提供的多个<em>未赋值的变量多项式</em> 的和：</p>
+<p><span class="math inline">\(e(g^{L&#39;},g) = e(g^L,g^α)\)</span> 这里也就是验证了 <span class="math inline">\(αal_a(s) + αdl_d(s) = α \times (al_a(s) + dl_d(s))\)</span></p></li>
+</ul></li>
+</ul>
+<p><em>注意：L(s) 和 αL(s) 代表所有的变量多项式并且由于 α 只用在计算变量多项式中，所以 prover 没有别的选择只能在 setup 提供的原始加密值和变换后的加密值上赋予相同的系数做计算。</em></p>
+<p>结果，prover ：</p>
+<ul>
+<li>除了“分配”值外，不能再修改它们的系数进而来修改<em>变量多项式</em> 了，因为 prover 只拿到了这些多项式的加密值，也因为 s 必要次幂的加密值不能与它们的 α 变换值一起使用</li>
+<li>不能通过另一个多项式相加去提供一个结果因为这样 <em>α</em>-比例关系将会被破坏掉</li>
+<li>不能通过与其他的一些多项式 <em>u(x)</em> 相乘来修改操作数多项式，这样可能会使得修改后的值不成比例因为在预配对空间中无法进行加密乘法</li>
+</ul>
+<p><em>注意：如果我们加（或者减）一个多项式，如 l<sub>a</sub>(x)，就变成了另一个的多项式，即</em></p>
+<p><em>l’<sub>d</sub>(x) = c<sub>d</sub>·l<sub>d</sub>(x)+c’<sub>a</sub>·l<sub>a</sub>(x)</em></p>
+<p><em>这并非是多项式 l<sub>d</sub>(x) 的修改，而是 l<sub>a</sub>(x) 结果系数的变化，因为他们最终会被加到一起：</em></p>
+<p><em>L(x)=c<sub>a</sub>·l<sub>a</sub>(x)+l’<sub>d</sub>(x) =(c<sub>a</sub>+c’<sub>a</sub>)·l<sub>a</sub>(x)+c<sub>d</sub>·l<sub>d</sub>(x)</em></p>
+<p>不过尽管 prover 被限制了多项式的使用，他还有拥有一些可允许范围内的自由度：</p>
+<ul>
+<li><p>当 prover 决定不加入一些变量多项式 <em>lᵢ</em>(<em>x</em>) 来构造操作符多项式 <em>L(x)</em> 时依然是可以接受的，因为这和为它分配值为 0 是一样的：</p>
+<p>g<sup>al<sub>a</sub>(x)</sup> = g<sup>al<sub>a</sub>(x)+0l<sub>d</sub>(x)</sup></p></li>
+<li><p>如果 prover 添加同一个变量多项式多次也是可以接受的因为这和一次分配多个值的和是一样的：</p>
+<p>g<sup>al<sub>a</sub>(x)</sup> · g<sup>al<sub>a</sub>(x)</sup> · g<sup>al<sub>a</sub>(x)</sup>= g<sup>3al<sub>a</sub>(x)</sup></p></li>
+</ul>
+<p>这些方法在右操作数和输出操作数 <em>R(x)</em> ，<em>O(x)</em> 上也同样适用。</p>
+<blockquote>
+<p>even@安比实验室: 总结一下本文证明协议的大致思路为：</p>
+<ol type="1">
+<li>将要证明的程序转换为数学语言表达的形式（即加减乘除的计算）</li>
+<li>用多项式在某处的取值来进行计算以此表示数学计算，进而进行证明</li>
+<li>用多项式在多处的取值来进行计算表示多个数学运算，进而加以证明</li>
+<li>对证明的“程序”在不同计算中使用的相同的变量进行约束</li>
+</ol>
+<p>当前的协议约束只解决了部分问题，还有诸多可以改进的地方，在下一节我们将对这些改进项展开讨论并给证明协议进行优化。</p>
+</blockquote>
+<p><strong>原文链接</strong></p>
+<p>https://arxiv.org/pdf/1906.07221.pdf</p>
+<p>https://medium.com/<span class="citation" data-cites="imolfar/why-and-how-zk-snark-works-4-general-purpose-computation-dcdc8081ee42">@imolfar/why-and-how-zk-snark-works-4-general-purpose-computation-dcdc8081ee42</span></p>
+<p>https://medium.com/<span class="citation" data-cites="imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06859e30">@imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06859e30</span></p>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Maksym Petkus，翻译 & 注解：even@安比实验室（even@secbit.io）</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2020-12-15
+      
+        <a href="https://github.com/sec-bit/blog/commit/ede571e4199f32c9afa489307142e394449f4e44" title="add ariticles: Why-and-How-zk-SNARK-Works 3~5">
+          (ede571e)
+        </a>
+        
+          <br>add ariticles: Why-and-How-zk-SNARK-Works 3~5
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content">如需转载请注明文章作者和出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://sec-bit.github.io/blog/tags/zero-knowledge-proof/">Zero Knowledge Proof</a>
+          <a href="https://sec-bit.github.io/blog/tags/tutorials/">tutorials</a>
+          <a href="https://sec-bit.github.io/blog/tags/zksnarks/">zkSNARKs</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/blog/2020/01/08/nizk-by-crs/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">云中「秘密」：构建非交互式零知识证明</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/blog/2020/01/03/zkp-learn-by-coding-libsnark-101/">
+            <span class="next-text nav-default">零知识证明 Learn by Coding：libsnark 入门篇</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "sec-bit/comments-for-secbit-blog"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:hi@secbit.io" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://twitter.com/SECBIT_IO" rel="me noopener" class="iconfont"
+      title="twitter"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1264 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M1229.8616 18.043658c0 0-117.852626 63.135335-164.151872 67.344358-105.225559-164.151872-505.082682-92.598492-437.738325 223.078185C278.622548 312.675223 89.216542 47.506814 89.216542 47.506814s-117.852626 189.406006 75.762402 345.139833C127.097743 396.85567 55.544363 371.601535 55.544363 371.601535S26.081207 535.753407 253.368414 615.724832c-21.045112 29.463156-113.643603 8.418045-113.643603 8.418045s25.254134 143.10676 231.496229 180.987961c-143.10676 130.479693-387.230056 92.598492-370.393967 105.225559 206.242095 189.406006 1119.599946 231.496229 1128.01799-643.98042C1179.353331 249.539887 1263.533778 123.269217 1263.533778 123.269217s-130.479693 37.881201-138.897738 33.672179C1225.652577 98.015083 1229.8616 18.043658 1229.8616 18.043658"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/sec-bit" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/org/secbit/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://sec-bit.github.io/blog/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2018 -
+    2020
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        SECBIT Labs
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/blog/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/blog/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/blog/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css"
+    integrity="sha384-BdGj8xC2eZkQaxoQ8nSLefg4AV4/AwB3Fj+8SUSo7pnKP6Eoy18liIKTPn9oBYNG"
+    crossorigin="anonymous">
+
+  
+  <script defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.js"
+    integrity="sha384-JiKN5O8x9Hhs/UE5cT5AAJqieYlOZbGT3CHws/y97o3ty4R7/O5poG9F3JoiOYw1"
+    crossorigin="anonymous"></script>
+
+  
+  <script defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/contrib/auto-render.min.js"
+    integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI"
+    crossorigin="anonymous" onload="renderMathInElement(document.body);">
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      renderMathInElement(document.body, {
+        
+      });
+    });
+  </script>
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/blog/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <script>
+    $("#openSearch, #openSearchMobile").click(function(){
+      $(".modal-dialog").addClass("visible");
+    });
+
+    $("#closeSearch").click(function(){
+      $(".modal-dialog").removeClass("visible");
+    });
+
+    $(document).click(function(event) {
+    
+      if (!$(event.target).closest(".modal-content, #openSearch, #openSearchMobile").length) {
+        $("body").find(".modal-dialog").removeClass("visible");
+      }
+    });
+  </script>
+
+
+
+
+
+</body>
+</html>

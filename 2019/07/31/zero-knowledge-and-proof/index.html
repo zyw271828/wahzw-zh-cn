@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.62.0" />
+<meta name="generator" content="Hugo 0.75.1" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-and-proof/" />
@@ -53,7 +53,7 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.0995afa14b62cd93e93cfc066b646c4c17a3eddca0e9d52a1d9dcf5d90aaacd3.css" integrity="sha256-CZWvoUtizZPpPPwGa2RsTBej7dyg6dUqHZ3PXZCqrNM=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
 
 
 
@@ -69,13 +69,14 @@
 <meta property="article:modified_time" content="2019-10-28T17:10:04+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="初识「零知识」与「证明」">
 <meta itemprop="description" content="要解释「零知识证明」，我们需要先解释「证明」，然后解释什么是「知识」，最后再解释什么是「零知识」。">
-<meta itemprop="datePublished" content="2019-07-31T08:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2019-10-28T17:10:04&#43;08:00" />
-<meta itemprop="wordCount" content="8776">
+<meta itemprop="datePublished" content="2019-07-31T08:00:00+08:00" />
+<meta itemprop="dateModified" content="2019-10-28T17:10:04+08:00" />
+<meta itemprop="wordCount" content="8782">
 
 
 
-<meta itemprop="keywords" content="Zero Knowledge Proof,Zero Knowledge,Proof," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="Zero Knowledge Proof,Zero Knowledge,Proof," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="初识「零知识」与「证明」"/>
 <meta name="twitter:description" content="要解释「零知识证明」，我们需要先解释「证明」，然后解释什么是「知识」，最后再解释什么是「零知识」。"/>
 
@@ -421,7 +422,7 @@ if (!doNotTrack) {
             <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
             
           </div>
-        <span class="more-meta"> 约 8776 字 </span>
+        <span class="more-meta"> 约 8782 字 </span>
           <span class="more-meta"> 预计阅读 18 分钟 </span>
 
         
@@ -439,24 +440,24 @@ if (!doNotTrack) {
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#heading">引言：</a></li>
-    <li><a href="#-">&ldquo;证明&rdquo; 的前世今生</a>
+    <li><a href="#引言">引言：</a></li>
+    <li><a href="#证明-的前世今生">&ldquo;证明&rdquo; 的前世今生</a>
       <ul>
         <li></li>
       </ul>
     </li>
-    <li><a href="#heading-1">交互式证明</a></li>
-    <li><a href="#heading-2">零知识证明有什么用处？</a></li>
-    <li><a href="#heading-3">举例：地图三染色问题</a></li>
-    <li><a href="#-vs-">信息 vs. 知识</a></li>
-    <li><a href="#heading-4">可验证计算与电路可满足性问题</a>
+    <li><a href="#交互式证明">交互式证明</a></li>
+    <li><a href="#零知识证明有什么用处">零知识证明有什么用处？</a></li>
+    <li><a href="#举例地图三染色问题">举例：地图三染色问题</a></li>
+    <li><a href="#信息-vs-知识">信息 vs. 知识</a></li>
+    <li><a href="#可验证计算与电路可满足性问题">可验证计算与电路可满足性问题</a>
       <ul>
         <li></li>
       </ul>
     </li>
-    <li><a href="#heading-6">写在最后</a>
+    <li><a href="#写在最后">写在最后</a>
       <ul>
-        <li><a href="#heading-7">参考文献</a></li>
+        <li><a href="#参考文献">参考文献</a></li>
       </ul>
     </li>
   </ul>
@@ -469,22 +470,22 @@ if (!doNotTrack) {
       <blockquote>
 <p><em>探索零知识证明系列（一）</em></p>
 </blockquote>
-<h2 id="heading">引言：</h2>
+<h2 id="引言">引言：</h2>
 <p>我认为区块链很难称为一个“技术”。它更像是一个领域，包罗万象。或者形而上地说，区块链更像一个有机体，融合了各种不同的理论技术。</p>
 <p>零知识证明是构建信任的重要技术，也是区块链这个有机体中不可缺少的一环。</p>
 <blockquote>
 <p>零知识证明是打通链上数据与链下计算的关键技术，也是实现链上数据隐私保护的重要途径</p>
 </blockquote>
 <p>要解释「零知识证明」，我们需要先解释「证明」，然后解释什么是「知识」，最后再解释什么是「零知识」。</p>
-<h2 id="-">&ldquo;证明&rdquo; 的前世今生</h2>
+<h2 id="证明-的前世今生">&ldquo;证明&rdquo; 的前世今生</h2>
 <p>什么是证明？很多人可能和我一样，看到这两个字，会不禁想起中学考卷中各种三角相似的几何图形，当老师在神奇地画出一条辅助线后，证明过程突然显而易见，然后会懊悔自己为何没想到。</p>
-<h4 id="--">古希腊：「证明」 == 「洞见」</h4>
+<h4 id="古希腊证明--洞见">古希腊：「证明」 == 「洞见」</h4>
 <p>数学证明最早源于古希腊。他们发明（发现）了公理与逻辑，他们用证明来说服对方，而不是靠权威。这是彻头彻尾的「去中心化」。自古希腊以降，这种方法论影响了整个人类文明的进程。</p>
 <p><img src="img/345.png" alt="勾股定理的证明"></p>
 <p>上图是「勾股定理」的巧妙证明。历史上曾出现过许许多多精巧的证明，神奇的思路，天才的灵感。一旦一个命题被证明，上帝都无能为力。嗯，对了，还有那个「上帝不是万能的」证明：上帝不能造出一块他举不起来的石头。</p>
 <p>一个数学证明往往暗藏无比深刻的「洞见」，相信很多人都看过「费马大定理」的故事[1]，这个定理证明横跨四百年，从费马写下「这里空间太小，我写不下」，到怀尔斯最终登顶，耗费了许多代人的聪明才智。最近如「彭加莱猜想」，稍微带点年代感的如「哥德巴赫猜想」，还有我非常敬佩的华裔科学家张益唐十年磨一剑，在仔细研究了「Goldston-Pintz-Yıldırım」和 「Bombieri-Friedlander-Iwaniec.」的证明「洞见」之后，证明了「质数间的有界间隔」[2]。</p>
 <p>自十七世纪，莱布尼茨起，人们就梦想找到一种机械的手段，可以来自动完成证明，而不再依赖天才的灵光一现。</p>
-<h4 id="---1">二十世纪初：「证明」 == 「符号推理」</h4>
+<h4 id="二十世纪初证明--符号推理">二十世纪初：「证明」 == 「符号推理」</h4>
 <p>时间到了十九世纪末，康托、布尔、弗雷格、希尔伯特、罗素、布劳威、哥德尔等人定义了形式化逻辑的符号系统。而「证明」则是在利用形式化逻辑的符号语言编写的推理过程。逻辑本身靠谱么？逻辑本身「自恰」吗？逻辑推理本身对不对，能够证明吗？这让 数学家/逻辑学家/计算机科学家 发明（发现） 了符号系统，语法 vs. 语义，可靠 vs. 完备，递归 vs. 无穷。（这部分精彩故事请参看『逻辑的引擎』一书[3]）。</p>
 <p>1910年，罗素发表了洪(zhuan)荒(tou)巨著『数学原理』。在书中，罗素与怀特海试图将数学完整地「形式化」下来。如果能达到这样的目标，所有的数学成果都将以证明的方式建立在坚实的基础上。下图就是『数学原理（卷二）』中的一页：</p>
 <p><img src="img/principle.png" alt=""></p>
@@ -492,17 +493,17 @@ if (!doNotTrack) {
 <p>似乎人们距离「定理的自动证明」并不遥远了。</p>
 <p>不幸的是，哥德尔在 1931 年证明了「哥德尔不完备性定理」[4]，图灵在 1936 年证明了图灵机停机问题的不可判定性[5]。这些成果彻底终结了这个几百年的幻想。无论公理系统如何精巧设计，都无法抓住所有的真理。</p>
 <p>证明不仅仅是一个严格推理，而且凝结了似乎很难机械化的创造性思维。证明中蕴含了大量的「知识」，每一次的突破，都将我们的认知提升到一个新的高度。不管是「洞见」，还是推理过程中所构造的「算法」，一个定理的证明的内涵往往远超出定理本身的结论。</p>
-<h4 id="---2">六十年代：「证明」 == 「程序」</h4>
+<h4 id="六十年代证明--程序">六十年代：「证明」 == 「程序」</h4>
 <p>又过了半个世纪，到了六十年代，逻辑学家 Haskell Curry 和 William Howard 相继发现了在「逻辑系统」和「计算系统— Lambda 演算」中出现了很多「神奇的对应」，这就是后来被命名的「Curry-Howard Correspondence」。这个发现使得大家恍然大悟，「编写程序」和「编写证明」实际在概念上是完全统一的。而在这之后的 50 年，相关理论与技术发展使得证明不再停留在草稿纸上，而是可以用程序来表达。这个同构映射非常有趣：程序的类型对应于证明的定理；循环对应于归纳；……（这里推荐一本书：『软件基础』（Software Foundations 中译本）[6]）。在直觉主义框架中，证明就意味着构造算法，构造算法实际上就是在写代码。(反过来也成立，嗯，码农码的不是代码，是数学证明，:P)</p>
 <p>目前在计算机科学领域，许多理论的证明已经从纸上的草图变成了代码的形式，比较流行的「证明编程语言」有 Coq，Isabelle，Agda 等等。采用编程的方式来构造证明，证明的正确性检查可以机械地由程序完成，并且许多啰嗦重复性的劳动可以由程序来辅助完成。数学理论证明的大厦正在像计算机软件一样，逐步地构建过程中。1996 年 12 月 W. McCune 利用自动定理证明工具 EQP 证明了一个 长达 63 年历史的数学猜想「Ronbins 猜想」，『纽约时报』随后发表了一篇题为「Computer Math Proof Shows Reasoning Power」的文章[7]，再一次探讨机器能否代替人类创造性思维的可能性。</p>
 <p>利用机器的辅助确实能够有效帮助数学家的思维达到更多的未知空间，但是「寻找证明」仍然是最有挑战性的工作。「验证证明」，则必须是一个简单、机械、并且有限的工作。这是种天然的「不对称性」。</p>
-<h4 id="---3">八十年代：「证明」 == 「交互」</h4>
+<h4 id="八十年代证明--交互">八十年代：「证明」 == 「交互」</h4>
 <p>时间拨到1985年，乔布斯刚刚离开苹果，而 S. Goldwasser 博士毕业后来到了 MIT，与 S. Micali，Rackoff 合写了一篇能载入计算机科学史册的经典：『交互式证明系统中的知识复杂性』[8]。</p>
 <p><img src="img/gmr89.png" alt="GMR89"></p>
 <p>他们对「证明」一词进行了重新的诠释，并提出了交互式证明系统的概念：通过构造两个图灵机进行「交互」而不是「推理」，来证明一个命题在概率上是否成立。「证明」这个概念再一次被拓展。</p>
 <p>交互证明的表现形式是两个（或者多个图灵机）的「对话脚本」，或者称为 Transcript。而这个对话过程，其中有一个显式的「证明者」角色，还有一个显式的「验证者」。其中证明者向验证者证明一个命题成立，同时还「不泄露其他任何知识」。这种就被称为「零知识证明」。</p>
 <p>再强调一遍，证明凝结了「知识」，但是证明过程确可以不泄露「知识」，同时这个证明验证过程仍然保持了简单、机械，并且有限性。这听上去是不是有点「反直觉」？</p>
-<h2 id="heading-1">交互式证明</h2>
+<h2 id="交互式证明">交互式证明</h2>
 <p>Alice: 我想向你证明我有一个方程的解，<code>w^3 - （w+1)^2 + 7 = 0</code> （方程的解：<code>w=3</code>）</p>
 <p>Bob: 好啊，我听着呢</p>
 <p>Alice: 但是我不会告诉你 x 具体是多少，除非你愿意掏钱，我才告诉你。</p>
@@ -530,7 +531,7 @@ if (!doNotTrack) {
 <li>证明：就是Alice与Bob对话中的「黑科技部分」。</li>
 </ul>
 <p>好了，证明也就是黑科技部分还没讲。看官们不要急，且听我慢慢道来。</p>
-<h2 id="heading-2">零知识证明有什么用处？</h2>
+<h2 id="零知识证明有什么用处">零知识证明有什么用处？</h2>
 <p>一提零知识证明技术，很多人就想到了匿名 Coin，比如 Monero, 比如 ZCash。确实，这几个 Coin 很好地普及了零知识证明，我本人也是通过 ZCash 才第一次听说了零知识证明这个词。但是在更深入地了解这个技术之后，深深感觉这个技术的威力远不止这一点。</p>
 <blockquote>
 <p>零知识证明技术可以解决数据的信任问题，计算的信任问题！</p>
@@ -555,7 +556,7 @@ if (!doNotTrack) {
 <li>构造完全公平的线上数字化商品的交易协议[9]。</li>
 <li>更多的例子，可以是任何形式的数据共享，数据处理与数据传输。</li>
 </ul>
-<h2 id="heading-3">举例：地图三染色问题</h2>
+<h2 id="举例地图三染色问题">举例：地图三染色问题</h2>
 <p>下面讲一个经典的问题，地图的三染色问题。如何用三种颜色染色一个地图，保证任意两个相邻的地区都是不同的颜色。我们把这个「地图三染色问题」转变成一个「连通图的顶点三染色问题」。假设每个地区都有一个首府（节点），然后把相邻的节点连接起来，这样地图染色问题可以变成一个连通图的顶点染色问题。</p>
 <p>下面我们设计一个交互协议：</p>
 <ul>
@@ -581,7 +582,7 @@ Pr[(G, c)\ | \ ThreeColor(G, c) = 0] &lt; (1 - \frac{1}{|E|})^n
 $$</p>
 <p>这里 <code>|E|</code> 是图中所有边的个数， 如果 <code>n</code> 足够大，这个概率 <code>Pr</code> 会变得非常非常小，变得「微不足道」。</p>
 <p>可是，Bob 每次看到的局部染色情况都是 Alice 变换过后的结果，无论 Bob 看多少次，都不能拼出一个完整的三染色答案出来。实际上，Bob 在这个过程中，虽然获得了很多「信息」，但是却没有获得真正的「知识」。</p>
-<h2 id="-vs-">信息 vs. 知识</h2>
+<h2 id="信息-vs-知识">信息 vs. 知识</h2>
 <ul>
 <li>信息 「Information」</li>
 <li>知识 「Knowledge」</li>
@@ -602,7 +603,7 @@ $$</p>
 </ol>
 </blockquote>
 <p>注：曾有人问我，这里的信息与知识的定义是否与 Kolmogorov 复杂性有关。根据算法信息论，一段字符串的信息量可以用产生字符串的最小程序的长度来测量。这个问题我不是很懂，希望路过的专业人士留言。</p>
-<h2 id="heading-4">可验证计算与电路可满足性问题</h2>
+<h2 id="可验证计算与电路可满足性问题">可验证计算与电路可满足性问题</h2>
 <p>看了上面的地图三染色问题，大家是不是没有感觉，好像这只是一个学术问题，如何跟现实问题关联起来？地图三染色问题是一个 NP-Complete 问题，这是「计算理论」中的一个名词。另外有一个叫做「电路可满足问题」也是同样是 NP-Complete 问题。NP-Complete 是一类问题，他的求解过程是多项式时间内难以完成的，即「求解困难」，但是验证解的过程是多项式时间可以完成的，即「验证简单」。</p>
 <p>那什么是电路呢？下面是三个不同的「算术电路」：</p>
 <p><img src="img/circuits.png" alt="circuits"></p>
@@ -629,7 +630,7 @@ $$</p>
 <li>弊端一：如果电路比较大，那么证明就很大，Bob 检查证明的工作量也很大。</li>
 <li>弊端二：Bob 在验证过程中，知道了所有的电路运算细节，包括输入。</li>
 </ul>
-<h4 id="heading-5">黑科技</h4>
+<h4 id="黑科技">黑科技</h4>
 <p>我们再对刚才的 Alice 与 Bob 的场景做些修改。假如，Alice 自己还有一个秘密，比如说网银密码。而 Bob 想知道 Alice 的网银密码的长度是不是 20 位长。而 Alice 想了下，告诉他密码长度应该问题不大。这时候 Bob 把一个计算字符串长度的代码转换成了电路 Q，并且发给 Alice。Alice 用电路 Q 算了一下自己的密码，然后把电路所有门的引脚发给了 Bob，并带上运算结果 20。</p>
 <p>Wai……t，这是有问题的，Bob 拿到电路运算过程中的所有内部细节之后，不就知道密码了吗？是的，Alice 显然不能这么做。那么 Alice 应该怎么做？</p>
 <p>答案是有很多种办法，热爱区块链技术的读者最耳熟的就是 zkSNARK[11]，还有zkSTARK[12]，子弹证明BulletProof[13]，以及一些比较小众的技术，都可以帮 Alice 做到：</p>
@@ -641,19 +642,19 @@ $$</p>
 <p>「零知识的电路可满足性证明协议」提供了一种最直接的保护隐私/敏感数据的技术</p>
 </blockquote>
 <p>最近几年来，零知识证明构造技术发展日新月异，并且在区块链技术领域得到了越来越多的应用。最新的零知识证明技术，有的技术可以让 Bob 高速验证证明（在移动设备上几毫秒验证完成）；有的技术可以让所有吃瓜群众帮忙验证（非交互式零知识证明）；有的技术支持非常小的证明大小（小到几十个字节）。后续文章我们会逐步展开介绍。</p>
-<h2 id="heading-6">写在最后</h2>
+<h2 id="写在最后">写在最后</h2>
 <p>无论是精妙的数论定理，地图三染色问题，还是电路可满足性问题。证明存在的意义是什么？所有的证明都体现了「证明」与「验证」的「不对称性」。证明可能是一个非常耗费算力，或者脑力的活动，无论是耗时几百年的「费马大定理」，还是比特币中的 POW 证明，这些证明都凝结了在寻找证明过程中所消耗的能量，证明过程可能是超乎寻常的复杂，偶尔需要天才横空出世。而验证过程一定（或者应该）是一个非常简单的，机械的，在（多项式）有效时间内且能终止的活动。某种意义上，这个不对称性真正体现了证明的意义，展示了零知识证明的价值。</p>
 <blockquote>
 <p>粗略看，「证明」是「逻辑」的产物，但「逻辑」与「计算」却又有着密不可分的联系，大家可能模模糊糊感觉到一些关于「证明」与「计算」之间的关联，它们贯穿始终：如机械推理、证明表达、交互计算 。这是一个有趣但更宏大的哲学问题。</p>
 </blockquote>
 <p>提醒：文章内容难免有不准确或不严谨的描述，还请各位专业人士拨冗指正。</p>
 <p>本文将在 Github 进行更新。</p>
-<h3 id="heading-7">参考文献</h3>
+<h3 id="参考文献">参考文献</h3>
 <ul>
 <li>[1] 西蒙, 辛格, 薛密. 费马大定理: 一个困惑了世间智者 358 年的谜[M]. 上海译文出版社, 1998.</li>
 <li>[2]  Alec Wilkinson. The Pursuit of Beauty: Yitang Zhang solves a pure-math mystery. The New Yorker. Feb. 2015.</li>
 <li>[3] 马丁, 戴维斯, 张卜天. 逻辑的引擎[M]. 湖南科学技术出版社, 2012.</li>
-<li>[4] Raymond Smullyan. Gödel's Incompleteness Theorems, Oxford Univ.Press. 1991.</li>
+<li>[4] Raymond Smullyan. Gödel&rsquo;s Incompleteness Theorems, Oxford Univ.Press. 1991.</li>
 <li>[5] Turing, Alan. &ldquo;On computable numbers, with an application to the Entscheidungsproblem.&rdquo; <em>Proceedings of the London mathematical society</em> 2.1 (1937): 230-265.</li>
 <li>[6] Pierce, Benjamin C., et al. &ldquo;Software foundations.&rdquo; 中文译文: &lt;https://github.com/Coq-zh/SF-zh</li>
 <li>[7] Kolata, Gina. &ldquo;Computer math proof shows reasoning power.&rdquo; <em>Math Horizons</em> 4.3 (1997): 22-25.</li>

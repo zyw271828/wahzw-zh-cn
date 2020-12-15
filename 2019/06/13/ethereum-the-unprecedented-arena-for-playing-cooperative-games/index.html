@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.62.0" />
+<meta name="generator" content="Hugo 0.75.1" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2019/06/13/ethereum-the-unprecedented-arena-for-playing-cooperative-games/" />
@@ -53,7 +53,7 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.0995afa14b62cd93e93cfc066b646c4c17a3eddca0e9d52a1d9dcf5d90aaacd3.css" integrity="sha256-CZWvoUtizZPpPPwGa2RsTBej7dyg6dUqHZ3PXZCqrNM=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
 
 
 
@@ -70,14 +70,15 @@
 <meta property="article:modified_time" content="2019-10-12T18:48:30+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="为什么说区块链是一座全新的博弈竞技场？">
 <meta itemprop="description" content="区块链到底有什么用？">
-<meta itemprop="datePublished" content="2019-06-13T08:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2019-10-12T18:48:30&#43;08:00" />
-<meta itemprop="wordCount" content="4141">
+<meta itemprop="datePublished" content="2019-06-13T08:00:00+08:00" />
+<meta itemprop="dateModified" content="2019-10-12T18:48:30+08:00" />
+<meta itemprop="wordCount" content="4139">
 <meta itemprop="image" content="https://sec-bit.github.io/blog/2019/06/13/ethereum-the-unprecedented-arena-for-playing-cooperative-games/cover.png">
 
 
 
-<meta itemprop="keywords" content="Ethereum,Game Theory,Smart Contract,Cooperative Games," /><meta name="twitter:card" content="summary_large_image"/>
+<meta itemprop="keywords" content="Ethereum,Game Theory,Smart Contract,Cooperative Games," />
+<meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://sec-bit.github.io/blog/2019/06/13/ethereum-the-unprecedented-arena-for-playing-cooperative-games/cover.png"/>
 <meta name="twitter:title" content="为什么说区块链是一座全新的博弈竞技场？"/>
 <meta name="twitter:description" content="区块链到底有什么用？"/>
@@ -425,7 +426,7 @@ if (!doNotTrack) {
             <a href="https://sec-bit.github.io/blog/categories/ethereum/"> Ethereum </a>
             
           </div>
-        <span class="more-meta"> 约 4141 字 </span>
+        <span class="more-meta"> 约 4139 字 </span>
           <span class="more-meta"> 预计阅读 9 分钟 </span>
 
         
@@ -445,9 +446,9 @@ if (!doNotTrack) {
   <ul>
     <li>
       <ul>
-        <li><a href="#-">两败俱伤？合作共赢？—— 建立非合作博弈转变为合作博弈的支点</a></li>
-        <li><a href="#heading">博弈革命——竞技场上的角逐新规则</a></li>
-        <li><a href="#--">道阻且长 —— 寻找链上链下的绑定机制</a></li>
+        <li><a href="#两败俱伤合作共赢-建立非合作博弈转变为合作博弈的支点">两败俱伤？合作共赢？—— 建立非合作博弈转变为合作博弈的支点</a></li>
+        <li><a href="#博弈革命竞技场上的角逐新规则">博弈革命——竞技场上的角逐新规则</a></li>
+        <li><a href="#道阻且长--寻找链上链下的绑定机制">道阻且长 —— 寻找链上链下的绑定机制</a></li>
       </ul>
     </li>
   </ul>
@@ -462,7 +463,7 @@ if (!doNotTrack) {
 <p>针对这个问题，以太坊基金会成员 Virgil Griffith 曾以以太坊为例，提出了一个让人眼前一亮的观点[1]：</p>
 <p><em>Ethereum is an unprecedented arena for playing cooperative games（以太坊是前所未有的合作博弈竞技场）。</em></p>
 <p>区块链和博弈论是两个不同的领域，乍一看似乎并没有太大的关联性，但事实并非如此。<strong>几乎所有的博弈论经典案例都可以借助区块链构建出新的博弈关系</strong>。Virgil Griffith 在他的文章中以以太坊为基础，借用博弈论中经典的案例解释了如何利用区块链来建立新的博弈关系。</p>
-<h3 id="-">两败俱伤？合作共赢？—— 建立非合作博弈转变为合作博弈的支点</h3>
+<h3 id="两败俱伤合作共赢-建立非合作博弈转变为合作博弈的支点">两败俱伤？合作共赢？—— 建立非合作博弈转变为合作博弈的支点</h3>
 <p><strong>博弈论</strong>（<strong>Game Theory</strong>）是经济学的一个分支，是研究博弈行为中斗争各方是否存在着最合理的行为方案，以及如何找到这个合理的行为方案的数学理论和方法[t2]。其中具有竞争或对抗性质的行为称为<strong>博弈行为</strong>[2]。</p>
 <p>说到博弈论就不得不提到一个大家所熟知的经典案例——<strong>囚徒困境</strong>[3]。</p>
 <p>有两个共谋犯罪的囚徒张三和李四被捕，他们之间不能互相交流。如果双方都不揭发对方，则每个人都只被关押 1 年；若他们双方有一方揭发，而另一方选择沉默，则揭发者将立即获释，沉默者则将被关押 8 年；若互相揭发，双方将同时被关押 5 年。</p>
@@ -503,19 +504,19 @@ if (!doNotTrack) {
 <p>与囚徒困境类似，这里我们同样可以利用区块链在猎人之间建立合作关系。猎人们先在以太坊上创建合约，双方各自向合约中抵押 1000 ETH，若任意一方最终猎取了野兔，则将其抵押的 1000 ETH烧掉，于是此时任何一名猎人此时都不会选择猎取野兔。</p>
 <p><img src="./img4.png" alt=""></p>
 <p>在上述例子中，我们将博弈方的收益和损失都转换为了以太坊上的价值符号表示，但在实际的应用场景中，能否以此来代替实际的收益还有待商榷；另外智能合约如何感知实际场景中的决策结果并自动触发合约执行也相对困难。因此<strong>如何找到适合的机制让现实博弈的关键操作与链上合约绑定</strong> 至关重要。</p>
-<h3 id="heading">博弈革命——竞技场上的角逐新规则</h3>
+<h3 id="博弈革命竞技场上的角逐新规则">博弈革命——竞技场上的角逐新规则</h3>
 <p>其实区块链和智能合约并不是改变博弈的必要条件，但区块链智能合约在应用和部署博弈模型方面有着巨大的潜力。</p>
 <p>由于真实情况下我们难以找到适合的可信第三方来做为公平的仲裁者，辅助执行博弈结果的利益裁定。而区块链及智能合约的出现让这一切变得十分容易，正如 Upgradeability is a bug[8] 这篇文章中所说的那样，<strong>智能合约最大的价值恰恰是在于它的 Trustless</strong>。</p>
 <p>不仅仅是非合作博弈，几乎任意的博弈关系都可以与区块链结合，创造出新的规则。</p>
-<h4 id="1-">1. 懦夫博弈</h4>
+<h4 id="1-懦夫博弈">1. 懦夫博弈</h4>
 <p><strong>在非合作博弈中打造竞争优势。</strong></p>
-<p>懦夫博弈也叫&quot;胆小鬼博弈&rdquo;，是指两名车手甲和乙相对驱车而行，最先转弯的一方被耻笑为“胆小鬼”（chicken），另一方胜出，但如果两人拒绝转弯，任由两车相撞，最终谁都无法受益[9]。</p>
+<p>懦夫博弈也叫&quot;胆小鬼博弈&quot;，是指两名车手甲和乙相对驱车而行，最先转弯的一方被耻笑为“胆小鬼”（chicken），另一方胜出，但如果两人拒绝转弯，任由两车相撞，最终谁都无法受益[9]。</p>
 <p>我们假定当两人同时转弯时记为收益为 0；当一方转弯，另一方直行时，转弯的一方记为收益 -1 ETH，另一方收益为 10 ETH；当两人同时直行时记为收益为 -100 ETH。</p>
 <p><img src="./img5.png" alt=""></p>
 <p>很显然，这个游戏只有当一方选择直行，另一方选择转弯收益最大，但是谁选择直行谁选择转弯却很难判定。</p>
 <p>为了打破僵局获得最大收益，车手甲可以在游戏开始之前创建合约，抵押 1000 ETH ，并通知车手乙。若其选择转弯，合约将自动烧毁其抵押的 1000 ETH，这就使得车手甲必定选择直行，而乙就不得不选择转弯以将损失降到最低。</p>
 <p><img src="./img6.png" alt=""></p>
-<h4 id="2-">2. 爵士乐队表演</h4>
+<h4 id="2-爵士乐队表演">2. 爵士乐队表演</h4>
 <p><strong>借助智能合约保障合作博弈中的利益公平分配</strong></p>
 <p>爵士乐队表演是一个合作博弈的案例[10]。假设一个场景，某台晚会需要招募表演人员，可供选择的表演人员包括一名吉他手，一名架子鼓手和一名歌手。</p>
 <ul>
@@ -544,7 +545,7 @@ if (!doNotTrack) {
 <p>在二人合作中，我们可以看到歌手的价值最高，吉他手的价值居中，架子鼓手的价值最低。</p>
 <p>2012年诺贝尔经济学奖获得者夏普利曾提出一个Shapley值的概念，解决了在合作博弈中合理分配收益给参与者的问题[11]。如果依据他的理论进行分配，歌手应该得到 4，吉他手 3.5，架子鼓手 2.5。</p>
 <p>举办方可以将分配的Shapley值计算公式写入智能合约，在演奏结束之后让合约自动转账给演奏参与者，从而保证分配的公平性。</p>
-<h4 id="3-">3. 从他人的博弈中套利</h4>
+<h4 id="3-从他人的博弈中套利">3. 从他人的博弈中套利</h4>
 <p><strong>空手套白狼：干扰他人博弈以套利</strong></p>
 <p>假设在一个博弈关系中有两个参与者：A 和 B。A 可以执行两个动作，向上或者向下；B 也可以执行两个动作向左或者向右。</p>
 <ul>
@@ -577,10 +578,10 @@ if (!doNotTrack) {
 <p>对于 B 来说，他需要根据 A 是否事先向 C 转账来决定他的选择。而对于 A 来说，向 C 转 5 ETH最终他还能获得 5 ETH的收益，如果不转则最多只能获得 1 ETH 的收益。面对理性的 A 和 B，C 仅需要创建一个合约，不支付任何费用，就可以让 A 乖乖得将部分收益转让给他。</p>
 <p><em>面对这种赤裸裸的 &ldquo;<strong>敲诈</strong>&rdquo; 行为，A 是否可以借助区块链来逆转局面呢？</em></p>
 <p>（聪明的小伙伴如果想到了解决的办法，欢迎添加小安的微信 secbit_xiaoanbi 来参与讨论）</p>
-<h3 id="--">道阻且长 —— 寻找链上链下的绑定机制</h3>
+<h3 id="道阻且长--寻找链上链下的绑定机制">道阻且长 —— 寻找链上链下的绑定机制</h3>
 <p>正如 Virgil Griffith 所说，</p>
-<p>&lsquo;<em>Ethereum enables powerful economic vehicles we don't yet understand.（以太坊支持我们不甚知晓的强大的经济学工具。）</em>&rsquo; [1]</p>
-<p>区块链作为一种去中心化，执行结果明确，不可篡改的&quot;可信第三方&rdquo;，打破了传统的思维，为打破博弈关系建立新的规则提供了非常有效的途径。作为一座全新的博弈竞技场，区块链和智能合约必定会为博弈的应用和改变注入更多的灵感。</p>
+<p>&lsquo;<em>Ethereum enables powerful economic vehicles we don&rsquo;t yet understand.（以太坊支持我们不甚知晓的强大的经济学工具。）</em>&rsquo; [1]</p>
+<p>区块链作为一种去中心化，执行结果明确，不可篡改的&quot;可信第三方&quot;，打破了传统的思维，为打破博弈关系建立新的规则提供了非常有效的途径。作为一座全新的博弈竞技场，区块链和智能合约必定会为博弈的应用和改变注入更多的灵感。</p>
 <p>但正如上文所提到的，如何找到适合的机制让现实博弈的关键操作与链上合约绑定，还需要更进一步的探索。</p>
 <p>&ldquo;或许距离这座&quot;竞技场&quot;真正运转起来还有很长的路要走。&rdquo;</p>
 <p>​																			— 郭宇(安比实验室创始人)</p>

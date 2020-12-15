@@ -5,11 +5,7 @@
     <link>https://sec-bit.github.io/blog/en/post/</link>
     <description>Recent content in Posts on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 29 Jul 2019 08:00:00 +0800</lastBuildDate>
-    
-	<atom:link href="https://sec-bit.github.io/blog/en/post/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 29 Jul 2019 08:00:00 +0800</lastBuildDate><atom:link href="https://sec-bit.github.io/blog/en/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>The &#39;Input Aliasing&#39; bug caused by a contract library of zkSNARKs</title>
       <link>https://sec-bit.github.io/blog/en/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</link>
@@ -34,7 +30,7 @@
       <pubDate>Thu, 23 Aug 2018 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/</guid>
-      <description>The first round of Fomo3D has ended and the winner&#39;s address is 0xa169, with a prize of 10,469.66 ethers.
+      <description>The first round of Fomo3D has ended and the winner&amp;rsquo;s address is 0xa169, with a prize of 10,469.66 ethers.
 You may think that the winner is just an ordinary participant.</description>
     </item>
     

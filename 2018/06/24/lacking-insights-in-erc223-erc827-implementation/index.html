@@ -34,7 +34,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.62.0" />
+<meta name="generator" content="Hugo 0.75.1" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2018/06/24/lacking-insights-in-erc223-erc827-implementation/" />
@@ -55,7 +55,7 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.0995afa14b62cd93e93cfc066b646c4c17a3eddca0e9d52a1d9dcf5d90aaacd3.css" integrity="sha256-CZWvoUtizZPpPPwGa2RsTBej7dyg6dUqHZ3PXZCqrNM=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
 
 
 
@@ -71,13 +71,14 @@
 <meta property="article:modified_time" content="2019-10-12T18:48:30+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
 <meta itemprop="name" content="ERC223及ERC827实现代码欠缺安全考虑">
 <meta itemprop="description" content="ERC223, ERC827的部分实现代码引入了任意函数调用缺陷，可能会对使用这部分代码的合约带来安全漏洞。如果需要实现上述规范接口，请仔细检查实现代码。这种合约本身允许用户自定义 call() 任意地址上任意函数的设计，十分危险。攻击者可以很容易地借用当前合约的身份来进行任何操作，比如盗取Token或者绕开权限检查等。">
-<meta itemprop="datePublished" content="2018-06-24T08:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2019-10-12T18:48:30&#43;08:00" />
+<meta itemprop="datePublished" content="2018-06-24T08:00:00+08:00" />
+<meta itemprop="dateModified" content="2019-10-12T18:48:30+08:00" />
 <meta itemprop="wordCount" content="4643">
 
 
 
-<meta itemprop="keywords" content="ERC223,ERC827,Smart Contract,Vulnerability," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="ERC223,ERC827,Smart Contract,Vulnerability," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ERC223及ERC827实现代码欠缺安全考虑"/>
 <meta name="twitter:description" content="ERC223, ERC827的部分实现代码引入了任意函数调用缺陷，可能会对使用这部分代码的合约带来安全漏洞。如果需要实现上述规范接口，请仔细检查实现代码。这种合约本身允许用户自定义 call() 任意地址上任意函数的设计，十分危险。攻击者可以很容易地借用当前合约的身份来进行任何操作，比如盗取Token或者绕开权限检查等。"/>
 
@@ -447,18 +448,18 @@ if (!doNotTrack) {
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#custom-call-">CUSTOM_CALL 滥用事件回顾与分析</a>
+    <li><a href="#custom_call-滥用事件回顾与分析">CUSTOM_CALL 滥用事件回顾与分析</a>
       <ul>
-        <li><a href="#atn-">ATN 事件漏洞分析</a></li>
-        <li><a href="#custom-call--1">CUSTOM_CALL 滥用的危害</a></li>
-        <li><a href="#erc223-">ERC223 提案实现与接口定义不一致</a></li>
-        <li><a href="#erc223--1">ERC223 代码实现的其他问题</a></li>
+        <li><a href="#atn-事件漏洞分析">ATN 事件漏洞分析</a></li>
+        <li><a href="#custom_call-滥用的危害">CUSTOM_CALL 滥用的危害</a></li>
+        <li><a href="#erc223-提案实现与接口定义不一致">ERC223 提案实现与接口定义不一致</a></li>
+        <li><a href="#erc223-代码实现的其他问题">ERC223 代码实现的其他问题</a></li>
       </ul>
     </li>
-    <li><a href="#evm-">EVM 参数传递机制</a></li>
-    <li><a href="#erc827-">ERC827 的有安全隐患代码实现</a></li>
-    <li><a href="#erc20-erc721-">ERC20, ERC721 中关于“接收通知调用”正确的代码实现</a></li>
-    <li><a href="#heading">总结与反思</a></li>
+    <li><a href="#evm-参数传递机制">EVM 参数传递机制</a></li>
+    <li><a href="#erc827-的有安全隐患代码实现">ERC827 的有安全隐患代码实现</a></li>
+    <li><a href="#erc20-erc721-中关于接收通知调用正确的代码实现">ERC20, ERC721 中关于“接收通知调用”正确的代码实现</a></li>
+    <li><a href="#总结与反思">总结与反思</a></li>
     <li><a href="#reference">Reference</a></li>
   </ul>
 </nav>
@@ -478,14 +479,14 @@ if (!doNotTrack) {
 <li>火币网已经暂停了已经上线交易的相关问题Token[9][10]</li>
 <li>ATN团队已经修复漏洞[1]</li>
 </ul>
-<h2 id="custom-call-">CUSTOM_CALL 滥用事件回顾与分析</h2>
+<h2 id="custom_call-滥用事件回顾与分析">CUSTOM_CALL 滥用事件回顾与分析</h2>
 <p>2018 年 6 月 20 日，AI Technology Network (ATN) 和慢雾团队披露了一起针对 ATN 智能合约的攻击事件，黑客于 2018 年 5 月 11 日利用 ATN Token 合约存在的漏洞，将自己地址设为 owner 并增发获利 1100 万 ATN。ATN 技术团队迅速发现问题、定位攻击方法并完成合约的升级修复 [1]。黑客利用了 ERC223 合约可传入自定义的接收调用函数与 ds-auth 权限校验等特征，在 ERC223 合约调用这个自定义函数时，合约调用自身函数从而造成内部权限控制失效。随后，百度安全的“隐形人真忙”也在先知安全大会上进行了“以太坊智能合约 call 注入攻击”的主题分享 [2]。这个漏洞源于一个较为常见的做法：在调用合约函数之后，可以再次调用一次另一个合约的任意函数，并且这个任意函数可以由合约调用发起者指定。但是 ATN 的合约漏洞恰恰暴露了这一常见做法非常危险的一面：合约调用者可能通过该功能绕开权限检查，或者以合约的身份发起对其它合约的攻击等等。</p>
 <p>有安全隐患代码链接：</p>
 <ul>
 <li><a href="https://github.com/Dexaran/ERC223-token-standard/blob/16d350ec85d5b14b9dc857468c8e0eb4a10572d3/ERC223_Token.sol#L70">https://github.com/Dexaran/ERC223-token-standard/blob/16d350ec85d5b14b9dc857468c8e0eb4a10572d3/ERC223_Token.sol#L70</a></li>
 <li><a href="https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/token/ERC827/ERC827Token.sol">https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/token/ERC827/ERC827Token.sol</a></li>
 </ul>
-<h3 id="atn-">ATN 事件漏洞分析</h3>
+<h3 id="atn-事件漏洞分析">ATN 事件漏洞分析</h3>
 <p>ERC223 是由 Dexaran 于 2017 年 3 月 5 日提出的一个 Token 标准草案 [3]，用于改进 ERC20，解决其无法处理发往合约自身 Token 的这一问题。ERC20 有两套代币转账机制，一套为直接调用 <code>transfer()</code> 函数，另一套为调用 <code>approve()</code> + <code>transferFrom()</code> 先授权再转账。当转账对象为智能合约时，这种情况必须使用第二套方法，否则转往合约地址的 Token 将永远无法再次转出。</p>
 <p>下面代码为 ERC223 草案中的一段 <strong>正确示例</strong>，调用 <code>transfer()</code> 函数时，合约判断目标地址 <code>to</code> 是否是合约，如果是合约，则调用目标合约的 <code>tokenFallback()</code> 方法，从而实现合约对转入 Token 的处理。这段代码并没有 CUSTOM_CALL 滥用的问题。</p>
 <div class="highlight"><div class="chroma">
@@ -513,14 +514,14 @@ if (!doNotTrack) {
   <span class="kd">function</span> <span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">uint</span> <span class="nx">codeLength</span><span class="p">;</span>
         <span class="nx">assembly</span> <span class="p">{</span>
-            <span class="nx">codeLength</span> <span class="o">:</span><span class="o">=</span> <span class="nx">extcodesize</span><span class="p">(</span><span class="nx">_to</span><span class="p">)</span>
+            <span class="nx">codeLength</span> <span class="o">:=</span> <span class="nx">extcodesize</span><span class="p">(</span><span class="nx">_to</span><span class="p">)</span>
         <span class="p">}</span>
-        <span class="nx">balances</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">=</span> <span class="nx">balances</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">_value</span><span class="p">)</span><span class="p">;</span>
-        <span class="nx">balances</span><span class="p">[</span><span class="nx">_to</span><span class="p">]</span> <span class="o">=</span> <span class="nx">balances</span><span class="p">[</span><span class="nx">_to</span><span class="p">]</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">_value</span><span class="p">)</span><span class="p">;</span>
+        <span class="nx">balances</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">=</span> <span class="nx">balances</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">].</span><span class="nx">sub</span><span class="p">(</span><span class="nx">_value</span><span class="p">);</span>
+        <span class="nx">balances</span><span class="p">[</span><span class="nx">_to</span><span class="p">]</span> <span class="o">=</span> <span class="nx">balances</span><span class="p">[</span><span class="nx">_to</span><span class="p">].</span><span class="nx">add</span><span class="p">(</span><span class="nx">_value</span><span class="p">);</span>
         <span class="k">if</span><span class="p">(</span><span class="nx">codeLength</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
             <span class="c1">// Require proper transaction handling.
-</span><span class="c1"></span>            <span class="nx">ERC223Receiver</span> <span class="nx">receiver</span> <span class="o">=</span> <span class="nx">ERC223Receiver</span><span class="p">(</span><span class="nx">_to</span><span class="p">)</span><span class="p">;</span>
-            <span class="nx">receiver</span><span class="p">.</span><span class="nx">tokenFallback</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">_data</span><span class="p">)</span><span class="p">;</span>
+</span><span class="c1"></span>            <span class="nx">ERC223Receiver</span> <span class="nx">receiver</span> <span class="o">=</span> <span class="nx">ERC223Receiver</span><span class="p">(</span><span class="nx">_to</span><span class="p">);</span>
+            <span class="nx">receiver</span><span class="p">.</span><span class="nx">tokenFallback</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">_data</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -558,8 +559,8 @@ if (!doNotTrack) {
     <span class="kr">public</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="p">...</span>
-    <span class="nx">ERC223ReceivingContract</span> <span class="nx">receiver</span> <span class="o">=</span> <span class="nx">ERC223ReceivingContract</span><span class="p">(</span><span class="nx">_to</span><span class="p">)</span><span class="p">;</span>
-    <span class="nx">receiving</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="p">(</span><span class="nx">byte4</span><span class="p">(</span><span class="nx">keccak256</span><span class="p">(</span><span class="nx">_custom_fallback</span><span class="p">)</span><span class="p">)</span><span class="p">,</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">amout</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span><span class="p">;</span>
+    <span class="nx">ERC223ReceivingContract</span> <span class="nx">receiver</span> <span class="o">=</span> <span class="nx">ERC223ReceivingContract</span><span class="p">(</span><span class="nx">_to</span><span class="p">);</span>
+    <span class="nx">receiving</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)(</span><span class="nx">byte4</span><span class="p">(</span><span class="nx">keccak256</span><span class="p">(</span><span class="nx">_custom_fallback</span><span class="p">)),</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">amout</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
     <span class="p">...</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -592,14 +593,14 @@ if (!doNotTrack) {
     <span class="kr">public</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> 
 <span class="p">{</span>
     <span class="p">...</span>
-    <span class="nx">assert</span><span class="p">(</span><span class="nx">_to</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="p">(</span><span class="nx">bytes4</span><span class="p">(</span><span class="nx">keccak256</span><span class="p">(</span><span class="nx">_custom_fallback</span><span class="p">)</span><span class="p">)</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">_data</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+    <span class="nx">assert</span><span class="p">(</span><span class="nx">_to</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)(</span><span class="nx">bytes4</span><span class="p">(</span><span class="nx">keccak256</span><span class="p">(</span><span class="nx">_custom_fallback</span><span class="p">)),</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">_data</span><span class="p">));</span>
     <span class="p">...</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>这其实是很危险的行为！ConsenSys 维护的「以太坊智能合约 —— 最佳安全开发指南」中曾明确提示，要尽量避免合约的外部调用。但在此次攻击事件中，黑客传入的 <code>_custom_fallback</code> 为 <code>setOwner(address)</code>，传入的目标地址 <code>_to</code> 恰好是 ATN 合约本身，间接调用了 ATN 的 <code>setOwner(address)</code> 方法，使得 <code>msg.sender</code> 变为 ATN Token 合约本身，从而通过 ds-auth 库的 <code>isAuthorized()</code> 鉴权校验。</p>
 <p>EVM 读取参数时并不会校验参数个数，在上述例子中，黑客调用了 <code>setOwner(adddress)</code> 函数，EVM 仅会读取最左边的 <code>_from</code> 参数。因此使用底层 <code>call()</code> 方法传参时，参数个数与函数所需不一致并不会引发报错，黑客很容易精心构造出所需的攻击参数。</p>
-<h3 id="custom-call--1">CUSTOM_CALL 滥用的危害</h3>
+<h3 id="custom_call-滥用的危害">CUSTOM_CALL 滥用的危害</h3>
 <p>再回到 <code>_custom_fallback</code> 接口实现上。我们认为作为一个通用 Token 标准接口设计，设计者必须尽可能多地考虑整个系统生态的安全性，尽可能规避因使用不当引入的风险。倘若上面这种 <code>_custom_fallback</code> 接口设计得到广泛采纳，未来势必会出现更多类似的安全性问题。一个良好的接口设计，最好能做到精简、易用和无歧义。作者提案中 <code>tokenFallback()</code> 接口完全可以应对其原本想要解决的 ERC20 问题。而实现上引入自定义的 <code>_custom_fallback</code>，很容易对开发者产生误导并被滥用。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -629,8 +630,8 @@ if (!doNotTrack) {
     <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span><span class="p">)</span>
   <span class="p">{</span>
     <span class="c1">// require(_spender != address(this));
-</span><span class="c1"></span>    <span class="nx">approve</span><span class="p">(</span><span class="nx">_spender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">)</span><span class="p">;</span>
-    <span class="nx">require</span><span class="p">(</span><span class="nx">_spender</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span><span class="p">(</span><span class="nx">_data</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+</span><span class="c1"></span>    <span class="nx">approve</span><span class="p">(</span><span class="nx">_spender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
+    <span class="nx">require</span><span class="p">(</span><span class="nx">_spender</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">value</span><span class="p">)(</span><span class="nx">_data</span><span class="p">));</span>
     <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
   <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -648,7 +649,7 @@ if (!doNotTrack) {
 <p>管理各种 Token 的智能合约，倘若也允许自定义 <code>call()</code>，其合约上的各种 Token 就十分危险了。</p>
 <p>后果二举例：如 ATN 安全事件中，黑客也是借此漏洞利用 ATN 合约的身份，绕过了 ds-auth 的权限控制。</p>
 <p>后果三举例：假设缺陷 Token 合约 A 被用户 X 授权（Approve）管理 10,000 个Token B，那么黑客也是借此漏洞调用<code>transferFrom()</code>函数来盗取Token B。</p>
-<h3 id="erc223-">ERC223 提案实现与接口定义不一致</h3>
+<h3 id="erc223-提案实现与接口定义不一致">ERC223 提案实现与接口定义不一致</h3>
 <p>进一步调查我们发现，ERC223 提案的文字接口描述中并没有提到 <code>_custom_fallback</code> 这一参数的引入和使用。</p>
 <p>以下是该提案规定的接口：</p>
 <div class="highlight"><div class="chroma">
@@ -664,10 +665,10 @@ if (!doNotTrack) {
 <td class="lntd">
 <pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">contract</span> <span class="nx">ERC223Interface</span> <span class="p">{</span>
     <span class="nx">uint</span> <span class="kr">public</span> <span class="nx">totalSupply</span><span class="p">;</span>
-    <span class="kd">function</span> <span class="nx">balanceOf</span><span class="p">(</span><span class="nx">address</span> <span class="nx">who</span><span class="p">)</span> <span class="nx">constant</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">uint</span><span class="p">)</span><span class="p">;</span>
-    <span class="kd">function</span> <span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">)</span><span class="p">;</span>
-    <span class="kd">function</span> <span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">data</span><span class="p">)</span><span class="p">;</span>
-    <span class="nx">event</span> <span class="nx">Transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">data</span><span class="p">)</span><span class="p">;</span>
+    <span class="kd">function</span> <span class="nx">balanceOf</span><span class="p">(</span><span class="nx">address</span> <span class="nx">who</span><span class="p">)</span> <span class="nx">constant</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">uint</span><span class="p">);</span>
+    <span class="kd">function</span> <span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">);</span>
+    <span class="kd">function</span> <span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">data</span><span class="p">);</span>
+    <span class="nx">event</span> <span class="nx">Transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">data</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
@@ -678,7 +679,7 @@ if (!doNotTrack) {
 </blockquote>
 <p>这段话的中心思想就是如果 Token 转账目标对象是 ERC223 合约，则尝试调用其 <code>tokenFallback()</code> 函数，如果目标对象不存在 <code>tokenFallback()</code> 函数，则让交易 fail 掉。<code>tokenFallback()</code> 在这里充当的作用就是类似以太转账里的默认 <code>fallback</code> 函数。</p>
 <p>显然，ERC223 提案的初衷十分清晰，就是约定一个 <code>tokenFallback()</code> 接口作为 Token 合约标准，用于处理转入的 Token。ERC223 提案主分支的代码实现也没有 <code>_custom_fallback</code> 的问题。而作者推荐的 Recommended 分支里的代码却增加了一种引入 <code>_custom_fallback</code> 的 <code>transfer()</code> 实现，但是没有进行任何风险提示。</p>
-<h3 id="erc223--1">ERC223 代码实现的其他问题</h3>
+<h3 id="erc223-代码实现的其他问题">ERC223 代码实现的其他问题</h3>
 <p>事实上，ERC223 Recommended 分支代码实现还存在其他问题。</p>
 <p><code>call()</code> 在处理 bytes 变量时会引发 evm 层面的 bug，导致数据不一致 [6]。</p>
 <div class="highlight"><div class="chroma">
@@ -688,7 +689,7 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// ERC223_Token.sol#L70
-</span><span class="c1"></span><span class="nx">assert</span><span class="p">(</span><span class="nx">_to</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="p">(</span><span class="nx">bytes4</span><span class="p">(</span><span class="nx">keccak256</span><span class="p">(</span><span class="nx">_custom_fallback</span><span class="p">)</span><span class="p">)</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">_data</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+</span><span class="c1"></span><span class="nx">assert</span><span class="p">(</span><span class="nx">_to</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)(</span><span class="nx">bytes4</span><span class="p">(</span><span class="nx">keccak256</span><span class="p">(</span><span class="nx">_custom_fallback</span><span class="p">)),</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">_data</span><span class="p">));</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>event 处理 indexed 的 bytes 变量，在特殊情况下也会引发报错 [7]。</p>
@@ -699,11 +700,11 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// ERC223_Interface.sol#L18
-</span><span class="c1"></span><span class="nx">event</span> <span class="nx">Transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">indexed</span> <span class="nx">data</span><span class="p">)</span><span class="p">;</span> 
+</span><span class="c1"></span><span class="nx">event</span> <span class="nx">Transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">indexed</span> <span class="nx">data</span><span class="p">);</span> 
 </code></pre></td></tr></table>
 </div>
 </div><p>由此可以推断 ERC223 的 Recommended 分支代码是不成熟的，我们不推荐使用。</p>
-<h2 id="evm-">EVM 参数传递机制</h2>
+<h2 id="evm-参数传递机制">EVM 参数传递机制</h2>
 <p>下面我们解释一下 EVM 中函数调用与参数传递的机制，以便于对这个安全隐患的理解。以如下合约为例</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -715,7 +716,7 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">contract</span> <span class="nx">A</span><span class="p">{</span>
-    <span class="kd">function</span> <span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">value</span><span class="p">)</span><span class="p">{</span>
+    <span class="kd">function</span> <span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">value</span><span class="p">){</span>
   	      <span class="k">return</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -807,7 +808,7 @@ if (!doNotTrack) {
 </div>
 </div><p>我们可以看到在字节码中，出于动态数组的考虑，只会判断 <code>calldata</code> 是否小于某个最小长度，但是不会检查参数是否过长。编译器会生成一系列 <code>CALLDATALOAD</code> 配合数学运算来分离出函数需要的参数。首先计算调用的目标函数：</p>
 <p><code>CALLDATALOAD</code> 指令将交易中的 calldata（<code>0xa9059cbb0000000000000000000000003f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be000000000000000000000000000000000000000000000000000000e8d4a51000</code>）加载到栈中，然后使用除法运算，将数据前256位除以 <code>0x 100000000000000000000000000000000000000000000000000000000</code>, 得到<code>0xA9059CBB</code>，以此类推，每个参数都会用类似的方法分离出来。但是当参数过多的时候，字节码、EVM都不会处理，可以直接忽略，所以这个特性主要来源于编译器。黑客利用这一特性可以很容易地针对 CUSTOM_CALL 构造攻击参数。</p>
-<h2 id="erc827-">ERC827 的有安全隐患代码实现</h2>
+<h2 id="erc827-的有安全隐患代码实现">ERC827 的有安全隐患代码实现</h2>
 <p>类似的 ERC827 Token 提案也存在相同的问题 [8]。下面的代码来自于 <strong>openzeppelin-solidity</strong> 的 ERC827 问题代码实现：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -824,16 +825,16 @@ if (!doNotTrack) {
 <pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">transferAndCall</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">,</span><span class="nx">bytes</span> <span class="nx">_data</span><span class="p">)</span>
     <span class="kr">public</span> <span class="nx">payable</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="nx">require</span><span class="p">(</span><span class="nx">_to</span> <span class="o">!=</span> <span class="nx">address</span><span class="p">(</span><span class="k">this</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
-    <span class="kr">super</span><span class="p">.</span><span class="nx">transfer</span><span class="p">(</span><span class="nx">_to</span><span class="p">,</span> <span class="nx">_value</span><span class="p">)</span><span class="p">;</span>
-    <span class="nx">require</span><span class="p">(</span><span class="nx">_to</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span><span class="p">(</span><span class="nx">_data</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+    <span class="nx">require</span><span class="p">(</span><span class="nx">_to</span> <span class="o">!=</span> <span class="nx">address</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+    <span class="kr">super</span><span class="p">.</span><span class="nx">transfer</span><span class="p">(</span><span class="nx">_to</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
+    <span class="nx">require</span><span class="p">(</span><span class="nx">_to</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">value</span><span class="p">)(</span><span class="nx">_data</span><span class="p">));</span>
     <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>该代码在 <code>transferAndCall()</code> 中转账功能完成后，会调用<code>_to</code>地址上的任意函数，并且参数由调用者任意指定。由于该函数检查了 <code>_to != address(this)</code>，因此代码不会产生 与 ds-auth 库结合后绕开权限检查的安全漏洞（<code>后果二</code>），但是可能会引入前文所提到的 <code>后果一</code>与<code>后果三</code>，即可以任意支配问题合约所拥有或管理的 Token（即以 this 合约为跳板攻击其它合约）。</p>
 <p>此外，还有不少 ERC20 Token 加入了类似的 <code>call()</code> 自定义数据的实现。这种允许自定义 <code>call()</code> 任意地址上任意函数的设计，十分危险。在特殊情况下，甚至允许攻击者盗走合约中的各种 Token，以及绕过合约本身的权限控制。</p>
-<h2 id="erc20-erc721-">ERC20, ERC721 中关于“接收通知调用”正确的代码实现</h2>
+<h2 id="erc20-erc721-中关于接收通知调用正确的代码实现">ERC20, ERC721 中关于“接收通知调用”正确的代码实现</h2>
 <p>正确的代码实现中，对于“接收通知调用”的处理应该将被通知函数的签名（signature）写死为固定值，避免由攻击者来<strong>任意指定</strong>的任何可能性。下面举两个例子说明正确的通知调用的写法：</p>
 <ol>
 <li>声明Receiver函数，并通过声明的函数进行接收通知调用</li>
@@ -855,9 +856,9 @@ if (!doNotTrack) {
 <pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">approveAndCall</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_spender</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">_extraData</span><span class="p">)</span>
     <span class="kr">public</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> 
 <span class="p">{</span>
-    <span class="nx">tokenRecipient</span> <span class="nx">spender</span> <span class="o">=</span> <span class="nx">tokenRecipient</span><span class="p">(</span><span class="nx">_spender</span><span class="p">)</span><span class="p">;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">approve</span><span class="p">(</span><span class="nx">_spender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">spender</span><span class="p">.</span><span class="nx">receiveApproval</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">_extraData</span><span class="p">)</span><span class="p">;</span>
+    <span class="nx">tokenRecipient</span> <span class="nx">spender</span> <span class="o">=</span> <span class="nx">tokenRecipient</span><span class="p">(</span><span class="nx">_spender</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">approve</span><span class="p">(</span><span class="nx">_spender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">spender</span><span class="p">.</span><span class="nx">receiveApproval</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">_extraData</span><span class="p">);</span>
         <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -885,13 +886,13 @@ if (!doNotTrack) {
 <td class="lntd">
 <pre class="chroma"><code class="language-js" data-lang="js"><span class="cm">/* Approves and then calls the receiving contract */</span>
 <span class="kd">function</span> <span class="nx">approveAndCall</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_spender</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">_extraData</span><span class="p">)</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">allowed</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span><span class="p">[</span><span class="nx">_spender</span><span class="p">]</span> <span class="o">=</span> <span class="nx">_value</span><span class="p">;</span>
-    <span class="nx">Approval</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_spender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">)</span><span class="p">;</span>
+    <span class="nx">allowed</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">][</span><span class="nx">_spender</span><span class="p">]</span> <span class="o">=</span> <span class="nx">_value</span><span class="p">;</span>
+    <span class="nx">Approval</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_spender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
 
     <span class="c1">//call the receiveApproval function on the contract you want to be notified. This crafts the function signature manually so one doesn&#39;t have to include a contract in here just for this.
 </span><span class="c1"></span>    <span class="c1">//receiveApproval(address _from, uint256 _value, address _tokenContract, bytes _extraData)
 </span><span class="c1"></span>    <span class="c1">//it is assumed that when does this that the call *should* succeed, otherwise one would use vanilla approve instead.
-</span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">_spender</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">bytes4</span><span class="p">(</span><span class="nx">bytes32</span><span class="p">(</span><span class="nx">sha3</span><span class="p">(</span><span class="s2">&#34;receiveApproval(address,uint256,address,bytes)&#34;</span><span class="p">)</span><span class="p">)</span><span class="p">)</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">_extraData</span><span class="p">)</span><span class="p">)</span> <span class="p">{</span> <span class="k">throw</span><span class="p">;</span> <span class="p">}</span>
+</span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">_spender</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">bytes4</span><span class="p">(</span><span class="nx">bytes32</span><span class="p">(</span><span class="nx">sha3</span><span class="p">(</span><span class="s2">&#34;receiveApproval(address,uint256,address,bytes)&#34;</span><span class="p">))),</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">_extraData</span><span class="p">))</span> <span class="p">{</span> <span class="k">throw</span><span class="p">;</span> <span class="p">}</span>
     <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
     <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -903,7 +904,7 @@ if (!doNotTrack) {
 <li><a href="https://github.com/ConsenSys/Token-Factory/blob/master/contracts/HumanStandardToken.sol">https://github.com/ConsenSys/Token-Factory/blob/master/contracts/HumanStandardToken.sol</a></li>
 <li><a href="https://github.com/ethereum/ethereum-org/blob/b46095815f52cf328ecf7676b2b38284d48fba58/solidity/token-advanced.sol#L138">https://github.com/ethereum/ethereum-org/blob/b46095815f52cf328ecf7676b2b38284d48fba58/solidity/token-advanced.sol#L138</a></li>
 </ul>
-<h2 id="heading">总结与反思</h2>
+<h2 id="总结与反思">总结与反思</h2>
 <ul>
 <li>ERC223 标准的实现与接口定义脱节，实现仓库存在两个分支接口不一致，使用<strong>权威代码</strong>时不能放松警惕</li>
 <li>ERC827 代码同样存在隐患</li>

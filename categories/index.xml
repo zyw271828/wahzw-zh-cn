@@ -5,15 +5,11 @@
     <link>https://sec-bit.github.io/blog/categories/</link>
     <description>Recent content in Categories on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 08 Jan 2020 08:00:00 +0800</lastBuildDate>
-    
-	<atom:link href="https://sec-bit.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 22 Jan 2020 08:00:00 +0800</lastBuildDate><atom:link href="https://sec-bit.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Zero Knowledge Proof</title>
       <link>https://sec-bit.github.io/blog/categories/zero-knowledge-proof/</link>
-      <pubDate>Wed, 08 Jan 2020 08:00:00 +0800</pubDate>
+      <pubDate>Wed, 22 Jan 2020 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/categories/zero-knowledge-proof/</guid>
       <description></description>
@@ -22,7 +18,7 @@
     <item>
       <title>zkSNARKs</title>
       <link>https://sec-bit.github.io/blog/categories/zksnarks/</link>
-      <pubDate>Fri, 03 Jan 2020 08:00:00 +0800</pubDate>
+      <pubDate>Wed, 22 Jan 2020 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/categories/zksnarks/</guid>
       <description></description>
@@ -38,7 +34,7 @@
     </item>
     
     <item>
-      <title>bitcoin</title>
+      <title>Bitcoin</title>
       <link>https://sec-bit.github.io/blog/categories/bitcoin/</link>
       <pubDate>Mon, 28 Oct 2019 08:00:00 +0800</pubDate>
       

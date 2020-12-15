@@ -5,10 +5,24 @@
     <link>https://sec-bit.github.io/blog/tags/zero-knowledge-proof/</link>
     <description>Recent content in Zero Knowledge Proof on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 08 Jan 2020 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 22 Jan 2020 08:00:00 +0800</lastBuildDate><atom:link href="https://sec-bit.github.io/blog/tags/zero-knowledge-proof/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>从零开始学习 zk-SNARK（五）——Pinocchio 协议</title>
+      <link>https://sec-bit.github.io/blog/2020/01/22/learn-zk-snark-from-zero-part-five/</link>
+      <pubDate>Wed, 22 Jan 2020 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/2020/01/22/learn-zk-snark-from-zero-part-five/</guid>
+      <description>作为本系列的最后一篇文章，本文继续对 zk-SNARK 协议进行完善，最终形成一个完整的 zk-SNARK 协议。</description>
+    </item>
     
-	<atom:link href="https://sec-bit.github.io/blog/tags/zero-knowledge-proof/index.xml" rel="self" type="application/rss+xml" />
-    
+    <item>
+      <title>从零开始学习 zk-SNARK（四）——多项式的约束</title>
+      <link>https://sec-bit.github.io/blog/2020/01/15/learn-zk-snark-from-zero-part-four/</link>
+      <pubDate>Wed, 15 Jan 2020 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/2020/01/15/learn-zk-snark-from-zero-part-four/</guid>
+      <description>上一篇文章中我们学习了如何将程序转换为多项式进行证明。到这里似乎已经有点晕了，本文将对协议执行进一步的约束，并对协议展开优化。</description>
+    </item>
     
     <item>
       <title>云中「秘密」：构建非交互式零知识证明</title>
@@ -17,6 +31,15 @@
       
       <guid>https://sec-bit.github.io/blog/2020/01/08/nizk-by-crs/</guid>
       <description>之前我们介绍了如何采用「随机预言机」来扮演一个虚拟的「第三方」角色，实现虚拟的「交互」与「随机挑战」。本文将深入讲述另一种方法实现非交互式零知识证明，即如何通过一段共享的字符串去除「交互」与「隐藏随机性」。这个字符串必须事先由「第三方」来随机产生，这就是传说中的「公共参考串」（Common Reference String，简称 CRS）。</description>
+    </item>
+    
+    <item>
+      <title>从零开始学习 zk-SNARK（三）——从程序到多项式的构造</title>
+      <link>https://sec-bit.github.io/blog/2020/01/08/learn-zk-snark-from-zero-part-three/</link>
+      <pubDate>Wed, 08 Jan 2020 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/2020/01/08/learn-zk-snark-from-zero-part-three/</guid>
+      <description>前文主要介绍了如何构造多项式的零知识证明协议，现在将开始探讨如何构造更通用的协议。本节主要是讲如何将一组计算的证明转换为多项式进行证明。本文重点主要包括：多项式的算术性质，多项式插值等。</description>
     </item>
     
     <item>

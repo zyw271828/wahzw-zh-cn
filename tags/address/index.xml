@@ -5,11 +5,7 @@
     <link>https://sec-bit.github.io/blog/tags/address/</link>
     <description>Recent content in Address on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 29 Sep 2018 08:00:00 +0800</lastBuildDate>
-    
-	<atom:link href="https://sec-bit.github.io/blog/tags/address/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 29 Sep 2018 08:00:00 +0800</lastBuildDate><atom:link href="https://sec-bit.github.io/blog/tags/address/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>是谁控制了比特币，是你？还是钱包？BTC地址与交易原理剖析</title>
       <link>https://sec-bit.github.io/blog/2018/09/29/bitcoin-p2pk2-p2sh-addr-pywallet-bug/</link>

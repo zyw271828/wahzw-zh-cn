@@ -5,11 +5,7 @@
     <link>https://sec-bit.github.io/blog/en/tags/zksnarks/</link>
     <description>Recent content in zkSNARKs on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 29 Jul 2019 08:00:00 +0800</lastBuildDate>
-    
-	<atom:link href="https://sec-bit.github.io/blog/en/tags/zksnarks/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 29 Jul 2019 08:00:00 +0800</lastBuildDate><atom:link href="https://sec-bit.github.io/blog/en/tags/zksnarks/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>The &#39;Input Aliasing&#39; bug caused by a contract library of zkSNARKs</title>
       <link>https://sec-bit.github.io/blog/en/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</link>
