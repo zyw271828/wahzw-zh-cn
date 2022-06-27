@@ -7,4 +7,5 @@ title = "zk-SNARK 为什么以及如何工作"
 description = "《zk-SNARK 为什么以及如何工作（Why and How zk-SNARK Works）》简体中文版"
 
 [output.html]
+mathjax-support = true
 git-repository-url = "https://github.com/zyw271828/wahzw-zh-cn"
