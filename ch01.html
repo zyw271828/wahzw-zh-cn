@@ -10,26 +10,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        <link rel="icon" href="../favicon.svg">
-        <link rel="shortcut icon" href="../favicon.png">
-        <link rel="stylesheet" href="../css/variables.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/chrome.css">
-        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
         <!-- Fonts -->
-        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../fonts/fonts.css">
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="../highlight.css">
-        <link rel="stylesheet" href="../tomorrow-night.css">
-        <link rel="stylesheet" href="../ayu-highlight.css">
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
     </head>
     <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
-            var path_to_root = "../";
+            var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">README</a></li><li class="chapter-item expanded affix "><a href="../abstract.html">摘要</a></li><li class="chapter-item expanded "><a href="../191225-Why-and-How-zk-SNARK-Works/index.html" class="active"><strong aria-hidden="true">1.</strong> 多项式的性质与证明</a></li><li class="chapter-item expanded "><a href="../200101-Why-and-How-zk-SNARK-Works-2/index.html"><strong aria-hidden="true">2.</strong> 多项式的非交互式零知识证明</a></li><li class="chapter-item expanded "><a href="../200108-Why-and-How-zk-SNARK-Works-3/index.html"><strong aria-hidden="true">3.</strong> 从程序到多项式的构造</a></li><li class="chapter-item expanded "><a href="../200115-Why-and-How-zk-SNARK-Works-4/index.html"><strong aria-hidden="true">4.</strong> 多项式的约束</a></li><li class="chapter-item expanded "><a href="../200122-Why-and-How-zk-SNARK-Works-5/index.html"><strong aria-hidden="true">5.</strong> Pinocchio 协议</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">README</a></li><li class="chapter-item expanded affix "><a href="abstract.html">摘要</a></li><li class="chapter-item expanded "><a href="ch01.html" class="active"><strong aria-hidden="true">1.</strong> 多项式的性质与证明</a></li><li class="chapter-item expanded "><a href="ch02.html"><strong aria-hidden="true">2.</strong> 多项式的非交互式零知识证明</a></li><li class="chapter-item expanded "><a href="ch03.html"><strong aria-hidden="true">3.</strong> 从程序到多项式的构造</a></li><li class="chapter-item expanded "><a href="ch04.html"><strong aria-hidden="true">4.</strong> 多项式的约束</a></li><li class="chapter-item expanded "><a href="ch05.html"><strong aria-hidden="true">5.</strong> Pinocchio 协议</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -107,7 +107,7 @@
                     <h1 class="menu-title">zk-SNARK 为什么和如何工作</h1>
 
                     <div class="right-buttons">
-                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         <a href="https://github.com/zyw271828/wahzw-zh-cn" title="Git repository" aria-label="Git repository">
@@ -137,28 +137,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <hr />
-<h2>title: &quot;从零开始学习 zk-SNARK（一）——多项式的性质与证明&quot;
-date: 2019-12-25T08:00:00+08:00
-summary: &quot;当我第一次了解到 zk-SNARK 技术是如何将这些东西完美地融合在一起的时候，就被数学之美震撼到了，并且随着我发现的维度越多，好奇心就越强烈。在这篇文章中，我主要就基于一些实例简洁明了地阐明 zk-SNARK ，并对这里面的很多问题做出了解释，并利用这种方式分享了我的经验，进而让更多人也能够欣赏到这项最先进的技术以及它的创新之处，最终欣赏到数学之美。&quot;
-featuredImage: &quot;img/1_5tGItKaiCxwLAjYJaBRffg.png&quot;
-slug: &quot;learn zk-SNARK from zero part one&quot;
-author: Maksym Petkus，翻译 &amp; 注解：even@安比实验室（even@secbit.io）
-tags: [&quot;Zero Knowledge Proof&quot;, &quot;tutorials&quot;, &quot;zkSNARKs&quot;]
-categories: [&quot;Zero Knowledge Proof&quot;, &quot;zkSNARKs&quot;]</h2>
-<blockquote>
-<p>@Maksym（作者）： 不管是原始的论文[Bit+11]; [Par+13] 还是原理讲解 [Rei16]; [But16]; [But17]; [Gab17]，其实市面上已经有大量关于 zk-SNARK 的学习资源了 。zk-SNARK 由大量的可变模块组成，所以对很多人来说它依然像一个黑盒子一样很难懂。这些资料对 zk-SNARK 中的一些技术难题部分做出了解释，但由于缺少了对应的其它环节的解释，大家还是很难通过这些资料了解到 zk-SNARK 的全貌。</p>
-<p>当我第一次了解到 zk-SNARK 技术是如何将这些东西完美地融合在一起的时候，就被数学之美震撼到了，并且随着我发现的维度越多，好奇心就越强烈。在这篇文章中，我主要就基于一些实例简洁明了地阐明 zk-SNARK ，并对这里面的很多问题做出了解释，并利用这种方式分享了我的经验，进而让更多人也能够欣赏到这项最先进的技术以及它的创新之处，最终欣赏到数学之美。</p>
-<p>这篇文章的主要贡献是比较简洁明了的解释了其中相当复杂的技术，这些简单的解释对于在不具备任何与之相关的先决知识，比如密码学和高等数学，的前提下理解 zk-SNARK 是很有必要的。文章中并不仅仅只解释 zk-SNARK 是如何工作的，还解释了为什么这样就可以工作，以及它是怎么来的。</p>
-</blockquote>
-<blockquote>
-<p>even@安比实验室：17 年最早接触 zk-SNARK 开始，就断断续续得学习了一些 zk-SNARK 的知识，但对其原理始终存在诸多困惑，没有形成一个完整的认识。偶然一次机会，看到了 Maksym Petkus 的这篇文章。文章从最基本的多项式性质讲起，从一个简单易懂的证明协议开始，然后像堆积木一样在发现问题，修改问题中逐步去完善协议，直到最终构造出完整的 zk-SNARK 协议。另外作者这种从问题出发的讲解方式，让读者知其然，也知其所以然 。作为一枚毕业多年早把数学知识还给老师的程序媛，读到这篇文章如获至宝，这篇文章读下来的感受像找到了一个脚手架，将脑海里碎片化的知识逐渐拼凑完整。于是想把它翻译出来（已获得作者授权），一方面加深自己的学习，另一方面也将这份宝藏分享给小伙伴们。</p>
-<p>文章翻译存在不足之处，欢迎纠正，补充，指导。</p>
-</blockquote>
-<p>作者：Maksym Petkus</p>
-<p>翻译 &amp; 注解：even@安比实验室（even@secbit.io）</p>
-<p>校对：valuka@安比实验室</p>
-<p>本系列文章已获作者中文翻译授权。</p>
+                        <h1 id="从零开始学习-zk-snark一多项式的性质与证明"><a class="header" href="#从零开始学习-zk-snark一多项式的性质与证明">从零开始学习 zk-SNARK（一）——多项式的性质与证明</a></h1>
 <h2 id="序言和介绍"><a class="header" href="#序言和介绍">序言和介绍</a></h2>
 <p>尽管最初计划写短一些，但现在已经写了几十页了，不过这篇文章读起来几乎不需要什么预备知识，并且你也可以随意跳过熟悉的部分。如果你不熟悉文中使用的某些数学符号也不需要担心，文中将会对这些符号逐个进行介绍。</p>
 <p><em>Zero-knowledge</em> <em>succinct non-interactive arguments of knowledge</em> (<em>zk-SNARK</em>) 确实是一种非常精妙的方法，它可以在不揭示任何信息的前提下证明某个论断为真。但首要问题是，它为什么有用？</p>
@@ -423,10 +402,6 @@ $$</p>
 <p>大家可以思考一下，如何解决这个问题？以及这个协议还存在哪些缺陷呢？</p>
 <p>在下一节中，我们将会继续展开讨论，并展示如何构造一个完备的多项式的零知识证明协议。</p>
 </blockquote>
-<p><strong>原文链接</strong></p>
-<p>https://arxiv.org/pdf/1906.07221.pdf</p>
-<p>https://medium.com/@imolfar/why-and-how-zk-snark-works-1-introduction-the-medium-of-a-proof-d946e931160</p>
-<p>https://medium.com/@imolfar/why-and-how-zk-snark-works-2-proving-knowledge-of-a-polynomial-f817760e2805</p>
 <p><strong>参考文献</strong></p>
 <p>[Bit+11] — Nir Bitansky, Ran Canetti, Alessandro Chiesa, and Eran Tromer. <em>From Extractable</em> <em>Collision Resistance to Succinct Non-Interactive Arguments of</em> <em>Knowledge, and Back Again</em>. Cryptology ePrint Archive, Report 2011/443. https://eprint.iacr.org/2011/443. 2011</p>
 <p>[Par+13] — Bryan Parno, Craig Gentry, Jon Howell, and Mariana Raykova. <em>Pinocchio: Nearly Practical Verifiable Computation</em>. Cryptology ePrint Archive, Report 2013/279. https://eprint.iacr.org/2013/279. 2013</p>
@@ -446,10 +421,10 @@ $$</p>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../abstract.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="abstract.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                            <a rel="next" href="../200101-Why-and-How-zk-SNARK-Works-2/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="ch02.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -458,10 +433,10 @@ $$</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../abstract.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="abstract.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                    <a rel="next" href="../200101-Why-and-How-zk-SNARK-Works-2/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="ch02.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -471,12 +446,12 @@ $$</p>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
     </body>

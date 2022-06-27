@@ -10,26 +10,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        <link rel="icon" href="../favicon.svg">
-        <link rel="shortcut icon" href="../favicon.png">
-        <link rel="stylesheet" href="../css/variables.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/chrome.css">
-        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
         <!-- Fonts -->
-        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../fonts/fonts.css">
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="../highlight.css">
-        <link rel="stylesheet" href="../tomorrow-night.css">
-        <link rel="stylesheet" href="../ayu-highlight.css">
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
     </head>
     <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
-            var path_to_root = "../";
+            var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">README</a></li><li class="chapter-item expanded affix "><a href="../abstract.html">摘要</a></li><li class="chapter-item expanded "><a href="../191225-Why-and-How-zk-SNARK-Works/index.html"><strong aria-hidden="true">1.</strong> 多项式的性质与证明</a></li><li class="chapter-item expanded "><a href="../200101-Why-and-How-zk-SNARK-Works-2/index.html"><strong aria-hidden="true">2.</strong> 多项式的非交互式零知识证明</a></li><li class="chapter-item expanded "><a href="../200108-Why-and-How-zk-SNARK-Works-3/index.html"><strong aria-hidden="true">3.</strong> 从程序到多项式的构造</a></li><li class="chapter-item expanded "><a href="../200115-Why-and-How-zk-SNARK-Works-4/index.html" class="active"><strong aria-hidden="true">4.</strong> 多项式的约束</a></li><li class="chapter-item expanded "><a href="../200122-Why-and-How-zk-SNARK-Works-5/index.html"><strong aria-hidden="true">5.</strong> Pinocchio 协议</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">README</a></li><li class="chapter-item expanded affix "><a href="abstract.html">摘要</a></li><li class="chapter-item expanded "><a href="ch01.html"><strong aria-hidden="true">1.</strong> 多项式的性质与证明</a></li><li class="chapter-item expanded "><a href="ch02.html"><strong aria-hidden="true">2.</strong> 多项式的非交互式零知识证明</a></li><li class="chapter-item expanded "><a href="ch03.html"><strong aria-hidden="true">3.</strong> 从程序到多项式的构造</a></li><li class="chapter-item expanded "><a href="ch04.html" class="active"><strong aria-hidden="true">4.</strong> 多项式的约束</a></li><li class="chapter-item expanded "><a href="ch05.html"><strong aria-hidden="true">5.</strong> Pinocchio 协议</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -107,7 +107,7 @@
                     <h1 class="menu-title">zk-SNARK 为什么和如何工作</h1>
 
                     <div class="right-buttons">
-                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         <a href="https://github.com/zyw271828/wahzw-zh-cn" title="Git repository" aria-label="Git repository">
@@ -137,23 +137,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <hr />
-<h2>title: &quot;从零开始学习 zk-SNARK（四）——多项式的约束&quot;
-date: 2020-01-15T08:00:00+08:00
-summary: &quot;上一篇文章中我们学习了如何将程序转换为多项式进行证明。到这里似乎已经有点晕了，本文将对协议执行进一步的约束，并对协议展开优化。&quot;
-featuredImage: &quot;img/4/WX20200116-211300@2x.png&quot;
-slug: &quot;learn zk-SNARK from zero part four&quot;
-markup: pandoc
-author: Maksym Petkus，翻译 &amp; 注解：even@安比实验室（even@secbit.io）
-tags: [&quot;Zero Knowledge Proof&quot;, &quot;tutorials&quot;, &quot;zkSNARKs&quot;]
-categories: [&quot;Zero Knowledge Proof&quot;, &quot;zkSNARKs&quot;]</h2>
-<blockquote>
-<p>even@安比实验室: 上一篇文章中我们学习了如何将程序转换为多项式进行证明。到这里似乎已经有点晕了，本文将对协议执行进一步的约束，并对协议展开优化。</p>
-</blockquote>
-<p>作者：Maksym Petkus</p>
-<p>翻译 &amp; 注解：even@安比实验室（even@secbit.io）</p>
-<p>校对：valuka@安比实验室</p>
-<p>本系列文章已获作者中文翻译授权。</p>
+                        <h1 id="从零开始学习-zk-snark四多项式的约束"><a class="header" href="#从零开始学习-zk-snark四多项式的约束">从零开始学习 zk-SNARK（四）——多项式的约束</a></h1>
 <h2 id="结构性质"><a class="header" href="#结构性质">结构性质</a></h2>
 <p>上文中的修改额外带来了一些其它有用的性质。</p>
 <h3 id="静态系数"><a class="header" href="#静态系数">静态系数</a></h3>
@@ -612,24 +596,19 @@ end function
 <p>协议如何处理非延展性变量和变量一致性</p>
 <p>协议中变量值一致性检查优化</p>
 </blockquote>
-<p><strong>原文链接</strong></p>
-<p>https://arxiv.org/pdf/1906.07221.pdf</p>
-<p>https://medium.com/@imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06859e30</p>
-<p>https://medium.com/@imolfar/why-and-how-zk-snark-works-6-verifiable-computation-protocol-1aa19f95a5cc</p>
 <p><strong>参考文献</strong></p>
 <p>[Par+13] — Bryan Parno, Craig Gentry, Jon Howell, and Mariana Raykova. <em>Pinocchio: Nearly</em> <em>Practical Verifiable Computation</em>. Cryptology ePrint Archive, Report 2013/279. https://eprint.iacr.org/2013/279. 2013.</p>
 <p>[Gen+12] — Rosario Gennaro, Craig Gentry, Bryan Parno, and Mariana Raykova. <em>Quadratic</em> <em>Span Programs and Succinct NIZKs without PCPs</em>. Cryptology ePrint Archive, Report 2012/215. https://eprint.iacr.org/2012/215. 2012.</p>
 <p>[Gro16] — Jens Groth. <em>On the Size of Pairing-based Non-interactive Arguments</em>. Cryptology ePrint Archive, Report 2016/260. https://eprint.iacr.org/2016/260. 2016.</p>
-<h1 id=""><a class="header" href="#"></a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../200108-Why-and-How-zk-SNARK-Works-3/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="ch03.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                            <a rel="next" href="../200122-Why-and-How-zk-SNARK-Works-5/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="ch05.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -638,10 +617,10 @@ end function
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../200108-Why-and-How-zk-SNARK-Works-3/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="ch03.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                    <a rel="next" href="../200122-Why-and-How-zk-SNARK-Works-5/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="ch05.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -651,12 +630,12 @@ end function
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
     </body>
