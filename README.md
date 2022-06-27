@@ -1,4 +1,4 @@
-# zk-SNARK 为什么和如何工作（Why and How zk-SNARK Works）简体中文版
+# zk-SNARK 为什么以及如何工作（Why and How zk-SNARK Works）简体中文版
 
 <a href="https://zyw271828.github.io/wahzw-zh-cn/abstract.html"><img alt="立即阅读"
     src="https://img.shields.io/badge/立即阅读-0091EA.svg?style=for-the-badge&logoColor=white&logo=mdbook" height="48" /></a>
