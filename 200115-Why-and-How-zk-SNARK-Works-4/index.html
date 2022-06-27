@@ -1,0 +1,663 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>多项式的约束 - zk-SNARK 为什么和如何工作</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="《zk-SNARK 为什么和如何工作（Why and How zk-SNARK Works）》简体中文版">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">README</a></li><li class="chapter-item expanded affix "><a href="../abstract.html">摘要</a></li><li class="chapter-item expanded "><a href="../191225-Why-and-How-zk-SNARK-Works/index.html"><strong aria-hidden="true">1.</strong> 多项式的性质与证明</a></li><li class="chapter-item expanded "><a href="../200101-Why-and-How-zk-SNARK-Works-2/index.html"><strong aria-hidden="true">2.</strong> 多项式的非交互式零知识证明</a></li><li class="chapter-item expanded "><a href="../200108-Why-and-How-zk-SNARK-Works-3/index.html"><strong aria-hidden="true">3.</strong> 从程序到多项式的构造</a></li><li class="chapter-item expanded "><a href="../200115-Why-and-How-zk-SNARK-Works-4/index.html" class="active"><strong aria-hidden="true">4.</strong> 多项式的约束</a></li><li class="chapter-item expanded "><a href="../200122-Why-and-How-zk-SNARK-Works-5/index.html"><strong aria-hidden="true">5.</strong> Pinocchio 协议</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">zk-SNARK 为什么和如何工作</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/zyw271828/wahzw-zh-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <hr />
+<h2>title: &quot;从零开始学习 zk-SNARK（四）——多项式的约束&quot;
+date: 2020-01-15T08:00:00+08:00
+summary: &quot;上一篇文章中我们学习了如何将程序转换为多项式进行证明。到这里似乎已经有点晕了，本文将对协议执行进一步的约束，并对协议展开优化。&quot;
+featuredImage: &quot;img/4/WX20200116-211300@2x.png&quot;
+slug: &quot;learn zk-SNARK from zero part four&quot;
+markup: pandoc
+author: Maksym Petkus，翻译 &amp; 注解：even@安比实验室（even@secbit.io）
+tags: [&quot;Zero Knowledge Proof&quot;, &quot;tutorials&quot;, &quot;zkSNARKs&quot;]
+categories: [&quot;Zero Knowledge Proof&quot;, &quot;zkSNARKs&quot;]</h2>
+<blockquote>
+<p>even@安比实验室: 上一篇文章中我们学习了如何将程序转换为多项式进行证明。到这里似乎已经有点晕了，本文将对协议执行进一步的约束，并对协议展开优化。</p>
+</blockquote>
+<p>作者：Maksym Petkus</p>
+<p>翻译 &amp; 注解：even@安比实验室（even@secbit.io）</p>
+<p>校对：valuka@安比实验室</p>
+<p>本系列文章已获作者中文翻译授权。</p>
+<h2 id="结构性质"><a class="header" href="#结构性质">结构性质</a></h2>
+<p>上文中的修改额外带来了一些其它有用的性质。</p>
+<h3 id="静态系数"><a class="header" href="#静态系数">静态系数</a></h3>
+<p>在上文的构造中，我们通过对 <em>未赋值的变量多项式</em> 的计算得到0 或者 1 ，以此表示在运算中是否要用到这个变量。自然地想，我们也可以使用其它系数值，包括负数值，因为我们可以<em>插值</em> 计算出经过任何必要的点（前提是没有两个计算使用了同一个 <em>x</em>）的多项式。如下是这种运算的一些例子：</p>
+<p>$\textcolor{green}{2a} \times \textcolor{blue}{1b} = \textcolor{red}{3r}$</p>
+<p>$\textcolor{green}{-3a} \times \textcolor{blue}{1b} = \textcolor{red}{-2r}$</p>
+<p>现在我们的程序就可以使用静态系数了，例如：</p>
+<pre><code class="language-pseudocode">Algorithm 2: Constant coefficients
+————————————————————————————————————————————————————————————
+
+function calc(w, a, b)
+    if w then
+        return 3a × b
+    else 
+        return 5a × 2b
+    end if
+end function
+</code></pre>
+<p>在 setup 阶段这些系数类似于 0 或者 1 将被“硬编码”进去，之后就不能再修改了。现在我们将运算形式修改为：</p>
+<p>$\textcolor{green}{c_a \cdot a} \times \textcolor{blue}{c_b \cdot b} = \textcolor{red}{c_r \cdot r}$</p>
+<p>或者更正式得用参数 v<sub>n</sub> ∈ {v<sub>1</sub>, v<sub>2</sub>, …, v<sub>n</sub>} 表示：</p>
+<p>$\textcolor{green}{c_l \cdot v_l} \times \textcolor{blue}{c_r \cdot v_r} = \textcolor{red}{c_o \cdot v_o}$</p>
+<p>其中下标 <em>l</em> ，<em>r</em> 和 <em>o</em> 表示变量在运算中的位置。</p>
+<p><em>注意：在不同的运算和操作数/输出中，同一个变量的常量系数可以是不同的。</em></p>
+<h3 id="没有成本的做加法"><a class="header" href="#没有成本的做加法">没有成本的做加法</a></h3>
+<p>看一下这个新结构，很显然在多项式的表示中，每一个不同 x 所要代表的操作数都是所有<em>操作数变量多项式</em> 的总和，其中只有一个被用到的变量是非零值而其它都为 0，下图就很好得表达了这个意思：</p>
+<p><img src="./img/4/1*HeUXxV8-H5MVbhdT8haqqw.png" alt="" /></p>
+<p>我们可以利用这一个结构，加任何数量必要的<em>变量</em> 到每一个运算的操作符/输出中。例如在第一个运算中，我们可以首先做加法 <em>a+c</em>，然后就只需要用别的操作数与之相乘了，即 (<em>a</em>+ <em>c</em>) × <em>b</em> = <em>r</em>，可以表示为下图：</p>
+<p><img src="./img/4/1*RpLBxan0och5LvpuE5KJVw.png" alt="" /></p>
+<p>因而也可以将这些变量中任意个，对它们先乘以任意的系数再一并加入到一起作为单个操作数中，以此来根据相应程序的需要构造一个操作数值。这个特性实际上就允许将运算结构改为：</p>
+<p>$\textcolor{green}{(c_{1,a} \cdot a + c_{1,b} \cdot b + …) } \times \textcolor{blue}{(c_{r,a} \cdot a + c_{r,b}\cdot b + …)} = \textcolor{red}{(c_{o,a} \cdot a + c_{o,b} \cdot b + …)}$</p>
+<p>或者更正式一些用变量  <em>vᵢ</em> ∈ {<em>v</em>₁*, v<em>₂</em>, …, vₙ*} 和操作数变量系数 $c_{l,i} \in {c_{l,1}, c_{l,2},……,c_{l,n}}, c_{r,i} \in {c_{r,1}, c_{r,2},……,c_{r,n}},c_{o,i} \in {c_{o,1}, c_{o,2},……,c_{o,n}},$</p>
+<p>这个结构就是：</p>
+<p>$\textcolor{green}{\sum_{i=1}^n {c_{l,i} \cdot v_i}} \times \textcolor{blue}{\sum_{i=1}^n {c_{r,i} \cdot v_i}} = \textcolor{red}{\sum_{i=1}^n {c_{o,i} \cdot v_i}}$</p>
+<p><em>注意 ：每一个运算的操作数都有自己的一组系数 c。</em></p>
+<blockquote>
+<p>even@安比实验室：乘法运算是关键，而加法运算都可以被合并到一个更大的乘法运算里面。</p>
+</blockquote>
+<h3 id="加法减法和除法"><a class="header" href="#加法减法和除法">加法，减法和除法</a></h3>
+<p>到目前为止，我们一直专注于乘法操作。但是为了能够执行通用计算，真实环境下的程序也需要加法，加法和除法。</p>
+<p><strong>加法</strong> 在前面的章节中，我们已经确定了可以在单个操作数的内容中将变量加起来，然后和另一个操作数相乘，即(3<em>a</em> + <em>b</em>) × <em>d</em> = <em>r</em> ，但是如果我们只是想做加法，没有乘法，例如一个程序中需要做  a + b 的计算，我们可以按照下面的方式来表示： <em>(a+b) × 1 = r​</em></p>
+<blockquote>
+<p>@Maksym（作者）：因为我们的结构中对于每一个操作数我们既需要常量系数也需要变量 (c ⋅ v) ，1 这个值可以表示为  c<em>₁</em> ⋅ v<em>₁</em>，其中  c<em>₁</em> = <em>1</em> 可以被“硬编码”到对应的多项式中， v<em>₁</em> 是一个变量可以给它分配任何值，那么我们就必须通过一些约束来限制 v<em>₁</em> 的值，这个在后面的章节中将会讲到。</p>
+</blockquote>
+<p><strong>减法</strong> 减法与加法几乎一致，唯一的不同就是负系数， a-b也就是：</p>
+<p>$\textcolor{green}{(a+-1 \cdot b)} \times \textcolor{blue}{1} = \textcolor{red}{r}$</p>
+<p><strong>除法</strong> 如果我们检查除法运算</p>
+<p>$\frac{factor}{divisor} = result$</p>
+<p>可以看到除法的结果是就是我们要得到一个结果值使其乘以 divisor 能够得到 factor。所以我们也可以用乘法来表示出同一个意思：<em>divisor × result = factor</em>。这样就是说如果我们想要去证明除法运算 <em>a / b= r</em>，我们就可以把它表示为：</p>
+<p>$\textcolor{green}{b} \times \textcolor{blue}{r} = \textcolor{red}{a}$</p>
+<blockquote>
+<p>@Maksym（作者）：运算的结构也称为 “约束” ，因为多项式结构代表的运算，并非是为了计算出结果，而是在 prover已经知晓的变量赋值的情况下，检验这个运算的过程是否正确。换句话说，即约束 prover 必须提供一致的值，无论这些值是什么。</p>
+<p>所有的算术计算（加减乘除）都已经有了，于是运算结构不再需要修改。</p>
+</blockquote>
+<blockquote>
+<p>even@安比实验室: 约束和运算有一定的关联性。算术电路的目的是为了实现「计算的验证」，而非「计算的过程」。</p>
+<p>上一篇文章中，我们提出了一种方法：把构造多项式的工作交给 setup 环节，prover 只要填上对应的数值就可以了。 这个方法不仅解决了同一个操作数运算符中不一致的问题，同时还带来了额外的便利：</p>
+<p>1）允许执行计算的表达式中包含静态系数。</p>
+<p>2）虽然l(x)·r(x)=o(x)的关系中只有乘法，但利用这个方法也可以轻松的执行加法操作，继而也就解决了减法和除法的问题。</p>
+</blockquote>
+<h2 id="计算示例"><a class="header" href="#计算示例">计算示例</a></h2>
+<p>有了一组通用的运算结构，我们就可以将我们原始的程序（上一篇文章中的例子）转换成一组运算，然后再转换成多项式的形式。我们先来想一下算法的数学形式（用变量 <em>v</em> 表示运算结果）：</p>
+<p>$ w \times (a \times b) + (1 - w) \times (a+b) = v$</p>
+<p>这里有三个乘法，但是由于运算结构只支持一个乘法操作，所以这里至少就要做三次运算。但是，我们可以将它简化为:</p>
+<p>$w \times (a \times b) + a + b -w \times (a + b) = v$</p>
+<p>$w \times (a \times b - a - b) = v -a- b$</p>
+<p>现在要包含同样的关系只需要两个乘法。这种运算的完整形式就是：</p>
+<p>$1: \qquad  \textcolor{green}{1 \cdot a} \times \textcolor{blue}{1 \cdot b }= \textcolor{red}{1 \cdot m} $</p>
+<p>$2:  \qquad \textcolor{green}{1 \cdot w} \times \textcolor{blue}{1 \cdot m + -1 \cdot a + -1 \cdot b} = \textcolor{red}{1 \cdot v + -1 \cdot a + -1 \cdot b}$</p>
+<p>我们还可以再增加一条约束使 <em>w</em> 必须为二进制数，否则 prover 就可以代入任何值去执行一个错误的运算了：</p>
+<p>$3：  \qquad \textcolor{green}{1 \cdot w} \times \textcolor{blue}{1 \cdot w}  = \textcolor{red}{1 \cdot w} $</p>
+<p>要了解为什么 <em>w</em> 只能为 0 或者 1，我们可以把等式表示为 <em>w</em>² – <em>w</em> = 0，也就是 <em>(w – 0)(w – 1) = 0</em> 这里 0 和 1 是唯一解。</p>
+<p>现在一共有 5 个变量，以及 2 个左操作符， 4 个右操作符和 5 个输出。操作符多项式为：</p>
+<p>$\textcolor{green}{L(x) = a \cdot l_a(x) + w \cdot l_w(x)}$</p>
+<p>$\textcolor{blue}{R(x) = m \cdot r_m(x) + a \cdot r_a(x) + b \cdot r_b(x)}$</p>
+<p>$\textcolor{red}{O(x) = m \cdot o_m(x) + v \cdot o_v(x) + a \cdot o_a(x) + b \cdot o_b(x)}$</p>
+<p>在三次运算中必须为每个*变量多项式 都分别算出一个对应的系数或者如果这个多项式在计算的操作数或者输出中没有被用到的话系数就置为 0。</p>
+<p><img src="./img/4/eq1.png" alt="" /></p>
+<p>结果因式多项式就是  <em>t(x) = (x – 1)(x –2)(x –3)</em>，它必须确保这三个运算都能被正确计算。</p>
+<p>接下来，我们利用多项式插值法来找到每个变量多项式：</p>
+<p><img src="./img/4/eq2.png" alt="" /></p>
+<p>绘制出来就是：</p>
+<p><img src="./img/4/1*YoNx3JunyKJh8kFad6qtpQ.png" alt="" /></p>
+<p>我们准备通过多项式去证明计算，首先，选择函数的输入值，例如： <em>w</em> <em>= 1</em>, <em>a</em> <em>= 3</em>, <em>b</em>= 2。其次，计算过程中的中间变量值为：</p>
+<p><em>m=a × b =6</em></p>
+<p><em>v = w(m-a-b)+a+b=6</em></p>
+<p>然后，我们把所有计算结果中的值赋值到 <em>变量多项式</em> 中，然后相加得到操作数或者输出多项式的形式：</p>
+<p>$\textcolor{green}{L(x)}=\textcolor{green}{3 \cdot l_a(x) +1 \cdot l_w(x)} = x^2 -5x+7$</p>
+<p>$\textcolor{blue}{R(x)}=\textcolor{blue}{6 \cdot r_m(x) + 3 \cdot r_a(x) + 2 \cdot r_b(x) + 1 \cdot r_w(x)} = \frac{1}{2}x^2 -2 \frac{1}{2}x +4$</p>
+<p>$\textcolor{red}{O(x)}=\textcolor{red}{6 \cdot o_m(x) + 6 \cdot o_v(x) + 3 \cdot o_a(x)+ 2 \cdot o_b(x) + 1 \cdot o_w(x)}= 2 \frac{1}{2}x^2 + 12 \frac{1}{2}x +16$</p>
+<p>在图中就表示为：</p>
+<p><img src="./img/4/1*XwRYLT4_4KRPTqQKg2jqfQ.png" alt="" /></p>
+<p>把他们相加成对应运算中的操作数和输出值：</p>
+<p><img src="./img/4/1*8xEajzq2MlB9i7O8PQ829Q.png" alt="" /></p>
+<p>我们需要去证明  <em>L</em>(<em>x</em>) × <em>R</em>(<em>x</em>) – <em>O</em>(<em>x</em>) = <em>t</em>(<em>x</em>)<em>h</em>(<em>x</em>)，因而我们先找出 <em>h</em>(<em>x</em>)：</p>
+<p>$h(x) = \frac{L(x) \times R(x) - O(x)}{t(x)} = \frac{\frac{1}{2}x^4 - 5x^3 + \frac{35}{2}x^2 -25x +12}{(x-1)(x-2)(x-3)} = \frac{1}{2}x - 2$</p>
+<p>以图的形式表示为：</p>
+<p><img src="./img/4/1*z4sW_cYeeGZS_8AAJzfoKQ.png" alt="" /></p>
+<p>这里很明显多项式 <em>L</em>(<em>x</em>) × <em>R</em>(<em>x</em>) – <em>O</em>(<em>x</em>) 的解为 <em>x</em>= 1， <em>x</em>= 2 和 <em>x</em>= 3，因而 <em>t(x)</em> 是它的因式，假如使用了和它不一致的变量值，情况就不是这样了。</p>
+<p>这就是一组能够正确计算的变量值，如何在多项式层面上证明出来的。下面 prover 还要再继续处理协议的密码学部分。</p>
+<h2 id="可验证计算协议"><a class="header" href="#可验证计算协议">可验证计算协议</a></h2>
+<p>我们基于前文中<strong>多项式知识协议</strong> 做了很多重要的修改使它变得更通用，我们再来看一下它现在的定义。假定函数 <em>f</em>(*) 是要证明的问题中的计算结果，其中操作数的数量为 <em>d</em> ，变量的数量 <em>n</em> ，以及它们对应的系数为：</p>
+<p>${c_{L,i,j},c_{R,i,j},c_{o,i,j}}_{i \in {1,…,d}, j \in {i,…,d}}$</p>
+<ul>
+<li>
+<p>Setup</p>
+<ul>
+<li>
+<p>为左操作数 ${l_i(x)}<em>{i \in {1,…,n}}$ 构造<em>变量多项式</em> 然后对于所有 $j \in {1,…,d}$ 的运算都算出其对应的系数，即 $l_i(j) = c</em>{L,i,j}$，对右操作数和输出也做同样的事情。</p>
+</li>
+<li>
+<p>随机抽取 <em>s</em>，$α$ </p>
+</li>
+<li>
+<p>计算 <em>t(x)= (x-1)(x-2)…(x-d)</em> 及其结果 $g^{t(s)}$</p>
+</li>
+<li>
+<p>计算 <em>proving key</em>：</p>
+<p>$({g^{s^k}}<em>{k \in[d]},{g^{l_i(s)}, g^{r_i(s)}, g^{o_i(s)},g^{αl_i(s)},g^{αr_i(s)},g^{αo_i(s)}}</em>{i \in {1,……,n}})$</p>
+</li>
+<li>
+<p>计算 <em>verification key</em>：</p>
+<p>$(g^{t(s)},g^α)$</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Proving</p>
+<ul>
+<li>
+<p>计算函数 <em>f(*)</em> 以此计算相应的变量 ${v_i}_{i \in {1,…,n}}$</p>
+</li>
+<li>
+<p>计算 $h(x) = \frac{L(x) \times R(x) - O(x)}{t(x)}$，其中 $L(x) = \sum_{i=1}^n {v_i \cdot l_i(x)}$，$R(x)$, $O(x)$ 与之相似</p>
+</li>
+<li>
+<p>给变量赋值并对操作数多项式求和：</p>
+<p>$g^{L(s)} = (g^{l_1(s)})^{v_1}…(g^{l_n(s)})^{v_n},g^{R(s)} = \prod_{i=1}^n{(g^{r_i(s)})^{v_i}}, g^{O(s)} = \prod_{i=1}^n{(g^{o_i(s)})^{v_i}}$</p>
+</li>
+<li>
+<p>对变换后的多项式赋值：</p>
+<p>$g^{αL(s)} = \prod_{i=1}^n{(g^{αl_i(s)})^{v_i}},g^{αR(s)} = \prod_{i=1}^n{(g^{αr_i(s)})^{v_i}}, g^{αO(s)} = \prod_{i=1}^n{(g^{αo_i(s)})^{v_i}}$</p>
+</li>
+<li>
+<p>使用 s 的幂加密值：${g^{s^k}}_{k \in [d]}$ 计算加密值 $g^{h(s)}$</p>
+</li>
+<li>
+<p>生成证明：${g^{L(s)},g^{R(s)},g^{O(s)},g^{αL(s)},g^{αR(s)},g^{αO(s)},g^{h(s)}}$</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Verification</p>
+<ul>
+<li>
+<p>解析证明为 ${g^L,g^R,g^O,g^{L'},g^{R'},g^{O'},g^{h}}$</p>
+</li>
+<li>
+<p>检查可变多项式约束：</p>
+<p>$e(g^L,g^α) = e(g^{L'},g), e(g^R,g^α) = e(g^{R'},g), e(g^O,g^α)=e(g^{O'},g)$</p>
+</li>
+<li>
+<p>验证计算有效性：</p>
+<p>$e(g^L,g^R) = e(g^t,g^h) \cdot e(g^O,g)$</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><em>注意：使用符号  ∏ 来表示多个元素连乘，即： $\prod_{i=1}^n{v_i} = v_1 \cdot v_2 \cdot … \cdot v_n$</em></p>
+<p>对于 <em>i ∈ {1, …, n}</em> 所有变量多项式 {<em>lᵢ</em>(<em>x</em>)<em>, rᵢ</em>(<em>x</em>)<em>, oᵢ</em>(<em>x</em>)}  和目标多项式 <em>t(x)</em> 的设置被称为一个<em>二元算术程序</em> (QAP，在[<a href="#8bfc">Gen+12</a>] 中有介绍)。</p>
+<p>虽然协议足够健壮，可以进行常规的计算验证，但这里依然还有两个安全考虑需要去解决。</p>
+<h3 id="操作数和输出的不可替代性"><a class="header" href="#操作数和输出的不可替代性">操作数和输出的不可替代性</a></h3>
+<p>因为在 <em>变量多项式约束检查</em> 中的所有操作数上我们使用了同一个 <em>α</em>，所以就没有办法阻止 prover 做下面的欺骗行为：</p>
+<ul>
+<li>使用其它的操作数中的可变多项式，即 <em>L</em>′(<em>s</em>) = <em>o</em>₁(<em>s</em>) + <em>r</em>₁(<em>s</em>) + <em>r</em>₁(<em>s</em>) + <em>…</em></li>
+<li>完全交换 <em>操作数多项式</em>， 也就是把 <em>O</em>(<em>s</em>) 和 <em>L</em>(<em>s</em>) 换成  <em>O(s) × R(s) = L(s)</em></li>
+<li>复用相同的操作数多项式，即  <em>L(s) × L(s) = O(s)</em></li>
+</ul>
+<p>可交换性就是指 prover 可以修改计算过程，并有效证明一些其它无关的计算结果。防止这种行为的一个很显然的方式就是在不同的操作数上使用不同的 <em>α<sub>s</sub></em> ，具体协议就可以修改为：</p>
+<ul>
+<li>
+<p>Setup</p>
+<p>…</p>
+<ul>
+<li>选择随机数 $α_l$，$α_r$，$α_o$ 来代替 $α$</li>
+<li>计算其对应的“变换” ${g^{α_ll_i(s)},g^{α_rr_i(s)},g^{α_oo_i(s)}}_{i \in {1…n}}$</li>
+<li>proving key：$({g^{s^k}}<em>{k \in [d]},{g^{l_i(s)}, g^{r_i(s)}, g^{o_i(s)}, g^{α_ll_i(s)}, g^{α_rr_i(s)}, g^{α_oo_i(s)}}</em>{i \in {i…n}})$</li>
+<li>verfication key：$(g^{t(s)},g^{α_l},g^{α_r},g^{α_o})$</li>
+</ul>
+</li>
+<li>
+<p>Proving</p>
+<p>…</p>
+<ul>
+<li>为 “变换”的多项式赋值：$g^{α_lL(s)} = \prod_{i=1}^n{(g^{α_ll_i(s)})^{v_i}}, g^{α_lR(s)} = \prod_{i=1}^n{(g^{α_rr_i(s)})^{v_i}}, g^{α_oO(s)} = \prod_{i=1}^n{(g^{α_oo_i(s)})^{v_i}}$</li>
+<li>设置证明：$(g^{L(s)},g^{R(s)},g^{O(s)},g^{α_lL(s)},g^{α_rR(s)},g^{α_oO(s)},g^{h(s)})$</li>
+</ul>
+</li>
+<li>
+<p>Verification</p>
+<p>…</p>
+<ul>
+<li>可变多项式约束验证：$e(g^L,g^{α_l}) = e(g^{L'},g),e(g^R,g^{α_r}) = e(g^{R'},g),e(g^O,g^{α_o}) = e(g^{O'},g)$</li>
+</ul>
+</li>
+</ul>
+<p>这样就不能在一个操作数中使用其它操作数的变量多项式了，因为 prover 没有办法去获知 $α_l, α_r, α_o$ 来满足 $α_s$ 变换关系。</p>
+<blockquote>
+<p>even@安比实验室: 这里通过对l(x),r(x)和o(x) 进行分开 KEA 检查，就解决了上篇文章中提出的第二个缺陷问题——由于 prover 生成的证明中只有计算结果，左操作数，右操作数，输出在计算中混用也不会被发现。</p>
+<p>同样下面一节也解决了上篇文章中提出的第三个缺陷问题——由于左操作数，右操作数，输出是分开表示的，互相之间的关系无法进行约束。</p>
+</blockquote>
+<h3 id="跨操作数的变量一致性"><a class="header" href="#跨操作数的变量一致性">跨操作数的变量一致性</a></h3>
+<p>对于任意的变量 vᵢ ，我们都必须将它的值 <em>分配</em> 到每个相应操作数中的一个与之对应的<em>变量多项式</em> 上，即：</p>
+<p>$(g^{l_i(s)})^{v_i}, (g^{r_i(s)})^{v_i},(g^{o_i(s)})^{v_i}$</p>
+<p>因为每一个<em>操作数运算符</em> 的有效性是分开校验的，并不强制要求我们在对应的<em>变量多项式</em> 中使用相同的变量值。这就意味着在左操作数中变量 <em>v</em>₁ 的值可以与右操作数或输出中的变量值 <em>v</em>₁不同。</p>
+<p>我们可以通过熟悉的限制多项式的方法（也就是限制变量多项式的方法）在操作数之间强制变量值相等。如果我们能够在所有的操作数之间创造一个作为“变换的校验和”的变量多项式，那么就可以限制 prover 使其只能够赋予相同的值。verifier 可以将这些每个变量的多项式加起来，即：</p>
+<p>$g^{l_i(s)+r_i(s)+o_i(s)}$</p>
+<p>然后乘以一个额外的随机数 <em>β</em>，即</p>
+<p>$g^{β(l_i(s)+r_i(s)+o_i(s))}$</p>
+<p>提供这些变换后的多项式给 prover，与变量多项式一起给它赋上变量值：</p>
+<p>$(g^{l_i(s)})^{v_{L,i}},(g^{r_i(s)})^{v_{R,i}}, (g^{o_i(s)})^{v_{O,i}}, (g^{β(l_i(s)+r_i(s)+o_i(s))})^{v_{β,i}}$</p>
+<p>然后加密 <em>β</em> 并把 $g^β$ 加到 <em>verification key</em> 中。现在如果所有的 <em>vᵢ</em> 值相同，即,</p>
+<p>$v_{L,i} = v_{R,i} = v_{o,i} = v_{β,i} \quad 其中  i \in {1,…,n}$</p>
+<p>等式就满足：</p>
+<p>$e(g^{v_{L,i} \cdot l_i(s)} \cdot g^{v_{R,i} \cdot r_i(s)} \cdot g^{v_{o,i} \cdot o_i(s)},g^β)=e(g^{v_{β,i} \cdot β(l_i(s)+r_i(s)+o_i(s))},g)$</p>
+<p>尽管这个一致性校验很有用，但还是存在一定的概率  <em>l</em>(<em>s</em>)<em>, r</em>(<em>s</em>)<em>, o</em>(<em>s</em>) 中至少有两项要么计算值相同要么一个多项式可以被另一个整除等情况，这就允许 prover 去分解 $v_{L,i},v_{R,i},v_{O,i},v_{β,i}$ 这些值的关系，使得即使有至少两个不相等的值也依然能够保持等式成立，从而使校验无效：</p>
+<p>$(v_{L,i} \cdot l_i(s) + v_{R,i} \cdot r_i(s) + v_{O,i} \cdot o_i(s)) \cdot β = v_{β,i} \cdot β \cdot (l_i(s) + r_i(s) + o_i(s))$</p>
+<p>例如，一个以  <em>l</em>(<em>x</em>) = <em>r</em>(<em>x</em>) 为例的单个运算。我们用 <em>w</em> 来表示这两个值同时  <em>y</em> = <em>o</em>(<em>s</em>)。这个等式看起来就是：</p>
+<p>$β(v_Lw + v_Rw+v_Oy) = v_β \cdot β(w+w+y)$</p>
+<p>对于任意的 $v_R$ 和 $v_O$，这种形式可以令 $v_β = v_o$，$v_L = 2v_o -v_R$，也就变换成：</p>
+<p>$β(2v_ow - v_Rw + v_Rw + v_oy) = v_o \cdot β(2w+y)$</p>
+<p>因而这样一个一致性策略是无效的。缓解这种情况的一种方法是对每个操作数都使用不同的 β，确保操作数的<em>变量多项式</em> 中包含无法预测的值。以下就是修改后的协议：</p>
+<ul>
+<li>
+<p>Setup</p>
+<ul>
+<li>
+<p>… 随机数 $β_l$， $β_r$， $β_o$</p>
+</li>
+<li>
+<p>对<em>变量一致性多项式</em> 进行计算，加密并添加到 proving key中：</p>
+<p>${g^{β_ll_i(s)+ β_rr_i(s)+ β_oo_i(s)}}_{i \in {1,…,n}}$</p>
+</li>
+<li>
+<p>对 $β_s$ 加密并将其加到 <em>verification key</em> 中：$(g^{β_l},g^{β_r},g^{β_o})$</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Proving</p>
+<ul>
+<li>
+<p>…将变量值赋给<em>变量一致性多项式</em>：</p>
+<p>$g^{z_i(s)} = (g^{β_ll_i(s)+ β_rr_i(s)+ β_oo_i(s)})^{v_i} \quad for \quad i \in {1,…,n}$</p>
+</li>
+<li>
+<p>增加分配的多项式到加密空间中:</p>
+<p>$g^{Z(s)} = \prod_{i=1}^n{g^{z_i(s)}} = g^{β_lL(s) + β_rR(s)+ β_oO(s)}$</p>
+</li>
+<li>
+<p>再在证明中加入：$g^{Z(s)}$</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Verification</p>
+<ul>
+<li>
+<p>…校验提供的<em>操作数多项式</em> 和 “校验和”多项式之间的一致性：</p>
+<p>$e(g^L,g^{β_l}) \cdot e(g^R,g^{β_r}) \cdot e(g^O,g^{β_o}) = e(g^Z,g)$</p>
+<p>这相当于：</p>
+<p>$e(g,g)^{β_lL + β_rR + β_oO} =e(g,g)^Z$</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>这个构造中同一个变量值就无法乱用了，因为不同的 <em>β<sub>s</sub></em> 使得相同多项式无法兼容，但是这里还存在与  <strong>remark 4.1</strong> 相同的缺陷，由于<em>g<sup>β<sub>l</sub></sup></em>  ，<em>g<sup>β<sub>r </sub></sup></em>， *g<sup>β<sub>o </sub></sup>*是公开可见的，攻击者可以修改任意变量多项式的零索引系数，因为它并不依赖于 <em>s</em>，即，<em>g<sup>β<sub>l</sub>s<sup>0</sup></sup>= g<sup>β<sub>l</sub></sup></em>。</p>
+<blockquote>
+<p>even@安比实验室: 回忆一下，上文中我们提出了在 setup 阶段设置数学表达式的约束关系来解决了一些问题，但这里似乎有引入了一个问题：如果保证 prover 构造的证明是用遵循这些约束关系计算出来的呢？</p>
+<p>KEA 其实已经解决了这个问题，但似乎并不完美，这就是我们下面要讨论的变量延展性问题。</p>
+</blockquote>
+<h3 id="变量非延展性和变量一致性多项式"><a class="header" href="#变量非延展性和变量一致性多项式">变量非延展性和变量一致性多项式</a></h3>
+<p><strong>变量多项式的延展性</strong></p>
+<p>举一个  <strong>remark 4.1</strong> 有关的例子，看一下下面的两个运算：</p>
+<p>$\textcolor{green}{a} \times \textcolor{blue}{1} = \textcolor{red}{b}$</p>
+<p>$\textcolor{green}{3a} \times \textcolor{blue}{1} =\textcolor{red}{c}$</p>
+<p>预期的结果 <em>b = a</em> 和 <em>c = 3a</em> , 再进一步就是  <em>c = 3b</em>。这就是说<em>左操作数的变量</em> 多项式的计算结果为 l<sub>a</sub>(1) = 1 和 l<sub>a</sub>(2) = 3。先不管  l<sub>a</sub>(<em>x</em>) 的形式， prover 都可以不按照上述的比例用另一个修改了的多项式 <em>lₐ</em>′(x) = al<sub>a</sub>(x) + 1 来给 <em>a</em> 赋值。这样运算就变成了  l<sub>a</sub>′(1) = a+ 1 和 l<sub>a</sub>′(2) = 3<em>a</em>+ 1, 结果也就是 <em>b = a + 1</em> 和 <em>c = 3a + 1</em>，其中 <em>c≠3b</em>，这意味着 <em>a</em> 的取值的实际意义在不同运算中是不一样的。</p>
+<p>但是因为 prover 已经拿到了 <em>g<sup>α<sub>l</sub></sup></em> 和 <em>g<sup>β<sub>l</sub></sup></em> ，所以他依然能够通过正确的操作符多项式* 和<em>变量值一致性</em> 的校验：</p>
+<ul>
+<li>
+<p>…Proving：</p>
+<ul>
+<li>
+<p>用分配不成比例的变量 <em>a</em> 来建立左操作数多项式： $L(x) = a \cdot l_a(x) +1$</p>
+</li>
+<li>
+<p>按照常规的方式构造右操作数多项式和输出多项式： $R(x) = r_1(x), O(x)=b \cdot o_b(x) + c \cdot o_c(x)$</p>
+</li>
+<li>
+<p>计算除数：$h(x) = \frac{L(x) \cdot R(x) - O(x)}{t(x)}$</p>
+</li>
+<li>
+<p>计算加密值：$g^{L(s)} = (g^{l_a(s)})^a \cdot g^1$，并按照常规方式计算 $g^{R(s)},g^{O(s)}$</p>
+</li>
+<li>
+<p>计算 α-变换的加密值：$g^{αL(s)} = (g^{αl_a(s)})^a \cdot g^α$，并按照常规方式计算 $g^{αR(s)},g^{αO(s)}$</p>
+</li>
+<li>
+<p>计算变量一致性多项式：</p>
+<p>$g^{Z(s)} = \prod_{i \in {1,a,b,c}}{(g^{β_ll_i(s)+β_rr_i(s)+β_oO_i(s)})^i \cdot g^{β_l}} = g^{β_l(L(s)+1)+ β_rR(s) +β_oO(s)}$，其中下标 <em>i</em> 代表对应变量的符号；指数 <em>i</em> 代表变量的值；以及未定义的变量多项式的值为 0。</p>
+</li>
+<li>
+<p>设置证明：$(g^{L(s)},g^{R(s)},g^{O(s)},g^{α_lL(s)},g^{α_rR(s)},g^{α_oO(s)},g^{Z(s)},g^{h(s)})$</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Verification：</p>
+<ul>
+<li>
+<p>变量多项式约束检查：</p>
+<p>$e(g^L,g^{β_l}) \cdot e(g^R, g^{β_r}) \cdot e(g^O,g^{β_o}) = e(g^Z,g) =&gt; e(g,g)^{(a \cdot l_a +1)β_l +Rβ_r + Oβ_o} = e(g,g)^{β_l(L+1)+ β_rR +β_oO}$</p>
+</li>
+<li>
+<p>有效计算检查：$e(g^L,g^R) = e(g^t,g^h) \cdot e(g^O,g)$</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>变量一致性多项式的延展性</strong></p>
+<p>而且 g<sup>β<sub>l</sub></sup>，g<sup>β<sub>r</sub></sup>，g<sup>β<sub>o</sub></sup>的存在允许我们在不同操作数的相同变量上使用不同的值。例如，如果我们有一个运算：</p>
+<p>$a \times a = b$</p>
+<p>可以用多项式表示：</p>
+<p>$l_a(x) = x, r_a(x) = x, o_a(x) = 0$</p>
+<p>$l_b(x) = 0, r_b(x) = 0, o_b(x) = x$</p>
+<p>尽管我们期待的输出是 <em>b</em>= <em>a</em>²，但我们可以设置不同的 <em>a</em> 值，例如：设置 <em>a</em>= 2 （左操作数中）, <em>a</em>= 5 （右操作数中）如下：</p>
+<ul>
+<li>
+<p>Proving：</p>
+<ul>
+<li>
+<p>…用 <em>a=2</em> 设置左操作数多项式：$L(x) = 2l_a(x) + 10L_b(x)$</p>
+</li>
+<li>
+<p>用 <em>a=5</em> 设置右操作数多项式：$R(x) = 2r_a(x) + 3 + 10r_b(x)$</p>
+</li>
+<li>
+<p>用 <em>b=10</em> 设置输出多项式：$O(x) = 2o_a(x) +10o_b(x)$</p>
+</li>
+<li>
+<p>…计算加密值：</p>
+<p>$g^{L(s)} = (g^{l_a(s)})^2 \cdot (g^{l_b(s)})^{10} = g^{2l_a(s)+10l_b(s)}$</p>
+<p>$g^{R(s)} = (g^{r_a(s)})^2 \cdot (g)^3 \cdot (g^{r_b(s)})^{10} = g^{2r_a(s)+3+10r_b(s)}$</p>
+<p>$g^{O(s)} = (g^{O_a(s)})^2 \cdot (g^{O_b(s)})^{10} = g^{2o_a(s)+10o_b(s)}$</p>
+</li>
+<li>
+<p>计算变量一致性多项式：</p>
+<p>$g^{Z(s)} = (g^{β_ll_a(s)+β_rr_a(s)+β_oo_a(s)})^2 \cdot (g^{β_r})^3 \cdot (g^{β_ll_b(s)+ β_rr_b(s)+ β_oo_b(s)})^{10} $</p>
+<p>$= g^{β_l(2l_a(s)+10l_b(s))+ β_r(2r_a(s)+3+10r_b(s)) + β_o(2o_a(s)+3+10o_b(s))}$</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Verification：</p>
+<ul>
+<li>
+<p>……变量值的一致性检查，应满足：</p>
+<p>$e(g^L,g^{β_l}) \cdot e(g^R, g^{β_r}) \cdot e(g^O,g^{β_o}) = e(g^Z,g)$</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>注意：多项式 o<sub>a</sub>(x)，l<sub>b</sub>(x)，r<sub>b</sub>(x) 其实可以被忽略掉的，因为这几项对于任何 <em>x</em> 的取值，计算结果都为 0，但是为了保持完整性我们依然要保留这几项。</p>
+<blockquote>
+<p>even@安比实验室：这种能力会危害到协议的可靠性。很显然，加密的 <em>β</em><sub>s</sub>不应该对 Prover 可见。</p>
+</blockquote>
+<p><strong>非延展性</strong></p>
+<p>解决延展性问题的一个方法就是，在 setup 阶段将 <em>verification key</em> 中加密的 β<sub>s</sub> 项与随机秘密值  <em>γ</em>(gamma) 相乘使其与加密值 <em>Z</em>(<em>s</em>) 不兼容：</p>
+<p>$g^{β_l \gamma}, g^{β_r\gamma}, g^{β_o\gamma}$</p>
+<p>相应的这种被修饰过的加密值，就能阻止使得修改加密值 <em>Z</em>(<em>s</em>)  变得不可行了，因为 <em>Z</em>(<em>s</em>) 中没有 <em>γ</em>，即：</p>
+<p>$g^{Z(s)} \cdot g^{v' \cdot β_l r} = g^{β_l(L(s)+v'r)+β_rR(s) + β_oO(s)}$</p>
+<p>因为变值  <em>γ</em>  是随机的 prover 并不知道它的值。所以这个修改就需要我们用 <em>Z</em>(<em>s</em>) 乘以  <em>γ</em> 来平衡协议中的变量值一致性校验* 等式：</p>
+<ul>
+<li>
+<p>Setup：</p>
+<ul>
+<li>…随机数 $β_l$，$β_r$，$β_o$，$γ$</li>
+<li>…设置 <em>verification key</em>：$(…, g^{β_l \gamma},  g^{β_r\gamma},  g^{β_o\gamma}, g^{\gamma})$</li>
+</ul>
+</li>
+<li>
+<p>Proving：…</p>
+</li>
+<li>
+<p>Verification：</p>
+<ul>
+<li>
+<p>…变量值一致性检查应满足：</p>
+<p>$e(g^L,g^{β_l\gamma}) \cdot e(g^R,g^{β_r\gamma}) \cdot e(g^O,g^{β_o\gamma}) = e(g^Z, g^{\gamma})$</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>这里很重要的一点是我们排除了变量多项式为 0-阶的例子（即， <em>l</em>₁(<em>x</em>) = 1<em>x</em>⁰），否则就可以从 <em>proving key</em> 的<em>变量一致性多项式</em> 中揭露出加了密的 <em>β</em> 值</p>
+<p>${g^{β_ll_i(s) +β_rr_i(s) + β_oo_i(s)}}_{i \in {1,…,n}}$</p>
+<p>这个例子中当操作数/输出中的任意两项为 0 时，即，对于 <em>l</em>₁(<em>x</em>) = 1, <em>r</em>₁(<em>s</em>) = 0, <em>o</em>₁(<em>s</em>) = 0 的例子，结果就是</p>
+<p>$g^{β_ll_1(s) +β_rr_1(s) +β_oo_1(s)} = g^{β_l}$</p>
+<p>我们同样也可以通过<em>修饰</em> <em>α<sub>s</sub></em> 项来解决<em>变量多项式</em> 的延展性问题。但是这就没有必要了，因为对于<em>变量多项式</em> 的任何修改，都需要被映射到变量的<em>一致性多项式</em> 中，而一致性多项式是无法修改的。</p>
+<h3 id="变量值一致性检查的优化"><a class="header" href="#变量值一致性检查的优化">变量值一致性检查的优化</a></h3>
+<p>现在<em>变量值一致性</em> 检查是有效的，但是这里在 <em>verification key</em> 中增加了 4 个昂贵的配对操作和 4 个新的项。文献 [<a href="#bd7c">Par+13</a>] 中的 Pinocchio 协议用了一个很聪明的方法优化，通过选择不同的生成元 <em>g</em> ，从而对每个操作数实行“移位”：</p>
+<ul>
+<li>
+<p>Setup</p>
+<ul>
+<li>…选择随机值 $β，γ，\rho_l,\rho_r$ 并设置 $\rho_o = \rho_l \cdot \rho_r$</li>
+<li>设置生成元 $g_l=g^{\rho_l}, g_r=g^{\rho_r},g_o=g^{\rho_o}$</li>
+<li>设置 <em>proving key</em>：$({g^{s^k}}<em>{k \in [d]},{g_l^{l_i(s)}, g_r^{r_i(s)}, g_o^{o_i(s)}, g_l^{α_ll_i(s)}, g_r^{α_rr_i(s)}, g_o^{α_oo_i(s)}, g_l^{βl_i(s)}, g_r^{βr_i(s)}, g_o^{βo_i(s)}}</em>{i \in [n]})$</li>
+<li>设置 <em>verification key</em>：$(g_o^{t(s)},g^{α_l},g^{α_r},g^{α_o},g^{βγ}，g^γ)$</li>
+</ul>
+</li>
+<li>
+<p>Proving</p>
+<ul>
+<li>
+<p>…分配变量值</p>
+<p>$g^{Z(s)} = \prod_{i=1}^n{(g_l^{βl_i(s)} \cdot g_r^{βr_i(s)} \cdot g_o^{βo_i(s)})^{v_i}}$</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Verification</p>
+<ul>
+<li>
+<p>…变量多项式约束检查：</p>
+<p>$e(g_l^{L'},g) = e(g_l^L,g^{α_l})$，对 $g_r^{R},g_o^{O}$ 做同样的检查</p>
+</li>
+<li>
+<p>变量值约束检查：</p>
+<p>$e(g_l^L \cdot g_r^R \cdot g_o^O , g^{βγ}) = e(g^Z,g^γ)$</p>
+</li>
+<li>
+<p>有效运算检查：</p>
+<p>$e(g_l^L , g_r^R) = e(g_o^t,g^h)e(g_o^O,g) =&gt; e(g,g)^{\rho_l\rho_rLR} = e(g,g)^{\rho_l\rho_rth+\rho_l\rho_rO}$</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>生成元的这种随机化进一步增加了安全性，使得如 <strong>remark 4.1</strong>中描述的<em>可变多项式</em> 延展性无效。因为对于故意的修改，它必须要么是<em>ρ<sub>l</sub></em>, <em>ρ<sub>r</sub></em> 或者<em>ρ<sub>o</sub></em> 原始值的倍数要么就是不可直接用的加密值的倍数（假定,如上文所述我们不去处理可能曝光加密后的值的 0 阶可变多项式）。</p>
+<p>这个优化使得 <em>verification key</em>  减少了两个项，并且去除了 verification 步骤中的两个配对运算。</p>
+<p><em>注意：在 Jens Groth 2016年的 paper [<a href="#2923">Gro16</a>] 中有更进一步的改进。</em></p>
+<blockquote>
+<p>even@安比实验室:至此，通用 zk-SNARK 协议的已经几乎构造完成了，本文可以归纳为以下几点：</p>
+<p>协议中是如何增加可变系数的和如何做加减乘除运算的</p>
+<p>协议如何保证操作数和输出的不可替代性</p>
+<p>协议如何保证跨操作数的可变一致性</p>
+<p>协议如何处理非延展性变量和变量一致性</p>
+<p>协议中变量值一致性检查优化</p>
+</blockquote>
+<p><strong>原文链接</strong></p>
+<p>https://arxiv.org/pdf/1906.07221.pdf</p>
+<p>https://medium.com/@imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06859e30</p>
+<p>https://medium.com/@imolfar/why-and-how-zk-snark-works-6-verifiable-computation-protocol-1aa19f95a5cc</p>
+<p><strong>参考文献</strong></p>
+<p>[Par+13] — Bryan Parno, Craig Gentry, Jon Howell, and Mariana Raykova. <em>Pinocchio: Nearly</em> <em>Practical Verifiable Computation</em>. Cryptology ePrint Archive, Report 2013/279. https://eprint.iacr.org/2013/279. 2013.</p>
+<p>[Gen+12] — Rosario Gennaro, Craig Gentry, Bryan Parno, and Mariana Raykova. <em>Quadratic</em> <em>Span Programs and Succinct NIZKs without PCPs</em>. Cryptology ePrint Archive, Report 2012/215. https://eprint.iacr.org/2012/215. 2012.</p>
+<p>[Gro16] — Jens Groth. <em>On the Size of Pairing-based Non-interactive Arguments</em>. Cryptology ePrint Archive, Report 2016/260. https://eprint.iacr.org/2016/260. 2016.</p>
+<h1 id=""><a class="header" href="#"></a></h1>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../200108-Why-and-How-zk-SNARK-Works-3/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../200122-Why-and-How-zk-SNARK-Works-5/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../200108-Why-and-How-zk-SNARK-Works-3/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../200122-Why-and-How-zk-SNARK-Works-5/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
