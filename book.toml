@@ -1,0 +1,10 @@
+[book]
+authors = ["Maksym Petkus"]
+language = "zh-CN"
+multilingual = false
+src = "src"
+title = "zk-SNARK 为什么和如何工作"
+description = "《zk-SNARK 为什么和如何工作（Why and How zk-SNARK Works）》简体中文版"
+
+[output.html]
+git-repository-url = "https://github.com/zyw271828/wahzw-zh-cn"
