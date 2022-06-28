@@ -8,3 +8,5 @@
 - [从程序到多项式的构造](./ch03.md)
 - [多项式的约束](./ch04.md)
 - [Pinocchio 协议](./ch05.md)
+
+[参考文献](./references.md)
