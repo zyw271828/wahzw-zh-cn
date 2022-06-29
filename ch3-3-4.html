@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Page not found - zk-SNARK 为什么以及如何工作</title>
-        <base href="/">
+        <title>加密多项式 - zk-SNARK 为什么以及如何工作</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="《zk-SNARK 为什么以及如何工作（Why and How zk-SNARK Works）》简体中文版">
@@ -78,7 +77,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">README</a></li><li class="chapter-item expanded affix "><a href="abstract.html">摘要</a></li><li class="chapter-item expanded affix "><a href="ch0.html">前言</a></li><li class="chapter-item expanded "><a href="ch1.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="chapter-item expanded "><a href="ch2.html"><strong aria-hidden="true">2.</strong> 证明的媒介</a></li><li class="chapter-item expanded "><a href="ch3.html"><strong aria-hidden="true">3.</strong> 多项式的非交互式零知识</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-1.html"><strong aria-hidden="true">3.1.</strong> 证明多项式的知识</a></li><li class="chapter-item expanded "><a href="ch3-2.html"><strong aria-hidden="true">3.2.</strong> 因式分解</a></li><li class="chapter-item expanded "><a href="ch3-3.html"><strong aria-hidden="true">3.3.</strong> 模糊求值</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-3-1.html"><strong aria-hidden="true">3.3.1.</strong> 同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-2.html"><strong aria-hidden="true">3.3.2.</strong> 模运算</a></li><li class="chapter-item expanded "><a href="ch3-3-3.html"><strong aria-hidden="true">3.3.3.</strong> 强同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-4.html"><strong aria-hidden="true">3.3.4.</strong> 加密多项式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ch02.html"><strong aria-hidden="true">4.</strong> 多项式的非交互式零知识证明</a></li><li class="chapter-item expanded "><a href="ch03.html"><strong aria-hidden="true">5.</strong> 从程序到多项式的构造</a></li><li class="chapter-item expanded "><a href="ch04.html"><strong aria-hidden="true">6.</strong> 多项式的约束</a></li><li class="chapter-item expanded "><a href="ch05.html"><strong aria-hidden="true">7.</strong> Pinocchio 协议</a></li><li class="chapter-item expanded affix "><a href="references.html">参考文献</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">README</a></li><li class="chapter-item expanded affix "><a href="abstract.html">摘要</a></li><li class="chapter-item expanded affix "><a href="ch0.html">前言</a></li><li class="chapter-item expanded "><a href="ch1.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="chapter-item expanded "><a href="ch2.html"><strong aria-hidden="true">2.</strong> 证明的媒介</a></li><li class="chapter-item expanded "><a href="ch3.html"><strong aria-hidden="true">3.</strong> 多项式的非交互式零知识</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-1.html"><strong aria-hidden="true">3.1.</strong> 证明多项式的知识</a></li><li class="chapter-item expanded "><a href="ch3-2.html"><strong aria-hidden="true">3.2.</strong> 因式分解</a></li><li class="chapter-item expanded "><a href="ch3-3.html"><strong aria-hidden="true">3.3.</strong> 模糊求值</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-3-1.html"><strong aria-hidden="true">3.3.1.</strong> 同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-2.html"><strong aria-hidden="true">3.3.2.</strong> 模运算</a></li><li class="chapter-item expanded "><a href="ch3-3-3.html"><strong aria-hidden="true">3.3.3.</strong> 强同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-4.html" class="active"><strong aria-hidden="true">3.3.4.</strong> 加密多项式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ch02.html"><strong aria-hidden="true">4.</strong> 多项式的非交互式零知识证明</a></li><li class="chapter-item expanded "><a href="ch03.html"><strong aria-hidden="true">5.</strong> 从程序到多项式的构造</a></li><li class="chapter-item expanded "><a href="ch04.html"><strong aria-hidden="true">6.</strong> 多项式的约束</a></li><li class="chapter-item expanded "><a href="ch05.html"><strong aria-hidden="true">7.</strong> Pinocchio 协议</a></li><li class="chapter-item expanded affix "><a href="references.html">参考文献</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -140,19 +139,81 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <h1 id="加密多项式"><a class="header" href="#加密多项式">加密多项式</a></h1>
+<p>配合这些工具，我们现在就可以在加密的随机数 \(x\) 上做运算并相应地修改零知识协议了。</p>
+<p>我们来看一下如何计算多项式 \(p(x) = x^3 - 3x^2 + 2x\)。前面已经明确了，知道一个多项式就是知道它的系数，在这个例子中也就是知道：1，-3，2。因为同态加密并不允许再对加密值求幂，所以我们必须要给出 \(x\) 的 1 到 3 次幂的加密值：\(E(x), E(x^2), E(x^3)\)，那么我们要计算的加密多项式就是：</p>
+<p>$${E\left(x^3\right)}^1 \cdot {E\left(x^2\right)}^{-3} \cdot {E\left(x\right)}^{2} =$$</p>
+<p>$${\left(g^{x^3}\right)}^1 \cdot {\left(g^{x^2}\right)}^{-3} \cdot {\Big( g^{x} \Big)}^2 =$$</p>
+<p>$$g^{1x^3} \cdot g^{-3x^2} \cdot g^{2x} =$$</p>
+<p>$$g^{x^3 - 3x^2 + 2x}$$</p>
+<p>通过这些运算，我们就获得了多项式在一些未知数 \(x\) 处的加密计算结果。这确实是一个很强大的机制，因为同态的性质，同一个多项式的加密运算在加密空间中始终是相同的。</p>
+<p>我们现在就可以更新前一个版本的协议了，比如对于阶数为 \(d\) 的多项式：</p>
+<ul>
+<li>
+<p>验证者</p>
+<ul>
+<li>取一个随机数 \(s\)，也就是秘密值</li>
+<li>令指数 \(i\) 取值为 \(0, 1, ..., d\) 时分别计算对 \(s\) 求幂的加密结果，即：\(E(s^i) = g^{s^i}\)</li>
+<li>代入 \(s\) 计算未加密的<em>目标多项式</em>：\(t(s)\)</li>
+<li>把对 \(s\) 求幂的加密结果提供给证明者：\(E(s^0), E(s^1), ..., E(s^d)\)</li>
+</ul>
+</li>
+<li>
+<p>证明者</p>
+<ul>
+<li>
+<p>计算多项式 \(h(x) = \frac{p(x)}{t(x)}\)</p>
+</li>
+<li>
+<p>使用加密值 \(g^{s^0}, g^{s^1}, \ldots, g^{s^d}\) 和系数 \(c_0, c_1, \ldots, c_n\) 计算</p>
+<p>$$E\left( p(s) \right) = g^{p(s)} = \left(g^{s^d}\right)^{c_d} \cdots \left(g^{s^1}\right)^{c_1} \cdot \left(g^{s^0}\right)^{c_0}$$</p>
+<p>然后同样计算</p>
+<p>$$E\left( h(s) \right) =  g^{h(s)}$$</p>
+</li>
+<li>
+<p>将结果 \(g^p\) 和 \(g^h\) 提供给验证者</p>
+</li>
+</ul>
+</li>
+<li>
+<p>验证者</p>
+<ul>
+<li>最后一步是验证者在加密空间内检查 \(p = t(s) \cdot h\)：</li>
+</ul>
+<p>$$g^p = \left(g^h\right)^{t(s)} \quad \Rightarrow \quad g^p = g^{t(s) \cdot h}$$</p>
+</li>
+</ul>
+<blockquote>
+<p>注：因为证明者并不知道与 \(s\) 相关的任何信息，所以很难提出不合法但能匹配验证的计算结果。</p>
+</blockquote>
+<p>尽管这个协议中证明者的灵活性有限，他依然可以通过其它的方式来伪造证明，无需实际使用验证者提供的 \(s\) 的幂的加密值。例如，如果证明者声称有一个满足条件的多项式，但只使用了 2 个幂值 \(s^3\) 和 \(s^1\)，这在当前协议中是不能验证的。</p>
+<blockquote>
+<p>译者注：本节利用强同态加密这个工具，构造了一个相对较强的零知识证明协议。但是如上文所述，这里还是存在一些问题——无法验证证明者是否是真的使用了验证者提供的值来构造证明。</p>
+<p>下一节中将会展示如何构造一个完备的多项式零知识证明协议。</p>
+</blockquote>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch3-3-3.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="ch02.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch3-3-3.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="ch02.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>

@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Page not found - zk-SNARK 为什么以及如何工作</title>
-        <base href="/">
+        <title>强同态加密 - zk-SNARK 为什么以及如何工作</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="《zk-SNARK 为什么以及如何工作（Why and How zk-SNARK Works）》简体中文版">
@@ -78,7 +77,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">README</a></li><li class="chapter-item expanded affix "><a href="abstract.html">摘要</a></li><li class="chapter-item expanded affix "><a href="ch0.html">前言</a></li><li class="chapter-item expanded "><a href="ch1.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="chapter-item expanded "><a href="ch2.html"><strong aria-hidden="true">2.</strong> 证明的媒介</a></li><li class="chapter-item expanded "><a href="ch3.html"><strong aria-hidden="true">3.</strong> 多项式的非交互式零知识</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-1.html"><strong aria-hidden="true">3.1.</strong> 证明多项式的知识</a></li><li class="chapter-item expanded "><a href="ch3-2.html"><strong aria-hidden="true">3.2.</strong> 因式分解</a></li><li class="chapter-item expanded "><a href="ch3-3.html"><strong aria-hidden="true">3.3.</strong> 模糊求值</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-3-1.html"><strong aria-hidden="true">3.3.1.</strong> 同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-2.html"><strong aria-hidden="true">3.3.2.</strong> 模运算</a></li><li class="chapter-item expanded "><a href="ch3-3-3.html"><strong aria-hidden="true">3.3.3.</strong> 强同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-4.html"><strong aria-hidden="true">3.3.4.</strong> 加密多项式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ch02.html"><strong aria-hidden="true">4.</strong> 多项式的非交互式零知识证明</a></li><li class="chapter-item expanded "><a href="ch03.html"><strong aria-hidden="true">5.</strong> 从程序到多项式的构造</a></li><li class="chapter-item expanded "><a href="ch04.html"><strong aria-hidden="true">6.</strong> 多项式的约束</a></li><li class="chapter-item expanded "><a href="ch05.html"><strong aria-hidden="true">7.</strong> Pinocchio 协议</a></li><li class="chapter-item expanded affix "><a href="references.html">参考文献</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">README</a></li><li class="chapter-item expanded affix "><a href="abstract.html">摘要</a></li><li class="chapter-item expanded affix "><a href="ch0.html">前言</a></li><li class="chapter-item expanded "><a href="ch1.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="chapter-item expanded "><a href="ch2.html"><strong aria-hidden="true">2.</strong> 证明的媒介</a></li><li class="chapter-item expanded "><a href="ch3.html"><strong aria-hidden="true">3.</strong> 多项式的非交互式零知识</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-1.html"><strong aria-hidden="true">3.1.</strong> 证明多项式的知识</a></li><li class="chapter-item expanded "><a href="ch3-2.html"><strong aria-hidden="true">3.2.</strong> 因式分解</a></li><li class="chapter-item expanded "><a href="ch3-3.html"><strong aria-hidden="true">3.3.</strong> 模糊求值</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-3-1.html"><strong aria-hidden="true">3.3.1.</strong> 同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-2.html"><strong aria-hidden="true">3.3.2.</strong> 模运算</a></li><li class="chapter-item expanded "><a href="ch3-3-3.html" class="active"><strong aria-hidden="true">3.3.3.</strong> 强同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-4.html"><strong aria-hidden="true">3.3.4.</strong> 加密多项式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ch02.html"><strong aria-hidden="true">4.</strong> 多项式的非交互式零知识证明</a></li><li class="chapter-item expanded "><a href="ch03.html"><strong aria-hidden="true">5.</strong> 从程序到多项式的构造</a></li><li class="chapter-item expanded "><a href="ch04.html"><strong aria-hidden="true">6.</strong> 多项式的约束</a></li><li class="chapter-item expanded "><a href="ch05.html"><strong aria-hidden="true">7.</strong> Pinocchio 协议</a></li><li class="chapter-item expanded affix "><a href="references.html">参考文献</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -140,19 +139,53 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <h1 id="强同态加密"><a class="header" href="#强同态加密">强同态加密</a></h1>
+<p>我们再回到同态加密上，使用模运算，例如取模 7，我们可以得到：</p>
+<p>$$5^1 = 5 \ (\mathrm{mod}\ {7})$$</p>
+<p>$$5^2 = 4 \ (\mathrm{mod}\ {7})$$</p>
+<p>$$5^3 = 6 \ (\mathrm{mod}\ {7})$$</p>
+<p>$$\ldots$$</p>
+<p>不同指数下运算将会得到同样的结果：</p>
+<p>$$5^5 = 3 \ (\mathrm{mod}\ {7})$$</p>
+<p>$$5^{11} = 3 \ (\mathrm{mod}\ {7})$$</p>
+<p>$$5^{17} = 3 \ (\mathrm{mod}\ {7})$$</p>
+<p>$$\ldots$$</p>
+<p>这样就很难知道指数是多少了。事实上，如果模取得相当大，从运算结果倒推指数运算就不可行了，现代密码学很大程度上就是基于这个问题的困难程度。</p>
+<p>方案中所有的同态性质都在模运算中保留了下来：</p>
+<p>$$\mathrm{加密：} 5^3 = 6 \ (\mathrm{mod}\ {7})$$</p>
+<p>$$\mathrm{乘法：} 6^2 = {(5^3)}^2 = 5^6 = 1 \ (\mathrm{mod}\ {7})$$</p>
+<p>$$\mathrm{加法：} 5^3 \cdot 5^2 = 5^5 = 3 \ (\mathrm{mod}\ {7})$$</p>
+<blockquote>
+<p>注：模相除有点难，已经超出范围了。</p>
+</blockquote>
+<p>我们来明确地说明一下加密函数：\(E(v) = g^v \ (\mathrm{mod}\ {n})\)，这里 \(v\) 就是我们要加密的值。</p>
+<p><strong>备注 3.2</strong> 这个同态加密模式有一个限制，我们可以把一个加密的值和一个未加密的值相乘，但我们不能将两个加密的值相乘（或者相除），也就是说我们不能对加密值取幂。虽然这些性质第一感觉看上去很不友好，但是却构成了 zk-SNARK 的基础。这个限制将在 3.6.1 节中讲到。</p>
+<blockquote>
+<p>译者注：通过模运算形成的集合被称为有限域，而通过计算指数再进行模运算形成的集合构成循环群。常见的同态加密方式除了整数幂取模之外，还有椭圆曲线上的倍乘。</p>
+</blockquote>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch3-3-2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="ch3-3-4.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch3-3-2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="ch3-3-4.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>

@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Page not found - zk-SNARK 为什么以及如何工作</title>
-        <base href="/">
+        <title>同态加密 - zk-SNARK 为什么以及如何工作</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="《zk-SNARK 为什么以及如何工作（Why and How zk-SNARK Works）》简体中文版">
@@ -78,7 +77,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">README</a></li><li class="chapter-item expanded affix "><a href="abstract.html">摘要</a></li><li class="chapter-item expanded affix "><a href="ch0.html">前言</a></li><li class="chapter-item expanded "><a href="ch1.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="chapter-item expanded "><a href="ch2.html"><strong aria-hidden="true">2.</strong> 证明的媒介</a></li><li class="chapter-item expanded "><a href="ch3.html"><strong aria-hidden="true">3.</strong> 多项式的非交互式零知识</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-1.html"><strong aria-hidden="true">3.1.</strong> 证明多项式的知识</a></li><li class="chapter-item expanded "><a href="ch3-2.html"><strong aria-hidden="true">3.2.</strong> 因式分解</a></li><li class="chapter-item expanded "><a href="ch3-3.html"><strong aria-hidden="true">3.3.</strong> 模糊求值</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-3-1.html"><strong aria-hidden="true">3.3.1.</strong> 同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-2.html"><strong aria-hidden="true">3.3.2.</strong> 模运算</a></li><li class="chapter-item expanded "><a href="ch3-3-3.html"><strong aria-hidden="true">3.3.3.</strong> 强同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-4.html"><strong aria-hidden="true">3.3.4.</strong> 加密多项式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ch02.html"><strong aria-hidden="true">4.</strong> 多项式的非交互式零知识证明</a></li><li class="chapter-item expanded "><a href="ch03.html"><strong aria-hidden="true">5.</strong> 从程序到多项式的构造</a></li><li class="chapter-item expanded "><a href="ch04.html"><strong aria-hidden="true">6.</strong> 多项式的约束</a></li><li class="chapter-item expanded "><a href="ch05.html"><strong aria-hidden="true">7.</strong> Pinocchio 协议</a></li><li class="chapter-item expanded affix "><a href="references.html">参考文献</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">README</a></li><li class="chapter-item expanded affix "><a href="abstract.html">摘要</a></li><li class="chapter-item expanded affix "><a href="ch0.html">前言</a></li><li class="chapter-item expanded "><a href="ch1.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="chapter-item expanded "><a href="ch2.html"><strong aria-hidden="true">2.</strong> 证明的媒介</a></li><li class="chapter-item expanded "><a href="ch3.html"><strong aria-hidden="true">3.</strong> 多项式的非交互式零知识</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-1.html"><strong aria-hidden="true">3.1.</strong> 证明多项式的知识</a></li><li class="chapter-item expanded "><a href="ch3-2.html"><strong aria-hidden="true">3.2.</strong> 因式分解</a></li><li class="chapter-item expanded "><a href="ch3-3.html"><strong aria-hidden="true">3.3.</strong> 模糊求值</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-3-1.html" class="active"><strong aria-hidden="true">3.3.1.</strong> 同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-2.html"><strong aria-hidden="true">3.3.2.</strong> 模运算</a></li><li class="chapter-item expanded "><a href="ch3-3-3.html"><strong aria-hidden="true">3.3.3.</strong> 强同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-4.html"><strong aria-hidden="true">3.3.4.</strong> 加密多项式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ch02.html"><strong aria-hidden="true">4.</strong> 多项式的非交互式零知识证明</a></li><li class="chapter-item expanded "><a href="ch03.html"><strong aria-hidden="true">5.</strong> 从程序到多项式的构造</a></li><li class="chapter-item expanded "><a href="ch04.html"><strong aria-hidden="true">6.</strong> 多项式的约束</a></li><li class="chapter-item expanded "><a href="ch05.html"><strong aria-hidden="true">7.</strong> Pinocchio 协议</a></li><li class="chapter-item expanded affix "><a href="references.html">参考文献</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -140,19 +139,40 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <h1 id="同态加密"><a class="header" href="#同态加密">同态加密</a></h1>
+<p>这也就是要设计同态加密的原因。它允许加密一个值并在密文上进行算术运算。获取加密的同态性质的方法有多种，我们来介绍一个简单的方法。</p>
+<p>总体思路就是我们选择一个基础的（基数需要具有某些特定的属性）的自然数 \(g\)（例如 5），然后我们以要加密的值为指数对 \(g\) 进行求幂。例如，如果我们要对 3 进行加密：</p>
+<p>$$5^3 = 125$$</p>
+<p>这里 125 就是 3 对应的密文。如果我们想要对被加密的值乘 2，我们可以以 2 为指数来对这个密文进行计算。</p>
+<p>$$125^2 = 15625 = \left(5^3\right)^2 = 5^{2 \times 3} = 5^6$$</p>
+<p>我们不仅可以用 2 来乘以一个未知的值并保持密文的有效性，还可以通过密文相乘来使两个值相加，例如 3 + 2：</p>
+<p>$$5^3 \cdot 5^2 = 5^{3 + 2} = 5^5 = 3125$$</p>
+<p>同样的，我们还可以通过相除提取加密的数字，例如 5 - 3</p>
+<p>$$\frac{5^5}{5^3} = 5^5 \cdot 5^{-3} = 5^{5 - 3} = 5 ^ 2 = 25$$</p>
+<p>不过由于基数 5 是公开的，很容易就可以找到被加密的数字。只要将密文一直除以 5，直到结果为 1，那么做除法的次数也就是被加密的值。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch3-3.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="ch3-3-2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch3-3.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="ch3-3-2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>

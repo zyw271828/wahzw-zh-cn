@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Page not found - zk-SNARK 为什么以及如何工作</title>
-        <base href="/">
+        <title>模运算 - zk-SNARK 为什么以及如何工作</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="《zk-SNARK 为什么以及如何工作（Why and How zk-SNARK Works）》简体中文版">
@@ -78,7 +77,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">README</a></li><li class="chapter-item expanded affix "><a href="abstract.html">摘要</a></li><li class="chapter-item expanded affix "><a href="ch0.html">前言</a></li><li class="chapter-item expanded "><a href="ch1.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="chapter-item expanded "><a href="ch2.html"><strong aria-hidden="true">2.</strong> 证明的媒介</a></li><li class="chapter-item expanded "><a href="ch3.html"><strong aria-hidden="true">3.</strong> 多项式的非交互式零知识</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-1.html"><strong aria-hidden="true">3.1.</strong> 证明多项式的知识</a></li><li class="chapter-item expanded "><a href="ch3-2.html"><strong aria-hidden="true">3.2.</strong> 因式分解</a></li><li class="chapter-item expanded "><a href="ch3-3.html"><strong aria-hidden="true">3.3.</strong> 模糊求值</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-3-1.html"><strong aria-hidden="true">3.3.1.</strong> 同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-2.html"><strong aria-hidden="true">3.3.2.</strong> 模运算</a></li><li class="chapter-item expanded "><a href="ch3-3-3.html"><strong aria-hidden="true">3.3.3.</strong> 强同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-4.html"><strong aria-hidden="true">3.3.4.</strong> 加密多项式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ch02.html"><strong aria-hidden="true">4.</strong> 多项式的非交互式零知识证明</a></li><li class="chapter-item expanded "><a href="ch03.html"><strong aria-hidden="true">5.</strong> 从程序到多项式的构造</a></li><li class="chapter-item expanded "><a href="ch04.html"><strong aria-hidden="true">6.</strong> 多项式的约束</a></li><li class="chapter-item expanded "><a href="ch05.html"><strong aria-hidden="true">7.</strong> Pinocchio 协议</a></li><li class="chapter-item expanded affix "><a href="references.html">参考文献</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">README</a></li><li class="chapter-item expanded affix "><a href="abstract.html">摘要</a></li><li class="chapter-item expanded affix "><a href="ch0.html">前言</a></li><li class="chapter-item expanded "><a href="ch1.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="chapter-item expanded "><a href="ch2.html"><strong aria-hidden="true">2.</strong> 证明的媒介</a></li><li class="chapter-item expanded "><a href="ch3.html"><strong aria-hidden="true">3.</strong> 多项式的非交互式零知识</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-1.html"><strong aria-hidden="true">3.1.</strong> 证明多项式的知识</a></li><li class="chapter-item expanded "><a href="ch3-2.html"><strong aria-hidden="true">3.2.</strong> 因式分解</a></li><li class="chapter-item expanded "><a href="ch3-3.html"><strong aria-hidden="true">3.3.</strong> 模糊求值</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-3-1.html"><strong aria-hidden="true">3.3.1.</strong> 同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-2.html" class="active"><strong aria-hidden="true">3.3.2.</strong> 模运算</a></li><li class="chapter-item expanded "><a href="ch3-3-3.html"><strong aria-hidden="true">3.3.3.</strong> 强同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-4.html"><strong aria-hidden="true">3.3.4.</strong> 加密多项式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ch02.html"><strong aria-hidden="true">4.</strong> 多项式的非交互式零知识证明</a></li><li class="chapter-item expanded "><a href="ch03.html"><strong aria-hidden="true">5.</strong> 从程序到多项式的构造</a></li><li class="chapter-item expanded "><a href="ch04.html"><strong aria-hidden="true">6.</strong> 多项式的约束</a></li><li class="chapter-item expanded "><a href="ch05.html"><strong aria-hidden="true">7.</strong> Pinocchio 协议</a></li><li class="chapter-item expanded affix "><a href="references.html">参考文献</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -140,19 +139,54 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <h1 id="模运算"><a class="header" href="#模运算">模运算</a></h1>
+<p>这里就到了模运算发挥作用的地方了。模运算的思路如下：除了我们所选择的组成有限集合的前 \(n\) 个自然数（即 \(0, 1, \ldots, n - 1\)）以外，任何超出此范围的给定整数，我们就将它「缠绕」起来。例如，我们选择前六个数。为了说明这一点，可以把它看做一个有六个单位大小相等刻度的圆；这就是我们所说的范围（通常指的是有限域）。</p>
+<p><img src="img/1_q-GtshK0LkZMg5PSj44FvA.png" alt="img" /></p>
+<p>现在我们看一下数字八应该在哪里。打个比方，我们可以把它看成一条长度为八的绳子：</p>
+<p><img src="img/1_WbT1Eie_Frg1vdqcfi_uig.png" alt="img" /></p>
+<p>如果我们将绳子固定在圆圈的开头</p>
+<p><img src="img/1_O-OE3lLnPelGiej4L56R3A.png" alt="img" /></p>
+<p>然后用绳子缠绕圆圈，我们在缠完一圈后还剩下一部分的绳子：</p>
+<p><img src="img/1_nOJ-DFp3L4fOYmHbkWp-JQ.png" alt="img" /></p>
+<p>然后我们继续缠绕，这根绳子将在刻度 #2 的地方终止。</p>
+<p><img src="img/1_5970QxlFD23iOJrY8_DPsw.png" alt="img" /></p>
+<p>这就是模运算操作的结果。无论这根绳子多长，它最终都会在圆圈一个刻度处终止。因而模运算结果将保持在一定范围内（例子中是 0 到 5）。长度为 15 的绳子将会在刻度 3 的地方终止，即 6 + 6 + 3（缠两个完整的圈并剩下 3 个单位长的部分）。负数运算类似，唯一不同的地方就是它是沿相反方向缠绕的，如 -8 的取模结果是 4。</p>
+<p>我们执行算术运算，结果都将落在这个 \(n\) 的范围内。现在开始我们将用符号「\(\mathrm{mod}\ n\)」来表示这个范围内的数。</p>
+<p>$$3 \times 5 = 3 \ (\mathrm{mod}\ {6})$$</p>
+<p>$$5 + 2 = 1 \ (\mathrm{mod}\ {6})$$</p>
+<p>另外，模运算最重要的性质就是运算顺序无所谓。例如，我们可以先做完所有的运算，然后再取模，或者每运算完一步都去取模。例如 \((2 \times 4 - 1) \times 3 = 3 \ (\mathrm{mod}\ {6})\) 就等于：</p>
+<p>$$2 \times 4 = 2 \ (\mathrm{mod}\ {6})$$</p>
+<p>$$2 - 1 = 1 \ (\mathrm{mod}\ {6})$$</p>
+<p>$$1 \times 3 = 3 \ (\mathrm{mod}\ {6})$$</p>
+<p>那么模运算到底有什么用呢？如果我们使用模运算，从运算结果再回到原始值并不容易，因为很多不同的组合会产生同样的运算结果：</p>
+<p>$$5 \times 4 = 2 \ (\mathrm{mod}\ {6})$$</p>
+<p>$$4 \times 2 = 2 \ (\mathrm{mod}\ {6})$$</p>
+<p>$$2 \times 1 = 2 \ (\mathrm{mod}\ {6})$$</p>
+<p>$$\ldots$$</p>
+<p>没有模运算的话，计算结果的大小会给找出原始值提供一些线索。模运算既能把这一信息隐藏起来，又可以保留常见的算术属性。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch3-3-1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="ch3-3-3.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch3-3-1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="ch3-3-3.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>

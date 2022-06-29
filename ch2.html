@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>证明的媒介 - zk-SNARK 为什么以及如何工作</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="《zk-SNARK 为什么以及如何工作（Why and How zk-SNARK Works）》简体中文版">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">README</a></li><li class="chapter-item expanded affix "><a href="abstract.html">摘要</a></li><li class="chapter-item expanded affix "><a href="ch0.html">前言</a></li><li class="chapter-item expanded "><a href="ch1.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="chapter-item expanded "><a href="ch2.html" class="active"><strong aria-hidden="true">2.</strong> 证明的媒介</a></li><li class="chapter-item expanded "><a href="ch3.html"><strong aria-hidden="true">3.</strong> 多项式的非交互式零知识</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-1.html"><strong aria-hidden="true">3.1.</strong> 证明多项式的知识</a></li><li class="chapter-item expanded "><a href="ch3-2.html"><strong aria-hidden="true">3.2.</strong> 因式分解</a></li><li class="chapter-item expanded "><a href="ch3-3.html"><strong aria-hidden="true">3.3.</strong> 模糊求值</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-3-1.html"><strong aria-hidden="true">3.3.1.</strong> 同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-2.html"><strong aria-hidden="true">3.3.2.</strong> 模运算</a></li><li class="chapter-item expanded "><a href="ch3-3-3.html"><strong aria-hidden="true">3.3.3.</strong> 强同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-4.html"><strong aria-hidden="true">3.3.4.</strong> 加密多项式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ch02.html"><strong aria-hidden="true">4.</strong> 多项式的非交互式零知识证明</a></li><li class="chapter-item expanded "><a href="ch03.html"><strong aria-hidden="true">5.</strong> 从程序到多项式的构造</a></li><li class="chapter-item expanded "><a href="ch04.html"><strong aria-hidden="true">6.</strong> 多项式的约束</a></li><li class="chapter-item expanded "><a href="ch05.html"><strong aria-hidden="true">7.</strong> Pinocchio 协议</a></li><li class="chapter-item expanded affix "><a href="references.html">参考文献</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">zk-SNARK 为什么以及如何工作</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/zyw271828/wahzw-zh-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="证明的媒介"><a class="header" href="#证明的媒介">证明的媒介</a></h1>
+<p>这里我们先不去管零知识、非交互性其形式和适用性这些概念，就从尝试证明一些简单的东西开始。</p>
+<p>想象一下我们有一个长度为 10 的位数组，现在要向验证者（例如程序）证明这样一个陈述：所有的位都被设置成了 1（即我们<em>知道</em>一个每个元素都等于 1 的数组）。</p>
+<p>$$b = [\ \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}\ ]$$</p>
+<p>验证者一次只能检查（也就是读取）一位。为了验证这个陈述，我们以某种任意的顺序读取元素并检查其是否确实等于 1。如果第一次抽样检查的结果是 1，就设置陈述的可信度为 \(\frac{1}{10} = 10%\)，否则，如果等于 0，就说明陈述是错误的。验证者继续进行下一轮验证，直到获得足够的可信度为止。假如在一些场景下要信任证明者需要至少 50% 的可信度，那就意味着必须执行 5 次校验。但假如在其它一些场景下需要 95% 的可信度，就需要检查所有的元素。很明显这个证明协议的缺点是必须要根据元素的数量进行检查，如果我们处理数百万个元素的数组，这么做是不现实的。</p>
+<p>现在我们来看一下由数学方程式表示的多项式，它可以被画成坐标系上的一条曲线：</p>
+<p><img src="img/1_-icO0q-Mu7AcFFMmCoOvfQ.png" alt="" /></p>
+<p>上面的曲线对应多项式：\(f(x) = x^3 -6x^2 + 11x - 6\)。多项式的阶数取决于 \(x\) 的最大指数，当前多项式的阶数是 3。</p>
+<p>多项式有一个非常好的特性，就是如果我们有两个阶为 \(d\) 的不相等多项式，它们相交的点数不会超过 \(d\)。例如，稍微修改一下原来的多项式为 \(x^3 - 6x^2 + \mathbf{10}x - \mathbf{5}\) 并在图上用绿色标出：</p>
+<p><img src="img/1_7JGXnnMDoEr4Rbn7-WOSQw.png" alt="" /></p>
+<p>这一点微小的修改就产生了变化很大的曲线。事实上，我们不可能找到两条不同的曲线，它们会在某段区域内重合（它们只会相交于一些点）。</p>
+<p>这是从找多项式共同点的方法中得出的性质。如果要找到两个多项式的交点，就要先令它们相等。例如，要找到多项式与 \(x\) 轴的交点（即 \(f(x) = 0\)），我们就要令 \(x^3 - 6x^2 + 11x - 6 = 0\)，等式的解就是共同点：\(x = 1\)、\(x = 2\) 和 \(x = 3\)。在上面图中也可以很清晰地看出这些解，也就是图上蓝色曲线和 \(x\) 轴相交的地方。</p>
+<p>同样，我们也可以令上文中原始的多项式和修改后的多项式相等，找到它们的交点。</p>
+<p>$$x^3 - 6x^2 + 11x - 6 = x^3 - 6x^2 + \mathbf{10}x - \mathbf{5}$$</p>
+<p>$$x - 1 = 0$$</p>
+<p>多项式化简后的结果阶数为 1，它有一个很明显的解 \(x = 1\)。因此这两个多项式有一个交点。</p>
+<p><img src="img/1_5tGItKaiCxwLAjYJaBRffg.png" alt="" /></p>
+<p>任意一个由阶数为 \(d\) 的多项式组成的等式，最后都会被化简为另外一个阶数至多为 \(d\) 的多项式，这是因为等式中没有能用来构造更高阶数的乘法。例如：\(5x^3 + 7x^2 - x + 2 = 3x^3 - x^2 + 2x - 5\)，简化为 \(2x^3 + 8x^2 - 3x + 7 = 0\)。另外代数的基本原理也告诉我们，对于一个阶数为 \(d\) 的多项式至多有 \(d\) 个解（3.2 节将对此进行详细介绍），因此也就至多有 \(d\) 个共同点。</p>
+<p>所以我们可以得出结论，任何多项式在任意点的计算结果（更多关于多项式求值可以参考：[<a href="./references.html#Pik13">Pik13</a>]）都可以看做是其唯一身份的表示。我们来计算一下当 \(x = 10\) 时，示例多项式的结果。</p>
+<p>$$ x^3 - 6x^2 + 11x - 6 = 504 $$</p>
+<p>$$ x^3 - 6x^2 + 10x - 5 = 495 $$</p>
+<p>事实上，在 \(x\) 可以选择的所有值中，至多只有三个值能够使这些多项式相等，其它的值都是不相等的。</p>
+<p>这也是为什么如果一个证明者声称他<em>知道</em>一些验证者也知道的多项式（无论多项式的阶数有多大）时，他们就可以按照一个简单的协议去验证：</p>
+<ul>
+<li>验证者选择一个随机值 \(x\) 并在本地计算多项式结果</li>
+<li>验证者将 \(x\) 值提供给证明者，并让他计算相关的多项式结果</li>
+<li>证明者代入 \(x\) 到多项式计算并将结果提供给验证者</li>
+<li>验证者检查本地的计算结果和证明者的计算结果是否相等，如果相等就说明证明者的陈述具有较高的可信度</li>
+</ul>
+<p>例如，我们把 \(x\) 的取值范围定在 1 到 \(10^{77}\)，那么计算结果不同的点的数量就有 \(10^{77} - d\) 个。因而 \(x\) 偶然「撞到」这 \(d\) 个结果相同的点中任意一个的概率就等于：\(\frac{d}{10^{77}}\)（几乎可以认为是不可能）。</p>
+<blockquote>
+<p>注：与低效的位检查协议相比，新的协议只需要一轮验证就可以让声明具有非常高的可信度（如果假设 \(d\) 远小于其取值范围的上限，就几乎是 \(100%\) 了）</p>
+</blockquote>
+<p>这也是为什么即使可能存在其他的证明媒介，多项式依然是 zk-SNARK 相对核心的部分。</p>
+<blockquote>
+<p>译者注：这一节告诉了我们多项式的一个重要性质：我们不可能找到共享连续段的两条不相等曲线，任何多项式在任意点的计算结果都可以看做是其唯一身份的标识。也就是说只要能证明知道某个随机点对应的多项式上的值就可以证明知道这个多项式（只有知道了多项式，才能算出这个点对应的值），这个性质是下面所有证明的核心。</p>
+<p>这就是 Schwartz–Zippel 定理，它可以扩展到多变量多项式，即在一个多维空间内形成的一个曲面。这个定理会在多个零知识证明方案的证明中反复出现。</p>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="ch3.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="ch3.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
