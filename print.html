@@ -211,17 +211,17 @@
 <p>$$b = [\ \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}\ ]$$</p>
 <p>验证者一次只能检查（也就是读取）一位。为了验证这个陈述，我们以某种任意的顺序读取元素并检查其是否确实等于 1。如果第一次抽样检查的结果是 1，就设置陈述的可信度为 \(\frac{1}{10} = 10%\)，否则，如果等于 0，就说明陈述是错误的。验证者继续进行下一轮验证，直到获得足够的可信度为止。假如在一些场景下要信任证明者需要至少 50% 的可信度，那就意味着必须执行 5 次校验。但假如在其它一些场景下需要 95% 的可信度，就需要检查所有的元素。很明显这个证明协议的缺点是必须要根据元素的数量进行检查，如果我们处理数百万个元素的数组，这么做是不现实的。</p>
 <p>现在我们来看一下由数学方程式表示的多项式，它可以被画成坐标系上的一条曲线：</p>
-<p><img src="img/1_-icO0q-Mu7AcFFMmCoOvfQ.png" alt="" /></p>
+<p><img src="img/1_-icO0q-Mu7AcFFMmCoOvfQ.png" alt="img" /></p>
 <p>上面的曲线对应多项式：\(f(x) = x^3 -6x^2 + 11x - 6\)。多项式的阶数取决于 \(x\) 的最大指数，当前多项式的阶数是 3。</p>
 <p>多项式有一个非常好的特性，就是如果我们有两个阶为 \(d\) 的不相等多项式，它们相交的点数不会超过 \(d\)。例如，稍微修改一下原来的多项式为 \(x^3 - 6x^2 + \mathbf{10}x - \mathbf{5}\) 并在图上用绿色标出：</p>
-<p><img src="img/1_7JGXnnMDoEr4Rbn7-WOSQw.png" alt="" /></p>
+<p><img src="img/1_7JGXnnMDoEr4Rbn7-WOSQw.png" alt="img" /></p>
 <p>这一点微小的修改就产生了变化很大的曲线。事实上，我们不可能找到两条不同的曲线，它们会在某段区域内重合（它们只会相交于一些点）。</p>
 <p>这是从找多项式共同点的方法中得出的性质。如果要找到两个多项式的交点，就要先令它们相等。例如，要找到多项式与 \(x\) 轴的交点（即 \(f(x) = 0\)），我们就要令 \(x^3 - 6x^2 + 11x - 6 = 0\)，等式的解就是共同点：\(x = 1\)、\(x = 2\) 和 \(x = 3\)。在上面图中也可以很清晰地看出这些解，也就是图上蓝色曲线和 \(x\) 轴相交的地方。</p>
 <p>同样，我们也可以令上文中原始的多项式和修改后的多项式相等，找到它们的交点。</p>
 <p>$$x^3 - 6x^2 + 11x - 6 = x^3 - 6x^2 + \mathbf{10}x - \mathbf{5}$$</p>
 <p>$$x - 1 = 0$$</p>
 <p>多项式化简后的结果阶数为 1，它有一个很明显的解 \(x = 1\)。因此这两个多项式有一个交点。</p>
-<p><img src="img/1_5tGItKaiCxwLAjYJaBRffg.png" alt="" /></p>
+<p><img src="img/1_5tGItKaiCxwLAjYJaBRffg.png" alt="img" /></p>
 <p>任意一个由阶数为 \(d\) 的多项式组成的等式，最后都会被化简为另外一个阶数至多为 \(d\) 的多项式，这是因为等式中没有能用来构造更高阶数的乘法。例如：\(5x^3 + 7x^2 - x + 2 = 3x^3 - x^2 + 2x - 5\)，简化为 \(2x^3 + 8x^2 - 3x + 7 = 0\)。另外代数的基本原理也告诉我们，对于一个阶数为 \(d\) 的多项式至多有 \(d\) 个解（3.2 节将对此进行详细介绍），因此也就至多有 \(d\) 个共同点。</p>
 <p>所以我们可以得出结论，任何多项式在任意点的计算结果（更多关于多项式求值可以参考：[<a href="./references.html#Pik13">Pik13</a>]）都可以看做是其唯一身份的表示。我们来计算一下当 \(x = 10\) 时，示例多项式的结果。</p>
 <p>$$ x^3 - 6x^2 + 11x - 6 = 504 $$</p>
@@ -268,7 +268,7 @@
 <p>换句话说，存在一些多项式 \(h(x)\) 能够使得 \(t(x)\) 与之相乘后等于 \(p(x)\)，由此得出，\(p(x)\) 中包含 \(t(x)\)，所以 \(p(x)\) 的根中也包含 \(t(x)\) 的所有根，这也就是我们要证明的东西。</p>
 <p>自然地算出 \(h(x)\) 的方式就是直接相除：\(h(x) = \frac{p(x)}{t(x)}\)。如果一个证明者不能找到这样一个 \(h(x)\) 也就意味着 \(p(x)\) 中不包含因式 \(t(x)\)，那么多项式相除就会有余数。</p>
 <p>例如我们用 \(p(x) = x^3 - 3x^2 + 2x\) 除以 \(t(x) = (x - 1)(x - 2) = x^2 - 3x + 2\)：</p>
-<p><img src="img/1_iT3kRk3C-DJdvQgi1b2uOA.png" alt="" /></p>
+<p><img src="img/1_iT3kRk3C-DJdvQgi1b2uOA.png" alt="img" /></p>
 <blockquote>
 <p>注：左边的式子是分母，右上角的是计算结果。底部是余数（多项式相除的解释及示例可以参考 [<a href="./references.html#Pik14">Pik14</a>]）。</p>
 </blockquote>
@@ -296,7 +296,7 @@
 <li>验证者再验证 \(p = t \cdot h\)：\(10626 = 462 \cdot 23\) 是正确的，这样陈述就被证明了</li>
 </ul>
 <p>相反，如果证明者使用一个并不包含必要因式的不同 \(p'(x)\)，例如 \(p'(x) = {\color{red}2}x^3 - 3x^2 + 2x\), 那么：</p>
-<p><img src="img/1_heV9wqxECa2N4rG0OpvItQ.png" alt="" /></p>
+<p><img src="img/1_heV9wqxECa2N4rG0OpvItQ.png" alt="img" /></p>
 <p>我们算出结果 \(2x + 3\) 和余数 \(7x - 6\)，即：\(p(x) = t(x) \times (2x + 3) + 7x - 6\)。这就意味着验证者为了计算出结果不得不用余数除以 \(t(x)\)，\(h(x) = 2x + 3 + \frac{7x - 6}{t(x)}\)。不过由于 \(x\) 是验证者随机选择的，就有极低（但仍然不可忽略）的概率余数 \(7x - 6\) 最终可以被 \(t(x)\) 整除。如果后面验证者要另外再检查 \(p\) 和 \(h\) 必须是整数的话，这个证明就会被拒绝。</p>
 <p>不过这个校验同时也要求多项式系数也是整数，这对协议产生了极大的限制。</p>
 <p>这就是为什么接下来我们要介绍能够使余数不被整除的密码学原理的原因，尽管这个原始值是有可能被整除的。</p>
@@ -434,10 +434,10 @@
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="从零开始学习-zk-snark二多项式的非交互式零知识证明"><a class="header" href="#从零开始学习-zk-snark二多项式的非交互式零知识证明">从零开始学习 zk-SNARK（二）——多项式的非交互式零知识证明</a></h1>
 <h2 id="限制多项式"><a class="header" href="#限制多项式">限制多项式</a></h2>
-<p>上文说到，多项式的知识其实就是它的系数 <em>c<sub>0</sub>, c<sub>1</sub>, …, c<sub>i</sub></em> 的知识。协议中我们是通过对秘密值 <em>s</em> 的幂的加密值再进行求幂来对系数进行“赋值”。我们已经限制了 prover 对 <em>s</em> 幂的加密值的选择, 但是这个限制并不是强制的  ，也就是说，prover 可以使用任何可能的方法找到满足下面等式的值  <em>z<sub>p</sub></em> 和 <em>z<sub>h</sub></em> </p>
+<p>上文说到，多项式的知识其实就是它的系数 <em>c<sub>0</sub>, c<sub>1</sub>, …, c<sub>i</sub></em> 的知识。协议中我们是通过对秘密值 <em>s</em> 的幂的加密值再进行求幂来对系数进行“赋值”。我们已经限制了证明者对 <em>s</em> 幂的加密值的选择, 但是这个限制并不是强制的  ，也就是说，证明者可以使用任何可能的方法找到满足下面等式的值  <em>z<sub>p</sub></em> 和 <em>z<sub>h</sub></em></p>
 <p>$Z_p = (Z_h)^{t(s)}$</p>
-<p>再用这两个值来代替  <em>gᵖ</em>  和 <em>gʰ</em>  将它交给 verifier。所以 verifier 需要能够证明 prover 给出的值就是用 <em>s</em> 幂的加密值而不是其它值计算出来的。</p>
-<p>我们看一个由一个变量和一个系数组成的一阶多项式的简单例子，对应的 <em>s</em> 的加密值为 <em>E(s) = gˢ</em>。这里我们要做的就是确保 prover 是拿 <em>s</em> 的加密值，即 <em>gˢ</em> ，而不是其他值与系数 <em>c</em> 做同态相乘的。所以结果一定是这个形式（<em>c</em> 为任意值）：</p>
+<p>再用这两个值来代替  <em>gᵖ</em>  和 <em>gʰ</em>  将它交给验证者。所以验证者需要能够证明证明者给出的值就是用 <em>s</em> 幂的加密值而不是其它值计算出来的。</p>
+<p>我们看一个由一个变量和一个系数组成的一阶多项式的简单例子，对应的 <em>s</em> 的加密值为 <em>E(s) = gˢ</em>。这里我们要做的就是确保证明者是拿 <em>s</em> 的加密值，即 <em>gˢ</em> ，而不是其他值与系数 <em>c</em> 做同态相乘的。所以结果一定是这个形式（<em>c</em> 为任意值）：</p>
 <p>$(g^s)^c$</p>
 <p>解决这个问题的一种方法就是用另一个“变换”的加密值做同样的操作，充当类似算术中“校验和”<em>（Checksum）</em>  的作用，以此确保结果是原始值的求幂值。</p>
 <p>这个是通过 <strong>Knowledge-of-Exponent Assumption (简称 KEA)</strong> 方法来实现的，在  [<a href="ch02.html#bd26">Dam91</a>] 中有介绍，更精准一点（注意 <em>a</em> 和 <em>α</em>(alpha)这两个字符的不同）说：</p>
@@ -473,27 +473,17 @@
 </ul>
 <p>最后这个协议提供了一个证明给 Alice ，Bob 确实是用他知道的某个值对 <em>a</em> 进行求幂的，而且他也不能做别的任何操作，例如：乘法，加法，因为这样就会破坏 α-变换关系。</p>
 <p>在同态加密中，求幂是对被加密值进行乘法运算。我们可以应用这个结构到一个简单的系数多项式 <em>f</em>(<em>x</em>) = <em>c</em>⋅ <em>x</em>的例子中：</p>
-<ul>
-<li>
-<p>verifier 选择随机数 <em>s</em>, <em>α</em>，然后提供令 <em>x=s</em> 的一阶及其转换的计算值：</p>
+<p><em>验证者选择随机数</em>s*,<em>α</em>，然后提供令<em>x=s</em> 的一阶及其转换的计算值：</p>
 <p>$(g^s,g^{αs})$</p>
-</li>
-<li>
-<p>prover 代入系数 c 计算:</p>
+<p>*证明者代入系数 c 计算:</p>
 <p>$((g^s)^c,(g^{αs})^c) =(g^{cs},g^{αcs})$</p>
-</li>
-<li>
-<p>verifier 验证：</p>
+<p>*验证者验证：</p>
 <p>$(g^{cs})^α = g^{αcs}$</p>
-</li>
-</ul>
-<p>这个结构“限制” prover 只能用 verifier 提供的加密的 <em>s</em> 进行计算，因而 prover 只能将系数 c 赋给 verifier 提供的多项式。现在我们可以扩展这种单项式上的方法到多项式上，因为计算是先将每项的分配分开计算然后再 “同态地” 相加在一起的（这个方法是 Jens Groth 在 [<a href="ch02.html#3068">Gro10</a>] 中介绍的）。所以如果给定 prover 一个指数为 <em>s</em> 的幂以及它们的变换的加密值，他就可以计算原始的和变换后的多项式，这里也必须要满足同样的校验。对于阶数为 <em>d</em> 的多项式：</p>
+<p>这个结构“限制”证明者只能用验证者提供的加密的 <em>s</em> 进行计算，因而证明者只能将系数 c 赋给验证者提供的多项式。现在我们可以扩展这种单项式上的方法到多项式上，因为计算是先将每项的分配分开计算然后再 “同态地” 相加在一起的（这个方法是 Jens Groth 在 [<a href="ch02.html#3068">Gro10</a>] 中介绍的）。所以如果给定证明者一个指数为 <em>s</em> 的幂以及它们的变换的加密值，他就可以计算原始的和变换后的多项式，这里也必须要满足同样的校验。对于阶数为 <em>d</em> 的多项式：</p>
+<p>*验证者提供加密值 $g^{s^0}$,$g^{s^1}$,…,$g^{s^d}$ 和他们的变换  $g^{αs^0}$,$g^{αs^1}$,…,$g^{αs^d}$</p>
 <ul>
 <li>
-<p>verifier 提供加密值 $g^{s^0}$,$g^{s^1}$,…,$g^{s^d}$ 和他们的变换  $g^{αs^0}$,$g^{αs^1}$,…,$g^{αs^d}$ </p>
-</li>
-<li>
-<p>prover:</p>
+<p>证明者:</p>
 <ul>
 <li>
 <p>计算给定的带有 s 的幂的加密多项式</p>
@@ -508,44 +498,34 @@
 </li>
 </ul>
 </li>
-<li>
-<p>verifier 校验：$(g^p)^α = g^{p'}$</p>
-</li>
 </ul>
+<p>*验证者校验：$(g^p)^α = g^{p'}$</p>
 <p>前面的多项式例子 <em>p(x) = x<sup>3</sup> - 3x<sup>2</sup> +2x</em> 就变成了：</p>
-<ul>
-<li>
-<p>verifier 提供 $E(s^3)$, $E(s^2)$, $E(s)$ 和它们的变换  $E(αs^3)$, $E(αs^2)$, $E(αs)$ </p>
-</li>
-<li>
-<p>prover 计算：</p>
+<p>*验证者提供 $E(s^3)$, $E(s^2)$, $E(s)$ 和它们的变换  $E(αs^3)$, $E(αs^2)$, $E(αs)$</p>
+<p>*证明者计算：</p>
 <p>$g^p = g^{p(s)} = (g^{s^3})^1 \cdot (g^{s^2})^{(-3)} \cdot (g^s)^2 = g^{s^3} \cdot g^{-3s^2} \cdot g^{2s} = g^{s^3-3s^2+2s}$</p>
 <p>$g^{p'} = g^{αp(s)} = (g^{αs^3})^1 \cdot (g^{αs^2})^(-3) \cdot (g^αs)^2 = g^{αs^3} \cdot g^{-3αs^2} \cdot g^{2αs} = g^{α(s^3-3s^2+2s)}$</p>
-</li>
-<li>
-<p>verifier 校验：$(g^p)^α = g^{p'}$</p>
+<p>*验证者校验：$(g^p)^α = g^{p'}$</p>
 <p>$(g^{s^3-3s^2+2s})^α = g^{α(s^3-3s^2+2s)}$</p>
 <p>$g^{α(s^3-3s^2+2s)} = g^{α(s^3-3s^2+2s)}$</p>
-</li>
-</ul>
-<p>现在我们就可以确保 prover 是用了 verifier 提供的多项式而不是其它值做计算的了，因为别的方法不能够保持 α-变换。 当然如果 verifier 想要确保在 prover 的多项式中排除了 s 的某些次幂，如 j， 他就不提供对应的密文及其变换：</p>
+<p>现在我们就可以确保证明者是用了验证者提供的多项式而不是其它值做计算的了，因为别的方法不能够保持 α-变换。 当然如果验证者想要确保在证明者的多项式中排除了 s 的某些次幂，如 j， 他就不提供对应的密文及其变换：</p>
 <p>$g^{s^j}，g^{αs^j}$</p>
-<p>与前面的协议相比，我们现在已经有了一个比较健壮的协议。但是尽管已经做了加密，在<em>零知识</em> 性质上也还依然存在一个很明显的缺陷：<em>即理论上多项式参数 c<sub>ᵢ</sub> 是一个很广的取值范围内的值，实际上这个范围可能很有限</em>（比如前面例子中的 6），这就意味着 verifier 可以在有限范围的系数组合中进行暴力破解，最终计算出一个与 prover 的答案相等的结果。比如我们将每个系数的取值范围定为 100，多项式阶数为 2，那么大概会有 100 万种不同的组合，这里可以认为暴力破解只需要少于 100 万次的迭代。更重要的是，即使在只有一个系数，值为 1 的例子中，安全协议也应该能够保证其安全。</p>
+<p>与前面的协议相比，我们现在已经有了一个比较健壮的协议。但是尽管已经做了加密，在<em>零知识</em> 性质上也还依然存在一个很明显的缺陷：<em>即理论上多项式参数 c<sub>ᵢ</sub> 是一个很广的取值范围内的值，实际上这个范围可能很有限</em>（比如前面例子中的 6），这就意味着验证者可以在有限范围的系数组合中进行暴力破解，最终计算出一个与证明者的答案相等的结果。比如我们将每个系数的取值范围定为 100，多项式阶数为 2，那么大概会有 100 万种不同的组合，这里可以认为暴力破解只需要少于 100 万次的迭代。更重要的是，即使在只有一个系数，值为 1 的例子中，安全协议也应该能够保证其安全。</p>
 <blockquote>
-<p>even@安比实验室: 有了 KEA，就可以约束 prover 只能通过用 verifier 提供的加密值去构造证明了。严格点讲，这里是用的是 KEA的扩展版本，叫做 The q-power Knowledge of Exponent Assumption. </p>
+<p>译者注：有了 KEA，就可以约束证明者只能通过用验证者提供的加密值去构造证明了。严格点讲，这里是用的是 KEA的扩展版本，叫做 The q-power Knowledge of Exponent Assumption.</p>
 </blockquote>
 <h2 id="零知识证明"><a class="header" href="#零知识证明">零知识证明</a></h2>
-<p>因为 verifier 能够从 prover 发送的数据中提取未知多项式 <em>p(x)</em> 的知识 ，那么我们就来看一下这些提供的数据（证明）：</p>
+<p>因为验证者能够从证明者发送的数据中提取未知多项式 <em>p(x)</em> 的知识 ，那么我们就来看一下这些提供的数据（证明）：</p>
 <p>$g^p$，$g^{p'}$，$g^h$</p>
 <p>它们参与到了下面的验证：</p>
 <p>$g^p = (g^h)^{t(s)}$  (多项式  <em>p(x)</em> 有根 <em>t(x)</em>)</p>
 <p>$(g^p)^α = g^{p'}$  (用了正确形式的多项式)</p>
 <p>问题是我们如何选择证明使得这个校验依然有效，同时又保证没有知识能被提取？</p>
 <p>前面章节给了我们一个答案：我们可以使用随机值 *δ (delta)*来“变换”这些值,  如 <em>(g<sup>p</sup> )<sup>δ</sup></em>。 现在，为了提取知识，就必须首先要知道一个不可知的值 <em>δ</em>。并且，这种随机化在统计学上与随机值没有什么区别。</p>
-<p>为了保持这种关系，我们在 verifier 的检查中验证一下。等式的每一边都有一个 prover 提供的值。所以如果我们用同一个<em>δ</em> 来“变换” 每一个值，那么等式一定保持相等。</p>
-<p>具体来讲，就是 prover 选择一个随机值 <em>δ</em> ，并用它对证明中的值进行求幂</p>
-<p>$(g^{p(s)})^δ$ , $(g^{h(s)})^δ$ , $(g^{αp(s)})^δ$ </p>
-<p>然后提供验证内容给 verifier：</p>
+<p>为了保持这种关系，我们在验证者的检查中验证一下。等式的每一边都有一个证明者提供的值。所以如果我们用同一个<em>δ</em> 来“变换” 每一个值，那么等式一定保持相等。</p>
+<p>具体来讲，就是证明者选择一个随机值 <em>δ</em> ，并用它对证明中的值进行求幂</p>
+<p>$(g^{p(s)})^δ$ , $(g^{h(s)})^δ$ , $(g^{αp(s)})^δ$</p>
+<p>然后提供验证内容给验证者：</p>
 <p>$(g^p)^δ = ((g^h)^δ)^{t(s)}$</p>
 <p>$((g^p)^δ)^α = (g^{p'})^δ$</p>
 <p>再合并一下我们就可以看到校验的等式依然成立：</p>
@@ -553,33 +533,31 @@
 <p>$g^{δ \cdot αp} = g^{δ \cdot p'}$</p>
 <p>注意零知识是如何轻而易举地融入到这个结构中去的，这通常也被称为&quot;无成本的&quot;零知识。</p>
 <blockquote>
-<p>even@安比实验室: 借助这个”无成本的”技巧，就可以轻松实现零知了。但是这里实现零知识的方法和实际中的Pinocchio协议，还有Groth16 方案略有不同。实际方案中是用乘法乘以 $g^{δ\cdot t(s)}$。</p>
+<p>译者注：借助这个”无成本的”技巧，就可以轻松实现零知了。但是这里实现零知识的方法和实际中的Pinocchio协议，还有Groth16 方案略有不同。实际方案中是用乘法乘以 $g^{δ\cdot t(s)}$。</p>
 </blockquote>
 <h2 id="非交互式"><a class="header" href="#非交互式">非交互式</a></h2>
-<p>到现在为止，我们已经讲完了一个交互式的零知识方案。但为什么我们还需要有非交互式呢？因为交互式证明只对原始的 verifier 有效，其他任何人（其他的 verifier）都不能够信任这个证明，因为：</p>
-<ul>
-<li>verifier 可以和 prover 串通，告诉他密码参数 <em>s</em>, <em>α</em>，有了这些参数 prover 就可以伪造证明，就像前面  <strong>remark 3.1</strong> 提到的那样。</li>
-<li>verifier 也可以使用同样的方法自己伪造证明。</li>
-<li>verifier 必须保存 <em>α</em> and <em>t</em>(<em>s</em>) 直到所有相关证明被验证完毕，这就带来了一个可能造成秘密参数泄漏的额外攻击面。</li>
-</ul>
-<p>因而 prover 就需要分别和每个 verifier 做交互来证明一个陈述（就是例子中指的多项式的知识）。</p>
-<p>尽管交互式证明也有它的用处，例如一个 prover 只想让一个特定的 verifier （称为目标 verifier，更多的信息参见 [<a href="https://medium.com/@imolfar/why-and-how-zk-snark-works-3-non-interactivity-distributed-setup-c0310c0e5d1c#4b56">JSI96</a>] ）确信，就不能再重复利用同一个证明去向别人证明这个声明了，但是当一个 prover 想让众多的参与者同时或者永久地确信的话，这种方法就很低效了。 prover 需要保持一直在线并且对每一个 verifier 执行相同的计算。</p>
+<p>到现在为止，我们已经讲完了一个交互式的零知识方案。但为什么我们还需要有非交互式呢？因为交互式证明只对原始的验证者有效，其他任何人（其他的验证者）都不能够信任这个证明，因为：</p>
+<p><em>验证者可以和证明者串通，告诉他密码参数</em>s*,<em>α</em>，有了这些参数证明者就可以伪造证明，就像前面  <strong>备注 3.1</strong> 提到的那样。
+<em>验证者也可以使用同样的方法自己伪造证明。
+<em>验证者必须保存</em>α</em>and<em>t</em>(<em>s</em>) 直到所有相关证明被验证完毕，这就带来了一个可能造成秘密参数泄漏的额外攻击面。</p>
+<p>因而证明者就需要分别和每个验证者做交互来证明一个陈述（就是例子中指的多项式的知识）。</p>
+<p>尽管交互式证明也有它的用处，例如一个证明者只想让一个特定的验证者（称为目标验证者，更多的信息参见 [<a href="https://medium.com/@imolfar/why-and-how-zk-snark-works-3-non-interactivity-distributed-setup-c0310c0e5d1c#4b56">JSI96</a>] ）确信，就不能再重复利用同一个证明去向别人证明这个声明了，但是当一个证明者想让众多的参与者同时或者永久地确信的话，这种方法就很低效了。证明者需要保持一直在线并且对每一个验证者执行相同的计算。</p>
 <p>因而，<strong>我们就需要一个可以被重复使用，公开，可信，又不会被滥用的秘密参数</strong>。</p>
-<p>我们先来思考一下如何在构造出秘密值 (<em>t</em>(<em>s</em>)<em>,α</em>) 构造之后保证它的安全性。我们可以对其进行加密，方式与 verifier 在发送加密值给 prover 之前对 <em>s</em> 的幂使用的加密方式一致。但是 <strong>remark 3.2</strong> 中提到，我们使用的同态加密并不支持两个秘密值相乘，这一点对 <em>t</em>(<em>s</em>) 和 <em>h</em> 的加密值相乘以及 <em>p</em> 和 <em>α</em> 的加密值相乘的验证都很重要。这个问题适合用Pairing配对操作来解决。</p>
+<p>我们先来思考一下如何在构造出秘密值 (<em>t</em>(<em>s</em>)<em>,α</em>) 构造之后保证它的安全性。我们可以对其进行加密，方式与验证者在发送加密值给证明者之前对 <em>s</em> 的幂使用的加密方式一致。但是 <strong>备注 3.2</strong> 中提到，我们使用的同态加密并不支持两个秘密值相乘，这一点对 <em>t</em>(<em>s</em>) 和 <em>h</em> 的加密值相乘以及 <em>p</em> 和 <em>α</em> 的加密值相乘的验证都很重要。这个问题适合用Pairing配对操作来解决。</p>
 <blockquote>
-<p>even@安比实验室:这里非交互的证明协议将对参数加密，但引入了两个问题：</p>
+<p>译者注：这里非交互的证明协议将对参数加密，但引入了两个问题：</p>
 <p>1）同态加密无法对两个加密值做乘法，那如何验证加密后的参数呢？</p>
 <p>2）加密值一旦泄露，协议的信任关系将无法保证，如何确保参数的安全性？</p>
 </blockquote>
 <h3 id="加密值的相乘"><a class="header" href="#加密值的相乘">加密值的相乘</a></h3>
 <p>配对操作（双线性映射）是一个数学结构，表示为函数  <em>e(g,g)</em>，它给定一个数据集中的两个加密的输入（即 <em>g<sup>a</sup>, g<sup>b</sup></em> ），可以将他们确定性地映射到另一组不同的输出数据集上的它们的乘积，即 <em>e(g<sup>a</sup>, g<sup>b</sup>) = e(g, g)<sup>ab</sup></em>：</p>
-<p><img src="./img/2/1*0Qnz6c35UV1bv7uk620qrw.png" alt="" /></p>
+<p><img src="./img/2/1*0Qnz6c35UV1bv7uk620qrw.png" alt="img" /></p>
 <p>因为源数据集和输出数据集（通常被称为一个 group）是不同的，所以一个配对的结果不能用做其他配对计算的输入。我们可以将输出集（也称为“目标集”）视为“不同的宇宙”。因而我们不能用另一个加密值乘以结果，而且配对这个名称本身也表明了，我们一次只能将两个加密值相乘。</p>
 <blockquote>
-<p>even@安比实验室: 换句话说，配对只支持 x * y 这种两个值的乘法，但不支持三个或以上的值相乘，比如不支持 x * y * z。</p>
+<p>译者注：换句话说，配对只支持 x <em>y 这种两个值的乘法，但不支持三个或以上的值相乘，比如不支持 x</em> y * z。</p>
 </blockquote>
 <p>在某种意义上，这个类似于一个哈希函数，他将所有可能的输入值映射到可能的输出值的集合中的一个元素上，通常情况下这个过程是不可逆的。</p>
-<p><em>注意：乍一眼看过去，这个限制可能会阻碍相关功能的实现，但在 zk-SNARK 中这反而是保证安全模式的最重要性质，参见 <strong>remark 3.3</strong>。</em></p>
+<p><em>注意：乍一眼看过去，这个限制可能会阻碍相关功能的实现，但在 zk-SNARK 中这反而是保证安全模式的最重要性质，参见 <strong>备注 3.3</strong>。</em></p>
 <p>配对函数 <em>e</em>(<em>g</em>,<em>g</em>) 可以初步（严格来说是不对的）地类比成“交换”每一个输出的基数和指数的操作，使得基数 <em>g</em> 在交换过程中被修改成了指数的方式，即 <em>g<sup>a</sup> → a<sup>g</sup></em> 。&quot;被转换&quot;的两个输入一起被修改了，这样原始值 <em>a</em> 和 <em>b</em> 就在同一个指数下相乘了，即：</p>
 <p>$e(g^a,g^b) =a^g \cdot b^g =(ab)^g$</p>
 <p>因而因为基数在“转换”中被修改了，所以在另一个配对中不能再使用这个结果 (<em>ab</em>)<strong>ᵍ</strong> （即：<em>e</em>((<em>ab</em>)<em>ᵍ</em>, g<em>ᵈ</em>)）构造出想要的加密乘积 <em>abd</em> 了。配对的核心性质可以表示成下面的等式：</p>
@@ -593,16 +571,16 @@
 <h3 id="可信任参与方的-setup"><a class="header" href="#可信任参与方的-setup">可信任参与方的 Setup</a></h3>
 <p>有了配对，我们现在就准备去设置安全公开且可复用的参数了。假定一下我们让一个诚实的参与方来生成秘密值 <em>s</em> 和 <em>α</em>。只有  <em>α</em> 和所有必要的 <em>s</em> 的幂及其对应的  <em>α</em>-变换被加密了，那么原始数据就必须要被删除（ i 为 0，1,…,d ）：</p>
 <p>$g^α，g^{s^i}，g^{αs^i}$</p>
-<p>这些参数通常被称为 <em>common reference string</em> 或者 CRS。CRS 生成后，任何的 prover 和任何的 verifier 都可以使用它来构造非交互式的零知识证明协议。CRS 的优化版本将包含目标多项式的加密值  $g^{t(s)}$，尽管这个值并不重要。</p>
+<p>这些参数通常被称为 <em>common reference string</em> 或者 CRS。CRS 生成后，任何的证明者和任何的验证者都可以使用它来构造非交互式的零知识证明协议。CRS 的优化版本将包含目标多项式的加密值  $g^{t(s)}$，尽管这个值并不重要。</p>
 <p>把 CRS 分成两组（ i 为 0，1,…,d ）：</p>
 <ul>
 <li><em>proving  key</em>（也被称为 <em>evaluation key</em>）：$(g^{s^i},g^{αs^i})$</li>
 <li><em>verification key</em>：$(g^{t(s)},g^α)$</li>
 </ul>
-<p>只要能够乘以加密值，verifier 就可以在协议的最后一步验证多项式了：</p>
+<p>只要能够乘以加密值，验证者就可以在协议的最后一步验证多项式了：</p>
 <ul>
 <li>
-<p>有了verification key，verifier 就可以处理从 prover 那里得到的加密多项式的值 $g^p$，$g^h$，$g^{p'}$：</p>
+<p>有了verification key，验证者就可以处理从证明者那里得到的加密多项式的值 $g^p$，$g^h$，$g^{p'}$：</p>
 <ul>
 <li>
 <p>在加密空间中校验  <em>p = t·h</em>：</p>
@@ -633,7 +611,7 @@
 <p>Carol 用她的随机数  $s_C$ 和 $α_C$ 做同样的事：</p>
 <p>$((g^{s^i_{AB}})^{s^i_C},(g^{α_{AB}})^{α_C},(g^{α_{AB}s^i_{AB}})^{α_Cs^i_C}) = (g^{(s_As_Bs_C)^i},g^{α_Aα_Bα_C},g^{α_Aα_Bα_C(s_As_Bs_C)^i})$</p>
 <p>然后公开 Alice-Bob-Carol 的 CRS:</p>
-<p>$(g^{s^i_{ABC}},g^{α_{ABC}},g^{α_{ABC}s^i_{ABC}})$ </p>
+<p>$(g^{s^i_{ABC}},g^{α_{ABC}},g^{α_{ABC}s^i_{ABC}})$</p>
 </li>
 </ul>
 <p>这个协议最后我们就获得了一个混合的 <em>sⁱ</em> 和 <em>α</em>：</p>
@@ -675,11 +653,13 @@
 </ul>
 <p>同样的，Carol 也必须证明她的 CRS 是乘以了 Alice-Bob 的 CRS 后正常获得的。</p>
 <p>这是一个健壮的 CRS 设置模式，它并不完全依赖于单个参与者。事实上，即使其它所有的参与者都串谋了，只要有一个参与者是诚实的，他能够删除并且永远不共享它的秘密参数，这个 CRS 就是有效的。所以在设置 CRS （有时候被称为仪式 [<a href="https://medium.com/@imolfar/why-and-how-zk-snark-works-3-non-interactivity-distributed-setup-c0310c0e5d1c#191c">Wil16</a>]）的时候有越多不相关的参与者参与，伪造证明的可能性就越低。当有相互竞争的参与方参与的时候，就几乎不可能伪造证明了。这种模式能够包容其他一些怀疑这种 setup 可识别性的不受信方因为校验步骤确保了他们不会破坏（这里也包括很弱的 <em>α</em> 和 <em>s</em> 的使用）最终的 CRS。</p>
-<p>&gt;even@安比实验室: 现在有一些zkSNARK方案支持可升级的 CRS，任何怀疑CRS的参与方都可以对CRS 进行更新。此外还有一些 zkSNARK方案支持 Universal CRS，用不着对每一个电路进行受信任设置，而是只需要全局完成一次即可。除此之外，大量无需 Trusted Setup 的方案正在被充分研究。</p>
-<p>##多项式的 SNARK</p>
+<blockquote>
+<p>译者注：现在有一些zkSNARK方案支持可升级的 CRS，任何怀疑CRS的参与方都可以对CRS 进行更新。此外还有一些 zkSNARK方案支持 Universal CRS，用不着对每一个电路进行受信任设置，而是只需要全局完成一次即可。除此之外，大量无需 Trusted Setup 的方案正在被充分研究。</p>
+</blockquote>
+<h2 id="多项式的-snark"><a class="header" href="#多项式的-snark">多项式的 SNARK</a></h2>
 <p>我们现在准备来合并这个逐步演化出来的 <em>zk-SNARKOP</em> 协议。为简洁起见，我们将使用大括号来表示由旁边的下标填充的一组元素，例如：</p>
 <p>${s^i}_{i\in[d]}$</p>
-<p>表示一组数 s<sup>1</sup>，s<sup>2</sup>， …， <em>s<sup>d</sup></em> 。我们已经明确目标多项式 <em>t(x)</em> 和 prover 的多项式阶数 <em>d</em>：</p>
+<p>表示一组数 s<sup>1</sup>，s<sup>2</sup>， …， <em>s<sup>d</sup></em> 。我们已经明确目标多项式 <em>t(x)</em> 和证明者的多项式阶数 <em>d</em>：</p>
 <ul>
 <li>Setup
 <ul>
@@ -707,29 +687,22 @@
 </ul>
 </li>
 </ul>
-<p><strong>Remark 3.3</strong> 如果 pairing 的结果有可能在其它类似的乘法协议中被复用，那么这里就完全没有安全性可言了，因为这样的话 prover 就可以构造</p>
+<p><strong>备注 3.3</strong> 如果 pairing 的结果有可能在其它类似的乘法协议中被复用，那么这里就完全没有安全性可言了，因为这样的话证明者就可以构造</p>
 <p>$g^{p'} = e(g^p,g^α)$</p>
 <p>这样也可以通过&quot;多项式约束&quot;的检查：</p>
 <p>$e(e(g^p,g^α)，g) = e(g^p,g^α)$</p>
 <h2 id="结论"><a class="header" href="#结论">结论</a></h2>
-<p>我们用 zk-SNARK 协议来解决多项式问题的知识，不过这是一个有局限的例子。因为大家可以说 prover 只要用另外一个有界的多项式去乘以 t(x) 就可以很容易得构造出一个能够通过测试的多项式  <em>p</em>(<em>x</em>) ，并且这种结构也是有效的。</p>
-<p>verifier <em>知道</em> prover 有一个有效的多项式，但是并不知道是哪一个。我们可以利用多项式的其他性质添加额外的证明，如**:**被多个多项式整除，是某个多项式的平方。虽然可能会有一个服务能够接受，存储和奖励所有经过证明的多项式，或者有一个需求，加密计算某种形式的未知多项式。然而若有通用方案就可以支撑无数的应用。</p>
+<p>我们用 zk-SNARK 协议来解决多项式问题的知识，不过这是一个有局限的例子。因为大家可以说证明者只要用另外一个有界的多项式去乘以 t(x) 就可以很容易得构造出一个能够通过测试的多项式  <em>p</em>(<em>x</em>) ，并且这种结构也是有效的。</p>
+<p>验证者<em>知道</em>证明者有一个有效的多项式，但是并不知道是哪一个。我们可以利用多项式的其他性质添加额外的证明，如**:**被多个多项式整除，是某个多项式的平方。虽然可能会有一个服务能够接受，存储和奖励所有经过证明的多项式，或者有一个需求，加密计算某种形式的未知多项式。然而若有通用方案就可以支撑无数的应用。</p>
 <blockquote>
-<p>even@安比实验室:总结一下这篇文章中一步一步解决了下面的几个问题：</p>
-<p>保证 prover 的证明是按照规则正确构造的 ——&gt; KEA</p>
+<p>译者注：总结一下这篇文章中一步一步解决了下面的几个问题：</p>
+<p>保证证明者的证明是按照规则正确构造的 ——&gt; KEA</p>
 <p>保证知识的零知性 ——&gt; “无成本的”δ 变换</p>
 <p>可复用证明 ——&gt; 非交互式</p>
-<p>非交互中如何设置安全公开且可复用的参数 ——&gt; 参数加密，verifier 借助密码配对进行验证</p>
+<p>非交互中如何设置安全公开且可复用的参数 ——&gt; 参数加密，验证者借助密码配对进行验证</p>
 <p>保证参数的生成者不泄密 ——&gt; 多方的 Setup</p>
 <p>至此，一个用来证明多项式知识的完整的 zk-SNARK 协议就构造出来了，不过现在的协议在通用性上依然还有很多限制，后面的文章将继续介绍如何构造通用的 zk-SNARK。</p>
 </blockquote>
-<p><strong>参考文献</strong></p>
-<p>[Dam91] — Ivan Damgård. “Towards practical public key systems secure against chosen ciphertext attacks”. In: <em>Annual International Cryptology Conference</em>. Springer. 1991, pp. 445–456.</p>
-<p>[Gro10] — Jens Groth. “Short pairing-based non-interactive zero-knowledge arguments”. In: <em>International Conference on the Theory and Application of Cryptology and</em> <em>Information Security</em>. Springer. 2010, pp. 321–340.</p>
-<p>[JSI96] — Markus Jakobsson, Kazue Sako, and Russell Impagliazzo. “Designated verifier proofs and their applications”. In: <em>International Conference on the Theory and Applications</em> <em>of Cryptographic Techniques</em>. Springer. 1996, pp. 143–154.</p>
-<p>[DBS04] — Ratna Dutta, Rana Barua, and Palash Sarkar. <em>Pairing-Based Cryptographic Protocols: A Survey</em>. Cryptology ePrint Archive, Report 2004/064. https://eprint.iacr.org/2004/064. 2004.</p>
-<p>[DK18] — Apoorvaa Deshpande and Yael Kalai. <em>Proofs of Ignorance and Applications</em> <em>to 2-Message Witness Hiding</em>. Cryptology ePrint Archive, Report 2018/896. https://eprint.iacr.org/2018/896. 2018.</p>
-<p>[Wil16] — Zooko Wilcox. <em>The Design of the Ceremony</em>. 2016. url: https://z.cash/blog/the-design-of-the-ceremony/</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="从零开始学习-zk-snark三从程序到多项式的构造"><a class="header" href="#从零开始学习-zk-snark三从程序到多项式的构造">从零开始学习 zk-SNARK（三）——从程序到多项式的构造</a></h1>
 <p>前面我们已经理顺了一个zk-SNARK 简单方案的思路，它包含了 zk-SNARK 大部分内在机制，现在我们继续完善方案，使它能执行零知识程序。</p>
 <h2 id="计算"><a class="header" href="#计算">计算</a></h2>
@@ -746,12 +719,12 @@ function calc(w, a, b)
 end function
 </code></pre>
 <p>从高处看，这段程序和我们协议里面的多项式并没有什么关系。我们现在就需要找到一种方式来将程序转换成多项式。第一步是将程序转换成数学语言，这个相对简单一些，声明可以表达成下面的形式（假定 <em>w</em> 是 0 或 1）：</p>
-<p><em>f(w,a,b) = w(a · b)+(1-w)(a+b)​</em></p>
+<p>$$f(w,a,b) = w(a · b)+(1-w)(a+b)​$$</p>
 <p>执行 <code>calc(1, 4, 2)</code> 和对 <em>f (1, 4, 2)</em>  求值都可以得到相同的结果：8。如果执行 <code>calc(0, 4, 2)</code> 和 <em>f(0,4,2)</em> 也都能够得到 6。<strong>其实我们可以用这种方法表达任何形式的有限程序</strong>。</p>
 <p>接下来（上面的例子）需要我们证明的是,对于表达式 <em>f(w,a,b)</em> ，输入为 (<em>1</em>, <em>4</em>, <em>2</em>)  时输出为 8，换句话说，我们要校验多项式：</p>
-<p><em>w(a · b)+(1-w)(a+b) = 8​</em></p>
+<p>$$w(a · b)+(1-w)(a+b) = 8​$$</p>
 <blockquote>
-<p>even@安比实验室: 猜想一下，是否只要是能够用多项式表示的程序都可以做证明？</p>
+<p>译者注：猜想一下，是否只要是能够用多项式表示的程序都可以做证明？</p>
 </blockquote>
 <h2 id="单个基本计算"><a class="header" href="#单个基本计算">单个基本计算</a></h2>
 <p>尽管已经将程序转换成了由数学语言表达的一般计算形式，我们还是需要再把它翻译成多项式。我们先来仔细研究一下计算的本质。任何计算的内核都是由以下形式的基本运算组成的：</p>
@@ -759,23 +732,23 @@ end function
 <p>两个操作数（即值）与一个运算符（即+,*–,<em>×</em>,*÷）放在一起执行运算。例如操作数是 2 和 3，运算符为乘，那么运算出来就是 2 × 3 = 6。由于任何复杂的计算（或者程序）都是由一系列这样的基本运算组成的，所以首先我们需要知道在多项式中单个运算是怎么表示的。</p>
 <h3 id="多项式的算术性质"><a class="header" href="#多项式的算术性质">多项式的算术性质</a></h3>
 <p>我们先来看一下如何将多项式和算术运算关联起来。例如有两个多项式 <em>f(x)</em> 和 <em>g(x)</em>，尝试将他们相乘使得 <em>h</em>(<em>x</em>) = <em>f</em>(<em>x</em>) × <em>g</em>(<em>x</em>)，在任意一个 <em>x</em>= <em>r</em> 处 <em>h(x)</em> 的计算结果都是 <em>f(r)</em> 和 <em>g(r)</em> 的乘积。再看一下如下两个多项式 <em>f(x) = 2x<sup>2</sup> – 9x+ 10</em>  和  <em>g(x) = – 4x<sup>2</sup> + 15x – 9</em>。以图形的形式展示：</p>
-<p><img src="img/3/1*zURb98IOmtMOxlIprp8xOQ.png" alt="" /></p>
+<p><img src="img/3/1*zURb98IOmtMOxlIprp8xOQ.png" alt="img" /></p>
 <p>当 x = 1 时 <em>f(1) = 2 – 9 + 10 = 3</em>, <em>g(1) = – 4 + 15 – 9 = 2</em>。把两个多项式相乘： <em>h(x) = f(x) × g(x) = – 8x<sup>4</sup> + 66x<sup>3</sup> – 193x<sup>2</sup> + 231x– 90</em>。从图中可以看出相乘的结果：</p>
-<p><img src="img/3/1*yBmMsuYRemhrLCc8PNuBaQ.png" alt="" /></p>
+<p><img src="img/3/1*yBmMsuYRemhrLCc8PNuBaQ.png" alt="img" /></p>
 <p><em>x</em> = 1 时，计算  <em>f(x) × g(x)</em>  结果为：<em>h(1) = – 8 + 66 – 193 + 231 – 90 = 6</em>，也就是说当 <em>x</em> = 1时，<em>h(x)</em> 就是 <em>f</em>(<em>x</em>) 和 <em>g</em>(<em>x</em>) 相乘的结果 ，在 <em>x</em> 取其它值的时候也一样。</p>
 <p>同样的如果我们将 <em>f</em>(<em>x</em>) 和 <em>g</em>(<em>x</em>) 相加，在 <em>x</em>=1 处的计算结果就是 5。</p>
-<p><img src="img/3/1*YIHfveOVrQVdjqbabMYw2Q.png" alt="" /></p>
-<p><em>注意：在其它的 x<sub>s</sub> 取值处，多项式相加的计算结果也是将两者多项式的值加在一起的结果，例如你可以验证一下 x=2， x=3 处的结果。</em> </p>
+<p><img src="img/3/1*YIHfveOVrQVdjqbabMYw2Q.png" alt="img" /></p>
+<p><em>注意：在其它的 x<sub>s</sub> 取值处，多项式相加的计算结果也是将两者多项式的值加在一起的结果，例如你可以验证一下 x=2， x=3 处的结果。</em></p>
 <p><strong>如果我们可以将操作数的值表示为多项式(我们也确实可以这么做)，那么利用算术属性，我们就能够得到操作数的计算结果了。</strong></p>
 <blockquote>
-<p>even@安比实验室: 回忆一下，在本系列的第一篇——多项式的性质与证明中，我们曾经说过“任何多项式在任意点的计算结果都可以看做是其唯一身份的表示。”</p>
+<p>译者注：回忆一下，在本系列的第一篇——多项式的性质与证明中，我们曾经说过“任何多项式在任意点的计算结果都可以看做是其唯一身份的表示。”</p>
 <p>反过来当我们知道某个多项式的时候，是不是也就意味着我们知道多项式上某个点的取值。这就是借助多项式来完成证明的依据。</p>
 </blockquote>
 <h2 id="限制运算"><a class="header" href="#限制运算">限制运算</a></h2>
-<p>如果一个 prover 声称某两个数字的乘积，verifier 要怎样去验证呢？为了证明单个计算的正确性，我们就必须首先确保所提供的操作数的输出（结果）的正确性。我们再来看一下运算的形式：</p>
-<p><em>左操作数   运算符   右操作数    输出​</em></p>
+<p>如果一个证明者声称某两个数字的乘积，验证者要怎样去验证呢？为了证明单个计算的正确性，我们就必须首先确保所提供的操作数的输出（结果）的正确性。我们再来看一下运算的形式：</p>
+<p>$$左操作数   运算符   右操作数    输出$$</p>
 <p>类似得我们也可以将其表示为一个运算多项式</p>
-<p><em>l(x)  运算符   r(x) = o(x)​</em></p>
+<p>$$l(x)  运算符   r(x) = o(x)​$$</p>
 <p>在一些选定的取值 <em>a</em> 处的运算:</p>
 <ul>
 <li><em>l</em>(<em>x</em>) — 表示（运算结果为）左操作数</li>
@@ -787,25 +760,25 @@ end function
 <p>可以用一个简单的多项式表示它： <em>l</em>(<em>x</em>) = 3<em>x</em>,  <em>r</em>(<em>x</em>) = 2<em>x</em>,  <em>o</em>(<em>x</em>) = 6<em>x</em>，取 <em>a=1</em> 进行计算，即 <em>l</em>(1) = 3；<em>r</em>(1) = 2；<em>o</em>(1) = 6。</p>
 <p><img src="img/3/1*c-MTFle20kE2N4V7_oIuPw.png" alt="img" /></p>
 <p>这个运算多项式就变成了：</p>
-<p><em>l(x) × r(x) = o(x)</em></p>
-<p><em>3x × 2x =6x</em></p>
-<p><em>6x² -6x =0</em></p>
+<p>$$l(x) × r(x) = o(x)$$</p>
+<p>$$3x × 2x =6x$$</p>
+<p>$$6x² -6x =0$$</p>
 <p>在图上表示为：</p>
 <p><img src="img/3/1*8inYSIOVem2TWfwblR3j3g.png" alt="img" /></p>
 <p>注意，这个多项式有一个因子 <em>(x = 1)</em> ：</p>
-<p><em>6x² -6x = 6x(x-1)</em></p>
-<p>因而如果 prover 用 <em>l</em>(<em>x</em>)<em>, r</em>(<em>x</em>)<em>, o</em>(<em>x</em>) 这些多项式来代替 <em>p</em>(<em>x</em>) ，因为它们依然可以被 <em>t(x)</em> 整除，所以 verifier 就可以认为它们是有效的。相反，如果 prover 尝试用 4 来代替输出值去欺骗 verifier ，即 <em>o</em>(<em>x</em>) = 4<em>x</em>，那么运算多项式就变成了 <em>6x<sup>2</sup> – 4x= 0</em>：</p>
-<p><img src="img/3/1*jacXf4SAhn3OpOyeqR6EOA.png" alt="" /></p>
+<p>$$6x² -6x = 6x(x-1)$$</p>
+<p>因而如果证明者用 <em>l</em>(<em>x</em>)<em>, r</em>(<em>x</em>)<em>, o</em>(<em>x</em>) 这些多项式来代替 <em>p</em>(<em>x</em>) ，因为它们依然可以被 <em>t(x)</em> 整除，所以验证者就可以认为它们是有效的。相反，如果证明者尝试用 4 来代替输出值去欺骗验证者，即 <em>o</em>(<em>x</em>) = 4<em>x</em>，那么运算多项式就变成了 <em>6x<sup>2</sup> – 4x= 0</em>：</p>
+<p><img src="img/3/1*jacXf4SAhn3OpOyeqR6EOA.png" alt="img" /></p>
 <p>图中这个多项式并没有 <em>x</em>=1 的解，因而 <em>l</em>(<em>x</em>) × <em>r</em>(<em>x</em>) – <em>o</em>(<em>x</em>)  就不能被 <em>t(x)</em> 整除：</p>
-<p><img src="img/3/div.png" alt="" /></p>
-<p>因而 verifier 不能接受这个<em>不一致的计算结果</em>（就像<strong>因式分解</strong>这一章描述的那样）</p>
+<p><img src="img/3/div.png" alt="img" /></p>
+<p>因而验证者不能接受这个<em>不一致的计算结果</em>（就像<strong>因式分解</strong>这一章描述的那样）</p>
 <blockquote>
-<p>even@安比实验室: 在前面的协议中，我们要证明的多项式是 p(x) = t(x)h(x)，这里我们修改 p(x)，使得 p(x) = l(x)r(x)-o(x)。这里t(x)目标多项式的根就是对应能够计算出数学表达式的值的 x。</p>
+<p>译者注：在前面的协议中，我们要证明的多项式是 p(x) = t(x)h(x)，这里我们修改 p(x)，使得 p(x) = l(x)r(x)-o(x)。这里t(x)目标多项式的根就是对应能够计算出数学表达式的值的 x。</p>
 <p>上面例子里面取 x=1 这个特殊值作为运算编码的位置。当然这里的 1 可以换成任何别的值，比如说换成 x=2，3，或101 等等。在[GGPR]与[PHGR]论文中，这个取值是一个随机值，被称为 “root”。</p>
 </blockquote>
 <h2 id="运算的证明"><a class="header" href="#运算的证明">运算的证明</a></h2>
 <p>现在我们来修改一下最新协议使它支持单个乘法计算的证明。回到前面<strong>多项式的 SNARK</strong>一章，我们已经能够证明多项式 <em>p(x)</em> 的知识了，只不过现在要计算的是三个多项式 <em>l</em>(<em>x</em>)<em>, r</em>(<em>x</em>)<em>, o</em>(<em>x</em>)的知识。我们可以定义 <em>p</em>(<em>x</em>) = <em>l</em>(<em>x</em>) × <em>r</em>(<em>x</em>) – <em>o</em>(<em>x</em>)，但这里存在两个争议点。首先，在我们的协议中证明阶段是不能做加密值乘法计算的（即， <em>l</em>(<em>s</em>) × <em>r</em>(<em>s</em>)），因为配对只能用一次，这个要用在校验多项式的约束上。第二，这里给证明者留下了一个可以修改多项式结构但依然保留有效因式 <em>t(x)</em> 的机会，例如可以令 <em>p</em>(<em>x</em>) = <em>l</em>(<em>x</em>) 或者  <em>p</em>(<em>x</em>) = <em>l</em>(<em>x</em>) – <em>r</em>(<em>x</em>) 甚至是 <em>p</em>(<em>x</em>) = <em>l</em>(<em>x</em>) × <em>r</em>(<em>x</em>) + <em>o</em>(<em>x</em>)，只要这里的 <em>p(x)</em> 还保留着根 <em>a</em> 就可以了。这个修改本质上是让证明的内容变成了别的声明，所以这样是不行的。</p>
-<p>所以  prover  必须要分别提供多项式 <em>l</em>(<em>s</em>), <em>r</em>(<em>s</em>), <em>o</em>(<em>s</em>) 值的证明，即协议必须修改要证明的<em>多项式的知识</em>。verifier 在加密空间中要验证的是  <em>l</em>(<em>s</em>) × <em>r</em>(<em>s</em>) – <em>o</em>(<em>s</em>) = <em>t</em>(<em>s</em>)<em>h</em>(<em>s</em>)。verifier 可以使用密码学配对来执行乘法，但还有一个小问题就是做减法(– <em>o</em>(<em>x</em>))是非常昂贵的计算（这需要去找到一个 <em>gᵒ⁽ˢ⁾</em> 的逆向转换），这里我们可以把 <em>o</em>(<em>x</em>) 移到等式右边来： <em>l</em>(<em>x</em>)<em>r</em>(<em>x</em>) = <em>t</em>(<em>x</em>)<em>h</em>(<em>x</em>) + <em>o</em>(<em>x</em>)。在加密空间中，verifier 的验证就可以转换成：</p>
+<p>所以 证明者 必须要分别提供多项式 <em>l</em>(<em>s</em>), <em>r</em>(<em>s</em>), <em>o</em>(<em>s</em>) 值的证明，即协议必须修改要证明的<em>多项式的知识</em>。验证者在加密空间中要验证的是  <em>l</em>(<em>s</em>) × <em>r</em>(<em>s</em>) – <em>o</em>(<em>s</em>) = <em>t</em>(<em>s</em>)<em>h</em>(<em>s</em>)。验证者可以使用密码学配对来执行乘法，但还有一个小问题就是做减法(– <em>o</em>(<em>x</em>))是非常昂贵的计算（这需要去找到一个 <em>gᵒ⁽ˢ⁾</em> 的逆向转换），这里我们可以把 <em>o</em>(<em>x</em>) 移到等式右边来： <em>l</em>(<em>x</em>)<em>r</em>(<em>x</em>) = <em>t</em>(<em>x</em>)<em>h</em>(<em>x</em>) + <em>o</em>(<em>x</em>)。在加密空间中，验证者的验证就可以转换成：</p>
 <p><em>e(g<sup>l(s)</sup>, g<sup>r(s)</sup>) = e(g<sup>t(s)</sup>,g<sup>h(s)</sup>) · e(g<sup>o(s)</sup>,g)</em></p>
 <p><em>e(g,g)<sup>l(s)r(s)</sup> =e(g,g)<sup>t(s)h(s)</sup> ·e(g,g)<sup>o(s)</sup></em></p>
 <p><em>e(g,g)<sup>l(s)r(s)</sup> =e(g,g)<sup>t(s)h(s)+o(s)</sup></em></p>
@@ -843,19 +816,19 @@ end function
 <p>这个协议就能够证明两个值相乘的计算结果是正确的了。</p>
 <p>你可能注意到了在这个新的协议中我们放弃了<em>零知识</em> 部分。这么做是为了简化协议的变换。后面的章节我们会再变回零知识。</p>
 <blockquote>
-<p>even@安比实验室：上面例子里面取 x=1 这个特殊值作为运算编码的位置。当然这里的 1 可以换成任何别的值，比如说换成 x=2，3，或101 等等。在[GGPR]与[PHGR]论文中，这个取值是一个随机值，被称为 “root”。</p>
+<p>译者注：上面例子里面取 x=1 这个特殊值作为运算编码的位置。当然这里的 1 可以换成任何别的值，比如说换成 x=2，3，或101 等等。在[GGPR]与[PHGR]论文中，这个取值是一个随机值，被称为 “root”。</p>
 </blockquote>
 <h2 id="多个运算"><a class="header" href="#多个运算">多个运算</a></h2>
 <p>现在我们已经能够证明单个算术运算了，但是要怎么扩展到多个运算上呢（这是我们的最终目标）？我们来尝试一下增加一个基本运算。想一想计算 <em>a</em> × <em>b</em> × <em>c</em> 乘积的需求，在元素操作模型中，这代表着两个操作：</p>
 <p><em><font style="color:green">a</font> × <font style="color:blue">b</font> = <font style="color:red">r<sub>1</sub></font></em></p>
 <p><em><font style="color:green">r<sub>1</sub></font> × <font style="color:blue">c</font> = <font style="color:red">r<sub>2</sub></font></em></p>
 <p>前面的讨论中我们通过对运算符多项式在任意取值 x 处 ，例如1，计算一个对应值，来表示一个操作数或者结果。有了这个性质的多项式并不会约束我们在不同 x 取值处用多项式来表示其他值。如示例中的 2，即：</p>
-<p><img src="img/3/1*mVveHukkAvK1sDSNgkP_Hw.png" alt="" /></p>
+<p><img src="img/3/1*mVveHukkAvK1sDSNgkP_Hw.png" alt="img" /></p>
 <p>这种独立性允许我们一次同时<em>执行</em> 两个运算并且又不会把这两者搞乱，即相互之间不会妨碍。这个多项式算术的结果就变成了：</p>
-<p><img src="img/3/1*8Z3PDChGgZm87PjtxyIetw.png" alt="" /></p>
+<p><img src="img/3/1*8Z3PDChGgZm87PjtxyIetw.png" alt="img" /></p>
 <p>可以看出这个多项式有两个根 <em>x</em>=1 和 <em>x</em>=2。因而也就是两次计算都被正确执行了。</p>
 <blockquote>
-<p>even@安比实验室：这里的示例为了理解方便，选择了 x=1, x=2 两个位置。记住在完整的 zkSNARK 方案中，这些 “root” 值必须为有限域内的随机数，否则就会引入安全漏洞。</p>
+<p>译者注：这里的示例为了理解方便，选择了 x=1, x=2 两个位置。记住在完整的 zkSNARK 方案中，这些 “root” 值必须为有限域内的随机数，否则就会引入安全漏洞。</p>
 </blockquote>
 <p>我们再来看一个有三个乘法运算的例子 2 × 1 × 3 × 2，它按照下面的步骤执行：</p>
 <p><em><font style="color:green">2</font> × <font style="color:blue">1</font> = <font style="color:red">2</font></em></p>
@@ -874,33 +847,33 @@ end function
 </ul>
 <p>我们以第一个方法为例。这个方法的思路是存在一个<em>系数未知</em> ，阶数至多为 <em>n</em> 的特定的多项式 <em>p(x)</em> 能够经过给定的 <em>n</em>+1 个点，对于每个点 {(<em>xᵢ</em>, <em>yᵢ</em>)}, <em>i</em> ∈ [n+1]来说，多项式在 <em>xᵢ</em> 处的计算结果都等于 <em>yᵢ</em>，即对于所有的 i，<em>p(xᵢ) = yᵢ</em> 。在我们的例子中，三个点就可以变成一个用以下形式所表示的阶数为 2 的多项式：<em>ax<sup>2</sup> + bx +c =y</em>。</p>
 <p>我们令<em>左运算多项式</em>（绿色标出的）在每个点处与多项式结果值相等，然后对每个系数用其它术语表示出来再计算等式：</p>
-<p><img src="./img/3/eq1.png" alt="" /></p>
+<p><img src="./img/3/eq1.png" alt="img" /></p>
 <p>因而 <em>左操作数多项式</em> 就是：</p>
 <p><em><font style="color:green">l(x)</font></em> <em>= 2x<sup>2</sup>-6x+6</em></p>
 <p>它和下面的图对应：</p>
-<p><img src="img/3/1*hAFtc6UZWhr34FA-ljVJ8w.png" alt="" /></p>
+<p><img src="img/3/1*hAFtc6UZWhr34FA-ljVJ8w.png" alt="img" /></p>
 <p>我们用相同的方式再计算 <em>r</em>(<em>x</em>) 和 <em>o</em>(<em>x</em>)：</p>
 <p>$\textcolor{blue}{r(x)}=\frac{-3x^2+13x-8}{2}; \quad \textcolor{red}{o(x)}=x^2+x$</p>
-<p><img src="img/3/1*Cc3KRiEfoYsyoD098-X3DQ.png" alt="" /></p>
+<p><img src="img/3/1*Cc3KRiEfoYsyoD098-X3DQ.png" alt="img" /></p>
 <h3 id="含有多个运算的多项式"><a class="header" href="#含有多个运算的多项式">含有多个运算的多项式</a></h3>
-<p>现在我们有了代表三个运算的操作数多项式，再进一步看一下怎么去校验每个计算的正确性。回到 verifier 寻找等式 <em>l</em>(<em>x</em>) · <em>r</em>(<em>x</em>) – <em>o</em>(<em>x</em>) = <em>t</em>(<em>x</em>)<em>h</em>(<em>x</em>) 的过程。在这个例子中，因为计算是在点 <em>x</em> <em>∈ {1</em>, <em>2</em>, <em>3</em>} 处被表示出来的，所以目标多项式在这些  <em>x<sub>s</sub>​</em> 点处的计算结果必须为 0，换句话说， <em>t</em>(<em>x</em>)的根必须是 1，2 和 3，它的基本形式就是：</p>
-<p><img src="img/3/1*h8i-j98fBxmFSraGWadrJA.png" alt="" /></p>
+<p>现在我们有了代表三个运算的操作数多项式，再进一步看一下怎么去校验每个计算的正确性。回到验证者寻找等式 <em>l</em>(<em>x</em>) · <em>r</em>(<em>x</em>) – <em>o</em>(<em>x</em>) = <em>t</em>(<em>x</em>)<em>h</em>(<em>x</em>) 的过程。在这个例子中，因为计算是在点 <em>x</em> <em>∈ {1</em>, <em>2</em>, <em>3</em>} 处被表示出来的，所以目标多项式在这些  <em>x<sub>s</sub>​</em> 点处的计算结果必须为 0，换句话说， <em>t</em>(<em>x</em>)的根必须是 1，2 和 3，它的基本形式就是：</p>
+<p><img src="img/3/1*h8i-j98fBxmFSraGWadrJA.png" alt="img" /></p>
 <p>第一步将 <em>l(x)</em> 和 <em>r(x)</em> 相乘得到结果：</p>
-<p><img src="img/3/1*bsT-MgxaGDGJxWPZKk37Rw.png" alt="" /></p>
+<p><img src="img/3/1*bsT-MgxaGDGJxWPZKk37Rw.png" alt="img" /></p>
 <p>第二步：从 <em>l</em>(<em>x</em>) × <em>r</em>(<em>x</em>) 的结果中将 <em>o</em>(<em>x</em>)  减去：</p>
-<p><img src="img/3/1*hs7NGn66W8Isu26jtVpDrw.png" alt="" /></p>
-<p>这里就已经可以看出每一个操作数相乘都对应了正确的结果。最后一步 prover 要算出一个有效因式：</p>
+<p><img src="img/3/1*hs7NGn66W8Isu26jtVpDrw.png" alt="img" /></p>
+<p>这里就已经可以看出每一个操作数相乘都对应了正确的结果。最后一步证明者要算出一个有效因式：</p>
 <p>$h(x) = \frac{l(x) \times r(x) -o(x)}{t(x)} = \frac{-3x^4 +22x^3 -57x^2 +63x -24}{(x-1)(x-2)(x-3)}$</p>
 <p>通过长除法可以算出：</p>
-<p><img src="./img/3/div2.png" alt="" /></p>
-<p>代入<em>h</em>(<em>x</em>) = – 3<em>x</em>+ 4<em>a</em>，verifier 可以计算 <em>t</em>(<em>x</em>)<em>h</em>(<em>x</em>)：</p>
-<p><img src="img/3/1*NEpiDG9xLK_purIz175KXA.png" alt="" /></p>
+<p><img src="./img/3/div2.png" alt="img" /></p>
+<p>代入<em>h</em>(<em>x</em>) = – 3<em>x</em>+ 4<em>a</em>，验证者可以计算 <em>t</em>(<em>x</em>)<em>h</em>(<em>x</em>)：</p>
+<p><img src="img/3/1*NEpiDG9xLK_purIz175KXA.png" alt="img" /></p>
 <p>现在显然 <em>l</em>(<em>x</em>) × <em>r</em>(<em>x</em>) – <em>o</em>(<em>x</em>) = <em>t</em>(<em>x</em>)<em>h</em>(<em>x</em>) ，这就是我们要证明的内容。</p>
 <blockquote>
-<p>even@安比实验室: 这里只需要一组多项式 <em>l</em>(<em>x</em>)，<em>r</em>(<em>x</em>)， <em>o</em>(<em>x</em>) 就可以将所有计算的约束关系表示出来了，有几个计算也就对应着目标多项式 t(x) 有几个根。</p>
-<p>当前的协议似乎存在一些缺陷，多项式只能证明 prover 拥有一组多项式 <em>l</em>(<em>x</em>)，<em>r</em>(<em>x</em>)， <em>o</em>(<em>x</em>) ，在 t(x) 的几个根的取值处 <em>l</em>(<em>x</em>)·<em>r</em>(<em>x</em>)= <em>o</em>(<em>x</em>)，无法证明这组多项式符合我们要证明的数学表达式：</p>
+<p>译者注：这里只需要一组多项式 <em>l</em>(<em>x</em>)，<em>r</em>(<em>x</em>)， <em>o</em>(<em>x</em>) 就可以将所有计算的约束关系表示出来了，有几个计算也就对应着目标多项式 t(x) 有几个根。</p>
+<p>当前的协议似乎存在一些缺陷，多项式只能证明证明者拥有一组多项式 <em>l</em>(<em>x</em>)，<em>r</em>(<em>x</em>)， <em>o</em>(<em>x</em>) ，在 t(x) 的几个根的取值处 <em>l</em>(<em>x</em>)·<em>r</em>(<em>x</em>)= <em>o</em>(<em>x</em>)，无法证明这组多项式符合我们要证明的数学表达式：</p>
 <p>1）多个计算关系之间也是分开表示的，这些算式之间的关系也同样无法进行约束</p>
-<p>2）由于 prover 生成的证明中只有计算结果，左操作数，右操作数，输出在计算中混用也不会被发现</p>
+<p>2）由于证明者生成的证明中只有计算结果，左操作数，右操作数，输出在计算中混用也不会被发现</p>
 <p>3）由于左操作数，右操作数，输出是分开表示的，互相之间的关系无法进行约束</p>
 </blockquote>
 <h2 id="变量多项式"><a class="header" href="#变量多项式">变量多项式</a></h2>
@@ -909,23 +882,23 @@ end function
 <p><em><font style="color:green">a</font> × <font style="color:blue">b</font> = <font style="color:red">r<sub>1</sub></font></em></p>
 <p><em><font style="color:green">a</font> × <font style="color:blue">c</font> = <font style="color:red">r<sub>2</sub></font></em></p>
 <p>这里 <em>a</em> 代表两个运算中的左操作符多项式，如：</p>
-<p><img src="img/3/1*PMNd1I7dYeJhSqF8MD5wCg.png" alt="" /></p>
-<p>然而，因为我们的协议中是允许 prover 为多项式设置任何系数的，所以他可以不受限制得为不同计算（即，用一些 <em>x</em> 表示的多项式）中的 <em>a</em> 设置不同的值，即：</p>
-<p><img src="img/3/1*HO_ZD_vp-c7LZK-IDxJo3A.png" alt="" /></p>
-<p><strong>这个自由打破了一致性</strong>，有空间允许 prover 能去证明了一些并非 verifier 感兴趣的其它无关的程序执行。因而我们必须要确保每一个变量在所有运算中出现的地方都只有一个取值。</p>
+<p><img src="img/3/1*PMNd1I7dYeJhSqF8MD5wCg.png" alt="img" /></p>
+<p>然而，因为我们的协议中是允许证明者为多项式设置任何系数的，所以他可以不受限制得为不同计算（即，用一些 <em>x</em> 表示的多项式）中的 <em>a</em> 设置不同的值，即：</p>
+<p><img src="img/3/1*HO_ZD_vp-c7LZK-IDxJo3A.png" alt="img" /></p>
+<p><strong>这个自由打破了一致性</strong>，有空间允许证明者能去证明了一些并非验证者感兴趣的其它无关的程序执行。因而我们必须要确保每一个变量在所有运算中出现的地方都只有一个取值。</p>
 <p><em>注意：文中的变量与常规的计算机科学中变量的定义不同，这里的变量是不可改变的而且每次执行都只赋值一次。</em></p>
 <blockquote>
-<p>even@安比实验室：请务必注意“变量”的定义，它是程序中的变量，但是却又不能改，这不是很矛盾吗？其实，这里变量是指本文开头的示例伪代码中的那些不会被修改的变量。在 zkSNARK 论文中，这个「变量」其实有一个对应的名词叫做 assignment，是算术电路的「赋值」。而所有的assignments 是一个算术电路可满足性问题的解，包含了算术电路的输入值以及电路运算过程中输出的中间结果值。</p>
+<p>译者注：请务必注意“变量”的定义，它是程序中的变量，但是却又不能改，这不是很矛盾吗？其实，这里变量是指本文开头的示例伪代码中的那些不会被修改的变量。在 zkSNARK 论文中，这个「变量」其实有一个对应的名词叫做 assignment，是算术电路的「赋值」。而所有的assignments 是一个算术电路可满足性问题的解，包含了算术电路的输入值以及电路运算过程中输出的中间结果值。</p>
 </blockquote>
 <h3 id="单个变量的操作数多项式"><a class="header" href="#单个变量的操作数多项式">单个变量的操作数多项式</a></h3>
-<p>我们来看一个简单的例子（就是当前的例子），在<em>左操作符多项式 l(x)</em> 表示的所有左操作数中只包含一个变量（即 <em>a</em>）。我们要找出是否有可以确保这个多项式在每一个运算中 <em>a</em> 都相同的方法。prover 可以设置不同值是因为他可以任意控制 <em>x</em> 的每个次幂的系数。因而如果这些系数是固定的，就可以解决问题了。</p>
+<p>我们来看一个简单的例子（就是当前的例子），在<em>左操作符多项式 l(x)</em> 表示的所有左操作数中只包含一个变量（即 <em>a</em>）。我们要找出是否有可以确保这个多项式在每一个运算中 <em>a</em> 都相同的方法。证明者可以设置不同值是因为他可以任意控制 <em>x</em> 的每个次幂的系数。因而如果这些系数是固定的，就可以解决问题了。</p>
 <p>我们来仔细看看包含相等值的多项式。例如检查一下下面两个多项式，他们分别都表示了有两个相等值对应的运算（即在 x=1 和 x=2 处），这里第一个多项式的值为 1，第二个多项式的值为 2：</p>
-<p><img src="img/3/1*sVoDxQA6KHkuEJAZvsL8xQ.png" alt="" /></p>
+<p><img src="img/3/1*sVoDxQA6KHkuEJAZvsL8xQ.png" alt="img" /></p>
 <p>注意每个多项式中相应的系数是成比例的，也就是第二个多项式的系数是第一个的两倍大，即：</p>
 <p><em>2x<sup>2</sup>-6x+6=2×(x<sup>2</sup> -3x+3)</em></p>
 <p>那么由于多项式的算术性质，如果我们想要同时地改变多项式中所有的值我们就需要改变它的比例，如果我们用一个数字乘以多项式，那么在每一个可能的 <em>x</em> 处的计算结果也要和相同的数字相乘（即，等比例变换）。为了验证这一点，我们尝试用 3 或者其它数字来乘第一个多项式。</p>
-<p>因此，<strong>如果 verifier 需要在所有计算中强制 prover 设置相同的值，他就要限制 prover 只能修改比例而不是单个系数</strong>。</p>
-<p>所以怎么保持系数比例不变呢？对于这个问题我们可以先思考一下在<em>左运算多项式</em> 中我们提供的证明是什么。是 <em>l(x)</em> 在一些秘密值 <em>s</em> 处的加密值：<em>g<sup>l(s)</sup></em>，即，一个被加密了的数。我们已经从 <strong>限制多项式</strong> 这一节中知道了怎样通过一个<em>α</em>-变换去限制 prover 只能使用 verifier 提供的 s 的幂做计算，来使得单个运算能够满足同态乘法。</p>
+<p>因此，<strong>如果验证者需要在所有计算中强制证明者设置相同的值，他就要限制证明者只能修改比例而不是单个系数</strong>。</p>
+<p>所以怎么保持系数比例不变呢？对于这个问题我们可以先思考一下在<em>左运算多项式</em> 中我们提供的证明是什么。是 <em>l(x)</em> 在一些秘密值 <em>s</em> 处的加密值：<em>g<sup>l(s)</sup></em>，即，一个被加密了的数。我们已经从 <strong>限制多项式</strong> 这一节中知道了怎样通过一个<em>α</em>-变换去限制证明者只能使用验证者提供的 s 的幂做计算，来使得单个运算能够满足同态乘法。</p>
 <p>和限制单个求幂值相似，verfier 可以一次限制完整的多项式。而不只是提供单独的加密及其 α-移位 <em>g<sup>s<sup>1</sup></sup></em>,<em>g<sup>s<sup>2</sup></sup></em>,…,<em>g<sup>s<sup>d</sup></sup></em>,<em>g<sup>αs<sup>1</sup></sup></em>,<em>g<sup>αs<sup>2</sup></sup></em>,…,<em>g<sup>αs<sup>d</sup></sup></em>。</p>
 <p>那么协议的过程就是：</p>
 <ul>
@@ -955,25 +928,25 @@ end function
 </ul>
 </li>
 </ul>
-<p>prover 需要返回同样的<em>α</em>-转换关系，因为无法从 proving key 中恢复出 <em>α</em> 所以保持这个变换的唯一方法就是用同一个值去分别乘以这两个加密值：<em>g<sup>l(s)</sup></em> 和 <em>g<sup>αl(s)</sup></em>。这个 prover 就无法修改 <em>l(x)</em> 的单个系数了，例如如果多项式为 l(x) = ax<sup>2</sup> + <em>bx</em>+ c ，prover 只可以用一个值 <em>v</em> 去修改整个多项式： v⋅(ax<sup>2</sup> + <em>bx</em>+ <em>c</em>) = v⋅ax<sup>2</sup> + <em>v⋅bx</em>+ v⋅c。<em>配对</em> 使其不能与另一个多项式做乘法，所以也就无法提供 <em>s</em> 的单个求幂值的 *α-*变换。 prover 不能做加法或者减法因为：</p>
+<p>证明者需要返回同样的<em>α</em>-转换关系，因为无法从 proving key 中恢复出 <em>α</em> 所以保持这个变换的唯一方法就是用同一个值去分别乘以这两个加密值：<em>g<sup>l(s)</sup></em> 和 <em>g<sup>αl(s)</sup></em>。这个证明者就无法修改 <em>l(x)</em> 的单个系数了，例如如果多项式为 l(x) = ax<sup>2</sup> + <em>bx</em>+ c ，证明者只可以用一个值 <em>v</em> 去修改整个多项式： v⋅(ax<sup>2</sup> + <em>bx</em>+ <em>c</em>) = v⋅ax<sup>2</sup> + <em>v⋅bx</em>+ v⋅c。<em>配对</em> 使其不能与另一个多项式做乘法，所以也就无法提供 <em>s</em> 的单个求幂值的 *α-*变换。证明者不能做加法或者减法因为：</p>
 <p>$g^{α(l(x)+a'x^2+c')} \not= g^{αl(x)} \cdot g^{a'x^2} \cdot g^{c'}$ 这里也同样需要未加密的 <em>α</em> 的知识。</p>
 <p>现在有了这个协议，不过怎么去构造<em>操作数多项式 l(x)</em> 呢？由于任何整数都可以通过乘以 1 得到它本身，所以多项式中对应的每个计算结果都应该为 1，即：</p>
-<p><img src="img/3/1*OD_cyAXNCBB62DVBe815qA.png" alt="" /></p>
-<p>然后再让 prover 在其上”分配“一个值 a ：</p>
-<p><img src="img/3/1*qNsslAIXLSPq5MWf4TCpqw.png" alt="" /></p>
-<p><strong>Remark 4.1</strong> <em>由于 verification key 包含了加密了的 α，所以可以用多项式加（或者减）任意一个值 v'，即：</em></p>
+<p><img src="img/3/1*OD_cyAXNCBB62DVBe815qA.png" alt="img" /></p>
+<p>然后再让证明者在其上”分配“一个值 a ：</p>
+<p><img src="img/3/1*qNsslAIXLSPq5MWf4TCpqw.png" alt="img" /></p>
+<p><strong>备注 4.1</strong> <em>由于 verification key 包含了加密了的 α，所以可以用多项式加（或者减）任意一个值 v'，即：</em></p>
 <p>$g^{vl(s)} \cdot g^{v'} = g^{vl(s)+v'}$</p>
 <p>$g^{αvl(s)} \cdot (g^α)^{v'} = g^{α(vl(s)+v')}$</p>
 <p>$e(g^{α(vl(s)+v')},g) = e(g^{vl(s)+v'},g^α)$</p>
-<p><em>因而可以修改多项式使其超出 verifier 的预期以及证明一个不同的声明，后面的章节我们将会解决掉这个问题。</em></p>
+<p><em>因而可以修改多项式使其超出验证者的预期以及证明一个不同的声明，后面的章节我们将会解决掉这个问题。</em></p>
 <blockquote>
-<p>@even@安比实验室：这一小节是解决这样一个问题，算术电路中一个 input wire 或者 output wire可能同时会作为多个门的输入wire，如何确保约束这些公用wire的问题。</p>
-<p>由于要证明的数学表达式是公开的，那么各个算式之间的约束关系也就是公开的，那么我们就可以把构造多项式的工作交给 setup 环节，这样 prover 只要填上对应的数值就可以了。 </p>
+<p>@译者注：这一小节是解决这样一个问题，算术电路中一个 input wire 或者 output wire可能同时会作为多个门的输入wire，如何确保约束这些公用wire的问题。</p>
+<p>由于要证明的数学表达式是公开的，那么各个算式之间的约束关系也就是公开的，那么我们就可以把构造多项式的工作交给 setup 环节，这样证明者只要填上对应的数值就可以了。</p>
 <p>上文这个方法就限制了在同一个操作数多项式上，不同的计算式中使用的同一个值的约束关系；同样若一个操作数多项式中用到了多个值，也可以将这些值全都加起来，如下文所述。</p>
 </blockquote>
 <h3 id="多变量的操作数多项式"><a class="header" href="#多变量的操作数多项式">多变量的操作数多项式</a></h3>
 <p>因为只有当所有的左操作数使用同一个变量的时候我们才可以设置一个值。但是如果左操作数中再多一个值 <em>d</em> 要怎么做呢：</p>
-<p><img src="img/3/1*yAqgTjn5LB4qh465LhM6hA.png" alt="" /></p>
+<p><img src="img/3/1*yAqgTjn5LB4qh465LhM6hA.png" alt="img" /></p>
 <p>假如我们还使用相同的方法，我们无法分别得为每一个变量设置值，并且让这些变量乘到一起去。也就是说这个受限的多项式只能支持一个变量的情况。我们可以把<em>操作数多项式 l(x)</em> 分成<em>操作数的变量多项式</em></p>
 <p>$l_a(x)$ 和 $l_d(x)$<em>（注意下标）</em></p>
 <p>这与上一节的方法一致，<em>变量 a</em> 和 <em>b</em> 可以被<em>赋值</em> 并分别进行约束，然后加在一起就可以表示所有的左操作数变量了。因为我们将<em>操作数的变量多项式</em> 加在了一起，所以我们就要能够确保在每次计算中相加后的结果只表示所有<em>操作符多项式</em> 中的一个。</p>
@@ -981,13 +954,13 @@ end function
 <p><em>l<sub>a</sub>(1) =1,  l<sub>a</sub>(2)=1,  l<sub>a</sub>(3)=0</em></p>
 <p><em>l<sub>d</sub>(x)=0,  l<sub>d</sub>(2)=0,  l<sub>d</sub>(3)=1</em></p>
 <p>图中表示为：</p>
-<p><img src="img/3/1*mPS0DWApQpziFbz9Almi1Q.png" alt="" /></p>
+<p><img src="img/3/1*mPS0DWApQpziFbz9Almi1Q.png" alt="img" /></p>
 <p>于是我们就可以将每个变量分开设置值，然后把他们加在一起来计算出操作数多项式，例如当 <em>a = 3</em> 和 <em>d= 2</em> 时：</p>
-<p><img src="img/3/1*haDU8bsgI7xwmxHTVZUODw.png" alt="" /></p>
+<p><img src="img/3/1*haDU8bsgI7xwmxHTVZUODw.png" alt="img" /></p>
 <p><em>注意：我们在一个值的后面使用下标表示它代表的变量，如, 3<sub>a</sub> 是一个用 3 实例化的变量 a。</em></p>
 <p>现在起我们用大写字母来表示这个复杂的 <em>操作符多项式</em>，即</p>
 <p><em>L(x) = al<sub>a</sub>(x) + dl<sub>d</sub>(x)</em></p>
-<p>计算结果为 <em>L</em>，也就是 <em>L=L(s)</em>。仅当每一个<em>操作数的变量多项式</em> 是由 verifier 约束的，结果才有效，与左多项式相关的交互应该相应得更改为：</p>
+<p>计算结果为 <em>L</em>，也就是 <em>L=L(s)</em>。仅当每一个<em>操作数的变量多项式</em> 是由验证者约束的，结果才有效，与左多项式相关的交互应该相应得更改为：</p>
 <ul>
 <li>
 <p>Setup</p>
@@ -1022,10 +995,10 @@ end function
 </ul>
 </li>
 </ul>
-<p><em>注意：L(s) 和 αL(s) 代表所有的变量多项式并且由于 α 只用在计算变量多项式中，所以 prover 没有别的选择只能在 setup 提供的原始加密值和变换后的加密值上赋予相同的系数做计算。</em></p>
-<p>结果，prover ：</p>
+<p><em>注意：L(s) 和 αL(s) 代表所有的变量多项式并且由于 α 只用在计算变量多项式中，所以证明者没有别的选择只能在 setup 提供的原始加密值和变换后的加密值上赋予相同的系数做计算。</em></p>
+<p>结果，证明者：</p>
 <ul>
-<li>除了“分配”值外，不能再修改它们的系数进而来修改<em>变量多项式</em> 了，因为 prover 只拿到了这些多项式的加密值，也因为 s 必要次幂的加密值不能与它们的 α 变换值一起使用</li>
+<li>除了“分配”值外，不能再修改它们的系数进而来修改<em>变量多项式</em> 了，因为证明者只拿到了这些多项式的加密值，也因为 s 必要次幂的加密值不能与它们的 α 变换值一起使用</li>
 <li>不能通过另一个多项式相加去提供一个结果因为这样 <em>α</em>-比例关系将会被破坏掉</li>
 <li>不能通过与其他的一些多项式 <em>u(x)</em> 相乘来修改操作数多项式，这样可能会使得修改后的值不成比例因为在预配对空间中无法进行加密乘法</li>
 </ul>
@@ -1033,20 +1006,20 @@ end function
 <p><em>l'<sub>d</sub>(x) = c<sub>d</sub>·l<sub>d</sub>(x)+c'<sub>a</sub>·l<sub>a</sub>(x)</em></p>
 <p><em>这并非是多项式 l<sub>d</sub>(x)  的修改，而是 l<sub>a</sub>(x) 结果系数的变化，因为他们最终会被加到一起：</em></p>
 <p><em>L(x)=c<sub>a</sub>·l<sub>a</sub>(x)+l'<sub>d</sub>(x) =(c<sub>a</sub>+c'<sub>a</sub>)·l<sub>a</sub>(x)+c<sub>d</sub>·l<sub>d</sub>(x)</em></p>
-<p>不过尽管 prover 被限制了多项式的使用，他还有拥有一些可允许范围内的自由度：</p>
+<p>不过尽管证明者被限制了多项式的使用，他还有拥有一些可允许范围内的自由度：</p>
 <ul>
 <li>
-<p>当 prover 决定不加入一些变量多项式 <em>lᵢ</em>(<em>x</em>) 来构造操作符多项式 <em>L(x)</em> 时依然是可以接受的，因为这和为它分配值为 0 是一样的：</p>
+<p>当证明者决定不加入一些变量多项式 <em>lᵢ</em>(<em>x</em>) 来构造操作符多项式 <em>L(x)</em> 时依然是可以接受的，因为这和为它分配值为 0 是一样的：</p>
 <p>g<sup>al<sub>a</sub>(x)</sup> = g<sup>al<sub>a</sub>(x)+0l<sub>d</sub>(x)</sup></p>
 </li>
 <li>
-<p>如果 prover 添加同一个变量多项式多次也是可以接受的因为这和一次分配多个值的和是一样的：</p>
+<p>如果证明者添加同一个变量多项式多次也是可以接受的因为这和一次分配多个值的和是一样的：</p>
 <p>g<sup>al<sub>a</sub>(x)</sup> · g<sup>al<sub>a</sub>(x)</sup> · g<sup>al<sub>a</sub>(x)</sup>= g<sup>3al<sub>a</sub>(x)</sup></p>
 </li>
 </ul>
 <p>这些方法在右操作数和输出操作数 <em>R(x)</em> ，<em>O(x)</em> 上也同样适用。</p>
 <blockquote>
-<p>even@安比实验室: 总结一下本文证明协议的大致思路为：</p>
+<p>译者注：总结一下本文证明协议的大致思路为：</p>
 <ol>
 <li>将要证明的程序转换为数学语言表达的形式（即加减乘除的计算）</li>
 <li>用多项式在某处的取值来进行计算以此表示数学计算，进而进行证明</li>
@@ -1080,11 +1053,11 @@ end function
 <p>$\textcolor{green}{c_l \cdot v_l} \times \textcolor{blue}{c_r \cdot v_r} = \textcolor{red}{c_o \cdot v_o}$</p>
 <p>其中下标 <em>l</em> ，<em>r</em> 和 <em>o</em> 表示变量在运算中的位置。</p>
 <p><em>注意：在不同的运算和操作数/输出中，同一个变量的常量系数可以是不同的。</em></p>
-<h3 id="没有成本的做加法"><a class="header" href="#没有成本的做加法">没有成本的做加法</a></h3>
+<h3 id="没有成本地做加法"><a class="header" href="#没有成本地做加法">没有成本地做加法</a></h3>
 <p>看一下这个新结构，很显然在多项式的表示中，每一个不同 x 所要代表的操作数都是所有<em>操作数变量多项式</em> 的总和，其中只有一个被用到的变量是非零值而其它都为 0，下图就很好得表达了这个意思：</p>
-<p><img src="./img/4/1*HeUXxV8-H5MVbhdT8haqqw.png" alt="" /></p>
+<p><img src="./img/4/1*HeUXxV8-H5MVbhdT8haqqw.png" alt="img" /></p>
 <p>我们可以利用这一个结构，加任何数量必要的<em>变量</em> 到每一个运算的操作符/输出中。例如在第一个运算中，我们可以首先做加法 <em>a+c</em>，然后就只需要用别的操作数与之相乘了，即 (<em>a</em>+ <em>c</em>) × <em>b</em> = <em>r</em>，可以表示为下图：</p>
-<p><img src="./img/4/1*RpLBxan0och5LvpuE5KJVw.png" alt="" /></p>
+<p><img src="./img/4/1*RpLBxan0och5LvpuE5KJVw.png" alt="img" /></p>
 <p>因而也可以将这些变量中任意个，对它们先乘以任意的系数再一并加入到一起作为单个操作数中，以此来根据相应程序的需要构造一个操作数值。这个特性实际上就允许将运算结构改为：</p>
 <p>$\textcolor{green}{(c_{1,a} \cdot a + c_{1,b} \cdot b + …) } \times \textcolor{blue}{(c_{r,a} \cdot a + c_{r,b}\cdot b + …)} = \textcolor{red}{(c_{o,a} \cdot a + c_{o,b} \cdot b + …)}$</p>
 <p>或者更正式一些用变量  <em>vᵢ</em> ∈ {<em>v</em>₁*, v<em>₂</em>, …, vₙ*} 和操作数变量系数 $c_{l,i} \in {c_{l,1}, c_{l,2},……,c_{l,n}}, c_{r,i} \in {c_{r,1}, c_{r,2},……,c_{r,n}},c_{o,i} \in {c_{o,1}, c_{o,2},……,c_{o,n}},$</p>
@@ -1092,13 +1065,13 @@ end function
 <p>$\textcolor{green}{\sum_{i=1}^n {c_{l,i} \cdot v_i}} \times \textcolor{blue}{\sum_{i=1}^n {c_{r,i} \cdot v_i}} = \textcolor{red}{\sum_{i=1}^n {c_{o,i} \cdot v_i}}$</p>
 <p><em>注意 ：每一个运算的操作数都有自己的一组系数 c。</em></p>
 <blockquote>
-<p>even@安比实验室：乘法运算是关键，而加法运算都可以被合并到一个更大的乘法运算里面。</p>
+<p>译者注：乘法运算是关键，而加法运算都可以被合并到一个更大的乘法运算里面。</p>
 </blockquote>
 <h3 id="加法减法和除法"><a class="header" href="#加法减法和除法">加法，减法和除法</a></h3>
 <p>到目前为止，我们一直专注于乘法操作。但是为了能够执行通用计算，真实环境下的程序也需要加法，加法和除法。</p>
 <p><strong>加法</strong> 在前面的章节中，我们已经确定了可以在单个操作数的内容中将变量加起来，然后和另一个操作数相乘，即(3<em>a</em> + <em>b</em>) × <em>d</em> = <em>r</em> ，但是如果我们只是想做加法，没有乘法，例如一个程序中需要做  a + b 的计算，我们可以按照下面的方式来表示： <em>(a+b) × 1 = r​</em></p>
 <blockquote>
-<p>@Maksym（作者）：因为我们的结构中对于每一个操作数我们既需要常量系数也需要变量 (c ⋅ v) ，1 这个值可以表示为  c<em>₁</em> ⋅ v<em>₁</em>，其中  c<em>₁</em> = <em>1</em> 可以被“硬编码”到对应的多项式中， v<em>₁</em> 是一个变量可以给它分配任何值，那么我们就必须通过一些约束来限制 v<em>₁</em> 的值，这个在后面的章节中将会讲到。</p>
+<p>注：因为我们的结构中对于每一个操作数我们既需要常量系数也需要变量 (c ⋅ v) ，1 这个值可以表示为  c<em>₁</em> ⋅ v<em>₁</em>，其中  c<em>₁</em> = <em>1</em> 可以被“硬编码”到对应的多项式中， v<em>₁</em> 是一个变量可以给它分配任何值，那么我们就必须通过一些约束来限制 v<em>₁</em> 的值，这个在后面的章节中将会讲到。</p>
 </blockquote>
 <p><strong>减法</strong> 减法与加法几乎一致，唯一的不同就是负系数， a-b也就是：</p>
 <p>$\textcolor{green}{(a+-1 \cdot b)} \times \textcolor{blue}{1} = \textcolor{red}{r}$</p>
@@ -1107,12 +1080,12 @@ end function
 <p>可以看到除法的结果是就是我们要得到一个结果值使其乘以 divisor 能够得到 factor。所以我们也可以用乘法来表示出同一个意思：<em>divisor × result = factor</em>。这样就是说如果我们想要去证明除法运算 <em>a / b= r</em>，我们就可以把它表示为：</p>
 <p>$\textcolor{green}{b} \times \textcolor{blue}{r} = \textcolor{red}{a}$</p>
 <blockquote>
-<p>@Maksym（作者）：运算的结构也称为 “约束” ，因为多项式结构代表的运算，并非是为了计算出结果，而是在 prover已经知晓的变量赋值的情况下，检验这个运算的过程是否正确。换句话说，即约束 prover 必须提供一致的值，无论这些值是什么。</p>
+<p>注：运算的结构也称为 “约束” ，因为多项式结构代表的运算，并非是为了计算出结果，而是在证明者已经知晓的变量赋值的情况下，检验这个运算的过程是否正确。换句话说，即约束证明者必须提供一致的值，无论这些值是什么。</p>
 <p>所有的算术计算（加减乘除）都已经有了，于是运算结构不再需要修改。</p>
 </blockquote>
 <blockquote>
-<p>even@安比实验室: 约束和运算有一定的关联性。算术电路的目的是为了实现「计算的验证」，而非「计算的过程」。</p>
-<p>上一篇文章中，我们提出了一种方法：把构造多项式的工作交给 setup 环节，prover 只要填上对应的数值就可以了。 这个方法不仅解决了同一个操作数运算符中不一致的问题，同时还带来了额外的便利：</p>
+<p>译者注：约束和运算有一定的关联性。算术电路的目的是为了实现「计算的验证」，而非「计算的过程」。</p>
+<p>上一篇文章中，我们提出了一种方法：把构造多项式的工作交给 setup 环节，证明者只要填上对应的数值就可以了。 这个方法不仅解决了同一个操作数运算符中不一致的问题，同时还带来了额外的便利：</p>
 <p>1）允许执行计算的表达式中包含静态系数。</p>
 <p>2）虽然l(x)·r(x)=o(x)的关系中只有乘法，但利用这个方法也可以轻松的执行加法操作，继而也就解决了减法和除法的问题。</p>
 </blockquote>
@@ -1125,7 +1098,7 @@ end function
 <p>现在要包含同样的关系只需要两个乘法。这种运算的完整形式就是：</p>
 <p>$1: \qquad  \textcolor{green}{1 \cdot a} \times \textcolor{blue}{1 \cdot b }= \textcolor{red}{1 \cdot m} $</p>
 <p>$2:  \qquad \textcolor{green}{1 \cdot w} \times \textcolor{blue}{1 \cdot m + -1 \cdot a + -1 \cdot b} = \textcolor{red}{1 \cdot v + -1 \cdot a + -1 \cdot b}$</p>
-<p>我们还可以再增加一条约束使 <em>w</em> 必须为二进制数，否则 prover 就可以代入任何值去执行一个错误的运算了：</p>
+<p>我们还可以再增加一条约束使 <em>w</em> 必须为二进制数，否则证明者就可以代入任何值去执行一个错误的运算了：</p>
 <p>$3：  \qquad \textcolor{green}{1 \cdot w} \times \textcolor{blue}{1 \cdot w}  = \textcolor{red}{1 \cdot w} $</p>
 <p>要了解为什么 <em>w</em> 只能为 0 或者 1，我们可以把等式表示为 <em>w</em>² – <em>w</em> = 0，也就是 <em>(w – 0)(w – 1) = 0</em> 这里 0 和 1 是唯一解。</p>
 <p>现在一共有 5 个变量，以及 2 个左操作符， 4 个右操作符和 5 个输出。操作符多项式为：</p>
@@ -1133,31 +1106,31 @@ end function
 <p>$\textcolor{blue}{R(x) = m \cdot r_m(x) + a \cdot r_a(x) + b \cdot r_b(x)}$</p>
 <p>$\textcolor{red}{O(x) = m \cdot o_m(x) + v \cdot o_v(x) + a \cdot o_a(x) + b \cdot o_b(x)}$</p>
 <p>在三次运算中必须为每个*变量多项式 都分别算出一个对应的系数或者如果这个多项式在计算的操作数或者输出中没有被用到的话系数就置为 0。</p>
-<p><img src="./img/4/eq1.png" alt="" /></p>
+<p><img src="./img/4/eq1.png" alt="img" /></p>
 <p>结果因式多项式就是  <em>t(x) = (x – 1)(x –2)(x –3)</em>，它必须确保这三个运算都能被正确计算。</p>
 <p>接下来，我们利用多项式插值法来找到每个变量多项式：</p>
-<p><img src="./img/4/eq2.png" alt="" /></p>
+<p><img src="./img/4/eq2.png" alt="img" /></p>
 <p>绘制出来就是：</p>
-<p><img src="./img/4/1*YoNx3JunyKJh8kFad6qtpQ.png" alt="" /></p>
+<p><img src="./img/4/1*YoNx3JunyKJh8kFad6qtpQ.png" alt="img" /></p>
 <p>我们准备通过多项式去证明计算，首先，选择函数的输入值，例如： <em>w</em> <em>= 1</em>, <em>a</em> <em>= 3</em>, <em>b</em>= 2。其次，计算过程中的中间变量值为：</p>
-<p><em>m=a × b =6</em></p>
-<p><em>v = w(m-a-b)+a+b=6</em></p>
+<p>$$m=a × b =6$$</p>
+<p>$$v = w(m-a-b)+a+b=6$$</p>
 <p>然后，我们把所有计算结果中的值赋值到 <em>变量多项式</em> 中，然后相加得到操作数或者输出多项式的形式：</p>
 <p>$\textcolor{green}{L(x)}=\textcolor{green}{3 \cdot l_a(x) +1 \cdot l_w(x)} = x^2 -5x+7$</p>
 <p>$\textcolor{blue}{R(x)}=\textcolor{blue}{6 \cdot r_m(x) + 3 \cdot r_a(x) + 2 \cdot r_b(x) + 1 \cdot r_w(x)} = \frac{1}{2}x^2 -2 \frac{1}{2}x +4$</p>
 <p>$\textcolor{red}{O(x)}=\textcolor{red}{6 \cdot o_m(x) + 6 \cdot o_v(x) + 3 \cdot o_a(x)+ 2 \cdot o_b(x) + 1 \cdot o_w(x)}= 2 \frac{1}{2}x^2 + 12 \frac{1}{2}x +16$</p>
 <p>在图中就表示为：</p>
-<p><img src="./img/4/1*XwRYLT4_4KRPTqQKg2jqfQ.png" alt="" /></p>
+<p><img src="./img/4/1*XwRYLT4_4KRPTqQKg2jqfQ.png" alt="img" /></p>
 <p>把他们相加成对应运算中的操作数和输出值：</p>
-<p><img src="./img/4/1*8xEajzq2MlB9i7O8PQ829Q.png" alt="" /></p>
+<p><img src="./img/4/1*8xEajzq2MlB9i7O8PQ829Q.png" alt="img" /></p>
 <p>我们需要去证明  <em>L</em>(<em>x</em>) × <em>R</em>(<em>x</em>) – <em>O</em>(<em>x</em>) = <em>t</em>(<em>x</em>)<em>h</em>(<em>x</em>)，因而我们先找出 <em>h</em>(<em>x</em>)：</p>
 <p>$h(x) = \frac{L(x) \times R(x) - O(x)}{t(x)} = \frac{\frac{1}{2}x^4 - 5x^3 + \frac{35}{2}x^2 -25x +12}{(x-1)(x-2)(x-3)} = \frac{1}{2}x - 2$</p>
 <p>以图的形式表示为：</p>
-<p><img src="./img/4/1*z4sW_cYeeGZS_8AAJzfoKQ.png" alt="" /></p>
+<p><img src="./img/4/1*z4sW_cYeeGZS_8AAJzfoKQ.png" alt="img" /></p>
 <p>这里很明显多项式 <em>L</em>(<em>x</em>) × <em>R</em>(<em>x</em>) – <em>O</em>(<em>x</em>) 的解为 <em>x</em>= 1， <em>x</em>= 2 和 <em>x</em>= 3，因而 <em>t(x)</em> 是它的因式，假如使用了和它不一致的变量值，情况就不是这样了。</p>
-<p>这就是一组能够正确计算的变量值，如何在多项式层面上证明出来的。下面 prover 还要再继续处理协议的密码学部分。</p>
+<p>这就是一组能够正确计算的变量值，如何在多项式层面上证明出来的。下面证明者还要再继续处理协议的密码学部分。</p>
 <h2 id="可验证计算协议"><a class="header" href="#可验证计算协议">可验证计算协议</a></h2>
-<p>我们基于前文中<strong>多项式知识协议</strong> 做了很多重要的修改使它变得更通用，我们再来看一下它现在的定义。假定函数 <em>f</em>(*) 是要证明的问题中的计算结果，其中操作数的数量为 <em>d</em> ，变量的数量 <em>n</em> ，以及它们对应的系数为：</p>
+<p>我们基于前文中<strong>多项式知识协议</strong> 做了很多重要的修改使它变得更通用，我们再来看一下它现在的定义。假定函数 <em>f</em>(<em>) 是要证明的问题中的计算结果，其中操作数的数量为</em>d*，变量的数量<em>n</em> ，以及它们对应的系数为：</p>
 <p>${c_{L,i,j},c_{R,i,j},c_{o,i,j}}_{i \in {1,…,d}, j \in {i,…,d}}$</p>
 <ul>
 <li>
@@ -1167,7 +1140,7 @@ end function
 <p>为左操作数 ${l_i(x)}<em>{i \in {1,…,n}}$ 构造<em>变量多项式</em> 然后对于所有 $j \in {1,…,d}$ 的运算都算出其对应的系数，即 $l_i(j) = c</em>{L,i,j}$，对右操作数和输出也做同样的事情。</p>
 </li>
 <li>
-<p>随机抽取 <em>s</em>，$α$ </p>
+<p>随机抽取 <em>s</em>，$α$</p>
 </li>
 <li>
 <p>计算 <em>t(x)= (x-1)(x-2)…(x-d)</em> 及其结果 $g^{t(s)}$</p>
@@ -1228,17 +1201,17 @@ end function
 <p>对于 <em>i ∈ {1, …, n}</em> 所有变量多项式 {<em>lᵢ</em>(<em>x</em>)<em>, rᵢ</em>(<em>x</em>)<em>, oᵢ</em>(<em>x</em>)}  和目标多项式 <em>t(x)</em> 的设置被称为一个<em>二元算术程序</em> (QAP，在[<a href="ch04.html#8bfc">Gen+12</a>] 中有介绍)。</p>
 <p>虽然协议足够健壮，可以进行常规的计算验证，但这里依然还有两个安全考虑需要去解决。</p>
 <h3 id="操作数和输出的不可替代性"><a class="header" href="#操作数和输出的不可替代性">操作数和输出的不可替代性</a></h3>
-<p>因为在 <em>变量多项式约束检查</em> 中的所有操作数上我们使用了同一个 <em>α</em>，所以就没有办法阻止 prover 做下面的欺骗行为：</p>
+<p>因为在 <em>变量多项式约束检查</em> 中的所有操作数上我们使用了同一个 <em>α</em>，所以就没有办法阻止证明者做下面的欺骗行为：</p>
 <ul>
 <li>使用其它的操作数中的可变多项式，即 <em>L</em>′(<em>s</em>) = <em>o</em>₁(<em>s</em>) + <em>r</em>₁(<em>s</em>) + <em>r</em>₁(<em>s</em>) + <em>…</em></li>
 <li>完全交换 <em>操作数多项式</em>， 也就是把 <em>O</em>(<em>s</em>) 和 <em>L</em>(<em>s</em>) 换成  <em>O(s) × R(s) = L(s)</em></li>
 <li>复用相同的操作数多项式，即  <em>L(s) × L(s) = O(s)</em></li>
 </ul>
-<p>可交换性就是指 prover 可以修改计算过程，并有效证明一些其它无关的计算结果。防止这种行为的一个很显然的方式就是在不同的操作数上使用不同的 <em>α<sub>s</sub></em> ，具体协议就可以修改为：</p>
+<p>可交换性就是指证明者可以修改计算过程，并有效证明一些其它无关的计算结果。防止这种行为的一个很显然的方式就是在不同的操作数上使用不同的 <em>α<sub>s</sub></em> ，具体协议就可以修改为：</p>
 <ul>
 <li>
-<p>Setup</p>
-<p>…</p>
+<p>Setup
+…</p>
 <ul>
 <li>选择随机数 $α_l$，$α_r$，$α_o$ 来代替 $α$</li>
 <li>计算其对应的“变换” ${g^{α_ll_i(s)},g^{α_rr_i(s)},g^{α_oo_i(s)}}_{i \in {1…n}}$</li>
@@ -1247,41 +1220,41 @@ end function
 </ul>
 </li>
 <li>
-<p>Proving</p>
-<p>…</p>
+<p>Proving
+…</p>
 <ul>
 <li>为 “变换”的多项式赋值：$g^{α_lL(s)} = \prod_{i=1}^n{(g^{α_ll_i(s)})^{v_i}}, g^{α_lR(s)} = \prod_{i=1}^n{(g^{α_rr_i(s)})^{v_i}}, g^{α_oO(s)} = \prod_{i=1}^n{(g^{α_oo_i(s)})^{v_i}}$</li>
 <li>设置证明：$(g^{L(s)},g^{R(s)},g^{O(s)},g^{α_lL(s)},g^{α_rR(s)},g^{α_oO(s)},g^{h(s)})$</li>
 </ul>
 </li>
 <li>
-<p>Verification</p>
-<p>…</p>
+<p>Verification
+…</p>
 <ul>
 <li>可变多项式约束验证：$e(g^L,g^{α_l}) = e(g^{L'},g),e(g^R,g^{α_r}) = e(g^{R'},g),e(g^O,g^{α_o}) = e(g^{O'},g)$</li>
 </ul>
 </li>
 </ul>
-<p>这样就不能在一个操作数中使用其它操作数的变量多项式了，因为 prover 没有办法去获知 $α_l, α_r, α_o$ 来满足 $α_s$ 变换关系。</p>
+<p>这样就不能在一个操作数中使用其它操作数的变量多项式了，因为证明者没有办法去获知 $α_l, α_r, α_o$ 来满足 $α_s$ 变换关系。</p>
 <blockquote>
-<p>even@安比实验室: 这里通过对l(x),r(x)和o(x) 进行分开 KEA 检查，就解决了上篇文章中提出的第二个缺陷问题——由于 prover 生成的证明中只有计算结果，左操作数，右操作数，输出在计算中混用也不会被发现。</p>
+<p>译者注：这里通过对l(x),r(x)和o(x) 进行分开 KEA 检查，就解决了上篇文章中提出的第二个缺陷问题——由于证明者生成的证明中只有计算结果，左操作数，右操作数，输出在计算中混用也不会被发现。</p>
 <p>同样下面一节也解决了上篇文章中提出的第三个缺陷问题——由于左操作数，右操作数，输出是分开表示的，互相之间的关系无法进行约束。</p>
 </blockquote>
 <h3 id="跨操作数的变量一致性"><a class="header" href="#跨操作数的变量一致性">跨操作数的变量一致性</a></h3>
 <p>对于任意的变量 vᵢ ，我们都必须将它的值 <em>分配</em> 到每个相应操作数中的一个与之对应的<em>变量多项式</em> 上，即：</p>
 <p>$(g^{l_i(s)})^{v_i}, (g^{r_i(s)})^{v_i},(g^{o_i(s)})^{v_i}$</p>
 <p>因为每一个<em>操作数运算符</em> 的有效性是分开校验的，并不强制要求我们在对应的<em>变量多项式</em> 中使用相同的变量值。这就意味着在左操作数中变量 <em>v</em>₁ 的值可以与右操作数或输出中的变量值 <em>v</em>₁不同。</p>
-<p>我们可以通过熟悉的限制多项式的方法（也就是限制变量多项式的方法）在操作数之间强制变量值相等。如果我们能够在所有的操作数之间创造一个作为“变换的校验和”的变量多项式，那么就可以限制 prover 使其只能够赋予相同的值。verifier 可以将这些每个变量的多项式加起来，即：</p>
+<p>我们可以通过熟悉的限制多项式的方法（也就是限制变量多项式的方法）在操作数之间强制变量值相等。如果我们能够在所有的操作数之间创造一个作为“变换的校验和”的变量多项式，那么就可以限制证明者使其只能够赋予相同的值。验证者可以将这些每个变量的多项式加起来，即：</p>
 <p>$g^{l_i(s)+r_i(s)+o_i(s)}$</p>
 <p>然后乘以一个额外的随机数 <em>β</em>，即</p>
 <p>$g^{β(l_i(s)+r_i(s)+o_i(s))}$</p>
-<p>提供这些变换后的多项式给 prover，与变量多项式一起给它赋上变量值：</p>
+<p>提供这些变换后的多项式给证明者，与变量多项式一起给它赋上变量值：</p>
 <p>$(g^{l_i(s)})^{v_{L,i}},(g^{r_i(s)})^{v_{R,i}}, (g^{o_i(s)})^{v_{O,i}}, (g^{β(l_i(s)+r_i(s)+o_i(s))})^{v_{β,i}}$</p>
 <p>然后加密 <em>β</em> 并把 $g^β$ 加到 <em>verification key</em> 中。现在如果所有的 <em>vᵢ</em> 值相同，即,</p>
 <p>$v_{L,i} = v_{R,i} = v_{o,i} = v_{β,i} \quad 其中  i \in {1,…,n}$</p>
 <p>等式就满足：</p>
 <p>$e(g^{v_{L,i} \cdot l_i(s)} \cdot g^{v_{R,i} \cdot r_i(s)} \cdot g^{v_{o,i} \cdot o_i(s)},g^β)=e(g^{v_{β,i} \cdot β(l_i(s)+r_i(s)+o_i(s))},g)$</p>
-<p>尽管这个一致性校验很有用，但还是存在一定的概率  <em>l</em>(<em>s</em>)<em>, r</em>(<em>s</em>)<em>, o</em>(<em>s</em>) 中至少有两项要么计算值相同要么一个多项式可以被另一个整除等情况，这就允许 prover 去分解 $v_{L,i},v_{R,i},v_{O,i},v_{β,i}$ 这些值的关系，使得即使有至少两个不相等的值也依然能够保持等式成立，从而使校验无效：</p>
+<p>尽管这个一致性校验很有用，但还是存在一定的概率  <em>l</em>(<em>s</em>)<em>, r</em>(<em>s</em>)<em>, o</em>(<em>s</em>) 中至少有两项要么计算值相同要么一个多项式可以被另一个整除等情况，这就允许证明者去分解 $v_{L,i},v_{R,i},v_{O,i},v_{β,i}$ 这些值的关系，使得即使有至少两个不相等的值也依然能够保持等式成立，从而使校验无效：</p>
 <p>$(v_{L,i} \cdot l_i(s) + v_{R,i} \cdot r_i(s) + v_{O,i} \cdot o_i(s)) \cdot β = v_{β,i} \cdot β \cdot (l_i(s) + r_i(s) + o_i(s))$</p>
 <p>例如，一个以  <em>l</em>(<em>x</em>) = <em>r</em>(<em>x</em>) 为例的单个运算。我们用 <em>w</em> 来表示这两个值同时  <em>y</em> = <em>o</em>(<em>s</em>)。这个等式看起来就是：</p>
 <p>$β(v_Lw + v_Rw+v_Oy) = v_β \cdot β(w+w+y)$</p>
@@ -1332,18 +1305,18 @@ end function
 </ul>
 </li>
 </ul>
-<p>这个构造中同一个变量值就无法乱用了，因为不同的 <em>β<sub>s</sub></em> 使得相同多项式无法兼容，但是这里还存在与  <strong>remark 4.1</strong> 相同的缺陷，由于<em>g<sup>β<sub>l</sub></sup></em>  ，<em>g<sup>β<sub>r </sub></sup></em>， *g<sup>β<sub>o </sub></sup>*是公开可见的，攻击者可以修改任意变量多项式的零索引系数，因为它并不依赖于 <em>s</em>，即，<em>g<sup>β<sub>l</sub>s<sup>0</sup></sup>= g<sup>β<sub>l</sub></sup></em>。</p>
+<p>这个构造中同一个变量值就无法乱用了，因为不同的 <em>β<sub>s</sub></em> 使得相同多项式无法兼容，但是这里还存在与  <strong>备注 4.1</strong> 相同的缺陷，由于<em>g<sup>β<sub>l</sub></sup></em>  ，<em>g<sup>β<sub>r </sub></sup></em>， *g<sup>β<sub>o </sub></sup>*是公开可见的，攻击者可以修改任意变量多项式的零索引系数，因为它并不依赖于 <em>s</em>，即，<em>g<sup>β<sub>l</sub>s<sup>0</sup></sup>= g<sup>β<sub>l</sub></sup></em>。</p>
 <blockquote>
-<p>even@安比实验室: 回忆一下，上文中我们提出了在 setup 阶段设置数学表达式的约束关系来解决了一些问题，但这里似乎有引入了一个问题：如果保证 prover 构造的证明是用遵循这些约束关系计算出来的呢？</p>
+<p>译者注：回忆一下，上文中我们提出了在 setup 阶段设置数学表达式的约束关系来解决了一些问题，但这里似乎有引入了一个问题：如果保证证明者构造的证明是用遵循这些约束关系计算出来的呢？</p>
 <p>KEA 其实已经解决了这个问题，但似乎并不完美，这就是我们下面要讨论的变量延展性问题。</p>
 </blockquote>
 <h3 id="变量非延展性和变量一致性多项式"><a class="header" href="#变量非延展性和变量一致性多项式">变量非延展性和变量一致性多项式</a></h3>
 <p><strong>变量多项式的延展性</strong></p>
-<p>举一个  <strong>remark 4.1</strong> 有关的例子，看一下下面的两个运算：</p>
+<p>举一个  <strong>备注 4.1</strong> 有关的例子，看一下下面的两个运算：</p>
 <p>$\textcolor{green}{a} \times \textcolor{blue}{1} = \textcolor{red}{b}$</p>
 <p>$\textcolor{green}{3a} \times \textcolor{blue}{1} =\textcolor{red}{c}$</p>
-<p>预期的结果 <em>b = a</em> 和 <em>c = 3a</em> , 再进一步就是  <em>c = 3b</em>。这就是说<em>左操作数的变量</em> 多项式的计算结果为 l<sub>a</sub>(1) = 1 和 l<sub>a</sub>(2) = 3。先不管  l<sub>a</sub>(<em>x</em>) 的形式， prover 都可以不按照上述的比例用另一个修改了的多项式 <em>lₐ</em>′(x) = al<sub>a</sub>(x) + 1 来给 <em>a</em> 赋值。这样运算就变成了  l<sub>a</sub>′(1) = a+ 1 和 l<sub>a</sub>′(2) = 3<em>a</em>+ 1, 结果也就是 <em>b = a + 1</em> 和 <em>c = 3a + 1</em>，其中 <em>c≠3b</em>，这意味着 <em>a</em> 的取值的实际意义在不同运算中是不一样的。</p>
-<p>但是因为 prover 已经拿到了 <em>g<sup>α<sub>l</sub></sup></em> 和 <em>g<sup>β<sub>l</sub></sup></em> ，所以他依然能够通过正确的操作符多项式* 和<em>变量值一致性</em> 的校验：</p>
+<p>预期的结果 <em>b = a</em> 和 <em>c = 3a</em> , 再进一步就是  <em>c = 3b</em>。这就是说<em>左操作数的变量</em> 多项式的计算结果为 l<sub>a</sub>(1) = 1 和 l<sub>a</sub>(2) = 3。先不管  l<sub>a</sub>(<em>x</em>) 的形式，证明者都可以不按照上述的比例用另一个修改了的多项式 <em>lₐ</em>′(x) = al<sub>a</sub>(x) + 1 来给 <em>a</em> 赋值。这样运算就变成了  l<sub>a</sub>′(1) = a+ 1 和 l<sub>a</sub>′(2) = 3<em>a</em>+ 1, 结果也就是 <em>b = a + 1</em> 和 <em>c = 3a + 1</em>，其中 <em>c≠3b</em>，这意味着 <em>a</em> 的取值的实际意义在不同运算中是不一样的。</p>
+<p>但是因为证明者已经拿到了 <em>g<sup>α<sub>l</sub></sup></em> 和 <em>g<sup>β<sub>l</sub></sup></em> ，所以他依然能够通过正确的操作符多项式<em>和</em>变量值一致性* 的校验：</p>
 <ul>
 <li>
 <p>…Proving：</p>
@@ -1430,14 +1403,14 @@ end function
 </ul>
 <p>注意：多项式 o<sub>a</sub>(x)，l<sub>b</sub>(x)，r<sub>b</sub>(x) 其实可以被忽略掉的，因为这几项对于任何 <em>x</em> 的取值，计算结果都为 0，但是为了保持完整性我们依然要保留这几项。</p>
 <blockquote>
-<p>even@安比实验室：这种能力会危害到协议的可靠性。很显然，加密的 <em>β</em><sub>s</sub>不应该对 Prover 可见。</p>
+<p>译者注：这种能力会危害到协议的可靠性。很显然，加密的 <em>β</em><sub>s</sub>不应该对证明者可见。</p>
 </blockquote>
 <p><strong>非延展性</strong></p>
 <p>解决延展性问题的一个方法就是，在 setup 阶段将 <em>verification key</em> 中加密的 β<sub>s</sub> 项与随机秘密值  <em>γ</em>(gamma) 相乘使其与加密值 <em>Z</em>(<em>s</em>) 不兼容：</p>
 <p>$g^{β_l \gamma}, g^{β_r\gamma}, g^{β_o\gamma}$</p>
 <p>相应的这种被修饰过的加密值，就能阻止使得修改加密值 <em>Z</em>(<em>s</em>)  变得不可行了，因为 <em>Z</em>(<em>s</em>) 中没有 <em>γ</em>，即：</p>
 <p>$g^{Z(s)} \cdot g^{v' \cdot β_l r} = g^{β_l(L(s)+v'r)+β_rR(s) + β_oO(s)}$</p>
-<p>因为变值  <em>γ</em>  是随机的 prover 并不知道它的值。所以这个修改就需要我们用 <em>Z</em>(<em>s</em>) 乘以  <em>γ</em> 来平衡协议中的变量值一致性校验* 等式：</p>
+<p>因为变值  <em>γ</em>  是随机的证明者并不知道它的值。所以这个修改就需要我们用 <em>Z</em>(<em>s</em>) 乘以  <em>γ</em> 来平衡协议中的变量值一致性校验* 等式：</p>
 <ul>
 <li>
 <p>Setup：</p>
@@ -1503,30 +1476,27 @@ end function
 </ul>
 </li>
 </ul>
-<p>生成元的这种随机化进一步增加了安全性，使得如 <strong>remark 4.1</strong>中描述的<em>可变多项式</em> 延展性无效。因为对于故意的修改，它必须要么是<em>ρ<sub>l</sub></em>, <em>ρ<sub>r</sub></em> 或者<em>ρ<sub>o</sub></em> 原始值的倍数要么就是不可直接用的加密值的倍数（假定,如上文所述我们不去处理可能曝光加密后的值的 0 阶可变多项式）。</p>
+<p>生成元的这种随机化进一步增加了安全性，使得如 <strong>备注 4.1</strong>中描述的<em>可变多项式</em> 延展性无效。因为对于故意的修改，它必须要么是<em>ρ<sub>l</sub></em>, <em>ρ<sub>r</sub></em> 或者<em>ρ<sub>o</sub></em> 原始值的倍数要么就是不可直接用的加密值的倍数（假定,如上文所述我们不去处理可能曝光加密后的值的 0 阶可变多项式）。</p>
 <p>这个优化使得 <em>verification key</em>  减少了两个项，并且去除了 verification 步骤中的两个配对运算。</p>
 <p><em>注意：在 Jens Groth 2016年的 paper [<a href="ch04.html#2923">Gro16</a>] 中有更进一步的改进。</em></p>
 <blockquote>
-<p>even@安比实验室:至此，通用 zk-SNARK 协议的已经几乎构造完成了，本文可以归纳为以下几点：</p>
+<p>译者注：至此，通用 zk-SNARK 协议的已经几乎构造完成了，本文可以归纳为以下几点：</p>
 <p>协议中是如何增加可变系数的和如何做加减乘除运算的</p>
 <p>协议如何保证操作数和输出的不可替代性</p>
 <p>协议如何保证跨操作数的可变一致性</p>
 <p>协议如何处理非延展性变量和变量一致性</p>
 <p>协议中变量值一致性检查优化</p>
 </blockquote>
-<p><strong>参考文献</strong></p>
-<p>[Par+13] — Bryan Parno, Craig Gentry, Jon Howell, and Mariana Raykova. <em>Pinocchio: Nearly</em> <em>Practical Verifiable Computation</em>. Cryptology ePrint Archive, Report 2013/279. https://eprint.iacr.org/2013/279. 2013.</p>
-<p>[Gen+12] — Rosario Gennaro, Craig Gentry, Bryan Parno, and Mariana Raykova. <em>Quadratic</em> <em>Span Programs and Succinct NIZKs without PCPs</em>. Cryptology ePrint Archive, Report 2012/215. https://eprint.iacr.org/2012/215. 2012.</p>
-<p>[Gro16] — Jens Groth. <em>On the Size of Pairing-based Non-interactive Arguments</em>. Cryptology ePrint Archive, Report 2016/260. https://eprint.iacr.org/2016/260. 2016.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="从零开始学习-zk-snark五pinocchio-协议"><a class="header" href="#从零开始学习-zk-snark五pinocchio-协议">从零开始学习 zk-SNARK（五）——Pinocchio 协议</a></h1>
 <h2 id="约束和公共输入"><a class="header" href="#约束和公共输入">约束和公共输入</a></h2>
 <h3 id="约束"><a class="header" href="#约束">约束</a></h3>
-<p>我们的分析主要集中在运算的概念上。但是，协议实际上不是去做”计算“，而是检验输出值是否是操作数正确运算得到的结果。所以我们称之为约束，即一个 verifier 约束 prover 去为预定义的“程序”提供有效值，而无论这个“程序”是什么。多个约束组成的系统被称为“约束系统”（在我们的例子中这是一个一阶约束系统，或被称为<strong>R1CS</strong>）。</p>
+<p>我们的分析主要集中在运算的概念上。但是，协议实际上不是去做”计算“，而是检验输出值是否是操作数正确运算得到的结果。所以我们称之为约束，即一个验证者约束证明者去为预定义的“程序”提供有效值，而无论这个“程序”是什么。多个约束组成的系统被称为“约束系统”（在我们的例子中这是一个一阶约束系统，或被称为<strong>R1CS</strong>）。</p>
 <blockquote>
-<p>@Maksym（作者）：这里其实隐含了寻找所有正确答案的一个方法就是对所有可能的组合值进行一次暴力破解，然后只选择一个满足的约束，或者使用可满足约束的更精密的技术[<a href="ch05.html#b979">con18</a>]。</p>
+<p>注：这里其实隐含了寻找所有正确答案的一个方法就是对所有可能的组合值进行一次暴力破解，然后只选择一个满足的约束，或者使用可满足约束的更精密的技术[<a href="ch05.html#b979">con18</a>]。</p>
 </blockquote>
+<p><a href="ignored"></a></p>
 <blockquote>
-<p>even@安比实验室：请注意这个约束是定义在算术电路，或者布尔电路上。因为这两类电路的可满足性问题是 NP-Complete 问题。</p>
+<p>译者注：请注意这个约束是定义在算术电路，或者布尔电路上。因为这两类电路的可满足性问题是 NP-Complete 问题。</p>
 </blockquote>
 <p>因而我们也可以使用约束来确保其它的关系。例如，如果我们想要确认变量 <em>a</em> 的值只能为 0 或 1（即二进制数），我们可以用一个简单的约束去做这件事：</p>
 <p>$\textcolor{green}{a} \times \textcolor{blue}{a} = \textcolor{red}{a}$</p>
@@ -1542,19 +1512,19 @@ end function
 <p>$5: \qquad \textcolor{green}{b_3} \times \textcolor{blue}{b_3} = \textcolor{red}{b_3}$</p>
 <p>更复杂的约束也可以用这种方式表示，以此来确保使用的值满足规则。注意很重要的一点是在当前的计算结构中是不能对 1 进行约束的：</p>
 <p>$\textcolor{green}{\Sigma_{i=1}^n{c_{l,i} \cdot v_i }} \times \textcolor{blue}{\Sigma_{i=1}^n{c_{r,i} \cdot v_i}} = \textcolor{red}{\Sigma_{i=1}^n{c_{o,i} \cdot v_i }}$</p>
-<p>因为值 1 （以及前面约束中的 2）必须通过 <em>c·v<sub>one </sub></em> 表达出来，其中 <em>c</em> 可以被固定到 <em>proving key</em> 中，但是因为 <em>v</em> 是由 prover 提供的，所以可以是任何别的值。尽管我们可以通过设置 <em>c=0</em> 来强制 <em>c·v<sub>one </sub></em> 变成 0，但是在我们前面受限的构造方法中很难找到一个约束来强制 v<sub>one </sub> 为 1。于是，Verifier 需要有一种办法来设置 v<sub>one </sub> 的值。</p>
+<p>因为值 1 （以及前面约束中的 2）必须通过 <em>c·v<sub>one </sub></em> 表达出来，其中 <em>c</em> 可以被固定到 <em>proving key</em> 中，但是因为 <em>v</em> 是由证明者提供的，所以可以是任何别的值。尽管我们可以通过设置 <em>c=0</em> 来强制 <em>c·v<sub>one </sub></em> 变成 0，但是在我们前面受限的构造方法中很难找到一个约束来强制 v<sub>one </sub> 为 1。于是，Verifier 需要有一种办法来设置 v<sub>one </sub> 的值。</p>
 <blockquote>
-<p>even@安比实验室: 我们前文中提到的表达式的约束关系就称为 R1CS。</p>
+<p>译者注：我们前文中提到的表达式的约束关系就称为 R1CS。</p>
 </blockquote>
 <h3 id="公共输入和-1"><a class="header" href="#公共输入和-1">公共输入和 1</a></h3>
-<p>如果不能根据 verifier 的输入对其进行检查，那么证明的可用性将受到限制。也就是说，虽然知道 prover 将两个值相乘但是并不知道这些值和/或计算结果。尽管有可能在 <em>proving key</em> 中通过“硬编码”来进行验证一些特定的值（如，乘法运算的结果必须为12），但这就需要针对每一个想要的“verifier 的输入”生成单独的密钥对。</p>
+<p>如果不能根据验证者的输入对其进行检查，那么证明的可用性将受到限制。也就是说，虽然知道证明者将两个值相乘但是并不知道这些值和/或计算结果。尽管有可能在 <em>proving key</em> 中通过“硬编码”来进行验证一些特定的值（如，乘法运算的结果必须为12），但这就需要针对每一个想要的“验证者的输入”生成单独的密钥对。</p>
 <blockquote>
-<p>even@安比实验室: 这样会严重限制实用性，电路需要支持参数。</p>
+<p>译者注：这样会严重限制实用性，电路需要支持参数。</p>
 </blockquote>
-<p><strong>因而如果可以由 verifier 而不是 prover 为计算指定一些值（输入或者输出），包括 $v_{one}$，那证明就可以变得更通用了。</strong></p>
+<p><strong>因而如果可以由验证者而不是证明者为计算指定一些值（输入或者输出），包括 $v_{one}$，那证明就可以变得更通用了。</strong></p>
 <p>首先，我们看一下要证明的值 g<sup>L(s)</sup>，g<sup>R(s)</sup>，g<sup>O(s)</sup>。因为这里使用了同态加密所以可以增大这些值，例如，我们可以与另一个加密的多项式相加使得值为<em>g<sup>L(s)</sup> · g<sup>l<sub>v</sub>(s)</sup> =g<sup>L(s)+l<sub>v</sub>(s)</sup></em> 。</p>
-<p>这样如果我们能够在提供给 prover 的变量多项式中排除必要的一项，verifier 就可以在这一项变量多项式上设置他自己的值，并且使得检查依然能够通过。</p>
-<p>因为 verifier 已经可以通过加入α-转换来限制 prover 选择多项式了，所以这个检查结果就很容易得到。因而当消除了它的 α<sub>s </sub>和 <em>β</em> 校验和对应的项，这些可变多项式就可以从 <em>proving key</em> 转移到 <em>verification key</em> 当中去了。</p>
+<p>这样如果我们能够在提供给证明者的变量多项式中排除必要的一项，验证者就可以在这一项变量多项式上设置他自己的值，并且使得检查依然能够通过。</p>
+<p>因为验证者已经可以通过加入α-转换来限制证明者选择多项式了，所以这个检查结果就很容易得到。因而当消除了它的 α<sub>s </sub>和 <em>β</em> 校验和对应的项，这些可变多项式就可以从 <em>proving key</em> 转移到 <em>verification key</em> 当中去了。</p>
 <p>必要的协议更新为：</p>
 <ul>
 <li>
@@ -1562,15 +1532,9 @@ end function
 <ul>
 <li>
 <p>…将 n 个可变多项式全部分为两组：</p>
-<ul>
-<li>
-<p>verifier 的 <em>m+1</em> 项：$L_v(x) = l_0(x) + l_1(x) +…+l_m(x)$,对 $R_v(x)$ 和 $O_v(x)$ 也做同样的计算。这里对于索引0 保留值 $v_{one} =1$</p>
-</li>
-<li>
-<p>prover 的 <em>n-m</em> 项：</p>
+<p><em>验证者的</em>m+1* 项：$L_v(x) = l_0(x) + l_1(x) +…+l_m(x)$,对 $R_v(x)$ 和 $O_v(x)$ 也做同样的计算。这里对于索引0 保留值 $v_{one} =1$</p>
+<p><em>证明者的</em>n-m* 项：</p>
 <p>$L_p(x) = l_{m+1}(x) +…+l_n(x)$，对 $R_p(x)$ 和 $O_p(x)$ 也做同样的计算。</p>
-</li>
-</ul>
 </li>
 <li>
 <p>设置 <em>proving key</em>：$({g^{s^k}}<em>{k \in [d]},{g_l^{l_i(s)},g_r^{r_i(s)},g_o^{o_i(s)},g_l^{α_ll_i(s)},g_r^{α_rr_i(s)},g_o^{α_oo_i(s)},g_l^{βl_i(s)},g_r^{βr_i(s)},g_o^{βo_i(s)}}</em>{i \in {m+1,…,n}})$</p>
@@ -1584,7 +1548,7 @@ end function
 <p>Proving</p>
 <ul>
 <li>
-<p>…为 verifier 的多项式计算 <em>h(x)</em>：$h(x) = \frac{L(x) \cdot R(x) -O(x)}{t(x)}$，其中 $L(x) = L_v(x) + L_p(x)$，$R(x)$ ，$O(x)$ 也通过同样的计算获得。</p>
+<p>…为验证者的多项式计算 <em>h(x)</em>：$h(x) = \frac{L(x) \cdot R(x) -O(x)}{t(x)}$，其中 $L(x) = L_v(x) + L_p(x)$，$R(x)$ ，$O(x)$ 也通过同样的计算获得。</p>
 </li>
 <li>
 <p>提供证明：</p>
@@ -1596,7 +1560,7 @@ end function
 <p>Verification</p>
 <ul>
 <li>
-<p>为 verifier 的变量多项式赋值，并加 1：</p>
+<p>为验证者的变量多项式赋值，并加 1：</p>
 <p>$g_l^{L_v(s)} = g_l^{l_0(s)} \cdot \prod_{i=1}^m{(g_l^{l_i(s)})^{v_i}}$，对 $g_r^{R_v(s)}$ 和 $g_o^{O_v(s)}$ 做同样的计算</p>
 </li>
 <li>
@@ -1616,13 +1580,13 @@ end function
 </ul>
 <blockquote>
 <p>注意：根据协议（<strong>单个变量操作数多项式</strong> 的章节）的性质，由多项式 <em>l<sub>0</sub>(x),r<sub>0</sub>(x),o<sub>0</sub>(x)</em> 表示的值 1 已在相应的运算中具备了合适的值，因此不需要再赋值了。</p>
-<p>注意：verifier 将不得不在验证步骤中做额外的工作，使得赋值的变量成比例。</p>
+<p>注意：验证者将不得不在验证步骤中做额外的工作，使得赋值的变量成比例。</p>
 </blockquote>
-<p><strong>这实际上是把一些变量从 prover 手中拿到 verifier 的手中，并同时保持等式相等。</strong> 因而只有当 prover 和 verifier 的输入中使用相同值的时候， <em>有效计算</em>检查才依然成立。</p>
+<p><strong>这实际上是把一些变量从证明者手中拿到验证者的手中，并同时保持等式相等。</strong> 因而只有当证明者和验证者的输入中使用相同值的时候， <em>有效计算</em>检查才依然成立。</p>
 <p>1 这个值相当重要，它能够通过与任意一个常数项相乘来生成这个值（从选择的有限域上），例如，用 123 去乘以 <em>a</em>：</p>
 <p>$\textcolor{green}{1 \cdot a} \times \textcolor{blue}{123 \cdot v_{one}} = \textcolor{red}{1 \cdot r}$</p>
 <blockquote>
-<p>even@安比实验室: 这里将原本由 prover 赋值的一些变量改为由拿到 verifier 赋值，使得prover 不得不与 verifier 保持相同的输入。这不仅解决了 Verifier 参数输入的问题，也间接解决了常数赋值的问题。</p>
+<p>译者注：这里将原本由证明者赋值的一些变量改为由拿到验证者赋值，使得证明者不得不与验证者保持相同的输入。这不仅解决了 Verifier 参数输入的问题，也间接解决了常数赋值的问题。</p>
 </blockquote>
 <h2 id="零知识计算"><a class="header" href="#零知识计算">零知识计算</a></h2>
 <h3 id="计算的零知识证明"><a class="header" href="#计算的零知识证明">计算的零知识证明</a></h3>
@@ -1635,18 +1599,12 @@ end function
 <p>$e(g,g)^{\delta^2L(s)R(s)}=e(g,g)^{\delta^2(t(s)h(s)+O(s))}$</p>
 <p>但是问题是使用相同的 <em>δ</em> 会妨碍安全性，因为我们在证明中分别用了以下这些值：</p>
 <ul>
-<li>
-<p>其他人可以很容易得辨认出两个不同的多项式值是否相同，以此来获取一些知识，即：g<sup>δL(s)</sup>=g<sup>δR(s)</sup></p>
-</li>
-<li>
-<p><em>L</em>(<em>s</em>) 和 <em>R</em>(<em>s</em>) 的不同值之间潜在的微小关系可能会通过暴力破解来区分开来，例如如果 <em>L</em>(<em>s</em>) = 5<em>R</em>(<em>s</em>)，就可以对 <em>i ∈ {1…N}</em> 取值反复校验 g<sup>L(s)</sup>=(g<sup>R(s)</sup>)<sup>i</sup> ，只需要执行 5 步就可以揭示出两者 5 倍区别的关系。同样的暴力破解也可以用在破解加密值的加法运算上，如：<em>g<sup>L(s)</sup> = g<sup>R(s)+5</sup></em></p>
-</li>
-<li>
-<p>证明元素之间的其它关系也可能会被发现，例如，如果 e(g<sup>δL(s)</sup>,g<sup>δR(s)</sup>) = e(g<sup>δ<sup>2</sup>O(s)</sup>,g)，那么也就表示 <em>L</em>(<em>x</em>) ⋅ <em>R</em>(<em>x</em>) = <em>O</em>(<em>x</em>)。</p>
-</li>
+<li>其他人可以很容易得辨认出两个不同的多项式值是否相同，以此来获取一些知识，即：g<sup>δL(s)</sup>=g<sup>δR(s)</sup></li>
+<li><em>L</em>(<em>s</em>) 和 <em>R</em>(<em>s</em>) 的不同值之间潜在的微小关系可能会通过暴力破解来区分开来，例如如果 <em>L</em>(<em>s</em>) = 5<em>R</em>(<em>s</em>)，就可以对 <em>i ∈ {1…N}</em> 取值反复校验 g<sup>L(s)</sup>=(g<sup>R(s)</sup>)<sup>i</sup> ，只需要执行 5 步就可以揭示出两者 5 倍区别的关系。同样的暴力破解也可以用在破解加密值的加法运算上，如：<em>g<sup>L(s)</sup> = g<sup>R(s)+5</sup></em></li>
+<li>证明元素之间的其它关系也可能会被发现，例如，如果 e(g<sup>δL(s)</sup>,g<sup>δR(s)</sup>) = e(g<sup>δ<sup>2</sup>O(s)</sup>,g)，那么也就表示 <em>L</em>(<em>x</em>) ⋅ <em>R</em>(<em>x</em>) = <em>O</em>(<em>x</em>)。</li>
 </ul>
 <blockquote>
-<p>注意：<strong>一致性检查优化</strong> 使得挖掘数据关系变得更加困难了，但是依然能够发现一些关系       ，且不说 verifier 可以选择特定  ρ<sub>l</sub>， ρ<sub>r</sub>  来为揭示知识提供便利（只要这不是一个多样化的 setup）。</p>
+<p>注意：<strong>一致性检查优化</strong> 使得挖掘数据关系变得更加困难了，但是依然能够发现一些关系       ，且不说验证者可以选择特定  ρ<sub>l</sub>， ρ<sub>r</sub>  来为揭示知识提供便利（只要这不是一个多样化的 setup）。</p>
 </blockquote>
 <p>最终，我们需要对每一个多项式的值使用不同的随机数 (<em>δ<sub>s</sub></em>) ，例如：</p>
 <p><em>δ<sub>l</sub>L(s) ·δ<sub>r</sub>R(s) - δ<sub>o</sub>O(s) =t(s)·(△?⃝ h(s))</em></p>
@@ -1654,9 +1612,9 @@ end function
 <p>$\Delta = \frac{\delta_lL(s) \cdot \delta_rR(s) - \delta_oO(s)}{t(s)h(s)}$</p>
 <p>设置 $\delta_o = \delta_l \cdot \delta_r$，于是就变成了：</p>
 <p>$\Delta = \frac{\delta_l \delta_r(L(s) \cdot R(s) - O(s))}{t(s)h(s)} = \delta_l \delta_r$</p>
-<p>但是如前文所述，这个妨碍了零知识的性质，更重要的是这个结构也不再适合 verifier 的输入多项式，因为它们必须是 *δ<sub>s</sub>*相应的倍数，这就需要额外的交互了。</p>
+<p>但是如前文所述，这个妨碍了零知识的性质，更重要的是这个结构也不再适合验证者的输入多项式，因为它们必须是 *δ<sub>s</sub>*相应的倍数，这就需要额外的交互了。</p>
 <p>我们可以尝试把随机数加到变量上：<em>(L(s)+δ<sub>l</sub>) ·(R(s)+δ<sub>r</sub>) - (O(s)+δ<sub>o</sub>) = t(s) ·(△ × h(s))</em></p>
-<p>$$\Delta = \frac{\overbrace{L(s)R(s)-O(s)}^{t(s)h(x)} + \delta_rL(s) + \delta_lR(s) + \delta_l \delta_r - \delta_o}{t(s)h(s)} = 1+ \frac{\delta_rL(s) + \delta_lR(s) + \delta_l \delta_r -\delta_o}{t(s)h(s)}$$ </p>
+<p>$$\Delta = \frac{\overbrace{L(s)R(s)-O(s)}^{t(s)h(x)} + \delta_rL(s) + \delta_lR(s) + \delta_l \delta_r - \delta_o}{t(s)h(s)} = 1+ \frac{\delta_rL(s) + \delta_lR(s) + \delta_l \delta_r -\delta_o}{t(s)h(s)}$$</p>
 <p>但是随机数是不可除尽的。尽管我们可以用 <em>t</em>(<em>s</em>)<em>h</em>(<em>s</em>) 去乘以每一个 <em>δ</em> ，但由于我们已经用了 $\Delta$  乘以 <em>h</em>(<em>s</em>) ， $\Delta$ 是组成加密结果的一部分（即<em>E</em>(<em>L</em>(<em>s</em>))等），因此在没有使用配对（它的结果在另一个数值空间内）的情况下是不能计算出g<sup>△h(s)</sup> 的。同样也不能使用 <em>s</em> 的幂（从 1 到 <em>d</em>）的加密值对 Δ<em>h</em>(<em>x</em>) 的进行加密计算，Δ<em>h</em>(<em>x</em>) 的阶将达到 2<em>d</em>。并且，基于上述同样的原因也无法计算这个随机操作数多项式的值：<em>g<sup>L(s)+δ<sub>l</sub>t(s)h(s)</sup></em>。</p>
 <p>于是我们应该用加法(?⃝ = +)来使用 $\Delta$，因为它可以同态地计算。</p>
 <p>$(L(s)+ \delta_l) \cdot (R(s) +\delta_r) - (O(s) + \delta_o) = t(s) \cdot (\Delta + h(s))$</p>
@@ -1673,14 +1631,14 @@ end function
 <p>$L \cdot R -O + \textcolor{magenta}{t(\delta_rL + \delta_lR + \delta_l \delta_r t - \delta_o)} = t(s)h+ \textcolor{magenta}{t(s)(\delta_rL+\delta_lR+\delta_l \delta_rt-\delta_o)}$</p>
 <p>这个结构就是统计学上的零知识 因为增加了 <em>δ<sub>l</sub>, δ</em><sub>r</sub><em>, δ<sub>o</sub></em> 的均匀随机倍数（参见[Gen+12] 中的定理 13）。</p>
 <blockquote>
-<p>注意：这种方法和 verfier 的操作数也是一致的，即：g<sub>l</sub><sup>L<sub>p</sub>+δ<sub>l</sub>t </sup>·g<sub>l</sub><sup>L<sub>v</sub></sup> = g<sup>L<sub>p</sub>+L<sub>v</sub>+δ<sub>l</sub>t</sup>。</p>
-<p>因而当且仅当 prover 使用了 verifier 的值来构造证明(即， Δ = δ<sub>r</sub>(L<sub>p</sub> + L<sub>v</sub>) + δ<sub>l</sub>(R<sub>p</sub>+ R<sub>v</sub> ) + δ<sub>l</sub>δ<sub>r</sub>t – δ<sub>o</sub>)，这个有效计算的检查依然是成立的，更多的细节看下一部分。</p>
+<p>注：这种方法和 verfier 的操作数也是一致的，即：g<sub>l</sub><sup>L<sub>p</sub>+δ<sub>l</sub>t </sup>·g<sub>l</sub><sup>L<sub>v</sub></sup> = g<sup>L<sub>p</sub>+L<sub>v</sub>+δ<sub>l</sub>t</sup>。</p>
+<p>因而当且仅当证明者使用了验证者的值来构造证明(即， Δ = δ<sub>r</sub>(L<sub>p</sub> + L<sub>v</sub>) + δ<sub>l</sub>(R<sub>p</sub>+ R<sub>v</sub> ) + δ<sub>l</sub>δ<sub>r</sub>t – δ<sub>o</sub>)，这个有效计算的检查依然是成立的，更多的细节看下一部分。</p>
 </blockquote>
 <p>为了使得 “变量多项式限制” 和 “变量值一致性”检查与 <em>零知识</em> 的修改一致，就有必要去增加以下的参数到 <em>proving key</em> 中：</p>
 <p>$g_l^{t(s)}, g_r^{t(s)},g_o^{t(s)}, g_l^{α_lt(s)}, g_r^{α_rt(s)},g_o^{α_ot(s)}, g_l^{βt(s)}, g_r^{βt(s)},g_o^{βt(s)}$</p>
 <p>非常奇怪的是最初的 Pinocchio 协议[Par+13]主要关注可验证的计算，而较少涉及 <em>零知识</em> 性质，这其实只需要一点点小修改，这个几乎是没有什么成本的。</p>
 <blockquote>
-<p>even@安比实验室: 与前文中的零知方案不同，这里通过相加而不是相乘的方式来确保 prover 知识的零知性。</p>
+<p>译者注：与前文中的零知方案不同，这里通过相加而不是相乘的方式来确保证明者知识的零知性。</p>
 <p>Pinocchio 协议是针对 GGPR 论文的改进，在3.1节中也提到了实现零知识只需要沿用 GGPR 论文的方法即可，并不是这篇论文的贡献。另外，Pinocchio 协议论文侧重工程实践，在2013年时，零知识证明还并没有得到应用。真正的应用还是自从匿名币ZCash起。</p>
 </blockquote>
 <h2 id="zk-snark-协议"><a class="header" href="#zk-snark-协议">zk-SNARK 协议</a></h2>
@@ -1729,7 +1687,7 @@ end function
 <p>计算 $h(x) = \frac{L(x)R(x)-O(x)}{t(x)} \textcolor{magenta}{+ \delta_r L(x) + \delta_lR(x) + \delta_l \delta_r t(x) - \delta_o}$</p>
 </li>
 <li>
-<p>将 prover 的变量值赋值给加密的可变多项式 $\textcolor{magenta}{并进行零知识的 \delta-转换}\quad  g_l^{L_p(s)}= \textcolor{magenta}{(g_l^{t(s)})^{\delta_l}} \cdot \prod_{i=m+1}^n{(g_l^{l_i(s)})^{v_i}}$，再用同样的方式计算 $g_r^{R_p(s)}$ 和 $g_o^{O_p(s)}$。</p>
+<p>将证明者的变量值赋值给加密的可变多项式 $\textcolor{magenta}{并进行零知识的 \delta-转换}\quad  g_l^{L_p(s)}= \textcolor{magenta}{(g_l^{t(s)})^{\delta_l}} \cdot \prod_{i=m+1}^n{(g_l^{l_i(s)})^{v_i}}$，再用同样的方式计算 $g_r^{R_p(s)}$ 和 $g_o^{O_p(s)}$。</p>
 </li>
 <li>
 <p>为其 *α-*变换赋值 $g_l^{L_p'(s)}= \textcolor{magenta}{(g_l^{\alpha <em>l t(s)})^{\delta_l}} \cdot \prod</em>{i=m+1}^n{(g_l^{\alpha _l l_i(s)})^{v_i}}$，再用同样的方式计算 $g_r^{R_p'(s)}$ 和 $g_o^{O_p'(s)}$。</p>
@@ -1750,7 +1708,7 @@ end function
 <p>解析提供的证明为 $(g_l^{L_p},g_r^{R_p},g_o^{O_p},g^h,g_l^{L_p'},g_r^{R_p'},g_o^{O_p'},g^Z)$</p>
 </li>
 <li>
-<p>将输入/输出值赋值给 verifier 的加密多项式并加 1：</p>
+<p>将输入/输出值赋值给验证者的加密多项式并加 1：</p>
 <p>$g_l^{L_v(s)} = g_l^{l_o(s)} \cdot \prod_{i=1}^m{(g_l^{l_i(s)})^{v_i}}$，并对 $g_r^{R_v(s)}$ 和 $g_o^{O_v(s)}$ 做同样的计算</p>
 </li>
 <li>
@@ -1771,45 +1729,24 @@ end function
 <h2 id="结论-1"><a class="header" href="#结论-1">结论</a></h2>
 <p>我们最终完成了一个允许证明计算的有效协议：</p>
 <ul>
-<li>
-<p>简明 (Succinctly) —— 独立于计算量，证明是恒定的，小尺寸的</p>
-</li>
-<li>
-<p>非交互性 (Non-interactive) —— 证明只要一经计算就可以在不直接与 prover 交互的前提下使任意数量的 verifier 确信</p>
-</li>
-<li>
-<p>可论证的知识 (with Argument of Knowledge) —— 对于陈述是正确的这点有不可忽略的概率，即无法构造假证据；并且 prover 知道正确陈述的对应值（即：证据），例如，如果陈述是 “B 是 sha256(a) 的结果” 那么就说明 prover 知道一些值 a 能够使得 B = sha256(a) 成立，因为 B 只能够通过 a 的知识计算出来，换句话说就是无法通过 B 来反算出 a（假定 a 的熵足够）。</p>
-</li>
-<li>
-<p>陈述有不可忽略的概率是正确的 (even@安比实验室: 这里指Soundness可靠性)，即，构造假证据是不可行的</p>
-</li>
-<li>
-<p><em>零知识</em>( zero-knowledge)  —— 很“难”从证明中提取任何知识，即，它与随机数无法区分。</p>
-</li>
+<li>简明 (Succinctly) —— 独立于计算量，证明是恒定的，小尺寸的</li>
+<li>非交互性 (Non-interactive) —— 证明只要一经计算就可以在不直接与证明者交互的前提下使任意数量的验证者确信</li>
+<li>可论证的知识 (with Argument of Knowledge) —— 对于陈述是正确的这点有不可忽略的概率，即无法构造假证据；并且证明者知道正确陈述的对应值（即：证据），例如，如果陈述是 “B 是 sha256(a) 的结果” 那么就说明证明者知道一些值 a 能够使得 B = sha256(a) 成立，因为 B 只能够通过 a 的知识计算出来，换句话说就是无法通过 B 来反算出 a（假定 a 的熵足够）。</li>
+<li>陈述有不可忽略的概率是正确的 (译者注：这里指Soundness可靠性)，即，构造假证据是不可行的</li>
+<li><em>零知识</em>( zero-knowledge)  —— 很“难”从证明中提取任何知识，即，它与随机数无法区分。</li>
 </ul>
 <blockquote>
-<p>even@安比实验室: 所谓Argument——论证，区别于 Proof —— 证明。Pinocchio 协议是 Argument 而非 Proof。这是因为 Pinocchio的可靠性是 Computational Soundness，Statistical ZK，这一类的证明系统被称为 Argument。所谓的 Computational Soundness 暗含了这样的事实：如果 Prover 计算能力足够强大的话，可以破坏可靠性。</p>
+<p>译者注：所谓Argument——论证，区别于 Proof —— 证明。Pinocchio 协议是 Argument 而非 Proof。这是因为 Pinocchio的可靠性是 Computational Soundness，Statistical ZK，这一类的证明系统被称为 Argument。所谓的 Computational Soundness 暗含了这样的事实：如果证明者计算能力足够强大的话，可以破坏可靠性。</p>
 </blockquote>
 <p>基于多项式的特殊性质，模运算，同态加密，椭圆曲线密码学，加密配对和发明者的聪明才智才使得这个协议得以实现。</p>
 <p>这个协议证明了一个特殊有限执行机制的计算，即在一次运算中可以将几乎任意数量的变量加在一起但是只能执行一次乘法，因而就有机会优化程序以有效地利用这种特性的同时也使用这个结构最大限度地减少计算次数。</p>
-<p>为了验证一个证明， <strong>verifier 并不需要知道所有的秘密数据，这一点很关键</strong>，这就使得任何人都可以以非交互式方式发布和使用正确构造的 <em>verification key</em>。这一点与只能让一个参与者确信证明的&quot;指定 verifier&quot;方案相反，因而它的信任是不可转移的。在 <em>zkSNARK</em> 中，如果不可信或由单方生成密钥对，则可以实现这个属性。</p>
-<p>零知识证明构造领域正在不断发展，包括引入了优化（[BCTV13, Gro16, GM17]），改进例如可更新的 <em>proving key</em> 和 <em>verification key</em>（[Gro+18]），以及新的构造方法（Bulletproofs [Bün+17], ZK-STARK [Ben+18], Sonic [Mal+19]）。</p>
+<p>为了验证一个证明， <strong>验证者并不需要知道所有的秘密数据，这一点很关键</strong>，这就使得任何人都可以以非交互式方式发布和使用正确构造的 <em>verification key</em>。这一点与只能让一个参与者确信证明的&quot;指定验证者&quot;方案相反，因而它的信任是不可转移的。在 <em>zkSNARK</em> 中，如果不可信或由单方生成密钥对，则可以实现这个属性。</p>
+<p>零知识证明构造领域正在不断发展，包括引入了优化（[Ben+13, Gro16, GM17]），改进例如可更新的 <em>proving key</em> 和 <em>verification key</em>（[Gro+18]），以及新的构造方法（Bulletproofs [Bün+17], ZK-STARK [Ben+18], Sonic [Mal+19]）。</p>
 <blockquote>
-<p>even@安比实验室：至此,本系列文章的介绍已经全部结束，大家是不是已经对zkSNARK协议（Pinocchio 协议）了如指掌了？其实任何复杂的协议掌握了核心思想，都可以抽丝剥茧将其变得通俗易懂。</p>
+<p>译者注：至此,本系列文章的介绍已经全部结束，大家是不是已经对zkSNARK协议（Pinocchio 协议）了如指掌了？其实任何复杂的协议掌握了核心思想，都可以抽丝剥茧将其变得通俗易懂。</p>
 <p>零知识证明的学习还有很长的路要走，本文只是一个入门的资料，正如文章中所述，零知识证明构造领域正在不断发展，不断的有新的研究突破呈现在我们面前。这是一个非常有趣的领域，后续也非常欢迎小伙伴跟我们一起继续学习和研究零知识证明技术。</p>
 <p>再次感谢 Maksym Petkus 大神的分享和授权。文章翻译存在不足之处，欢迎纠正，补充，指导。</p>
 </blockquote>
-<p><strong>参考文献</strong></p>
-<p>[con18] — Wikipedia contributors. <em>Constraint satisfaction</em>. Wikipedia, The Free Encyclopedia. 2018.</p>
-<p>[Gen+12] — Rosario Gennaro, Craig Gentry, Bryan Parno, and Mariana Raykova. <em>Quadratic</em> <em>Span Programs and Succinct NIZKs without PCPs</em>. Cryptology ePrint Archive, Report 2012/215. https://eprint.iacr.org/2012/215. 2012.</p>
-<p>[Par+13] — Bryan Parno, Craig Gentry, Jon Howell, and Mariana Raykova. <em>Pinocchio: Nearly</em> <em>Practical Verifiable Computation</em>. Cryptology ePrint Archive, Report 2013/279. https://eprint.iacr.org/2013/279. 2013.</p>
-<p>[BCTV13] — Eli Ben-Sasson, Alessandro Chiesa, Eran Tromer, Madars Virza. <em>Succinct Non-Interactive Zero Knowledge for a von Neumann Architecture</em>. Cryptology ePrint Archive, Report 2013/879. https://eprint.iacr.org/2013/879. 2013.</p>
-<p>[Gro10] — Jens Groth. “Short pairing-based non-interactive zero-knowledge arguments”. In: <em>International Conference on the Theory and Application of Cryptology and</em> <em>Information Security</em>. Springer. 2010, pp. 321–340.</p>
-<p>[GM17] — Jens Groth, Mary Maller. <em>Snarky Signatures: Minimal Signatures of Knowledge from Simulation-Extractable SNARKs</em>. Cryptology ePrint Archive, Report 2017/540. https://eprint.iacr.org/2017/540. 2017.</p>
-<p>[Gro+18] — Jens Groth, Markulf Kohlweiss, Mary Maller, Sarah Meiklejohn, and Ian Miers. <em>Updatable and</em> <em>Universal Common Reference Strings with Applications to zk-SNARKs</em>. Cryptology ePrint Archive, Report 2018/280. https://eprint.iacr.org/2018/280. 2018.</p>
-<p>[Bün+17] — Benedikt Bünz, Jonathan Bootle, Dan Boneh, Andrew Poelstra, Pieter Wuille, and Greg Maxwell. <em>Bulletproofs: Short</em> <em>Proofs for Confidential Transactions and More</em>. Cryptology ePrint Archive, Report 2017/1066. https://eprint.iacr.org/2017/1066. 2017.</p>
-<p>[Ben+18] — Eli Ben-Sasson, Iddo Bentov, Yinon Horesh, and Michael Riabzev. <em>Scalable,</em> <em>transparent, and post-quantum secure computational integrity</em>. Cryptology ePrint Archive, Report 2018/046. https://eprint.iacr.org/2018/046. 2018.</p>
-<p>[Mal+19] — Mary Maller, Sean Bowe, Markulf Kohlweiss, and Sarah Meiklejohn. <em>Sonic: Zero-Knowledge SNARKs from Linear-Size Universal</em> <em>and Updateable Structured Reference Strings</em>. Cryptology ePrint Archive, Report 2019/099. https://eprint.iacr.org/2019/099. 2019.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="参考文献"><a class="header" href="#参考文献">参考文献</a></h1>
 <p><a name="Bit+11"></a>[Bit+11] — Nir Bitansky, Ran Canetti, Alessandro Chiesa, and Eran Tromer. <em>From Extractable Collision Resistance to Succinct Non-Interactive Arguments of Knowledge, and Back Again</em>. Cryptology ePrint Archive, Report 2011/443. <a href="https://eprint.iacr.org/2011/443">https://eprint.iacr.org/2011/443</a>. 2011</p>
 <p><a name="Par+13"></a>[Par+13] — Bryan Parno, Craig Gentry, Jon Howell, and Mariana Raykova. <em>Pinocchio: Nearly Practical Verifiable Computation</em>. Cryptology ePrint Archive, Report 2013/279. <a href="https://eprint.iacr.org/2013/279">https://eprint.iacr.org/2013/279</a>. 2013</p>
