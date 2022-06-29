@@ -5,6 +5,3 @@ MD013: false
 MD033:
   # Allowed elements
   allowed_elements: [a]
-
-# MD045/no-alt-text - Images should have alternate text (alt text)
-MD045: false
