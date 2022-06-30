@@ -1,0 +1,308 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>变量和变量一致性多项式的非延展性 - zk-SNARK 为什么以及如何工作</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="《zk-SNARK 为什么以及如何工作（Why and How zk-SNARK Works）》简体中文版">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">README</a></li><li class="chapter-item expanded affix "><a href="abstract.html">摘要</a></li><li class="chapter-item expanded affix "><a href="ch0.html">前言</a></li><li class="chapter-item expanded "><a href="ch1.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="chapter-item expanded "><a href="ch2.html"><strong aria-hidden="true">2.</strong> 证明的媒介</a></li><li class="chapter-item expanded "><a href="ch3.html"><strong aria-hidden="true">3.</strong> 多项式的非交互式零知识</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-1.html"><strong aria-hidden="true">3.1.</strong> 证明多项式的知识</a></li><li class="chapter-item expanded "><a href="ch3-2.html"><strong aria-hidden="true">3.2.</strong> 因式分解</a></li><li class="chapter-item expanded "><a href="ch3-3.html"><strong aria-hidden="true">3.3.</strong> 模糊求值</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-3-1.html"><strong aria-hidden="true">3.3.1.</strong> 同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-2.html"><strong aria-hidden="true">3.3.2.</strong> 模运算</a></li><li class="chapter-item expanded "><a href="ch3-3-3.html"><strong aria-hidden="true">3.3.3.</strong> 强同态加密</a></li><li class="chapter-item expanded "><a href="ch3-3-4.html"><strong aria-hidden="true">3.3.4.</strong> 加密多项式</a></li></ol></li><li class="chapter-item expanded "><a href="ch3-4.html"><strong aria-hidden="true">3.4.</strong> 限制多项式</a></li><li class="chapter-item expanded "><a href="ch3-5.html"><strong aria-hidden="true">3.5.</strong> 零知识</a></li><li class="chapter-item expanded "><a href="ch3-6.html"><strong aria-hidden="true">3.6.</strong> 非交互性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-6-1.html"><strong aria-hidden="true">3.6.1.</strong> 加密值的乘法</a></li><li class="chapter-item expanded "><a href="ch3-6-2.html"><strong aria-hidden="true">3.6.2.</strong> 可信任参与方设置</a></li><li class="chapter-item expanded "><a href="ch3-6-3.html"><strong aria-hidden="true">3.6.3.</strong> 信任多个参与方中的一个</a></li></ol></li><li class="chapter-item expanded "><a href="ch3-7.html"><strong aria-hidden="true">3.7.</strong> 多项式知识的简洁非交互式论证</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch3-7-1.html"><strong aria-hidden="true">3.7.1.</strong> 结论</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ch4.html"><strong aria-hidden="true">4.</strong> 通用零知识证明</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch4-1.html"><strong aria-hidden="true">4.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="ch4-2.html"><strong aria-hidden="true">4.2.</strong> 单一运算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch4-2-1.html"><strong aria-hidden="true">4.2.1.</strong> 多项式的算术性质</a></li></ol></li><li class="chapter-item expanded "><a href="ch4-3.html"><strong aria-hidden="true">4.3.</strong> 执行运算</a></li><li class="chapter-item expanded "><a href="ch4-4.html"><strong aria-hidden="true">4.4.</strong> 运算证明</a></li><li class="chapter-item expanded "><a href="ch4-5.html"><strong aria-hidden="true">4.5.</strong> 多个运算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch4-5-1.html"><strong aria-hidden="true">4.5.1.</strong> 多项式插值</a></li><li class="chapter-item expanded "><a href="ch4-5-2.html"><strong aria-hidden="true">4.5.2.</strong> 多运算多项式</a></li></ol></li><li class="chapter-item expanded "><a href="ch4-6.html"><strong aria-hidden="true">4.6.</strong> 变量多项式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch4-6-1.html"><strong aria-hidden="true">4.6.1.</strong> 单变量操作数多项式</a></li><li class="chapter-item expanded "><a href="ch4-6-2.html"><strong aria-hidden="true">4.6.2.</strong> 多变量操作数多项式</a></li></ol></li><li class="chapter-item expanded "><a href="ch4-7.html"><strong aria-hidden="true">4.7.</strong> 结构属性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch4-7-1.html"><strong aria-hidden="true">4.7.1.</strong> 常数系数</a></li><li class="chapter-item expanded "><a href="ch4-7-2.html"><strong aria-hidden="true">4.7.2.</strong> 无成本加法</a></li><li class="chapter-item expanded "><a href="ch4-7-3.html"><strong aria-hidden="true">4.7.3.</strong> 加法、减法和除法</a></li></ol></li><li class="chapter-item expanded "><a href="ch4-8.html"><strong aria-hidden="true">4.8.</strong> 示例计算</a></li><li class="chapter-item expanded "><a href="ch4-9.html"><strong aria-hidden="true">4.9.</strong> 可验证计算协议</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch4-9-1.html"><strong aria-hidden="true">4.9.1.</strong> 操作数和输出的不可互换性</a></li><li class="chapter-item expanded "><a href="ch4-9-2.html"><strong aria-hidden="true">4.9.2.</strong> 跨操作数的变量一致性</a></li><li class="chapter-item expanded "><a href="ch4-9-3.html" class="active"><strong aria-hidden="true">4.9.3.</strong> 变量和变量一致性多项式的非延展性</a></li><li class="chapter-item expanded "><a href="ch4-9-4.html"><strong aria-hidden="true">4.9.4.</strong> 变量值一致性检查的优化</a></li></ol></li><li class="chapter-item expanded "><a href="ch4-10.html"><strong aria-hidden="true">4.10.</strong> 约束</a></li><li class="chapter-item expanded "><a href="ch4-11.html"><strong aria-hidden="true">4.11.</strong> 公开输入和一</a></li><li class="chapter-item expanded "><a href="ch4-12.html"><strong aria-hidden="true">4.12.</strong> 计算的零知识证明</a></li><li class="chapter-item expanded "><a href="ch4-13.html"><strong aria-hidden="true">4.13.</strong> zk-SNARK 协议</a></li></ol></li><li class="chapter-item expanded "><a href="ch5.html"><strong aria-hidden="true">5.</strong> 结论</a></li><li class="chapter-item expanded affix "><a href="references.html">参考文献</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">zk-SNARK 为什么以及如何工作</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/zyw271828/wahzw-zh-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="变量和变量一致性多项式的非延展性"><a class="header" href="#变量和变量一致性多项式的非延展性">变量和变量一致性多项式的非延展性</a></h1>
+<h2 id="变量多项式的延展性"><a class="header" href="#变量多项式的延展性">变量多项式的延展性</a></h2>
+<p>举一个  <strong>备注 4.1</strong> 有关的例子，看一下下面的两个运算：</p>
+<p>$\textcolor{green}{a} \times \textcolor{blue}{1} = \textcolor{red}{b}$</p>
+<p>$\textcolor{green}{3a} \times \textcolor{blue}{1} =\textcolor{red}{c}$</p>
+<p>预期的结果 <em>b = a</em> 和 <em>c = 3a</em> , 再进一步就是  <em>c = 3b</em>。这就是说<em>左操作数的变量</em> 多项式的计算结果为 l<sub>a</sub>(1) = 1 和 l<sub>a</sub>(2) = 3。先不管  l<sub>a</sub>(<em>x</em>) 的形式，证明者都可以不按照上述的比例用另一个修改了的多项式 <em>lₐ</em>′(x) = al<sub>a</sub>(x) + 1 来给 <em>a</em> 赋值。这样运算就变成了  l<sub>a</sub>′(1) = a+ 1 和 l<sub>a</sub>′(2) = 3<em>a</em>+ 1, 结果也就是 <em>b = a + 1</em> 和 <em>c = 3a + 1</em>，其中 <em>c≠3b</em>，这意味着 <em>a</em> 的取值的实际意义在不同运算中是不一样的。</p>
+<p>但是因为证明者已经拿到了 <em>g<sup>α<sub>l</sub></sup></em> 和 <em>g<sup>β<sub>l</sub></sup></em> ，所以他依然能够通过正确的操作符多项式<em>和</em>变量值一致性* 的校验：</p>
+<ul>
+<li>
+<p>…Proving：</p>
+<ul>
+<li>
+<p>用分配不成比例的变量 <em>a</em> 来建立左操作数多项式： $L(x) = a \cdot l_a(x) +1$</p>
+</li>
+<li>
+<p>按照常规的方式构造右操作数多项式和输出多项式： $R(x) = r_1(x), O(x)=b \cdot o_b(x) + c \cdot o_c(x)$</p>
+</li>
+<li>
+<p>计算除数：$h(x) = \frac{L(x) \cdot R(x) - O(x)}{t(x)}$</p>
+</li>
+<li>
+<p>计算加密值：$g^{L(s)} = (g^{l_a(s)})^a \cdot g^1$，并按照常规方式计算 $g^{R(s)},g^{O(s)}$</p>
+</li>
+<li>
+<p>计算 α-变换的加密值：$g^{αL(s)} = (g^{αl_a(s)})^a \cdot g^α$，并按照常规方式计算 $g^{αR(s)},g^{αO(s)}$</p>
+</li>
+<li>
+<p>计算变量一致性多项式：</p>
+<p>$g^{Z(s)} = \prod_{i \in {1,a,b,c}}{(g^{β_ll_i(s)+β_rr_i(s)+β_oO_i(s)})^i \cdot g^{β_l}} = g^{β_l(L(s)+1)+ β_rR(s) +β_oO(s)}$，其中下标 <em>i</em> 代表对应变量的符号；指数 <em>i</em> 代表变量的值；以及未定义的变量多项式的值为 0。</p>
+</li>
+<li>
+<p>设置证明：$(g^{L(s)},g^{R(s)},g^{O(s)},g^{α_lL(s)},g^{α_rR(s)},g^{α_oO(s)},g^{Z(s)},g^{h(s)})$</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Verification：</p>
+<ul>
+<li>
+<p>变量多项式约束检查：</p>
+<p>$e(g^L,g^{β_l}) \cdot e(g^R, g^{β_r}) \cdot e(g^O,g^{β_o}) = e(g^Z,g) =&gt; e(g,g)^{(a \cdot l_a +1)β_l +Rβ_r + Oβ_o} = e(g,g)^{β_l(L+1)+ β_rR +β_oO}$</p>
+</li>
+<li>
+<p>有效计算检查：$e(g^L,g^R) = e(g^t,g^h) \cdot e(g^O,g)$</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="变量一致性多项式的延展性"><a class="header" href="#变量一致性多项式的延展性">变量一致性多项式的延展性</a></h2>
+<p>而且 g<sup>β<sub>l</sub></sup>，g<sup>β<sub>r</sub></sup>，g<sup>β<sub>o</sub></sup>的存在允许我们在不同操作数的相同变量上使用不同的值。例如，如果我们有一个运算：</p>
+<p>$a \times a = b$</p>
+<p>可以用多项式表示：</p>
+<p>$l_a(x) = x, r_a(x) = x, o_a(x) = 0$</p>
+<p>$l_b(x) = 0, r_b(x) = 0, o_b(x) = x$</p>
+<p>尽管我们期待的输出是 <em>b</em>= <em>a</em>²，但我们可以设置不同的 <em>a</em> 值，例如：设置 <em>a</em>= 2 （左操作数中）, <em>a</em>= 5 （右操作数中）如下：</p>
+<ul>
+<li>
+<p>Proving：</p>
+<ul>
+<li>
+<p>…用 <em>a=2</em> 设置左操作数多项式：$L(x) = 2l_a(x) + 10L_b(x)$</p>
+</li>
+<li>
+<p>用 <em>a=5</em> 设置右操作数多项式：$R(x) = 2r_a(x) + 3 + 10r_b(x)$</p>
+</li>
+<li>
+<p>用 <em>b=10</em> 设置输出多项式：$O(x) = 2o_a(x) +10o_b(x)$</p>
+</li>
+<li>
+<p>…计算加密值：</p>
+<p>$g^{L(s)} = (g^{l_a(s)})^2 \cdot (g^{l_b(s)})^{10} = g^{2l_a(s)+10l_b(s)}$</p>
+<p>$g^{R(s)} = (g^{r_a(s)})^2 \cdot (g)^3 \cdot (g^{r_b(s)})^{10} = g^{2r_a(s)+3+10r_b(s)}$</p>
+<p>$g^{O(s)} = (g^{O_a(s)})^2 \cdot (g^{O_b(s)})^{10} = g^{2o_a(s)+10o_b(s)}$</p>
+</li>
+<li>
+<p>计算变量一致性多项式：</p>
+<p>$g^{Z(s)} = (g^{β_ll_a(s)+β_rr_a(s)+β_oo_a(s)})^2 \cdot (g^{β_r})^3 \cdot (g^{β_ll_b(s)+ β_rr_b(s)+ β_oo_b(s)})^{10} $</p>
+<p>$= g^{β_l(2l_a(s)+10l_b(s))+ β_r(2r_a(s)+3+10r_b(s)) + β_o(2o_a(s)+3+10o_b(s))}$</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Verification：</p>
+<ul>
+<li>
+<p>……变量值的一致性检查，应满足：</p>
+<p>$e(g^L,g^{β_l}) \cdot e(g^R, g^{β_r}) \cdot e(g^O,g^{β_o}) = e(g^Z,g)$</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>注意：多项式 o<sub>a</sub>(x)，l<sub>b</sub>(x)，r<sub>b</sub>(x) 其实可以被忽略掉的，因为这几项对于任何 <em>x</em> 的取值，计算结果都为 0，但是为了保持完整性我们依然要保留这几项。</p>
+<blockquote>
+<p>译者注：这种能力会危害到协议的可靠性。很显然，加密的 <em>β</em><sub>s</sub>不应该对证明者可见。</p>
+</blockquote>
+<h2 id="非延展性"><a class="header" href="#非延展性">非延展性</a></h2>
+<p>解决延展性问题的一个方法就是，在 setup 阶段将 <em>verification key</em> 中加密的 β<sub>s</sub> 项与随机秘密值  <em>γ</em>(gamma) 相乘使其与加密值 <em>Z</em>(<em>s</em>) 不兼容：</p>
+<p>$g^{β_l \gamma}, g^{β_r\gamma}, g^{β_o\gamma}$</p>
+<p>相应的这种被修饰过的加密值，就能阻止使得修改加密值 <em>Z</em>(<em>s</em>)  变得不可行了，因为 <em>Z</em>(<em>s</em>) 中没有 <em>γ</em>，即：</p>
+<p>$g^{Z(s)} \cdot g^{v' \cdot β_l r} = g^{β_l(L(s)+v'r)+β_rR(s) + β_oO(s)}$</p>
+<p>因为变值  <em>γ</em>  是随机的证明者并不知道它的值。所以这个修改就需要我们用 <em>Z</em>(<em>s</em>) 乘以  <em>γ</em> 来平衡协议中的变量值一致性校验* 等式：</p>
+<ul>
+<li>
+<p>Setup：</p>
+<ul>
+<li>…随机数 $β_l$，$β_r$，$β_o$，$γ$</li>
+<li>…设置 <em>verification key</em>：$(…, g^{β_l \gamma},  g^{β_r\gamma},  g^{β_o\gamma}, g^{\gamma})$</li>
+</ul>
+</li>
+<li>
+<p>Proving：…</p>
+</li>
+<li>
+<p>Verification：</p>
+<ul>
+<li>
+<p>…变量值一致性检查应满足：</p>
+<p>$e(g^L,g^{β_l\gamma}) \cdot e(g^R,g^{β_r\gamma}) \cdot e(g^O,g^{β_o\gamma}) = e(g^Z, g^{\gamma})$</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>这里很重要的一点是我们排除了变量多项式为 0-阶的例子（即， <em>l</em>₁(<em>x</em>) = 1<em>x</em>⁰），否则就可以从 <em>proving key</em> 的<em>变量一致性多项式</em> 中揭露出加了密的 <em>β</em> 值</p>
+<p>${g^{β_ll_i(s) +β_rr_i(s) + β_oo_i(s)}}_{i \in {1,…,n}}$</p>
+<p>这个例子中当操作数/输出中的任意两项为 0 时，即，对于 <em>l</em>₁(<em>x</em>) = 1, <em>r</em>₁(<em>s</em>) = 0, <em>o</em>₁(<em>s</em>) = 0 的例子，结果就是</p>
+<p>$g^{β_ll_1(s) +β_rr_1(s) +β_oo_1(s)} = g^{β_l}$</p>
+<p>我们同样也可以通过<em>修饰</em> <em>α<sub>s</sub></em> 项来解决<em>变量多项式</em> 的延展性问题。但是这就没有必要了，因为对于<em>变量多项式</em> 的任何修改，都需要被映射到变量的<em>一致性多项式</em> 中，而一致性多项式是无法修改的。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch4-9-2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="ch4-9-4.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch4-9-2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="ch4-9-4.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
