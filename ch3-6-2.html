@@ -140,26 +140,24 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="可信任参与方设置"><a class="header" href="#可信任参与方设置">可信任参与方设置</a></h1>
-<p>有了配对，我们现在就准备去设置安全公开且可复用的参数了。假定一下我们让一个诚实的参与方来生成秘密值 <em>s</em> 和 <em>α</em>。只有  <em>α</em> 和所有必要的 <em>s</em> 的幂及其对应的  <em>α</em>-变换被加密了，那么原始数据就必须要被删除（ i 为 0，1,…,d ）：</p>
-<p>$g^α，g^{s^i}，g^{αs^i}$</p>
-<p>这些参数通常被称为 <em>common reference string</em> 或者 CRS。CRS 生成后，任何的证明者和任何的验证者都可以使用它来构造非交互式的零知识证明协议。CRS 的优化版本将包含目标多项式的加密值  $g^{t(s)}$，尽管这个值并不重要。</p>
-<p>把 CRS 分成两组（ i 为 0，1,…,d ）：</p>
+<p>有了密码学配对，我们现在就准备去设置安全公开且可复用的参数了。假定我们让一个诚实的参与方来生成秘密值 \(s\) 和 \(\alpha\)。当 \(\alpha\) 和所有必要的 \(s\) 的幂及其对应的 \(\alpha\)-移位 \(g^\alpha, g^{s^i}, g^{\alpha s^i}\)（\(i\) 为 \(0, 1, \ldots, d\)）被加密完成后，原始数据就必须要被删除。</p>
+<p>这些参数通常被称为公共参考字符串（Common Reference String，CRS）。CRS 被生成后，任何证明者和任何验证者都可以使用它来构造非交互式的零知识证明协议。虽然不重要，但 CRS 的优化版本将包含<em>目标多项式</em>的加密值 \(g^{t(s)}\)。</p>
+<p>接着，把 CRS 分成两组（\(i\) 为 \(0, 1, \ldots, d\)）：</p>
 <ul>
-<li><em>proving  key</em>（也被称为 <em>evaluation key</em>）：$(g^{s^i},g^{αs^i})$</li>
-<li><em>verification key</em>：$(g^{t(s)},g^α)$</li>
+<li>证明密钥（Proving Key，也被称为求值密钥 Evaluation Key）：\((g^{s^i}, g^{\alpha s^i})\)</li>
+<li>验证密钥（Verification Key）：\((g^{t(s)}, g^{\alpha})\)</li>
 </ul>
-<p>只要能够乘以加密值，验证者就可以在协议的最后一步验证多项式了：</p>
+<p>只要能将加密值相乘，验证者就可以在协议的最后一步验证多项式了：</p>
+<ul>
+<li>有了验证密钥，验证者就可以处理从证明者那里得到的加密多项式 \(g^p, g^h, g^{p'}\) 的值：
 <ul>
 <li>
-<p>有了verification key，验证者就可以处理从证明者那里得到的加密多项式的值 $g^p$，$g^h$，$g^{p'}$：</p>
-<ul>
-<li>
-<p>在加密空间中校验  <em>p = t·h</em>：</p>
-<p>$e(g^p,g^1) = e(g^t,g^h)$</p>
+<p>在加密空间中校验 \(p = t \cdot h\)：</p>
+<p>$$e\left(g^p, g^1\right) = e\left(g^t, g^h\right) \quad\text{等效于}\quad e\left(g, g\right)^{p} = e\left(g, g\right)^{t \cdot h}$$</p>
 </li>
 <li>
 <p>校验多项式的限制：</p>
-<p>$e(g^p,g^α) = e(g^{p'},g)$</p>
+<p>$$e\left(g^p, g^\alpha\right) = e\left(g^{p'}, g\right)$$</p>
 </li>
 </ul>
 </li>
