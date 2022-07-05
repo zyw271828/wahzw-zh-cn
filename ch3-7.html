@@ -140,40 +140,37 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="多项式知识的简洁非交互式论证"><a class="header" href="#多项式知识的简洁非交互式论证">多项式知识的简洁非交互式论证</a></h1>
-<p>我们现在准备来合并这个逐步演化出来的 <em>zk-SNARKOP</em> 协议。为简洁起见，我们将使用大括号来表示由旁边的下标填充的一组元素，例如：</p>
-<p>${s^i}_{i\in[d]}$</p>
-<p>表示一组数 s<sup>1</sup>，s<sup>2</sup>， …， <em>s<sup>d</sup></em> 。我们已经明确目标多项式 <em>t(x)</em> 和证明者的多项式阶数 <em>d</em>：</p>
+<p>我们现在可以整合这个逐步演化出来的多项式知识的简洁非交互式论证（Succinct Non-Interactive Argument of Knowledge of Polynomial，zk-SNARKOP）协议了。为简洁起见，我们将使用大括号来表示由旁边的下标填充的一组元素，例如 \(\left\{ s^i \right\}_{i \in [d]}\) 表示集合 \(s^1, s^2, \ldots, s^d\)。</p>
+<p>我们已经明确了<em>目标多项式</em> \(t(x)\) 和证明者的多项式阶数 \(d\)：</p>
 <ul>
-<li>Setup
+<li>设置
 <ul>
-<li>挑选随机值 <em>s</em>，<em>α</em></li>
-<li>计算加密值 $g^α$ 和 ${g^{s^i}}<em>{i\in[d]}$，${g^{αs^i}}</em>{i\in{0,…,d}}$</li>
-<li>生成 <em>proving key</em>：$({g^{s^i}}<em>{i\in[d]},{g^{αs^i}}</em>{i\in{0,…,d}})$</li>
-<li>生成 <em>verification key</em>: $(g^α，g^{t(s)})$</li>
+<li>选择随机值 \(s, \alpha\)</li>
+<li>计算加密值 \(g^\alpha\) 和 \(\left\lbrace g^{s^i} \right\rbrace_{i \in [d]}, \left\lbrace g^{\alpha s^i} \right\rbrace_{i \in \{0, \ldots, d\}}\)</li>
+<li>生成证明密钥：\(\left( \left\lbrace g^{s^i} \right\rbrace_{i \in [d]}, \left\lbrace g^{\alpha s^i} \right\rbrace_{i \in \{0, \ldots, d\}} \right)\)</li>
+<li>生成验证密钥：\(\left( g^\alpha, g^{t(s)} \right)\)</li>
 </ul>
 </li>
-<li>Proving
+<li>证明
 <ul>
-<li>分配系数 ${c_i}_{i\in{0,…,d}}$ (即知识)得 $p(x) = c_dx^d +…+ c_1x^1 + c_0x^0$</li>
-<li>求多项式 $h(x) = p(x)/t(x)$</li>
-<li>代入 ${g^{s^i}}_{i\in[d]}$ 计算多项式 $g^{p(s)}$ 和 $g^{h(s)}$ 的值</li>
-<li>代入 ${g^{αs^i}}_{i\in[d]}$ 计算变换多项式 $g^{αp(s)}$ 的值</li>
-<li>选择随机数 <em>δ</em></li>
-<li>构造随机化的证明 $π = (g^{δp(s)},g^{δh(s)},g^{δαp(s)})$</li>
+<li>分配系数 \(\left\{ c_i \right\}_{i \in \{0,\ldots, d\}}\)（即知识）得 \(p(x) = c_d x^d + \cdots + c_1 x^1 + c_0 x^0\)</li>
+<li>求多项式 \(h(x) = \frac{p(x)}{t(x)}\)</li>
+<li>代入 \(\left\lbrace g^{s^i} \right\rbrace_{i \in [d]}\) 计算多项式 \(g^{ p(s)}\) 和 \(g^{ h(s)}\) 的值</li>
+<li>代入 \(\left\lbrace g^{\alpha s^i} \right\rbrace_{i \in \{0, \ldots, d\}}\) 计算移位多项式 \(g^{ \alpha p(s)}\) 的值</li>
+<li>选择随机数 \(\delta\)</li>
+<li>构造随机化的证明 \(\pi = \left(g^{\delta p(s)}, g^{\delta h(s)}, g^{\delta \alpha p(s)} \right)\)</li>
 </ul>
 </li>
-<li>verification
+<li>验证
 <ul>
-<li>映射证明 <em>π</em> 为 $(g^p,g^h,g^{p'})$</li>
-<li>验证多项式约束：$e(g^{p'},g) = e(g^p,g^α)$</li>
-<li>验证多项式系数：$e(g^p,g) = e(g^{t(s)},g^h)$</li>
+<li>映射证明 \(\pi\) 为 \(\left(g^{p}, g^{h}, g^{p'} \right)\)</li>
+<li>验证多项式约束：\(e\left(g^{p'}, g\right) = e\left(g^{p}, g^\alpha\right)\)</li>
+<li>验证多项式系数：\(e\left(g^p, g\right) = e\left(g^{t(s)}, g^h\right)\)</li>
 </ul>
 </li>
 </ul>
-<p><strong>备注 3.3</strong> 如果 pairing 的结果有可能在其它类似的乘法协议中被复用，那么这里就完全没有安全性可言了，因为这样的话证明者就可以构造</p>
-<p>$g^{p'} = e(g^p,g^α)$</p>
-<p>这样也可以通过&quot;多项式约束&quot;的检查：</p>
-<p>$e(e(g^p,g^α)，g) = e(g^p,g^α)$</p>
+<p><strong>备注 3.3</strong> 如果可以将配对结果重用于另一个乘法，那么这样的协议将是完全不安全的，因为这样的话证明者就可以构造 \(g^{p'} = e\left(g^{p}, g^\alpha\right)\)，这样也可以通过「多项式约束」的检查：</p>
+<p>$$e\left(e\left(g^{p}, g^\alpha\right), g\right) = e\left(g^{p}, g^\alpha\right)$$</p>
 
                     </main>
 
