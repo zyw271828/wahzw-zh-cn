@@ -721,30 +721,28 @@
 <div style="break-before: page; page-break-before: always;"></div><h1 id="通用零知识证明"><a class="header" href="#通用零知识证明">通用零知识证明</a></h1>
 <p>我们已经用一个简单而充分的例子铺平了道路，它包含了大部分 zk-SNARK 的内在机制，现在我们继续完善该方案，使它能执行零知识程序。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="计算"><a class="header" href="#计算">计算</a></h1>
-<p>来看一段用伪代码写的简单程序</p>
-<pre><code class="language-pseudocode">Algorithm 1: Operation depends on an input
-————————————————————————————————————————————————————————————————————
-
-function calc(w, a, b)       
-    if w then      
-        return a × b       
-    else       
-        return a + b       
-    end if      
+<p>来看一段用伪代码写的简单程序：</p>
+<p>算法 1：运算取决于输入</p>
+<pre><code class="language-pseudocode">function calc(w, a, b)
+    if w then
+        return a * b
+    else
+        return a + b
+    end if
 end function
 </code></pre>
-<p>从高处看，这段程序和我们协议里面的多项式并没有什么关系。我们现在就需要找到一种方式来将程序转换成多项式。第一步是将程序转换成数学语言，这个相对简单一些，声明可以表达成下面的形式（假定 <em>w</em> 是 0 或 1）：</p>
-<p>$$f(w,a,b) = w(a · b)+(1-w)(a+b)​$$</p>
-<p>执行 <code>calc(1, 4, 2)</code> 和对 <em>f (1, 4, 2)</em>  求值都可以得到相同的结果：8。如果执行 <code>calc(0, 4, 2)</code> 和 <em>f(0,4,2)</em> 也都能够得到 6。<strong>其实我们可以用这种方法表达任何形式的有限程序</strong>。</p>
-<p>接下来（上面的例子）需要我们证明的是,对于表达式 <em>f(w,a,b)</em> ，输入为 (<em>1</em>, <em>4</em>, <em>2</em>)  时输出为 8，换句话说，我们要校验多项式：</p>
-<p>$$w(a · b)+(1-w)(a+b) = 8​$$</p>
+<p>从高层次的角度来看，这段程序和我们协议里的多项式并没有什么关系。我们现在需要找到一种方式来将程序转换成多项式形式。第一步是将程序转换成数学语言，这个相对简单一些，声明可以表达成下面的形式（假定 \(w\) 是 0 或 1）：</p>
+<p>$$f(w, a, b) = w (a \times b) + (1 - w) (a + b)$$</p>
+<p>执行 <code>calc(1, 4, 2)</code> 和对 \(f(1, 4, 2)\) 求值都可以得到相同的结果：8。如果执行 <code>calc(0, 4, 2)</code> 和 \(f(0, 4, 2)\) 也都能得到 6。其实我们可以用这种方法表达任何形式的有限程序。</p>
+<p>接下来需要我们证明的是（在这个例子中），对于表达式 \(f(w, a, b)\) ，输入为 \((1, 4, 2)\) 时的输出是否为 8，换句话说，我们需要检查下面的相等性：</p>
+<p>$$w (a \times b) + (1 - w) (a + b) = 8$$</p>
 <blockquote>
-<p>译者注：猜想一下，是否只要是能够用多项式表示的程序都可以做证明？</p>
+<p>译者注：猜想一下，只要是能用多项式表示的程序都可以做证明吗？</p>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="单一运算"><a class="header" href="#单一运算">单一运算</a></h1>
-<p>尽管已经将程序转换成了由数学语言表达的一般计算形式，我们还是需要再把它翻译成多项式。我们先来仔细研究一下计算的本质。任何计算的内核都是由以下形式的基本运算组成的：</p>
-<p>$左操作数 \quad 运算操作符 \quad 右操作数 \quad = 输出$</p>
-<p>两个操作数（即值）与一个运算符（即+,*–,<em>×</em>,*÷）放在一起执行运算。例如操作数是 2 和 3，运算符为乘，那么运算出来就是 2 × 3 = 6。由于任何复杂的计算（或者程序）都是由一系列这样的基本运算组成的，所以首先我们需要知道在多项式中单个运算是怎么表示的。</p>
+<p>尽管已经将程序转换成了由数学语言表达的一般计算形式，我们还是需要再把它翻译成多项式。让我们来仔细看看简单来说什么是计算。任何计算的内核都是由以下形式的基本运算组成的：</p>
+<p>$$\mathsf{左操作数}\quad \mathbf{运算符}\quad \mathsf{右操作数}\quad =\quad \mathsf{输出}$$</p>
+<p>两个操作数（也就是值）与一个运算符（例如 \(+, -, \times, \div\)）放在一起执行运算。例如操作数是 2 和 3，运算符为「乘法」，那么结果就是 \(2 \times 3 = 6\)。由于任何复杂的计算（或者程序）都是由一系列这样的基本运算组成的，所以首先我们需要知道单一运算在多项式中是怎样表示的。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="多项式的算术性质"><a class="header" href="#多项式的算术性质">多项式的算术性质</a></h1>
 <p>我们先来看一下如何将多项式和算术运算关联起来。例如有两个多项式 <em>f(x)</em> 和 <em>g(x)</em>，尝试将他们相乘使得 <em>h</em>(<em>x</em>) = <em>f</em>(<em>x</em>) × <em>g</em>(<em>x</em>)，在任意一个 <em>x</em>= <em>r</em> 处 <em>h(x)</em> 的计算结果都是 <em>f(r)</em> 和 <em>g(r)</em> 的乘积。再看一下如下两个多项式 <em>f(x) = 2x<sup>2</sup> – 9x+ 10</em>  和  <em>g(x) = – 4x<sup>2</sup> + 15x – 9</em>。以图形的形式展示：</p>
 <p><img src="img/3/1*zURb98IOmtMOxlIprp8xOQ.png" alt="img" /></p>
