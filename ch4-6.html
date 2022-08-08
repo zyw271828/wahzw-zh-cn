@@ -140,18 +140,21 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="变量多项式"><a class="header" href="#变量多项式">变量多项式</a></h1>
-<p>有了前文介绍的方法来解决证明多个计算多项式的问题，我们就可以一次证明多个运算（如上百万个甚至更多）了，但是这个方案还有一个关键的缺点。</p>
-<p><strong>如果证明中执行的“程序”在不同运算中使用了相同的变量作为操作数或输出</strong>，例如：</p>
-<p><em><font style="color:green">a</font> × <font style="color:blue">b</font> = <font style="color:red">r<sub>1</sub></font></em></p>
-<p><em><font style="color:green">a</font> × <font style="color:blue">c</font> = <font style="color:red">r<sub>2</sub></font></em></p>
-<p>这里 <em>a</em> 代表两个运算中的左操作符多项式，如：</p>
+<p>使用这种方法，我们可以一次证明许多运算（例如数百万甚至更多），但它有一个严重的缺点。</p>
+<p>如果证明过程中执行的「程序」在不同运算中使用了相同的变量作为操作数或作为输出，例如：</p>
+<p>$$\color{ForestGreen}{a}\quad \times \quad\color{blue}{b}\quad = \quad\color{red}{r_1}$$</p>
+<p>$$\color{ForestGreen}{a}\quad \times \quad\color{blue}{c}\quad = \quad\color{red}{r_2}$$</p>
+<p>对于这两个运算，\(\color{ForestGreen}{a}\) 必须在<em>左操作数多项式</em>中表示：</p>
 <p><img src="img/3/1*PMNd1I7dYeJhSqF8MD5wCg.png" alt="img" /></p>
-<p>然而，因为我们的协议中是允许证明者为多项式设置任何系数的，所以他可以不受限制得为不同计算（即，用一些 <em>x</em> 表示的多项式）中的 <em>a</em> 设置不同的值，即：</p>
+<p>尽管如此，由于我们的协议允许证明者将任何系数设置为多项式，所以他为不同的运算（由一些 \(a\) 表示）设置不同的 \(x\) 值是不受限制的，例如：</p>
 <p><img src="img/3/1*HO_ZD_vp-c7LZK-IDxJo3A.png" alt="img" /></p>
-<p><strong>这个自由打破了一致性</strong>，有空间允许证明者能去证明了一些并非验证者感兴趣的其它无关的程序执行。因而我们必须要确保每一个变量在所有运算中出现的地方都只有一个取值。</p>
-<p><em>注意：文中的变量与常规的计算机科学中变量的定义不同，这里的变量是不可改变的而且每次执行都只赋值一次。</em></p>
+<p>这种自由破坏了一致性，并允许证明者证明验证者不感兴趣的其他程序的执行。因此，我们必须确保任何变量在它被使用的每个运算中只能有一个值。</p>
 <blockquote>
-<p>译者注：请务必注意“变量”的定义，它是程序中的变量，但是却又不能改，这不是很矛盾吗？其实，这里变量是指本文开头的示例伪代码中的那些不会被修改的变量。在 zkSNARK 论文中，这个「变量」其实有一个对应的名词叫做 assignment，是算术电路的「赋值」。而所有的assignments 是一个算术电路可满足性问题的解，包含了算术电路的输入值以及电路运算过程中输出的中间结果值。</p>
+<p>注：这里的变量与常规的计算机科学中的变量定义不同，这里的变量是不可改变的，而且每次执行都只能被赋值一次。</p>
+</blockquote>
+<p><a href="ignored"></a></p>
+<blockquote>
+<p>译者注：请务必注意「变量」的定义，它是程序中的变量，但又不可改变，其实是指示例伪代码中那些不会被修改的变量。在 zk-SNARK 论文中，这个「变量」其实有一个对应的名词叫做 Assignment，是算术电路的「赋值」。而所有的 Assignment 是一个算术电路可满足性问题的解，包含了算术电路的输入值以及电路运算过程中输出的中间结果值。</p>
 </blockquote>
 
                     </main>
