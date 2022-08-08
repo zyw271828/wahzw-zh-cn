@@ -848,23 +848,24 @@ $$e(g^{o'}, g) = e(g^{o}, g^\alpha)$$</li>
 <p>我们需要将它们表示为操作数多项式，对于由 \(x \in \{1, 2, 3\}\) 所表示的计算，\(l(x)\) 相应地经过 \(\color{ForestGreen}{2, 2}\) 和 \(\color{ForestGreen}{6}\)（即经过点 \((1, \color{ForestGreen}{2}), (2, \color{ForestGreen}{2}), (3, \color{ForestGreen}{6})\)），同样 \(r(x) \ni (1, \color{blue}{1}), (2, \color{blue}{3}), (3, \color{blue}{2})\)，以及 \(o(x) \ni (1,\color{red}{2}), (2, \color{red}{6}), (3, \color{red}{12})\)。</p>
 <p>但是，我们如何找到经过这些点的多项式呢？对于任何超过一个点的情况，都必须使用特定的数学方法。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="多项式插值"><a class="header" href="#多项式插值">多项式插值</a></h1>
-<p>为了构造<em>操作数</em> 和 <em>输出多项式</em>，我们需要一种方法来用给定的一组点去构造一个能经过所有这些点的<em>弯曲</em> 多项式，这叫<em>插值</em>。有几种不同的方法可以算出这个多项式：</p>
+<p>为了构造<em>操作数</em>和<em>输出多项式</em>，我们需要一种方法，对于给定的一组点可以产生通过所有这些点的<em>弯曲</em>多项式，这种方法被称为<em>插值</em>。有几种不同的方法可以得到这个多项式：</p>
 <ul>
-<li>一组未知方程</li>
+<li>具有未知数的方程组</li>
 <li>牛顿多项式</li>
 <li>内维尔算法</li>
 <li>拉格朗日多项式</li>
 <li>快速傅里叶变换</li>
 </ul>
-<p>我们以第一个方法为例。这个方法的思路是存在一个<em>系数未知</em> ，阶数至多为 <em>n</em> 的特定的多项式 <em>p(x)</em> 能够经过给定的 <em>n</em>+1 个点，对于每个点 {(<em>xᵢ</em>, <em>yᵢ</em>)}, <em>i</em> ∈ [n+1]来说，多项式在 <em>xᵢ</em> 处的计算结果都等于 <em>yᵢ</em>，即对于所有的 i，<em>p(xᵢ) = yᵢ</em> 。在我们的例子中，三个点就可以变成一个用以下形式所表示的阶数为 2 的多项式：<em>ax<sup>2</sup> + bx +c =y</em>。</p>
-<p>我们令<em>左运算多项式</em>（绿色标出的）在每个点处与多项式结果值相等，然后对每个系数用其它术语表示出来再计算等式：</p>
+<p>我们以第一个方法为例。这个方法的思路是存在一个<em>系数未知</em>、阶数至多为 \(n\) 的唯一多项式能够经过给定的 \(n + 1\) 个点，对于每个点 \(\left\{ \left(x_i, y_i\right) \right\}_{i \in [n + 1]}\)，多项式在 \(x_i\) 处的计算结果都等于 \(y_i\)。在我们的例子中，三个点对应阶数为 2 的多项式，表示为：</p>
+<p>$$ax^2 + bx + c = y$$</p>
+<p>让我们令<em>左操作数多项式</em>（绿色）在每个点的多项式求值<em>相等</em>，并通过用其他系数表达每个系数来求解方程组：</p>
 <p><img src="./img/3/eq1.png" alt="img" /></p>
-<p>因而 <em>左操作数多项式</em> 就是：</p>
-<p><em><font style="color:green">l(x)</font></em> <em>= 2x<sup>2</sup>-6x+6</em></p>
-<p>它和下面的图对应：</p>
+<p>因此<em>左操作数多项式</em>为：</p>
+<p>$$\color{ForestGreen}{l(x)} = 2x^2 - 6x + 6$$</p>
+<p>对应于下图：</p>
 <p><img src="img/3/1*hAFtc6UZWhr34FA-ljVJ8w.png" alt="img" /></p>
-<p>我们用相同的方式再计算 <em>r</em>(<em>x</em>) 和 <em>o</em>(<em>x</em>)：</p>
-<p>$\textcolor{blue}{r(x)}=\frac{-3x^2+13x-8}{2}; \quad \textcolor{red}{o(x)}=x^2+x$</p>
+<p>我们可以用同样的方法找到 \(r(x)\) 和 \(o(x)\)：</p>
+<p>$$\color{blue}{r(x)} = \frac{-3x^2 + 13x - 8}{2}; \quad \color{red}{o(x)} = x^2 + x$$</p>
 <p><img src="img/3/1*Cc3KRiEfoYsyoD098-X3DQ.png" alt="img" /></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="多运算多项式"><a class="header" href="#多运算多项式">多运算多项式</a></h1>
 <p>现在我们有了代表三个运算的操作数多项式，再进一步看一下怎么去校验每个计算的正确性。回到验证者寻找等式 <em>l</em>(<em>x</em>) · <em>r</em>(<em>x</em>) – <em>o</em>(<em>x</em>) = <em>t</em>(<em>x</em>)<em>h</em>(<em>x</em>) 的过程。在这个例子中，因为计算是在点 <em>x</em> <em>∈ {1</em>, <em>2</em>, <em>3</em>} 处被表示出来的，所以目标多项式在这些  <em>x<sub>s</sub>​</em> 点处的计算结果必须为 0，换句话说， <em>t</em>(<em>x</em>)的根必须是 1，2 和 3，它的基本形式就是：</p>
