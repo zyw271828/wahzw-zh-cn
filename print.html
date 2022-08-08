@@ -830,23 +830,23 @@ $$e(g^{o'}, g) = e(g^{o}, g^\alpha)$$</li>
 <p>这样的协议就能证明两个值相乘的结果是正确计算的了。</p>
 <p>你可能会注意到，在更新后的协议中我们放弃了零知识组件。这样做是为了让过渡更加简单。我们将在后面的部分将它添加回协议中。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="多个运算"><a class="header" href="#多个运算">多个运算</a></h1>
-<p>现在我们已经能够证明单个算术运算了，但是要怎么扩展到多个运算上呢（这是我们的最终目标）？我们来尝试一下增加一个基本运算。想一想计算 <em>a</em> × <em>b</em> × <em>c</em> 乘积的需求，在元素操作模型中，这代表着两个操作：</p>
-<p><em><font style="color:green">a</font> × <font style="color:blue">b</font> = <font style="color:red">r<sub>1</sub></font></em></p>
-<p><em><font style="color:green">r<sub>1</sub></font> × <font style="color:blue">c</font> = <font style="color:red">r<sub>2</sub></font></em></p>
-<p>前面的讨论中我们通过对运算符多项式在任意取值 x 处 ，例如1，计算一个对应值，来表示一个操作数或者结果。有了这个性质的多项式并不会约束我们在不同 x 取值处用多项式来表示其他值。如示例中的 2，即：</p>
+<p>现在我们已经能证明单个运算了，但要怎样扩展才能证明多个运算（这是我们的最终目标）呢？让我们尝试添加另一个运算。假如需要计算乘积：\(a \times b \times c\)。在基本运算模型中，这意味着两个运算：</p>
+<p>$$\color{ForestGreen}{a}\quad \times \quad\color{blue}{b}\quad = \quad\color{red}{r_1}$$</p>
+<p>$$\color{ForestGreen}{r_1}\quad \times \quad\color{blue}{c}\quad = \quad\color{red}{r_2}$$</p>
+<p>在前面的讨论中，我们可以通过使操作数多项式计算为某个任意 \(x\) 处的相应值（例如 \(1\)）来表示此类运算。有了这个方法，多项式的属性并不会限制我们在不同的 \(x\) 处表示其他值（例如 \(2\)），即：</p>
 <p><img src="img/3/1*mVveHukkAvK1sDSNgkP_Hw.png" alt="img" /></p>
-<p>这种独立性允许我们一次同时<em>执行</em> 两个运算并且又不会把这两者搞乱，即相互之间不会妨碍。这个多项式算术的结果就变成了：</p>
+<p>这种独立性允许我们一次<em>执行</em>两个运算而不会将它们「混合」在一起，也就是说相互之间没有干扰。这个多项式算术的结果就变成了：</p>
 <p><img src="img/3/1*8Z3PDChGgZm87PjtxyIetw.png" alt="img" /></p>
-<p>可以看出这个多项式有两个根 <em>x</em>=1 和 <em>x</em>=2。因而也就是两次计算都被正确执行了。</p>
+<p>可以看出，运算多项式有两个根 \(x = 1\) 和 \(x = 2\)。因此，这两次计算都被正确<em>执行</em>了。</p>
 <blockquote>
-<p>译者注：这里的示例为了理解方便，选择了 x=1, x=2 两个位置。记住在完整的 zkSNARK 方案中，这些 “root” 值必须为有限域内的随机数，否则就会引入安全漏洞。</p>
+<p>译者注：这里的示例为了方便理解，选择了 \(x = 1\) 和 \(x = 2\) 两个位置。在完整的 zk-SNARK 方案中，这些「root」值必须为有限域内的随机数，否则就会引入安全漏洞。</p>
 </blockquote>
-<p>我们再来看一个有三个乘法运算的例子 2 × 1 × 3 × 2，它按照下面的步骤执行：</p>
-<p><em><font style="color:green">2</font> × <font style="color:blue">1</font> = <font style="color:red">2</font></em></p>
-<p><em><font style="color:green">2</font> × <font style="color:blue">3</font> = <font style="color:red">6</font></em></p>
-<p><em><font style="color:green">6</font> × <font style="color:blue">2</font> = <font style="color:red">12</font></em></p>
-<p>我们要把它们表示为操作数多项式，对于由 <em>x</em> <em>∈ {1</em>, <em>2</em>, <em>3</em>}  所表示的计算， <em>l</em>(<em>x</em>) 相应的要等于 2，2 和 6。即通过点 (<em>1</em>, <em>2)</em>, <em>(2</em>, <em>2)</em>, <em>(3</em>, <em>6</em>)，同样的 <em>r</em>(<em>x</em>) ∋ (<em>1</em>, <em>1)</em>,<em>(2</em>, <em>3)</em>,<em>(3</em>,<em>2</em>) ，<em>o</em>(<em>x</em>) ∋ (<em>1</em>, <em>2)</em>, <em>(2</em>, <em>6)</em>, <em>(3</em>, <em>12</em>)。</p>
-<p>但是，我们要怎么找到经过这些点的多项式呢？对于任何包含超过一个点的例子，就必须要使用特定的数学方法了。</p>
+<p>我们再来看一个有三个乘法运算的例子 \(2 \times 1 \times 3 \times 2\)，它按照下面的步骤执行：</p>
+<p>$$\color{ForestGreen}{2}\quad \times \quad\color{blue}{1}\quad = \quad\color{red}{2}$$</p>
+<p>$$\color{ForestGreen}{2}\quad \times \quad\color{blue}{3}\quad = \quad\color{red}{6}$$</p>
+<p>$$\color{ForestGreen}{6}\quad \times \quad\color{blue}{2}\quad = \quad\color{red}{12}$$</p>
+<p>我们需要将它们表示为操作数多项式，对于由 \(x \in \{1, 2, 3\}\) 所表示的计算，\(l(x)\) 相应地经过 \(\color{ForestGreen}{2, 2}\) 和 \(\color{ForestGreen}{6}\)（即经过点 \((1, \color{ForestGreen}{2}), (2, \color{ForestGreen}{2}), (3, \color{ForestGreen}{6})\)），同样 \(r(x) \ni (1, \color{blue}{1}), (2, \color{blue}{3}), (3, \color{blue}{2})\)，以及 \(o(x) \ni (1,\color{red}{2}), (2, \color{red}{6}), (3, \color{red}{12})\)。</p>
+<p>但是，我们如何找到经过这些点的多项式呢？对于任何超过一个点的情况，都必须使用特定的数学方法。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="多项式插值"><a class="header" href="#多项式插值">多项式插值</a></h1>
 <p>为了构造<em>操作数</em> 和 <em>输出多项式</em>，我们需要一种方法来用给定的一组点去构造一个能经过所有这些点的<em>弯曲</em> 多项式，这叫<em>插值</em>。有几种不同的方法可以算出这个多项式：</p>
 <ul>
