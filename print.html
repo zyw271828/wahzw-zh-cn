@@ -1046,42 +1046,44 @@ $$L(x) = c_{a} \cdot l_a(x) + l_d'(x) = \left(c_a + c_a'\right) \cdot l_a(x) + c
 <p>当前的协议约束只解决了部分问题，还有许多可以改进的地方，下一节中将会展开讨论这些改进，并对证明协议进行优化。</p>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="结构属性"><a class="header" href="#结构属性">结构属性</a></h1>
-<p>上文中的修改额外带来了一些其它有用的性质。</p>
+<p>这种修改还带来了许多额外的有用特性。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="常数系数"><a class="header" href="#常数系数">常数系数</a></h1>
-<p>在上文的构造中，我们通过对 <em>未赋值的变量多项式</em> 的计算得到0 或者 1 ，以此表示在运算中是否要用到这个变量。自然地想，我们也可以使用其它系数值，包括负数值，因为我们可以<em>插值</em> 计算出经过任何必要的点（前提是没有两个计算使用了同一个 <em>x</em>）的多项式。如下是这种运算的一些例子：</p>
-<p>$\textcolor{green}{2a} \times \textcolor{blue}{1b} = \textcolor{red}{3r}$</p>
-<p>$\textcolor{green}{-3a} \times \textcolor{blue}{1b} = \textcolor{red}{-2r}$</p>
-<p>现在我们的程序就可以使用静态系数了，例如：</p>
-<pre><code class="language-pseudocode">Algorithm 2: Constant coefficients
-————————————————————————————————————————————————————————————
-
-function calc(w, a, b)
+<p>在上面的构造中，我们一直在使用<em>未赋值的变量多项式</em> \(1\) 或 \(0\) 的求值来表示变量<em>是否</em>在运算中<em>被使用</em>。自然，我们也可以使用包括负系数在内的其他系数，因为我们可以对多项式进行<em>插值</em>来经过任何必要的点（假设没有两个运算占用相同的 \(x\)）。此类运算的示例如下：</p>
+<p>$$\color{ForestGreen}{2a}\quad \times \quad\color{blue}{1b}\quad = \quad\color{red}{3r}$$</p>
+<p>$$\color{ForestGreen}{-3a}\quad \times \quad\color{blue}{1b}\quad = \quad\color{red}{-2r}$$</p>
+<p>现在我们的程序就可以使用常数系数了，例如：</p>
+<p>算法 2：常数系数</p>
+<pre><code class="language-pseudocode">function calc(w, a, b)
     if w then
-        return 3a × b
-    else 
-        return 5a × 2b
+        return 3a * b
+    else
+        return 5a * 2b
     end if
 end function
 </code></pre>
-<p>在 setup 阶段这些系数类似于 0 或者 1 将被“硬编码”进去，之后就不能再修改了。现在我们将运算形式修改为：</p>
-<p>$\textcolor{green}{c_a \cdot a} \times \textcolor{blue}{c_b \cdot b} = \textcolor{red}{c_r \cdot r}$</p>
-<p>或者更正式得用参数 v<sub>n</sub> ∈ {v<sub>1</sub>, v<sub>2</sub>, …, v<sub>n</sub>} 表示：</p>
-<p>$\textcolor{green}{c_l \cdot v_l} \times \textcolor{blue}{c_r \cdot v_r} = \textcolor{red}{c_o \cdot v_o}$</p>
-<p>其中下标 <em>l</em> ，<em>r</em> 和 <em>o</em> 表示变量在运算中的位置。</p>
-<p><em>注意：在不同的运算和操作数/输出中，同一个变量的常量系数可以是不同的。</em></p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="无成本加法"><a class="header" href="#无成本加法">无成本加法</a></h1>
-<p>看一下这个新结构，很显然在多项式的表示中，每一个不同 x 所要代表的操作数都是所有<em>操作数变量多项式</em> 的总和，其中只有一个被用到的变量是非零值而其它都为 0，下图就很好得表达了这个意思：</p>
-<p><img src="./img/4/1*HeUXxV8-H5MVbhdT8haqqw.png" alt="img" /></p>
-<p>我们可以利用这一个结构，加任何数量必要的<em>变量</em> 到每一个运算的操作符/输出中。例如在第一个运算中，我们可以首先做加法 <em>a+c</em>，然后就只需要用别的操作数与之相乘了，即 (<em>a</em>+ <em>c</em>) × <em>b</em> = <em>r</em>，可以表示为下图：</p>
-<p><img src="./img/4/1*RpLBxan0och5LvpuE5KJVw.png" alt="img" /></p>
-<p>因而也可以将这些变量中任意个，对它们先乘以任意的系数再一并加入到一起作为单个操作数中，以此来根据相应程序的需要构造一个操作数值。这个特性实际上就允许将运算结构改为：</p>
-<p>$\textcolor{green}{(c_{1,a} \cdot a + c_{1,b} \cdot b + …) } \times \textcolor{blue}{(c_{r,a} \cdot a + c_{r,b}\cdot b + …)} = \textcolor{red}{(c_{o,a} \cdot a + c_{o,b} \cdot b + …)}$</p>
-<p>或者更正式一些用变量  <em>vᵢ</em> ∈ {<em>v</em>₁*, v<em>₂</em>, …, vₙ*} 和操作数变量系数 $c_{l,i} \in {c_{l,1}, c_{l,2},……,c_{l,n}}, c_{r,i} \in {c_{r,1}, c_{r,2},……,c_{r,n}},c_{o,i} \in {c_{o,1}, c_{o,2},……,c_{o,n}},$</p>
-<p>这个结构就是：</p>
-<p>$\textcolor{green}{\sum_{i=1}^n {c_{l,i} \cdot v_i}} \times \textcolor{blue}{\sum_{i=1}^n {c_{r,i} \cdot v_i}} = \textcolor{red}{\sum_{i=1}^n {c_{o,i} \cdot v_i}}$</p>
-<p><em>注意 ：每一个运算的操作数都有自己的一组系数 c。</em></p>
+<p>这些系数将在设置阶段「硬编码」，类似于 \(1\) 或 \(0\) 而且是不可变的。我们可以相应修改运算的形式：</p>
+<p>$$\color{ForestGreen}{c_a \cdot a}\quad \times \quad\color{blue}{c_b \cdot b}\quad = \quad\color{red}{c_r \cdot r}$$</p>
+<p>或者更正式地说，对于变量 \(v_i \in \{v_1, v_2, ..., v_n\}\)：</p>
+<p>$$\color{ForestGreen}{c_l \cdot v_l}\quad \times \quad\color{blue}{c_r \cdot v_r}\quad = \quad\color{red}{c_o \cdot v_o}$$</p>
+<p>其中 \(l, r, o\) 是运算中使用的变量的索引。</p>
 <blockquote>
-<p>译者注：乘法运算是关键，而加法运算都可以被合并到一个更大的乘法运算里面。</p>
+<p>注：同一变量的常数系数在不同的运算和操作数 / 输出中可能不同。</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="无成本加法"><a class="header" href="#无成本加法">无成本加法</a></h1>
+<p>看一下更新后的结构，很明显在多项式表示中，由一些不同的 \(x\) 表示的每个<em>操作数</em>都是所有<em>操作数变量多项式</em>的总和，因此只有单个<em>使用</em>的变量可以具有非零值，而所有其他变量都为零。下图很好地说明了这一点：</p>
+<p><img src="./img/4/1*HeUXxV8-H5MVbhdT8haqqw.png" alt="img" /></p>
+<p>我们可以利用这种结构，允许为运算中的每个操作数添加任意数量的必要<em>变量</em>。例如在第一个运算中，我们可以先做加法 \(a + c\)，然后再乘以其他操作数，例如 \(\color{ForestGreen}{(a + c)} \times \color{blue}{b} = \color{red}{r}\)，这可以表示为：</p>
+<p><img src="./img/4/1*RpLBxan0och5LvpuE5KJVw.png" alt="img" /></p>
+<p>因此，可以在单个<em>操作数</em>中添加任意数量的当前变量，对它们中的每一个使用任意系数，这样可以根据各个程序的需要来生成将在相应运算中使用的操作数值。这种特性有效地允许将运算结构更改为：</p>
+<p>$$\color{ForestGreen}{(c_{\textrm{l},a} \cdot a + c_{\textrm{l},b} \cdot b + \ldots)}\quad \times \quad\color{blue}{(c_{\textrm{r},a} \cdot a + c_{\textrm{r},b} \cdot b + \ldots)}\quad = \quad\color{red}{(c_{\textrm{o},a} \cdot a + c_{\textrm{o},b} \cdot b + \ldots)}$$</p>
+<p>或更正式地说，对于变量 \(v_i \in \{v_1, v_2, ..., v_n\}\) 和操作数变量系数 \(c_{\textrm{l},i} \in \{c_{\textrm{l},1}, c_{\textrm{l},2}, ..., c_{\textrm{r},n}\}\)，\(c_{\textrm{r},i} \in \{c_{\textrm{r},1}, c_{\textrm{r},2}, ..., c_{\textrm{r},n}\}\)，\(c_{\textrm{o},i} \in \{c_{\textrm{o},1}, c_{\textrm{o},2}, ..., c_{\textrm{o},n}\}\)：</p>
+<p>$$\color{ForestGreen}{\sum_{i=1}^{n} c_{\textrm{l},i} \cdot v_i}\quad \times \quad\color{blue}{\sum_{i=1}^{n} c_{\textrm{r},i} \cdot v_i}\quad = \quad\color{red}{\sum_{i=1}^{n} c_{\textrm{o},i} \cdot v_i}$$</p>
+<blockquote>
+<p>注：每个运算的操作数都有自己的一组系数 \(c\)。</p>
+</blockquote>
+<p><a href="ignored"></a></p>
+<blockquote>
+<p>译者注：乘法运算是关键，而加法运算可以被合并到一个更大的乘法运算里。</p>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="加法减法和除法"><a class="header" href="#加法减法和除法">加法、减法和除法</a></h1>
 <p>到目前为止，我们一直专注于乘法操作。但是为了能够执行通用计算，真实环境下的程序也需要加法，减法和除法。</p>
