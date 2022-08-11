@@ -1086,26 +1086,35 @@ end function
 <p>译者注：乘法运算是关键，而加法运算可以被合并到一个更大的乘法运算里。</p>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="加法减法和除法"><a class="header" href="#加法减法和除法">加法、减法和除法</a></h1>
-<p>到目前为止，我们一直专注于乘法操作。但是为了能够执行通用计算，真实环境下的程序也需要加法，减法和除法。</p>
-<p><strong>加法</strong> 在前面的章节中，我们已经确定了可以在单个操作数的内容中将变量加起来，然后和另一个操作数相乘，即(3<em>a</em> + <em>b</em>) × <em>d</em> = <em>r</em> ，但是如果我们只是想做加法，没有乘法，例如一个程序中需要做  a + b 的计算，我们可以按照下面的方式来表示： <em>(a+b) × 1 = r​</em></p>
+<p>到目前为止，我们一直专注于乘法运算。然而，为了能够执行通用计算，真实环境下的程序还需要加法、除法和减法。</p>
+<p><strong>加法：</strong> 在上一节中，我们已经确定可以在单个操作数的情况下添加变量，然后将其乘以另一个操作数，例如 \(\color{ForestGreen}{(3a + b)} \times \color{blue}{d} = \color{red}{r}\)，但是如果我们只需要加法而不需要乘法，例如，如果一个程序需要计算 \(\mathrm{a} + \mathrm{b}\)，我们可以将其表示为：</p>
+<p>$$\color{ForestGreen}{(a + b)}\quad \times \quad\color{blue}{1}\quad = \quad\color{red}{r}$$</p>
 <blockquote>
-<p>注：因为我们的结构中对于每一个操作数我们既需要常量系数也需要变量 (c ⋅ v) ，1 这个值可以表示为  c<em>₁</em> ⋅ v<em>₁</em>，其中  c<em>₁</em> = <em>1</em> 可以被“硬编码”到对应的多项式中， v<em>₁</em> 是一个变量可以给它分配任何值，那么我们就必须通过一些约束来限制 v<em>₁</em> 的值，这个在后面的章节中将会讲到。</p>
+<p>注：由于我们的结构对每个操作数都需要一个常数系数和一个变量（\(\color{blue}{c \cdot v}\)），所以 \(\color{blue}{1}\) 的值被表示为 \(c_{one} \cdot v_{one}\)，虽然 \(c_{one} = 1\) 可以被「硬编码」到对应的多项式中，但 \(v_{one}\) 是一个变量，可以被赋任何值，因此我们必须通过 4.10 节中解释的约束来限制 \(v_{one}\) 的值。</p>
 </blockquote>
-<p><strong>减法</strong> 减法与加法几乎一致，唯一的不同就是负系数， a-b也就是：</p>
-<p>$\textcolor{green}{(a+-1 \cdot b)} \times \textcolor{blue}{1} = \textcolor{red}{r}$</p>
-<p><strong>除法</strong> 如果我们检查除法运算</p>
-<p>$\frac{factor}{divisor} = result$</p>
-<p>可以看到除法的结果是就是我们要得到一个结果值使其乘以 divisor 能够得到 factor。所以我们也可以用乘法来表示出同一个意思：<em>divisor × result = factor</em>。这样就是说如果我们想要去证明除法运算 <em>a / b= r</em>，我们就可以把它表示为：</p>
-<p>$\textcolor{green}{b} \times \textcolor{blue}{r} = \textcolor{red}{a}$</p>
+<p><strong>减法：</strong> 减法几乎与加法相同，唯一的区别是一个负系数，例如，对于 \(\mathrm{a - b}\)：</p>
+<p>$$\color{ForestGreen}{(a + -1 \cdot b)}\quad \times \quad\color{blue}{1}\quad = \quad\color{red}{r}$$</p>
+<p><strong>除法：</strong> 如果我们观察除法运算 \(\mathsf{\frac{因子}{除数} = 结果}\)，可以发现将除法的 \(\mathsf{结果}\) 乘以 \(\mathsf{除数}\) 就能得到 \(\mathsf{因子}\)。因此我们可以用乘法表达相同的含义：\(\mathsf{除数 \times 结果 = 因子}\)。如果我们要证明除法运算 \(\mathrm{\frac{a}{b} = r}\)，可以将其表示为：</p>
+<p>$$\color{ForestGreen}{b}\quad \times \quad\color{blue}{r}\quad = \quad\color{red}{a}$$</p>
 <blockquote>
-<p>注：运算的结构也称为 “约束” ，因为多项式结构代表的运算，并非是为了计算出结果，而是在证明者已经知晓的变量赋值的情况下，检验这个运算的过程是否正确。换句话说，即约束证明者必须提供一致的值，无论这些值是什么。</p>
-<p>所有的算术计算（加减乘除）都已经有了，于是运算结构不再需要修改。</p>
+<p>注：运算的结构也被称为「约束（Constraint）」，由多项式结构表示的运算本身并非是为了计算结果，而是检查证明者是否已经知道变量（包括结果），并且它们对运算来说是<em>有效</em>的，也就是说，无论这些值是什么，证明者都必须提供一致的值。</p>
 </blockquote>
+<p><a href="ignored"></a></p>
 <blockquote>
-<p>译者注：约束和运算有一定的关联性。算术电路的目的是为了实现「计算的验证」，而非「计算的过程」。</p>
-<p>上一篇文章中，我们提出了一种方法：把构造多项式的工作交给 setup 环节，证明者只要填上对应的数值就可以了。 这个方法不仅解决了同一个操作数运算符中不一致的问题，同时还带来了额外的便利：</p>
-<p>1）允许执行计算的表达式中包含静态系数。</p>
-<p>2）虽然l(x)·r(x)=o(x)的关系中只有乘法，但利用这个方法也可以轻松的执行加法操作，继而也就解决了减法和除法的问题。</p>
+<p>注：所有这些算术运算都已经存在，因此不再需要修改运算的结构。</p>
+</blockquote>
+<p><a href="ignored"></a></p>
+<blockquote>
+<p>译者注：约束和运算有一定的关联性。算术电路的目的是为了实现计算的<em>验证</em>，而非计算的<em>过程</em>。</p>
+<p>上文中，我们提出了一种方法：把构造多项式的工作交给设置环节，证明者只需要填上对应的数值就可以了。这个方法不仅解决了同一个操作数的运算符不一致的问题，同时还带来了额外的便利：</p>
+<ol>
+<li>
+<p>允许执行计算的表达式中包含静态系数。</p>
+</li>
+<li>
+<p>虽然 \(l(x) \times r(x) = o(x)\) 的关系中只有乘法，但利用这个方法也能轻松地执行加法运算，同时也解决了减法和除法的问题。</p>
+</li>
+</ol>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="示例计算"><a class="header" href="#示例计算">示例计算</a></h1>
 <p>有了一组通用的运算结构，我们就可以将我们原始的程序（上一篇文章中的例子）转换成一组运算，然后再转换成多项式的形式。我们先来想一下算法的数学形式（用变量 <em>v</em> 表示运算结果）：</p>
