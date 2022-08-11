@@ -1117,45 +1117,45 @@ end function
 </ol>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="示例计算"><a class="header" href="#示例计算">示例计算</a></h1>
-<p>有了一组通用的运算结构，我们就可以将我们原始的程序（上一篇文章中的例子）转换成一组运算，然后再转换成多项式的形式。我们先来想一下算法的数学形式（用变量 <em>v</em> 表示运算结果）：</p>
-<p>$ w \times (a \times b) + (1 - w) \times (a+b) = v$</p>
-<p>这里有三个乘法，但是由于运算结构只支持一个乘法操作，所以这里至少就要做三次运算。但是，我们可以将它简化为:</p>
-<p>$w \times (a \times b) + a + b -w \times (a + b) = v$</p>
-<p>$w \times (a \times b - a - b) = v -a- b$</p>
-<p>现在要包含同样的关系只需要两个乘法。这种运算的完整形式就是：</p>
-<p>$1: \qquad  \textcolor{green}{1 \cdot a} \times \textcolor{blue}{1 \cdot b }= \textcolor{red}{1 \cdot m} $</p>
-<p>$2:  \qquad \textcolor{green}{1 \cdot w} \times \textcolor{blue}{1 \cdot m + -1 \cdot a + -1 \cdot b} = \textcolor{red}{1 \cdot v + -1 \cdot a + -1 \cdot b}$</p>
-<p>我们还可以再增加一条约束使 <em>w</em> 必须为二进制数，否则证明者就可以代入任何值去执行一个错误的运算了：</p>
-<p>$3：  \qquad \textcolor{green}{1 \cdot w} \times \textcolor{blue}{1 \cdot w}  = \textcolor{red}{1 \cdot w} $</p>
-<p>要了解为什么 <em>w</em> 只能为 0 或者 1，我们可以把等式表示为 <em>w</em>² – <em>w</em> = 0，也就是 <em>(w – 0)(w – 1) = 0</em> 这里 0 和 1 是唯一解。</p>
-<p>现在一共有 5 个变量，以及 2 个左操作符， 4 个右操作符和 5 个输出。操作符多项式为：</p>
-<p>$\textcolor{green}{L(x) = a \cdot l_a(x) + w \cdot l_w(x)}$</p>
-<p>$\textcolor{blue}{R(x) = m \cdot r_m(x) + a \cdot r_a(x) + b \cdot r_b(x)}$</p>
-<p>$\textcolor{red}{O(x) = m \cdot o_m(x) + v \cdot o_v(x) + a \cdot o_a(x) + b \cdot o_b(x)}$</p>
-<p>在三次运算中必须为每个*变量多项式 都分别算出一个对应的系数或者如果这个多项式在计算的操作数或者输出中没有被用到的话系数就置为 0。</p>
+<p>有了通用运算的结构，我们就可以将原来的算法 1 转换为一组运算，并进一步转换为多项式形式。算法的数学形式是（我们将使用变量 \(v\) 来表示运算结果）：</p>
+<p>$$w \times (a \times b) + (1 - w) \times (a + b) = v$$</p>
+<p>它有三个乘法，由于运算结构只支持一个乘法，所以至少会有 3 个运算。但是，我们可以简化方程：</p>
+<p>$$w \times (a \times b) + a + b - w \times (a + b) = v$$</p>
+<p>$$w \times (a \times b - a - b) = v - a - b$$</p>
+<p>现在要保持同样的关系只需要两个乘法。运算的完整形式是：</p>
+<p>$$1:\quad\color{ForestGreen}{1\cdot a}\quad \times \quad\color{blue}{1\cdot b}\quad = \quad\color{red}{1 \cdot m}$$</p>
+<p>$$2:\quad\color{ForestGreen}{1\cdot w}\quad \times \quad\color{blue}{1\cdot m\ +\ -1\cdot a\ + \ -1\cdot b}\quad = \quad\color{red}{1 \cdot v\ +\ -1 \cdot a\ +\ -1 \cdot b}$$</p>
+<p>我们还可以添加一个要求 \(w\) 必须是二进制的约束，否则证明者就可以使用其他的 \(w\) 取值去执行一个不正确的运算：</p>
+<p>$$3:\quad\color{ForestGreen}{1\cdot w}\quad \times \quad\color{blue}{1\cdot w}\quad = \quad\color{red}{1\cdot w}$$</p>
+<p>要说明为什么 \(w\) 只能是 0 或 1，我们可以将方程表示为 \(w^2 - w = 0\)，然后进一步表示为 \((w - 0)(w - 1) = 0\)，其中 0 和 1 是唯一的解。</p>
+<p>这里总共有 5 个变量，其中 2 个在左操作数中，4 个在右操作数中，5 个在输出中。操作数多项式为：</p>
+<p>$$\color{ForestGreen}{L(x)} = \color{ForestGreen}{ a \cdot l_a(x) + w \cdot l_w(x) }$$</p>
+<p>$$\color{blue}{R(x)} = \color{blue}{ m \cdot r_{m}(x) + a \cdot r_a(x) + b \cdot r_b(x) + w\cdot r_w(x) }$$</p>
+<p>$$\color{red}{O(x)} = \color{red}{ m \cdot o_{m}(x) + v \cdot o_v(x) + a \cdot o_a(x) + b \cdot o_b(x) + w\cdot o_w(x) }$$</p>
+<p>其中每个<em>变量多项式</em>必须为 3 个运算中的每一个运算计算出一个相应的系数，如果变量不存在于运算的操作数或输出中，则计算为 0：</p>
 <p><img src="./img/4/eq1.png" alt="img" /></p>
-<p>结果因式多项式就是  <em>t(x) = (x – 1)(x –2)(x –3)</em>，它必须确保这三个运算都能被正确计算。</p>
-<p>接下来，我们利用多项式插值法来找到每个变量多项式：</p>
+<p>因此，辅因子多项式是 \(t(x) = (x-1)(x-2)(x-3)\)，这可以确保所有三个运算都已经被正确计算。</p>
+<p>接下来我们利用多项式插值来找到每个<em>变量多项式</em>：</p>
 <p><img src="./img/4/eq2.png" alt="img" /></p>
 <p>绘制出来就是：</p>
 <p><img src="./img/4/1*YoNx3JunyKJh8kFad6qtpQ.png" alt="img" /></p>
-<p>我们准备通过多项式去证明计算，首先，选择函数的输入值，例如： <em>w</em> <em>= 1</em>, <em>a</em> <em>= 3</em>, <em>b</em>= 2。其次，计算过程中的中间变量值为：</p>
-<p>$$m=a × b =6$$</p>
-<p>$$v = w(m-a-b)+a+b=6$$</p>
-<p>然后，我们把所有计算结果中的值赋值到 <em>变量多项式</em> 中，然后相加得到操作数或者输出多项式的形式：</p>
-<p>$\textcolor{green}{L(x)}=\textcolor{green}{3 \cdot l_a(x) +1 \cdot l_w(x)} = x^2 -5x+7$</p>
-<p>$\textcolor{blue}{R(x)}=\textcolor{blue}{6 \cdot r_m(x) + 3 \cdot r_a(x) + 2 \cdot r_b(x) + 1 \cdot r_w(x)} = \frac{1}{2}x^2 -2 \frac{1}{2}x +4$</p>
-<p>$\textcolor{red}{O(x)}=\textcolor{red}{6 \cdot o_m(x) + 6 \cdot o_v(x) + 3 \cdot o_a(x)+ 2 \cdot o_b(x) + 1 \cdot o_w(x)}= 2 \frac{1}{2}x^2 + 12 \frac{1}{2}x +16$</p>
-<p>在图中就表示为：</p>
+<p>现在我们就可以通过多项式来证明计算了。首先，我们为函数选择输入值，例如 \(w = 1, a = 3, b = 2\)。接着，从运算中计算中间变量的值：</p>
+<p>$$m = a \times b = 6$$</p>
+<p>$$v = w(m - a - b) + a + b = 6$$</p>
+<p>之后，我们将计算结果所涉及的所有值赋给相应的<em>变量多项式</em>，并将它们相加，形成操作数和输出多项式的形式：</p>
+<p>$$\color{ForestGreen}{L(x)} = \color{ForestGreen}{ 3 \cdot l_a(x) + 1 \cdot l_w(x) } = x^2 - 5x + 7$$</p>
+<p>$$\color{blue}{R(x)} = \color{blue}{ 6 \cdot r_{m}(x) + 3 \cdot r_a(x) + 2 \cdot r_b(x) + 1\cdot r_w(x) } = \frac{1}{2} x^2 - 2\frac{1}{2}x + 4$$</p>
+<p>$$\color{red}{O(x)} = \color{red}{ 6 \cdot o_{m}(x) + 6 \cdot o_v(x) + 3 \cdot o_a(x) + 2 \cdot o_b(x) + 1\cdot o_w(x) } = 2\frac{1}{2} x^2 - 12\frac{1}{2}x + 16$$</p>
+<p>在图中表示为：</p>
 <p><img src="./img/4/1*XwRYLT4_4KRPTqQKg2jqfQ.png" alt="img" /></p>
-<p>把他们相加成对应运算中的操作数和输出值：</p>
+<p>加起来表示相应运算中的操作数和输出值：</p>
 <p><img src="./img/4/1*8xEajzq2MlB9i7O8PQ829Q.png" alt="img" /></p>
-<p>我们需要去证明  <em>L</em>(<em>x</em>) × <em>R</em>(<em>x</em>) – <em>O</em>(<em>x</em>) = <em>t</em>(<em>x</em>)<em>h</em>(<em>x</em>)，因而我们先找出 <em>h</em>(<em>x</em>)：</p>
-<p>$h(x) = \frac{L(x) \times R(x) - O(x)}{t(x)} = \frac{\frac{1}{2}x^4 - 5x^3 + \frac{35}{2}x^2 -25x +12}{(x-1)(x-2)(x-3)} = \frac{1}{2}x - 2$</p>
-<p>以图的形式表示为：</p>
+<p>我们需要证明 \(L(x) \times R(x) - O(x) = t(x), h(x)\)，因此要找出 \(h(x)\)：</p>
+<p>$$h(x) = \frac{L(x) \times R(x) - O(x)}{t(x)} = \frac{\frac{1}{2}x^4 - 5x^3 + \frac{35}{2} x^2 - 25x + 12}{(x-1)(x-2)(x-3)} = \frac{1}{2}x - 2$$</p>
+<p>在图中表示为：</p>
 <p><img src="./img/4/1*z4sW_cYeeGZS_8AAJzfoKQ.png" alt="img" /></p>
-<p>这里很明显多项式 <em>L</em>(<em>x</em>) × <em>R</em>(<em>x</em>) – <em>O</em>(<em>x</em>) 的解为 <em>x</em>= 1， <em>x</em>= 2 和 <em>x</em>= 3，因而 <em>t(x)</em> 是它的因式，假如使用了和它不一致的变量值，情况就不是这样了。</p>
-<p>这就是一组能够正确计算的变量值，如何在多项式层面上证明出来的。下面证明者还要再继续处理协议的密码学部分。</p>
+<p>可见多项式 \(L(x)\times R(x) - O(x)\) 有解 \(x = 1\)、\(x = 2\) 和 \(x = 3\)，因此 \(t(x)\) 是它的辅因子，如果我们使用不一致的变量值，情况就不是这样了。</p>
+<p>这就是正确计算执行的变量值的知识在多项式层面上证明的方法。下面证明者还要继续处理协议的密码学部分。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="可验证计算协议"><a class="header" href="#可验证计算协议">可验证计算协议</a></h1>
 <p>我们基于前文中<strong>多项式知识协议</strong> 做了很多重要的修改使它变得更通用，我们再来看一下它现在的定义。假定函数 <em>f</em>(<em>) 是要证明的问题中的计算结果，其中操作数的数量为</em>d*，变量的数量<em>n</em> ，以及它们对应的系数为：</p>
 <p>${c_{L,i,j},c_{R,i,j},c_{o,i,j}}_{i \in {1,…,d}, j \in {i,…,d}}$</p>
