@@ -1157,76 +1157,44 @@ end function
 <p>可见多项式 \(L(x)\times R(x) - O(x)\) 有解 \(x = 1\)、\(x = 2\) 和 \(x = 3\)，因此 \(t(x)\) 是它的辅因子，如果我们使用不一致的变量值，情况就不是这样了。</p>
 <p>这就是正确计算执行的变量值的知识在多项式层面上证明的方法。下面证明者还要继续处理协议的密码学部分。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="可验证计算协议"><a class="header" href="#可验证计算协议">可验证计算协议</a></h1>
-<p>我们基于前文中<strong>多项式知识协议</strong> 做了很多重要的修改使它变得更通用，我们再来看一下它现在的定义。假定函数 <em>f</em>(<em>) 是要证明的问题中的计算结果，其中操作数的数量为</em>d*，变量的数量<em>n</em> ，以及它们对应的系数为：</p>
-<p>${c_{L,i,j},c_{R,i,j},c_{o,i,j}}_{i \in {1,…,d}, j \in {i,…,d}}$</p>
+<p>我们对多项式知识协议（第 3.7 节）做了许多重要的修改来让它更具有通用性，让我们看看它现在是如何定义的。假设函数 \(f(*)\) 的计算结果是证明的主题，运算的数量为 \(d\)，变量的数量 \(n\) 和对应的系数 \(\left\{ c_{L,i,j}, c_{R,i,j}, c_{O,i,j} \right\}_{i \in \{1, \ldots, n\}, j \in \{1, \ldots, d\}}\)：</p>
 <ul>
-<li>
-<p>Setup</p>
+<li>设置
 <ul>
-<li>
-<p>为左操作数 ${l_i(x)}<em>{i \in {1,…,n}}$ 构造<em>变量多项式</em> 然后对于所有 $j \in {1,…,d}$ 的运算都算出其对应的系数，即 $l_i(j) = c</em>{L,i,j}$，对右操作数和输出也做同样的事情。</p>
-</li>
-<li>
-<p>随机抽取 <em>s</em>，$α$</p>
-</li>
-<li>
-<p>计算 <em>t(x)= (x-1)(x-2)…(x-d)</em> 及其结果 $g^{t(s)}$</p>
-</li>
-<li>
-<p>计算 <em>proving key</em>：</p>
-<p>$({g^{s^k}}<em>{k \in[d]},{g^{l_i(s)}, g^{r_i(s)}, g^{o_i(s)},g^{αl_i(s)},g^{αr_i(s)},g^{αo_i(s)}}</em>{i \in {1,……,n}})$</p>
-</li>
-<li>
-<p>计算 <em>verification key</em>：</p>
-<p>$(g^{t(s)},g^α)$</p>
-</li>
+<li>为左操作数 \(\left\{ l_i(x) \right\}_{i \in \{1, \ldots, n\}}\) 构造<em>变量多项式</em>，使得对于 \(j \in \{1, \ldots, d\}\) 的所有运算都求值为相应的系数，即 \(l_i(j) = c_{L,i,j}\)，右操作数和输出同理</li>
+<li>选择随机值 \(s, \alpha\)</li>
+<li>计算 \(t(x) = (x-1)(x-2)\ldots(x-d)\) 以及 \(g^{t(s)}\)</li>
+<li>计算证明密钥：\(\left( \left\{ g^{s^k} \right\}_{k \in [d]}, \left\{ g^{l_i(s)}, g^{r_i(s)}, g^{o_i(s)}, g^{\alpha l_i(s)}, g^{\alpha r_i(s)}, g^{\alpha o_i(s)} \right\}_{i \in \{1,\ldots,n\}} \right)\)</li>
+<li>计算验证密钥：\(\left(g^{t(s)}, g^{\alpha}\right)\)</li>
 </ul>
 </li>
-<li>
-<p>Proving</p>
+<li>证明
 <ul>
-<li>
-<p>计算函数 <em>f(*)</em> 以此计算相应的变量 ${v_i}_{i \in {1,…,n}}$</p>
-</li>
-<li>
-<p>计算 $h(x) = \frac{L(x) \times R(x) - O(x)}{t(x)}$，其中 $L(x) = \sum_{i=1}^n {v_i \cdot l_i(x)}$，$R(x)$, $O(x)$ 与之相似</p>
-</li>
-<li>
-<p>给变量赋值并对操作数多项式求和：</p>
-<p>$g^{L(s)} = (g^{l_1(s)})^{v_1}…(g^{l_n(s)})^{v_n},g^{R(s)} = \prod_{i=1}^n{(g^{r_i(s)})^{v_i}}, g^{O(s)} = \prod_{i=1}^n{(g^{o_i(s)})^{v_i}}$</p>
-</li>
-<li>
-<p>对变换后的多项式赋值：</p>
-<p>$g^{αL(s)} = \prod_{i=1}^n{(g^{αl_i(s)})^{v_i}},g^{αR(s)} = \prod_{i=1}^n{(g^{αr_i(s)})^{v_i}}, g^{αO(s)} = \prod_{i=1}^n{(g^{αo_i(s)})^{v_i}}$</p>
-</li>
-<li>
-<p>使用 s 的幂加密值：${g^{s^k}}_{k \in [d]}$ 计算加密值 $g^{h(s)}$</p>
-</li>
-<li>
-<p>生成证明：${g^{L(s)},g^{R(s)},g^{O(s)},g^{αL(s)},g^{αR(s)},g^{αO(s)},g^{h(s)}}$</p>
-</li>
+<li>计算函数 \(f(*)\) 和相应的变量值 \(\left\{ v_i \right\}_{i \in \{1,\ldots,n\}}\)</li>
+<li>计算 \(h(x) = \frac{L(x) \times R(x) - O(x)}{t(x)}\)，其中 \(L(x) = \sum_{i=1}^n v_i \cdot l_i(x)\)，\(R(x), O(x)\) 同理</li>
+<li>给变量赋值并<em>求和</em>来得到操作数多项式：
+$$g^{L(s)} = \left(g^{l_1(s)}\right)^{v_1} \cdots \left(g^{l_n(s)}\right)^{v_n},\ g^{R(s)} = \prod_{i=1}^{n} \left(g^{r_i(s)}\right)^{v_i},\ g^{O(s)} = \prod_{i=1}^{n} \left(g^{o_i(s)}\right)^{v_i}$$</li>
+<li>将变量值赋给移位的多项式：
+$$g^{\alpha L(s)} = \prod_{i=1}^{n} \left(g^{\alpha l_i(s)}\right)^{v_i},\ g^{\alpha R(s)} = \prod_{i=1}^{n} \left(g^{\alpha r_i(s)}\right)^{v_i},\ g^{\alpha O(s)} = \prod_{i=1}^{n} \left(g^{\alpha o_i(s)}\right)^{v_i}$$</li>
+<li>使用提供的 \(s\) 的幂计算加密值 \(g^{h(s)}\)：\(\left\{ g^{s^k} \right\}_{k \in [d]}\)</li>
+<li>构造证明：\(\left( g^{L(s)}, g^{R(s)}, g^{O(s)}, g^{\alpha L(s)}, g^{\alpha R(s)}, g^{\alpha O(s)}, g^{h(s)} \right)\)</li>
 </ul>
 </li>
-<li>
-<p>Verification</p>
+<li>验证
 <ul>
-<li>
-<p>解析证明为 ${g^L,g^R,g^O,g^{L'},g^{R'},g^{O'},g^{h}}$</p>
-</li>
-<li>
-<p>检查可变多项式约束：</p>
-<p>$e(g^L,g^α) = e(g^{L'},g), e(g^R,g^α) = e(g^{R'},g), e(g^O,g^α)=e(g^{O'},g)$</p>
-</li>
-<li>
-<p>验证计算有效性：</p>
-<p>$e(g^L,g^R) = e(g^t,g^h) \cdot e(g^O,g)$</p>
-</li>
+<li>将证明解析为：\(\left( g^L, g^R, g^O, g^{L'}, g^{R'}, g^{O'}, g^h \right)\)</li>
+<li>检查可变多项式约束：
+$$e(g^{L}, g^\alpha) = e(g^{L'}, g),\quad e(g^{R}, g^\alpha) = e(g^{R'}, g), \quad e(g^{O}, g^\alpha) = e(g^{O'}, g)$$</li>
+<li>检查运算的有效性：
+$$e(g^{L}, g^{R}) = e(g^{t}, g^{h}) \cdot e(g^{O}, g)$$</li>
 </ul>
 </li>
 </ul>
-<p><em>注意：使用符号  ∏ 来表示多个元素连乘，即： $\prod_{i=1}^n{v_i} = v_1 \cdot v_2 \cdot … \cdot v_n$</em></p>
-<p>对于 <em>i ∈ {1, …, n}</em> 所有变量多项式 {<em>lᵢ</em>(<em>x</em>)<em>, rᵢ</em>(<em>x</em>)<em>, oᵢ</em>(<em>x</em>)}  和目标多项式 <em>t(x)</em> 的设置被称为一个<em>二元算术程序</em> (QAP，在[<a href="ch4-9.html#8bfc">Gen+12</a>] 中有介绍)。</p>
-<p>虽然协议足够健壮，可以进行常规的计算验证，但这里依然还有两个安全考虑需要去解决。</p>
+<blockquote>
+<p>注：使用符号 \(\prod\) 可以简洁地表达多个元素的乘积，即 \(\prod_{i=1}^n v_i = v_1 \cdot v_2 \cdot \ldots \cdot v_n\)。</p>
+</blockquote>
+<p>所有变量多项式 \(\{l_i(x), r_i(x), o_i(x)\}_{i \in \{1, \ldots, n\}}\) 和目标多项式 \(t(x)\) 的集合被称为<em>二次算术程序</em>（Quadratic Arithmetic Program，QAP，参见 [<a href="./references.html#Gen+12">Gen+12</a>]）。</p>
+<p>虽然这个协议足够健壮，可以进行一般计算验证，但还有两个必须要解决的安全问题。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="操作数和输出的不可互换性"><a class="header" href="#操作数和输出的不可互换性">操作数和输出的不可互换性</a></h1>
 <p>因为在 <em>变量多项式约束检查</em> 中的所有操作数上我们使用了同一个 <em>α</em>，所以就没有办法阻止证明者做下面的欺骗行为：</p>
 <ul>
