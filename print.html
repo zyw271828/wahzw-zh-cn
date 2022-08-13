@@ -1183,7 +1183,7 @@ $$g^{\alpha L(s)} = \prod_{i=1}^{n} \left(g^{\alpha l_i(s)}\right)^{v_i},\ g^{\a
 <li>验证
 <ul>
 <li>将证明解析为：\(\left( g^L, g^R, g^O, g^{L'}, g^{R'}, g^{O'}, g^h \right)\)</li>
-<li>检查可变多项式约束：
+<li>检查变量多项式约束：
 $$e(g^{L}, g^\alpha) = e(g^{L'}, g),\quad e(g^{R}, g^\alpha) = e(g^{R'}, g), \quad e(g^{O}, g^\alpha) = e(g^{O'}, g)$$</li>
 <li>检查运算的有效性：
 $$e(g^{L}, g^{R}) = e(g^{t}, g^{h}) \cdot e(g^{O}, g)$$</li>
@@ -1196,44 +1196,43 @@ $$e(g^{L}, g^{R}) = e(g^{t}, g^{h}) \cdot e(g^{O}, g)$$</li>
 <p>所有变量多项式 \(\{l_i(x), r_i(x), o_i(x)\}_{i \in \{1, \ldots, n\}}\) 和目标多项式 \(t(x)\) 的集合被称为<em>二次算术程序</em>（Quadratic Arithmetic Program，QAP，参见 [<a href="./references.html#Gen+12">Gen+12</a>]）。</p>
 <p>虽然这个协议足够健壮，可以进行一般计算验证，但还有两个必须要解决的安全问题。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="操作数和输出的不可互换性"><a class="header" href="#操作数和输出的不可互换性">操作数和输出的不可互换性</a></h1>
-<p>因为在 <em>变量多项式约束检查</em> 中的所有操作数上我们使用了同一个 <em>α</em>，所以就没有办法阻止证明者做下面的欺骗行为：</p>
+<p>由于我们对<em>变量多项式约束</em>的所有操作数都使用相同的 \(\alpha\)，所以无法阻止证明者：</p>
 <ul>
-<li>使用其它的操作数中的可变多项式，即 <em>L</em>′(<em>s</em>) = <em>o</em>₁(<em>s</em>) + <em>r</em>₁(<em>s</em>) + <em>r</em>₁(<em>s</em>) + <em>…</em></li>
-<li>完全交换 <em>操作数多项式</em>， 也就是把 <em>O</em>(<em>s</em>) 和 <em>L</em>(<em>s</em>) 换成  <em>O(s) × R(s) = L(s)</em></li>
-<li>复用相同的操作数多项式，即  <em>L(s) × L(s) = O(s)</em></li>
+<li>使用来自其他操作数的变量多项式，例如 \(L'(s) = o_1(s) + r_1(s) + r_5(s) + \ldots\)</li>
+<li>完全交换<em>操作数多项式</em>，例如交换 \(O(s)\) 与 \(L(s)\) 得到运算 \(\color{ForestGreen}{O(s)}\ {\times}\ \color{blue}{R(s)}\ =\ \color{red}{L(s)}\)</li>
+<li>重复使用相同的操作数多项式，例如 \(\color{ForestGreen}{L(s)}\ {\times}\ \color{blue}{L(s)}\ =\ \color{red}{O(s)}\)</li>
 </ul>
-<p>可交换性就是指证明者可以修改计算过程，并有效证明一些其它无关的计算结果。防止这种行为的一个很显然的方式就是在不同的操作数上使用不同的 <em>α<sub>s</sub></em> ，具体协议就可以修改为：</p>
+<p>这种可互换性意味着证明者可以改变执行并有效地证明一些其他的计算。阻止这种行为的一个很明显的方法是对不同的操作数使用不同的 \(\alpha\)，具体来说我们修改为：</p>
 <ul>
-<li>
-<p>Setup
-…</p>
+<li>设置
 <ul>
-<li>选择随机数 $α_l$，$α_r$，$α_o$ 来代替 $α$</li>
-<li>计算其对应的“变换” ${g^{α_ll_i(s)},g^{α_rr_i(s)},g^{α_oo_i(s)}}_{i \in {1…n}}$</li>
-<li>proving key：$({g^{s^k}}<em>{k \in [d]},{g^{l_i(s)}, g^{r_i(s)}, g^{o_i(s)}, g^{α_ll_i(s)}, g^{α_rr_i(s)}, g^{α_oo_i(s)}}</em>{i \in {i…n}})$</li>
-<li>verfication key：$(g^{t(s)},g^{α_l},g^{α_r},g^{α_o})$</li>
-</ul>
-</li>
-<li>
-<p>Proving
-…</p>
-<ul>
-<li>为 “变换”的多项式赋值：$g^{α_lL(s)} = \prod_{i=1}^n{(g^{α_ll_i(s)})^{v_i}}, g^{α_lR(s)} = \prod_{i=1}^n{(g^{α_rr_i(s)})^{v_i}}, g^{α_oO(s)} = \prod_{i=1}^n{(g^{α_oo_i(s)})^{v_i}}$</li>
-<li>设置证明：$(g^{L(s)},g^{R(s)},g^{O(s)},g^{α_lL(s)},g^{α_rR(s)},g^{α_oO(s)},g^{h(s)})$</li>
+<li>\(\ldots\)</li>
+<li>选择随机值 \(\alpha_{l}, \alpha_{r}, \alpha_{o}\) 而不是 \(\alpha\)</li>
+<li>计算相应的「移位」\(\left\{g^{\alpha_{l} l_i(s)}, g^{\alpha_{r} r_i(s)}, g^{\alpha_{o} o_i(s)}\right\}_{i \in \{1 \ldots n\}}\)</li>
+<li>证明密钥：\(\left(\left\{ g^{s^k} \right\}_{k \in [d]}, \left\{g^{l_i(s)}, g^{r_i(s)}, g^{o_i(s)}, g^{\alpha_{l} l_i(s)}, g^{\alpha_{r} r_i(s)}, g^{\alpha_{o} o_i(s)} \right\}_{i \in \{1 \ldots n\}} \right)\)</li>
+<li>验证密钥：\(\left( g^{t(s)}, g^{\alpha_{l}}, g^{\alpha_{r}}, g^{\alpha_{o}} \right)\)</li>
 </ul>
 </li>
-<li>
-<p>Verification
-…</p>
+<li>证明
 <ul>
-<li>可变多项式约束验证：$e(g^L,g^{α_l}) = e(g^{L'},g),e(g^R,g^{α_r}) = e(g^{R'},g),e(g^O,g^{α_o}) = e(g^{O'},g)$</li>
+<li>\(\ldots\)</li>
+<li>将变量值赋给「移位」的多项式
+$$g^{\alpha_{l} L(s)} = \prod_{i=1}^{n} \left( g^{\alpha_{l} l_i(s)} \right)^{v_i},\ g^{\alpha_{r} R(s)} = \prod_{i=1}^{n} \left(g^{\alpha_{r} r_i(s)} \right)^{v_i},\ g^{\alpha_{o} O(s)} = \prod_{i=1}^{n} \left(g^{\alpha_{o} o_i(s)} \right)^{v_i}$$</li>
+<li>构造证明：\(\left(g^{L(s)}, g^{R(s)}, g^{O(s)}, g^{\alpha_{l} L(s)}, g^{\alpha_{r} R(s)}, g^{\alpha_{o} O(s)}, g^{h(s)} \right)\)</li>
+</ul>
+</li>
+<li>验证
+<ul>
+<li>\(\ldots\)</li>
+<li>检查变量多项式约束：
+$$e\left( g^{L}, g^{\alpha_{l}} \right) = e\left( g^{L'}, g \right), \quad e\left( g^{R}, g^{\alpha_{r}} \right) = e\left( g^{R'}, g \right), \quad e\left( g^{O}, g^{\alpha_{o}} \right) = e\left( g^{O'}, g \right)$$</li>
 </ul>
 </li>
 </ul>
-<p>这样就不能在一个操作数中使用其它操作数的变量多项式了，因为证明者没有办法去获知 $α_l, α_r, α_o$ 来满足 $α_s$ 变换关系。</p>
+<p>现在就不能使用来自其他操作数的变量多项式了，因为证明者不知道 \(\alpha_{l}, \alpha_{r}, \alpha_{o}\)。</p>
 <blockquote>
-<p>译者注：这里通过对l(x),r(x)和o(x) 进行分开 KEA 检查，就解决了上篇文章中提出的第二个缺陷问题——由于证明者生成的证明中只有计算结果，左操作数，右操作数，输出在计算中混用也不会被发现。</p>
-<p>同样下面一节也解决了上篇文章中提出的第三个缺陷问题——由于左操作数，右操作数，输出是分开表示的，互相之间的关系无法进行约束。</p>
+<p>译者注：这里通过对 \(L(x)\)、\(R(x)\) 和 \(O(x)\) 分别进行 KEA 检查，解决了上文中提到的第二个缺陷——由于证明者生成的证明中只有计算结果，左操作数、右操作数、输出在计算中混用也不会被发现。</p>
+<p>下节将会解决上文中提到的第三个缺陷——由于左操作数、右操作数、输出是分开表示的，相互之间的关系无法进行约束。</p>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="跨操作数的变量一致性"><a class="header" href="#跨操作数的变量一致性">跨操作数的变量一致性</a></h1>
 <p>对于任意的变量 vᵢ ，我们都必须将它的值 <em>分配</em> 到每个相应操作数中的一个与之对应的<em>变量多项式</em> 上，即：</p>
