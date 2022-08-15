@@ -141,131 +141,91 @@
                     <main>
                         <h1 id="变量和变量一致性多项式的非延展性"><a class="header" href="#变量和变量一致性多项式的非延展性">变量和变量一致性多项式的非延展性</a></h1>
 <h2 id="变量多项式的延展性"><a class="header" href="#变量多项式的延展性">变量多项式的延展性</a></h2>
-<p>举一个  <strong>备注 4.1</strong> 有关的例子，看一下下面的两个运算：</p>
-<p>$\textcolor{green}{a} \times \textcolor{blue}{1} = \textcolor{red}{b}$</p>
-<p>$\textcolor{green}{3a} \times \textcolor{blue}{1} =\textcolor{red}{c}$</p>
-<p>预期的结果 <em>b = a</em> 和 <em>c = 3a</em> , 再进一步就是  <em>c = 3b</em>。这就是说<em>左操作数的变量</em> 多项式的计算结果为 l<sub>a</sub>(1) = 1 和 l<sub>a</sub>(2) = 3。先不管  l<sub>a</sub>(<em>x</em>) 的形式，证明者都可以不按照上述的比例用另一个修改了的多项式 <em>lₐ</em>′(x) = al<sub>a</sub>(x) + 1 来给 <em>a</em> 赋值。这样运算就变成了  l<sub>a</sub>′(1) = a+ 1 和 l<sub>a</sub>′(2) = 3<em>a</em>+ 1, 结果也就是 <em>b = a + 1</em> 和 <em>c = 3a + 1</em>，其中 <em>c≠3b</em>，这意味着 <em>a</em> 的取值的实际意义在不同运算中是不一样的。</p>
-<p>但是因为证明者已经拿到了 <em>g<sup>α<sub>l</sub></sup></em> 和 <em>g<sup>β<sub>l</sub></sup></em> ，所以他依然能够通过正确的操作符多项式<em>和</em>变量值一致性* 的校验：</p>
+<p>让我们用以下两个运算作为例子来说明备注 4.1：</p>
+<p>$$\color{ForestGreen}{a}\quad \times \quad\color{blue}{1}\quad = \quad\color{red}{b}$$</p>
+<p>$$\color{ForestGreen}{3a}\quad \times \quad\color{blue}{1}\quad = \quad\color{red}{c}$$</p>
+<p>预期结果是 \(b = a\) 和 \(c = 3a\)，有明确的 \(c = 3b\) 的关系。这意味着<em>左操作数的变量</em>多项式的求值为 \(l_a(1) = 1\) 和 \(l_a(2) = 3\)。无论 \(l_a(x)\) 的形式如何，证明者都可以通过提供修改的多项式 \(l'_a(x) = a l_a(x) + 1\) 来不成比例地赋 \(a\) 的值。因此求值将会变成 \(l'_a(1) = a + 1\) 和 \(l'_a(2) = 3a + 1\)，结果 \(b = a + 1\)，\(c = 3a + 1\) 其中 \(c \neq 3b\)，实际上意味着 \(a\) 的值在不同的运算中是不一样的。</p>
+<p>因为证明者已知 \(g^{\alpha_l}\) 和 \(g^{\beta_l}\)，所以他可以同时满足<em>正确的操作数多项式</em>和<em>变量值一致性</em>检查：</p>
 <ul>
-<li>
-<p>…Proving：</p>
+<li>\(\ldots\) 证明
 <ul>
-<li>
-<p>用分配不成比例的变量 <em>a</em> 来建立左操作数多项式： $L(x) = a \cdot l_a(x) +1$</p>
-</li>
-<li>
-<p>按照常规的方式构造右操作数多项式和输出多项式： $R(x) = r_1(x), O(x)=b \cdot o_b(x) + c \cdot o_c(x)$</p>
-</li>
-<li>
-<p>计算除数：$h(x) = \frac{L(x) \cdot R(x) - O(x)}{t(x)}$</p>
-</li>
-<li>
-<p>计算加密值：$g^{L(s)} = (g^{l_a(s)})^a \cdot g^1$，并按照常规方式计算 $g^{R(s)},g^{O(s)}$</p>
-</li>
-<li>
-<p>计算 α-变换的加密值：$g^{αL(s)} = (g^{αl_a(s)})^a \cdot g^α$，并按照常规方式计算 $g^{αR(s)},g^{αO(s)}$</p>
-</li>
-<li>
-<p>计算变量一致性多项式：</p>
-<p>$g^{Z(s)} = \prod_{i \in {1,a,b,c}}{(g^{β_ll_i(s)+β_rr_i(s)+β_oO_i(s)})^i \cdot g^{β_l}} = g^{β_l(L(s)+1)+ β_rR(s) +β_oO(s)}$，其中下标 <em>i</em> 代表对应变量的符号；指数 <em>i</em> 代表变量的值；以及未定义的变量多项式的值为 0。</p>
-</li>
-<li>
-<p>设置证明：$(g^{L(s)},g^{R(s)},g^{O(s)},g^{α_lL(s)},g^{α_rR(s)},g^{α_oO(s)},g^{Z(s)},g^{h(s)})$</p>
-</li>
+<li>通过不成比例地赋值变量 \(a\) 来构造左操作数多项式：
+$$L(x) = a \cdot l_a(x) + 1$$</li>
+<li>用常规方式构造右操作数和输出多项式：
+$$R(x) = r_1(x),\ O(x) = b \cdot o_b(x) + c \cdot o_c(x)$$</li>
+<li>计算余数 \(h(x) = \frac{L(x)\cdot R(x) - O(x)}{t(x)}\)</li>
+<li>计算加密值：\(g^{L(s)} = \left( g^{l_a(s)} \right)^a \cdot g^1\)，用常规方式计算 \(g^{R(s)}, g^{O(s)}\)</li>
+<li>计算 \(\alpha\)-移位：\(g^{\alpha L(s)} = \left( g^{\alpha l_a(s)} \right)^a \cdot g^\alpha\)，用常规方式计算 \(g^{\alpha R(s)}, g^{\alpha O(s)}\)</li>
+<li>计算变量一致性多项式：
+$$g^{Z(s)} = \prod_{i \in \{1, a, b, c\}} \left( g^{\beta_l l_i(s) + \beta_r r_i(s) + \beta_o o_i(s)} \right)^i \ \cdot g^{\beta_l} = g^{\beta_l (L(s) + 1) + \beta_r R(s) + \beta_o O(s)}$$
+（其中下标 \(_i\) 代表对应变量的符号，指数 \(^i\) 代表变量的值；此外，未定义的<em>变量多项式</em>等于零。）</li>
+<li>构造证明：\(\left( g^{L(s)}, g^{R(s)}, g^{O(s)}, g^{\alpha_l L(s)}, g^{\alpha_r R(s)}, g^{\alpha_o O(s)}, g^{Z(s)}, g^{h(s)} \right)\)</li>
 </ul>
 </li>
-<li>
-<p>Verification：</p>
+<li>验证
 <ul>
-<li>
-<p>变量多项式约束检查：</p>
-<p>$e(g^L,g^{β_l}) \cdot e(g^R, g^{β_r}) \cdot e(g^O,g^{β_o}) = e(g^Z,g) =&gt; e(g,g)^{(a \cdot l_a +1)β_l +Rβ_r + Oβ_o} = e(g,g)^{β_l(L+1)+ β_rR +β_oO}$</p>
-</li>
-<li>
-<p>有效计算检查：$e(g^L,g^R) = e(g^t,g^h) \cdot e(g^O,g)$</p>
-</li>
+<li>检查变量多项式约束：
+$$e\left( g^{L'}, g \right) = e\left( g^{L}, g^\alpha \right) \ \ \Rightarrow \ \ e\left( g^{\alpha a \cdot l_a(s) + \alpha}, g \right) = e\left( g^{a l_a(s) + 1}, g^\alpha \right)$$
+用常规方式计算 \(g^{R'}, g^{O'}\)</li>
+<li>检查变量值一致性
+$$e\left( g^{L}, g^{\beta_l} \right) \cdot e\left( g^{R}, g^{\beta_r} \right) \cdot e\left( g^{O}, g^{\beta_o} \right) = e\left( g^{Z}, g \right) \Rightarrow$$
+$${e\left( g, g \right)}^{(a\cdot l_a + 1) \beta_l + R\beta_r + O\beta_o} = e\left( g, g \right)^{\beta_l (L + 1) + \beta_r R + \beta_o O}$$</li>
+<li>检查运算的有效性 \(e(g^{L}, g^{R}) = e(g^{t}, g^{h}) \cdot e(g^{O}, g)\)</li>
 </ul>
 </li>
 </ul>
 <h2 id="变量一致性多项式的延展性"><a class="header" href="#变量一致性多项式的延展性">变量一致性多项式的延展性</a></h2>
-<p>而且 g<sup>β<sub>l</sub></sup>，g<sup>β<sub>r</sub></sup>，g<sup>β<sub>o</sub></sup>的存在允许我们在不同操作数的相同变量上使用不同的值。例如，如果我们有一个运算：</p>
-<p>$a \times a = b$</p>
-<p>可以用多项式表示：</p>
-<p>$l_a(x) = x, r_a(x) = x, o_a(x) = 0$</p>
-<p>$l_b(x) = 0, r_b(x) = 0, o_b(x) = x$</p>
-<p>尽管我们期待的输出是 <em>b</em>= <em>a</em>²，但我们可以设置不同的 <em>a</em> 值，例如：设置 <em>a</em>= 2 （左操作数中）, <em>a</em>= 5 （右操作数中）如下：</p>
+<p>此外，\(g^{\beta_l}, g^{\beta_r}, g^{\beta_o}\) 的可用性允许在不同的操作数中使用相同变量的不同值。例如，如果我们有一个运算：</p>
+<p>$$\color{ForestGreen}{a}\quad \times \quad\color{blue}{a}\quad = \quad\color{red}{b}$$</p>
+<p>可以用变量多项式表示：</p>
+<p>$${\color{ForestGreen}{l_a(x) = x}},\quad {\color{blue}{r_a(x) = x}},\quad {\color{red}{o_a(x) = 0}}$$</p>
+<p>$${\color{ForestGreen}{l_b(x) = 0}},\quad {\color{blue}{r_b(x) = 0}},\quad {\color{red}{o_b(x) = x}}$$</p>
+<p>虽然我们预期的输出是 \(b = a^2\)，但我们可以设置不同的 \(a\) 值，例如 \({\color{ForestGreen}{a = 2}}\)，\({\color{blue}{a = 5}}\) 如下：</p>
 <ul>
-<li>
-<p>Proving：</p>
+<li>证明
 <ul>
-<li>
-<p>…用 <em>a=2</em> 设置左操作数多项式：$L(x) = 2l_a(x) + 10L_b(x)$</p>
-</li>
-<li>
-<p>用 <em>a=5</em> 设置右操作数多项式：$R(x) = 2r_a(x) + 3 + 10r_b(x)$</p>
-</li>
-<li>
-<p>用 <em>b=10</em> 设置输出多项式：$O(x) = 2o_a(x) +10o_b(x)$</p>
-</li>
-<li>
-<p>…计算加密值：</p>
-<p>$g^{L(s)} = (g^{l_a(s)})^2 \cdot (g^{l_b(s)})^{10} = g^{2l_a(s)+10l_b(s)}$</p>
-<p>$g^{R(s)} = (g^{r_a(s)})^2 \cdot (g)^3 \cdot (g^{r_b(s)})^{10} = g^{2r_a(s)+3+10r_b(s)}$</p>
-<p>$g^{O(s)} = (g^{O_a(s)})^2 \cdot (g^{O_b(s)})^{10} = g^{2o_a(s)+10o_b(s)}$</p>
-</li>
-<li>
-<p>计算变量一致性多项式：</p>
-<p>$g^{Z(s)} = (g^{β_ll_a(s)+β_rr_a(s)+β_oo_a(s)})^2 \cdot (g^{β_r})^3 \cdot (g^{β_ll_b(s)+ β_rr_b(s)+ β_oo_b(s)})^{10} $</p>
-<p>$= g^{β_l(2l_a(s)+10l_b(s))+ β_r(2r_a(s)+3+10r_b(s)) + β_o(2o_a(s)+3+10o_b(s))}$</p>
-</li>
+<li>\(\ldots\) 用 \(a = 2\) 构造左操作数多项式：\(L(x) = 2 l_a(x) + 10 l_b(x)\)</li>
+<li>用 \(a = 5\) 构造右操作数多项式：\(R(x) = 2 r_a(x) + 3 + 10 r_b(x)\)</li>
+<li>用 \(b = 10\) 构造输出多项式：\(O(x) = 2 o_a(x) + 10 o_b(x)\)</li>
+<li>\(\ldots\) 计算加密值：
+$$g^{L(s)} = \left( g^{l_a(s)} \right)^2 \cdot \left( g^{l_b(s)} \right)^{10} = g^{2l_a(s) + 10 l_b(s)}$$
+$$g^{R(s)} = \left( g^{r_a(s)} \right)^2 \cdot (g)^3 \cdot \left( g^{r_b(s)} \right)^{10} = g^{2r_a(s) + 3 + 10 r_b(s)}$$
+$$g^{O(s)} = \left( g^{o_a(s)} \right)^2 \cdot \left( g^{o_b(s)} \right)^{10} = g^{2 o_a(s) + 10 o_b(s)}$$</li>
+<li>计算变量一致性多项式：
+$$g^{Z(s)} = \left( g^{\beta_l l_a(s) + \beta_r r_a(s) + \beta_o o_a(s)} \right)^{2} \ \cdot \left( g^{\beta_r} \right)^{3} \cdot \left( g^{\beta_l l_b(s) + \beta_r r_b(s) + \beta_o o_b(s)} \right)^{10} = $$
+$$g^{\beta_l \left(2 l_a(s) + 10 l_b(s) \right)\ +\ \beta_r (2 r_a(s) + 3 + 10 r_b(s))\ +\ \beta_o (2 o_a(s) + 10 o_b(s))}$$</li>
 </ul>
 </li>
-<li>
-<p>Verification：</p>
+<li>验证
 <ul>
-<li>
-<p>……变量值的一致性检查，应满足：</p>
-<p>$e(g^L,g^{β_l}) \cdot e(g^R, g^{β_r}) \cdot e(g^O,g^{β_o}) = e(g^Z,g)$</p>
-</li>
+<li>\(\ldots\) 检查变量值一致性，应满足：
+$$e\left( g^{L}, g^{\beta_l} \right) \cdot e\left( g^{R}, g^{\beta_r} \right) \cdot e\left( g^{O}, g^{\beta_o} \right) = e\left( g^{Z}, g \right)$$</li>
 </ul>
 </li>
 </ul>
-<p>注意：多项式 o<sub>a</sub>(x)，l<sub>b</sub>(x)，r<sub>b</sub>(x) 其实可以被忽略掉的，因为这几项对于任何 <em>x</em> 的取值，计算结果都为 0，但是为了保持完整性我们依然要保留这几项。</p>
 <blockquote>
-<p>译者注：这种能力会危害到协议的可靠性。很显然，加密的 <em>β</em><sub>s</sub>不应该对证明者可见。</p>
+<p>注：多项式 \(o_a(x), l_b(x), r_b(x)\) 其实可以忽略不计，因为它们对于任何 \(x\) 的计算结果都为 0，但是为了完整性，我们仍然保留它们。</p>
 </blockquote>
+<p>这种能力破坏了证明的<em>健全性（Soundness）</em>。很明显，不应该将加密的 \(\beta\) 提供给证明者。</p>
 <h2 id="非延展性"><a class="header" href="#非延展性">非延展性</a></h2>
-<p>解决延展性问题的一个方法就是，在 setup 阶段将 <em>verification key</em> 中加密的 β<sub>s</sub> 项与随机秘密值  <em>γ</em>(gamma) 相乘使其与加密值 <em>Z</em>(<em>s</em>) 不兼容：</p>
-<p>$g^{β_l \gamma}, g^{β_r\gamma}, g^{β_o\gamma}$</p>
-<p>相应的这种被修饰过的加密值，就能阻止使得修改加密值 <em>Z</em>(<em>s</em>)  变得不可行了，因为 <em>Z</em>(<em>s</em>) 中没有 <em>γ</em>，即：</p>
-<p>$g^{Z(s)} \cdot g^{v' \cdot β_l r} = g^{β_l(L(s)+v'r)+β_rR(s) + β_oO(s)}$</p>
-<p>因为变值  <em>γ</em>  是随机的证明者并不知道它的值。所以这个修改就需要我们用 <em>Z</em>(<em>s</em>) 乘以  <em>γ</em> 来平衡协议中的变量值一致性校验* 等式：</p>
+<p>解决延展性的一种方法是在设置阶段将 \(g^{\beta_l},\ g^{\beta_r},\ g^{\beta_o}\) 在加密空间中乘以随机秘密值 \(\gamma\)（Gamma）来使验证密钥中的 \(g^{\beta_l},\ g^{\beta_r},\ g^{\beta_o}\) 与 \(g^{Z(s)}\) 不兼容：\(g^{\beta_l \gamma},\ g^{\beta_r \gamma},\ g^{\beta_o \gamma}\)。这种屏蔽（Mask）加密不允许用有意义的方式修改 \(g^{Z(s)}\)，因为 \(Z(s)\) 不是 \(\gamma\) 的倍数，即 \(g^{Z(s)} \cdot g^{v'\cdot\beta_l \gamma} = g^{\beta_l (L(s) + \color{yellow}{v' \gamma} ) + \beta_r R(s) + \beta_o O(s)}\)。因为证明者不知道 \(\gamma\)，所以更改将会是随机的。修改要求我们将 \(Z(s)\) 乘以 \(\gamma\) 来平衡协议中的变量值一致性检查方程：</p>
 <ul>
-<li>
-<p>Setup：</p>
+<li>设置
 <ul>
-<li>…随机数 $β_l$，$β_r$，$β_o$，$γ$</li>
-<li>…设置 <em>verification key</em>：$(…, g^{β_l \gamma},  g^{β_r\gamma},  g^{β_o\gamma}, g^{\gamma})$</li>
+<li>选择随机值 \(\beta_l, \beta_r, \beta_o, \gamma\)</li>
+<li>生成验证密钥：\(\left(\ldots, g^{\beta_l \gamma}, g^{\beta_r \gamma}, g^{\beta_o \gamma}, g^{\gamma} \right)\)</li>
 </ul>
 </li>
-<li>
-<p>Proving：…</p>
-</li>
-<li>
-<p>Verification：</p>
+<li>证明 \(\ldots\)</li>
+<li>验证
 <ul>
-<li>
-<p>…变量值一致性检查应满足：</p>
-<p>$e(g^L,g^{β_l\gamma}) \cdot e(g^R,g^{β_r\gamma}) \cdot e(g^O,g^{β_o\gamma}) = e(g^Z, g^{\gamma})$</p>
-</li>
+<li>\(\ldots\) 检查变量值一致性，应满足：
+$$e\left( g^{L}, g^{\beta_l \gamma} \right) \cdot e\left( g^{R}, g^{\beta_r \gamma} \right) \cdot e\left( g^{O}, g^{\beta_o \gamma} \right) = e\left( g^{Z}, g^\gamma \right)$$</li>
 </ul>
 </li>
 </ul>
-<p>这里很重要的一点是我们排除了变量多项式为 0-阶的例子（即， <em>l</em>₁(<em>x</em>) = 1<em>x</em>⁰），否则就可以从 <em>proving key</em> 的<em>变量一致性多项式</em> 中揭露出加了密的 <em>β</em> 值</p>
-<p>${g^{β_ll_i(s) +β_rr_i(s) + β_oo_i(s)}}_{i \in {1,…,n}}$</p>
-<p>这个例子中当操作数/输出中的任意两项为 0 时，即，对于 <em>l</em>₁(<em>x</em>) = 1, <em>r</em>₁(<em>s</em>) = 0, <em>o</em>₁(<em>s</em>) = 0 的例子，结果就是</p>
-<p>$g^{β_ll_1(s) +β_rr_1(s) +β_oo_1(s)} = g^{β_l}$</p>
-<p>我们同样也可以通过<em>修饰</em> <em>α<sub>s</sub></em> 项来解决<em>变量多项式</em> 的延展性问题。但是这就没有必要了，因为对于<em>变量多项式</em> 的任何修改，都需要被映射到变量的<em>一致性多项式</em> 中，而一致性多项式是无法修改的。</p>
+<p>需要注意的是，我们排除了变量多项式为 0 阶的情况（例如 \(l_1(x) = 1x^0\)），否则在任何两个操作数 / 输出为零的情况下，将允许在证明密钥 \(\left\{ g^{\beta_l l_i(s) + \beta_r r_i(s) + \beta_o o_i(s)} \right\}_{i \in \{1,\ldots,n\}}\) 的变量一致性多项式中暴露 \(\beta\) 的加密，例如，对于 \(l_1(x) = 1,\ r_1(s) = 0,\ o_1(s) = 0\)，这将导致 \(g^{\beta_l l_1(s) + \beta_r r_1(s) + \beta_o o_1(s)} = g^{\beta_l}\)。</p>
+<p>我们也可以用类似的方法<em>屏蔽</em> \(\alpha\) 来解决<em>变量多项式</em>的延展性。但这并不是必需的，因为对<em>变量多项式</em>的任何修改都需要反映在无法修改的<em>变量一致性多项式</em>中。</p>
 
                     </main>
 
