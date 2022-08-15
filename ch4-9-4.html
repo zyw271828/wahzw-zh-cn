@@ -140,54 +140,60 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="变量值一致性检查的优化"><a class="header" href="#变量值一致性检查的优化">变量值一致性检查的优化</a></h1>
-<p>现在<em>变量值一致性</em> 检查是有效的，但是这里在 <em>verification key</em> 中增加了 4 个昂贵的配对操作和 4 个新的项。文献 [<a href="#bd7c">Par+13</a>] 中的 Pinocchio 协议用了一个很聪明的方法优化，通过选择不同的生成元 <em>g</em> ，从而对每个操作数实行“移位”：</p>
+<p><em>变量值一致性</em>检查现在是有效的，但它在验证密钥中增加了 4 个昂贵的配对运算和 4 个新术语。Pinocchio 协议 <a href="./references.html#Par+13">[Par+13]</a> 通过为每个操作数巧妙地选择生成元 \(g\) 来<em>固化（Ingrain）</em>「移位」：</p>
 <ul>
-<li>
-<p>Setup</p>
+<li>设置
 <ul>
-<li>…选择随机值 $β，γ，\rho_l,\rho_r$ 并设置 $\rho_o = \rho_l \cdot \rho_r$</li>
-<li>设置生成元 $g_l=g^{\rho_l}, g_r=g^{\rho_r},g_o=g^{\rho_o}$</li>
-<li>设置 <em>proving key</em>：$({g^{s^k}}<em>{k \in [d]},{g_l^{l_i(s)}, g_r^{r_i(s)}, g_o^{o_i(s)}, g_l^{α_ll_i(s)}, g_r^{α_rr_i(s)}, g_o^{α_oo_i(s)}, g_l^{βl_i(s)}, g_r^{βr_i(s)}, g_o^{βo_i(s)}}</em>{i \in [n]})$</li>
-<li>设置 <em>verification key</em>：$(g_o^{t(s)},g^{α_l},g^{α_r},g^{α_o},g^{βγ}，g^γ)$</li>
+<li>\(\ldots\) 选择随机值 \(\beta, \gamma, \rho_l, \rho_r\) 并设置 \(\rho_o = \rho_l \cdot \rho_r\)</li>
+<li>设置生成元 \(g_l = g^{\rho_l}, g_r = g^{\rho_r}, g_o = g^{\rho_o}\)</li>
+<li>生成证明密钥：
+$$\left(\left\{ g^{s^k} \right\}_{k \in [d]}, \left\{g_l^{l_i(s)}, g_r^{r_i(s)}, g_o^{o_i(s)}, g_l^{\alpha_l l_i(s)}, g_r^{\alpha_r r_i(s)}, g_o^{\alpha_o o_i(s)}, g_l^{\beta l_i(s)} \cdot g_r^{\beta r_i(s)} \cdot g_o^{\beta o_i(s)} \right\}\right)$$</li>
+<li>生成验证密钥：\(\left(g_o^{t(s)}, g^{\alpha_l}, g^{\alpha_r}, g^{\alpha_o}, g^{\beta \gamma}, g^\gamma \right)\)</li>
 </ul>
 </li>
-<li>
-<p>Proving</p>
+<li>证明
 <ul>
-<li>
-<p>…分配变量值</p>
-<p>$g^{Z(s)} = \prod_{i=1}^n{(g_l^{βl_i(s)} \cdot g_r^{βr_i(s)} \cdot g_o^{βo_i(s)})^{v_i}}$</p>
-</li>
+<li>\(\ldots\) 赋变量值
+$$g^{Z(s)} = \prod_{i=1}^n \left( g_l^{\beta l_i(s)} \cdot g_r^{\beta r_i(s)} \cdot g_o^{\beta o_i(s)} \right)^{v_i}$$</li>
 </ul>
 </li>
-<li>
-<p>Verification</p>
+<li>验证
 <ul>
-<li>
-<p>…变量多项式约束检查：</p>
-<p>$e(g_l^{L'},g) = e(g_l^L,g^{α_l})$，对 $g_r^{R},g_o^{O}$ 做同样的检查</p>
-</li>
-<li>
-<p>变量值约束检查：</p>
-<p>$e(g_l^L \cdot g_r^R \cdot g_o^O , g^{βγ}) = e(g^Z,g^γ)$</p>
-</li>
-<li>
-<p>有效运算检查：</p>
-<p>$e(g_l^L , g_r^R) = e(g_o^t,g^h)e(g_o^O,g) =&gt; e(g,g)^{\rho_l\rho_rLR} = e(g,g)^{\rho_l\rho_rth+\rho_l\rho_rO}$</p>
-</li>
+<li>\(\ldots\) 检查变量多项式约束：
+$$e\left( g_l^{L'}, g \right) = e\left( g_l^{L}, g^{\alpha_l} \right)，g_r^{R}, g_o^{O} \ 同理$$</li>
+<li>检查变量值一致性：
+$$e\left( g_l^{L} \cdot g_r^{R} \cdot g_o^{O}, g^{\beta \gamma} \right) = e\left( g^{Z}, g^\gamma \right)$$</li>
+<li>检查运算的有效性：
+$$e\left( g_l^{L} \cdot g_r^{R} \right) = e\left( g_o^t, g^h \right) e\left( g_o^O, g \right) \Rightarrow$$
+$${e\left( g, g \right)}^{\rho_l \rho_r L R} = {e\left( g, g \right)}^{\rho_l \rho_r th + \rho_l \rho_r O}$$</li>
 </ul>
 </li>
 </ul>
-<p>生成元的这种随机化进一步增加了安全性，使得如 <strong>备注 4.1</strong>中描述的<em>可变多项式</em> 延展性无效。因为对于故意的修改，它必须要么是<em>ρ<sub>l</sub></em>, <em>ρ<sub>r</sub></em> 或者<em>ρ<sub>o</sub></em> 原始值的倍数要么就是不可直接用的加密值的倍数（假定,如上文所述我们不去处理可能曝光加密后的值的 0 阶可变多项式）。</p>
-<p>这个优化使得 <em>verification key</em>  减少了两个项，并且去除了 verification 步骤中的两个配对运算。</p>
-<p><em>注意：在 Jens Groth 2016年的 paper [<a href="#2923">Gro16</a>] 中有更进一步的改进。</em></p>
+<p>生成元的这种随机化进一步增加了安全性，使<em>变量多项式</em>的延展性（在备注 4.1 中描述）无效，因为对于故意的更改，它必须是 \(\rho_l\)、\(\rho_r\) 或 \(\rho_o\) 的倍数，原始或加密的版本是不可用的（假设，如上文所述我们不处理可能暴露加密版本的 0 阶变量多项式）。</p>
+<p>这个优化使验证密钥小了两个元素，并消除了验证步骤中的两个配对运算。</p>
 <blockquote>
-<p>译者注：至此，通用 zk-SNARK 协议的已经几乎构造完成了，本文可以归纳为以下几点：</p>
-<p>协议中是如何增加可变系数的和如何做加减乘除运算的</p>
-<p>协议如何保证操作数和输出的不可替代性</p>
-<p>协议如何保证跨操作数的可变一致性</p>
-<p>协议如何处理非延展性变量和变量一致性</p>
-<p>协议中变量值一致性检查优化</p>
+<p>注：Jens Groth 的 2016 年论文 <a href="./references.html#Gro16">[Gro16]</a> 中有进一步的协议改进。</p>
+</blockquote>
+<p><a href="ignored"></a></p>
+<blockquote>
+<p>译者注：至此，通用 zk-SNARK 协议几乎已经构造完成了，可以归纳为以下几点：</p>
+<ul>
+<li>
+<p>如何增加变量系数、如何做加减乘除运算</p>
+</li>
+<li>
+<p>如何保证操作数和输出的不可互换性</p>
+</li>
+<li>
+<p>如何保证跨操作数的变量一致性</p>
+</li>
+<li>
+<p>如何处理变量和变量一致性多项式的非延展性</p>
+</li>
+<li>
+<p>变量值一致性检查的优化</p>
+</li>
+</ul>
 </blockquote>
 
                     </main>
