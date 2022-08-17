@@ -206,7 +206,7 @@ $$e\left( g^{L}, g^{\beta_l} \right) \cdot e\left( g^{R}, g^{\beta_r} \right) \c
 <blockquote>
 <p>注：多项式 \(o_a(x), l_b(x), r_b(x)\) 其实可以忽略不计，因为它们对于任何 \(x\) 的计算结果都为 0，但是为了完整性，我们仍然保留它们。</p>
 </blockquote>
-<p>这种能力破坏了证明的<em>健全性（Soundness）</em>。很明显，不应该将加密的 \(\beta\) 提供给证明者。</p>
+<p>这种能力破坏了证明的<em>可靠性（Soundness）</em>。很明显，不应该将加密的 \(\beta\) 提供给证明者。</p>
 <h2 id="非延展性"><a class="header" href="#非延展性">非延展性</a></h2>
 <p>解决延展性的一种方法是在设置阶段将 \(g^{\beta_l},\ g^{\beta_r},\ g^{\beta_o}\) 在加密空间中乘以随机秘密值 \(\gamma\)（Gamma）来使验证密钥中的 \(g^{\beta_l},\ g^{\beta_r},\ g^{\beta_o}\) 与 \(g^{Z(s)}\) 不兼容：\(g^{\beta_l \gamma},\ g^{\beta_r \gamma},\ g^{\beta_o \gamma}\)。这种屏蔽（Mask）加密不允许用有意义的方式修改 \(g^{Z(s)}\)，因为 \(Z(s)\) 不是 \(\gamma\) 的倍数，即 \(g^{Z(s)} \cdot g^{v'\cdot\beta_l \gamma} = g^{\beta_l (L(s) + \color{yellow}{v' \gamma} ) + \beta_r R(s) + \beta_o O(s)}\)。因为证明者不知道 \(\gamma\)，所以更改将会是随机的。修改要求我们将 \(Z(s)\) 乘以 \(\gamma\) 来平衡协议中的变量值一致性检查方程：</p>
 <ul>

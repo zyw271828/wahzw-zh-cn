@@ -1346,7 +1346,7 @@ $$e\left( g^{L}, g^{\beta_l} \right) \cdot e\left( g^{R}, g^{\beta_r} \right) \c
 <blockquote>
 <p>注：多项式 \(o_a(x), l_b(x), r_b(x)\) 其实可以忽略不计，因为它们对于任何 \(x\) 的计算结果都为 0，但是为了完整性，我们仍然保留它们。</p>
 </blockquote>
-<p>这种能力破坏了证明的<em>健全性（Soundness）</em>。很明显，不应该将加密的 \(\beta\) 提供给证明者。</p>
+<p>这种能力破坏了证明的<em>可靠性（Soundness）</em>。很明显，不应该将加密的 \(\beta\) 提供给证明者。</p>
 <h2 id="非延展性"><a class="header" href="#非延展性">非延展性</a></h2>
 <p>解决延展性的一种方法是在设置阶段将 \(g^{\beta_l},\ g^{\beta_r},\ g^{\beta_o}\) 在加密空间中乘以随机秘密值 \(\gamma\)（Gamma）来使验证密钥中的 \(g^{\beta_l},\ g^{\beta_r},\ g^{\beta_o}\) 与 \(g^{Z(s)}\) 不兼容：\(g^{\beta_l \gamma},\ g^{\beta_r \gamma},\ g^{\beta_o \gamma}\)。这种屏蔽（Mask）加密不允许用有意义的方式修改 \(g^{Z(s)}\)，因为 \(Z(s)\) 不是 \(\gamma\) 的倍数，即 \(g^{Z(s)} \cdot g^{v'\cdot\beta_l \gamma} = g^{\beta_l (L(s) + \color{yellow}{v' \gamma} ) + \beta_r R(s) + \beta_o O(s)}\)。因为证明者不知道 \(\gamma\)，所以更改将会是随机的。修改要求我们将 \(Z(s)\) 乘以 \(\gamma\) 来平衡协议中的变量值一致性检查方程：</p>
 <ul>
@@ -1610,26 +1610,20 @@ $$e\left( g_l^{L_p} g_l^{L_v(s)}, g_r^{R_p} g_r^{R_v(s)} \right) = e\left( g_o^{
 </li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="结论-1"><a class="header" href="#结论-1">结论</a></h1>
-<p>我们最终完成了一个允许证明计算的有效协议：</p>
+<p>我们最终得到了一个允许证明计算的有效协议：</p>
 <ul>
-<li>简明 (Succinctly) —— 独立于计算量，证明是恒定的，小尺寸的</li>
-<li>非交互性 (Non-interactive) —— 证明只要一经计算就可以在不直接与证明者交互的前提下使任意数量的验证者确信</li>
-<li>可论证的知识 (with Argument of Knowledge) —— 对于陈述是正确的这点有不可忽略的概率，即无法构造假证据；并且证明者知道正确陈述的对应值（即：证据），例如，如果陈述是 “B 是 sha256(a) 的结果” 那么就说明证明者知道一些值 a 能够使得 B = sha256(a) 成立，因为 B 只能够通过 a 的知识计算出来，换句话说就是无法通过 B 来反算出 a（假定 a 的熵足够）。</li>
-<li>陈述有不可忽略的概率是正确的 (译者注：这里指Soundness可靠性)，即，构造假证据是不可行的</li>
-<li><em>零知识</em>( zero-knowledge)  —— 很“难”从证明中提取任何知识，即，它与随机数无法区分。</li>
+<li>简洁（Succinctly）——与计算量无关，证明的大小是恒定且小的</li>
+<li>非交互式（Non-Interactively）——只要计算出证明，就可以用来说服任意数量的验证者，他们无需与证明者直接交互</li>
+<li>有论证的知识（With Argumented Knowledge）——陈述正确的概率不可忽略，即假证明是不可行的；此外，证明者<em>知道</em>真实陈述的相应值（即证据），例如，如果陈述是「\(B\) 是 \(\mathrm{sha256}(a)\) 的结果」，那么就说明证明者知道某个 \(a\) 使得 \(B = \mathrm{sha256}(a)\) 成立，这一点很有用，因为 \(B\) 只能根据 \(a\) 的知识计算出来，并且仅从 \(B\) 计算出 \(a\) 是不可行的（假设 \(a\) 有足够的熵）</li>
+<li>在<em>零知识</em>中（In <em>Zero-Knowledge</em>）——从证明中提取任何知识都是不可行的，即它与随机无法区分</li>
 </ul>
 <blockquote>
-<p>译者注：所谓Argument——论证，区别于 Proof —— 证明。Pinocchio 协议是 Argument 而非 Proof。这是因为 Pinocchio的可靠性是 Computational Soundness，Statistical ZK，这一类的证明系统被称为 Argument。所谓的 Computational Soundness 暗含了这样的事实：如果证明者计算能力足够强大的话，可以破坏可靠性。</p>
+<p>译者注：论证（Argument）与证明（Proof）不同，Pinocchio 协议是论证而非证明。这是因为 Pinocchio 的可靠性是计算可靠性（Computational Soundness）、统计零知识（Statistical Zero-Knowledge），这一类的证明系统被称为论证。计算可靠性暗含了一种事实：如果证明者的计算能力足够强，可以破坏可靠性。</p>
 </blockquote>
-<p>基于多项式的特殊性质，模运算，同态加密，椭圆曲线密码学，加密配对和发明者的聪明才智才使得这个协议得以实现。</p>
-<p>这个协议证明了一个特殊有限执行机制的计算，即在一次运算中可以将几乎任意数量的变量加在一起但是只能执行一次乘法，因而就有机会优化程序以有效地利用这种特性的同时也使用这个结构最大限度地减少计算次数。</p>
-<p>为了验证一个证明， <strong>验证者并不需要知道所有的秘密数据，这一点很关键</strong>，这就使得任何人都可以以非交互式方式发布和使用正确构造的 <em>verification key</em>。这一点与只能让一个参与者确信证明的&quot;指定验证者&quot;方案相反，因而它的信任是不可转移的。在 <em>zkSNARK</em> 中，如果不可信或由单方生成密钥对，则可以实现这个属性。</p>
-<p>零知识证明构造领域正在不断发展，包括引入了优化（[Ben+13, Gro16, GM17]），改进例如可更新的 <em>proving key</em> 和 <em>verification key</em>（[Gro+18]），以及新的构造方法（Bulletproofs [Bün+17], ZK-STARK [Ben+18], Sonic [Mal+19]）。</p>
-<blockquote>
-<p>译者注：至此,本系列文章的介绍已经全部结束，大家是不是已经对zkSNARK协议（Pinocchio 协议）了如指掌了？其实任何复杂的协议掌握了核心思想，都可以抽丝剥茧将其变得通俗易懂。</p>
-<p>零知识证明的学习还有很长的路要走，本文只是一个入门的资料，正如文章中所述，零知识证明构造领域正在不断发展，不断的有新的研究突破呈现在我们面前。这是一个非常有趣的领域，后续也非常欢迎小伙伴跟我们一起继续学习和研究零知识证明技术。</p>
-<p>再次感谢 Maksym Petkus 大神的分享和授权。文章翻译存在不足之处，欢迎纠正，补充，指导。</p>
-</blockquote>
+<p>由于多项式的独特性质、模算术、同态加密、椭圆曲线密码学、密码学配对和发明者的独创性，这个协议才得以实现。</p>
+<p>该协议证明了唯一的有限执行机计算的正确性，它在一次运算中可以将几乎任意数量的变量相加，但只能执行一次乘法。因此，有机会优化程序以有效利用这种特殊性，以及使用最小化运算数量的结构。</p>
+<p>重要的是，验证者不必知道任何秘密数据来验证证明，任何人都可以用非交互的方式发布和使用正确构造的验证密钥。这与证明只能说服一方的「指定验证者（Designated Verifier）」方案相反，后者是不可转让的。在 <em>zk-SNARK</em> 中，我们可以在不可信或单方生成密钥对的情况下实现可转让属性。</p>
+<p>零知识证明结构领域正在不断发展，包括优化（[<a href="./references.html#Ben+13">Ben+13</a>; <a href="./references.html#Gro16">Gro16</a>; <a href="./references.html#GM17">GM17</a>]）、可更新的证明和验证密钥等改进（[<a href="./references.html#Gro+18">Gro+18</a>]），以及新的结构（Bulletproofs [<a href="./references.html#B%C3%BCn+17">Bün+17</a>]，ZK-STARK [<a href="./references.html#Ben+18">Ben+18</a>]，Sonic [<a href="./references.html#Mal+19">Mal+19</a>]）。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="参考文献"><a class="header" href="#参考文献">参考文献</a></h1>
 <p><a name="Bit+11"></a>[Bit+11] — Nir Bitansky, Ran Canetti, Alessandro Chiesa, and Eran Tromer. <em>From Extractable Collision Resistance to Succinct Non-Interactive Arguments of Knowledge, and Back Again</em>. Cryptology ePrint Archive, Report 2011/443. <a href="https://eprint.iacr.org/2011/443">https://eprint.iacr.org/2011/443</a>. 2011</p>
 <p><a name="Par+13"></a>[Par+13] — Bryan Parno, Craig Gentry, Jon Howell, and Mariana Raykova. <em>Pinocchio: Nearly Practical Verifiable Computation</em>. Cryptology ePrint Archive, Report 2013/279. <a href="https://eprint.iacr.org/2013/279">https://eprint.iacr.org/2013/279</a>. 2013</p>
