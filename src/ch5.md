@@ -16,3 +16,7 @@
 重要的是，验证者不必知道任何秘密数据来验证证明，任何人都可以用非交互的方式发布和使用正确构造的验证密钥。这与证明只能说服一方的「指定验证者（Designated Verifier）」方案相反，后者是不可转让的。在 *zk-SNARK* 中，我们可以在不可信或单方生成密钥对的情况下实现可转让属性。
 
 零知识证明结构领域正在不断发展，包括优化（[[Ben+13](./references.md#Ben+13); [Gro16](./references.md#Gro16); [GM17](./references.md#GM17)]）、可更新的证明和验证密钥等改进（[[Gro+18](./references.md#Gro+18)]），以及新的结构（Bulletproofs [[Bün+17](./references.md#Bün+17)]，ZK-STARK [[Ben+18](./references.md#Ben+18)]，Sonic [[Mal+19](./references.md#Mal+19)]）。
+
+## 致谢
+
+我们感谢 Mary Maller 和 Andrew Miller 对这篇文章提出的宝贵意见。
