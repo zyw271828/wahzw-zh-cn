@@ -209,7 +209,7 @@
 <p>这里我们先不去管零知识、非交互性其形式和适用性这些概念，就从尝试证明一些简单的东西开始。</p>
 <p>想象一下我们有一个长度为 10 的位数组，现在要向验证者（例如程序）证明这样一个陈述：所有的位都被设置成了 1（即我们<em>知道</em>一个每个元素都等于 1 的数组）。</p>
 <p>$$b = [\ \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}\ ]$$</p>
-<p>验证者一次只能检查（也就是读取）一位。为了验证这个陈述，我们以某种任意的顺序读取元素并检查其是否确实等于 1。如果第一次抽样检查的结果是 1，就设置陈述的可信度为 \(\frac{1}{10} = 10%\)，否则，如果等于 0，就说明陈述是错误的。验证者继续进行下一轮验证，直到获得足够的可信度为止。假如在一些场景下要信任证明者需要至少 50% 的可信度，那就意味着必须执行 5 次校验。但假如在其它一些场景下需要 95% 的可信度，就需要检查所有的元素。很明显这个证明协议的缺点是必须要根据元素的数量进行检查，如果我们处理数百万个元素的数组，这么做是不现实的。</p>
+<p>验证者一次只能检查（也就是读取）一位。为了验证这个陈述，我们以某种任意的顺序读取元素并检查其是否确实等于 1。如果第一次抽样检查的结果是 1，就设置陈述的可信度为 \(\displaystyle \frac{1}{10} = 10%\)，否则，如果等于 0，就说明陈述是错误的。验证者继续进行下一轮验证，直到获得足够的可信度为止。假如在一些场景下要信任证明者需要至少 50% 的可信度，那就意味着必须执行 5 次校验。但假如在其它一些场景下需要 95% 的可信度，就需要检查所有的元素。很明显这个证明协议的缺点是必须要根据元素的数量进行检查，如果我们处理数百万个元素的数组，这么做是不现实的。</p>
 <p>现在我们来看一下由数学方程式表示的多项式，它可以被画成坐标系上的一条曲线：</p>
 <p><img src="img/1_-icO0q-Mu7AcFFMmCoOvfQ.png" alt="img" /></p>
 <p>上面的曲线对应多项式：\(f(x) = x^3 -6x^2 + 11x - 6\)。多项式的阶数取决于 \(x\) 的最大指数，当前多项式的阶数是 3。</p>
@@ -234,7 +234,7 @@
 <li>证明者代入 \(x\) 到多项式计算并将结果提供给验证者</li>
 <li>验证者检查本地的计算结果和证明者的计算结果是否相等，如果相等就说明证明者的陈述具有较高的可信度</li>
 </ul>
-<p>例如，我们把 \(x\) 的取值范围定在 1 到 \(10^{77}\)，那么计算结果不同的点的数量就有 \(10^{77} - d\) 个。因而 \(x\) 偶然「撞到」这 \(d\) 个结果相同的点中任意一个的概率就等于：\(\frac{d}{10^{77}}\)（几乎可以认为是不可能）。</p>
+<p>例如，我们把 \(x\) 的取值范围定在 1 到 \(10^{77}\)，那么计算结果不同的点的数量就有 \(10^{77} - d\) 个。因而 \(x\) 偶然「撞到」这 \(d\) 个结果相同的点中任意一个的概率就等于：\(\displaystyle \frac{d}{10^{77}}\)（几乎可以认为是不可能）。</p>
 <blockquote>
 <p>注：与低效的位检查协议相比，新的协议只需要一轮验证就可以让声明具有非常高的可信度（如果假设 \(d\) 远小于其取值范围的上限，就几乎是 \(100%\) 了）</p>
 </blockquote>
@@ -1478,7 +1478,7 @@ $$\left( \ldots, \left\{ g_l^{l_i(s)}, g_r^{r_i(s)}, g_o^{o_i(s)} \right\}_{i \i
 </li>
 <li>证明
 <ul>
-<li>\(\ldots\) 根据验证者的多项式计算 \(h(x)\)：\(h(x) = \frac{L(x)\cdot R(x) - O(x)}{t(x)}\)，其中 \(L(x) = L_v(x) + L_p(x)\)，\(R(x), O(x)\) 同理</li>
+<li>\(\ldots\) 根据验证者的多项式计算 \(h(x)\)：\(\displaystyle h(x) = \frac{L(x)\cdot R(x) - O(x)}{t(x)}\)，其中 \(L(x) = L_v(x) + L_p(x)\)，\(R(x), O(x)\) 同理</li>
 <li>提供证明：
 $$\left( g_l^{L_p(s)}, g_r^{R_p(s)}, g_o^{O_p(s)}, g_l^{\alpha_l L_p(s)}, g_r^{\alpha_r R_p(s)}, g_o^{\alpha_o O_p(s)}, g^{Z(s)}, g^{h(s)} \right)$$</li>
 </ul>
@@ -1563,87 +1563,49 @@ $$e\left( g_l^{L_v(s)} g_l^{L_p}, g_r^{R_v(s)} g_r^{R_p} \right) = e\left( g_o^{
 <p>Pinocchio 协议是针对 [GGPR] 论文的改进，在 3.1 节中也提到了实现零知识只需要沿用 [GGPR] 论文的方法即可，并不是这篇论文的贡献。另外，Pinocchio 协议的论文侧重工程实践，在 2013 年时，零知识证明还没有得到应用，真正的应用还是从匿名币 Zcash 开始的。</p>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="zk-snark-协议"><a class="header" href="#zk-snark-协议">zk-SNARK 协议</a></h1>
-<p>在这一步步的改进之后，我们得到了最终版本的zkSNARK，又名 Pinocchio [Par + 13]，协议  （<em>零知识</em> 部分是可选的并用<em>不同的颜色</em> 标注出来了），就是：</p>
+<p>在所有的逐步改进之后，最终的零知识简洁的非交互式知识论证是这样的（<em>零知识</em>组件是可选的，并以\(\color{Magenta}{不同的颜色}\)突出显示）：</p>
 <ul>
-<li>
-<p>Setup</p>
+<li>设置
 <ul>
-<li>
-<p>选择生成元 <em>g</em> 和加密配对 <em>e</em></p>
-</li>
-<li>
-<p>将变量总数为 <em>n</em> 其中输入/输出变量数位 <em>m</em> 的函数 <em>f(u) = y</em>，转换为阶数为 <em>d</em> 大小为 <em>n+1</em> 的多项式形式（QAP）（${l_i(x),r_i(x),o_i(x)}_{i \in {0,……,n}},t(x)$）</p>
-</li>
-<li>
-<p>选择随机数 $s, \rho_l, \rho_r, \alpha_l, \alpha_r, \alpha_o, \beta, \gamma$</p>
-</li>
-<li>
-<p>设置 $\rho_o = \rho_l \cdot \rho_r$ 和操作数生成元 $g_l=g^{\rho_l}, g_r = g^{\rho_r}, g_o = g^{\rho_o}$</p>
-</li>
-<li>
-<p>设置 <em>proving key</em>：</p>
-<p>$({g^{s^k}}<em>{k \in [d]}, {g_l^{l_i(s)},g_r^{r_i(s)},g_o^{o_i(s)}}</em>{i \in {0,…,n}}), {g_l^{\alpha_ll_i(s)},g_r^{\alpha_rr_i(s)},$</p>
-<p>$g_o^{\alpha_oo_i(s)},g_l^{\beta l_i(s)},g_r^{\beta r_i(s)},g_o^{\beta o_i(s)}}_{i \in {m+1,…,n}},$</p>
-<p>$\textcolor{magenta}{g_l^{t(s)}, g_r^{t(s)}, g_o^{t(s)}, g_l^{\alpha_l t(s)}, g_r^{\alpha_r t(s)}, g_o^{\alpha_o t(s)}, g_l^{\beta t(s)},g_r^{\beta t(s)}, g_o^{\beta t(s)}} )$</p>
-</li>
-<li>
-<p>设置 <em>verfication key</em>：</p>
-<p>$(g^1,g_o^{t(s)},{g_l^{l_i(s)},g_r^{r_i(s)},g_o^{o_i(s)}}_{i \in {0,…,m}},g^{α_l},g^{\alpha_r},g^{\alpha_o},g^{\gamma},g^{\beta \gamma})$</p>
-</li>
+<li>选择一个生成元 \(g\) 和一个密码学配对 \(e\)</li>
+<li>对于变量总数为 \(n\) 的函数 \(f(u) = y\)，其中 \(m\) 是输入 / 输出变量，转换为阶数为 \(d\)，大小为 \(n + 1\) 的多项式形式（一个二次算术程序）\(\left( \{l_i(x), r_i(x), o_i(x)\}_{i \in \{0, \ldots, n\}}, t(x) \right)\)</li>
+<li>选择随机值 \(s, \rho_l, \rho_r, \alpha_l, \alpha_r, \alpha_o, \beta, \gamma\)</li>
+<li>设置 \(\rho_o = \rho_l \cdot \rho_r\) 和操作数生成元 \(g_l = g^{\rho_l}, g_r = g^{\rho_r}, g_o = g^{\rho_o}\)</li>
+<li>生成证明密钥：
+$$\bigg( \left\{ g^{s^k} \right\}_{k \in [d]}, \left\{ g_l^{l_i(s)}, g_r^{r_i(s)}, g_o^{o_i(s)} \right\}_{i \in \{0, \ldots, n\}},$$
+$$\left\{ g_l^{\alpha_l l_i(s)}, g_r^{\alpha_r r_i(s)}, g_o^{\alpha_o o_i(s)}, g_l^{\beta l_i(s)} g_r^{\beta r_i(s)} g_o^{\beta o_i(s)} \right\}_{i \in \{m + 1, \ldots, n\}},$$
+$$\color{Magenta}{ g_l^{t(s)}, g_r^{t(s)}, g_o^{t(s)}, g_l^{\alpha_l t(s)}, g_r^{\alpha_r t(s)}, g_o^{\alpha_o t(s)}, g_l^{\beta t(s)}, g_r^{\beta t(s)}, g_o^{\beta t(s)} } \bigg)$$</li>
+<li>生成验证密钥：
+$$\left( g^1, g_o^{t(s)}, \left\{ g_l^{l_i(s)}, g_r^{r_i(s)}, g_o^{o_i(s)} \right\}_{i \in \{0, \ldots, m\}}, g^{\alpha_l}, g^{\alpha_r}, g^{\alpha_o}, g^{\gamma}, g^{\beta \gamma} \right)$$</li>
 </ul>
 </li>
-<li>
-<p>Proving</p>
+<li>证明
 <ul>
-<li>
-<p>代入输入值 <em>u</em>，执行 <em>f(u)</em> 计算获取所有的中间变量值 ${v_i}_{i \in {m+1,……，n}}$</p>
-</li>
-<li>
-<p>把所有未加密的变量多项式赋值给$ L(x) = l_0(x) + \sum_{i=1}^n {v_i \cdot l_i(x)}$，并对 $R(x)$ 和 $O(x)$ 做同样的计算</p>
-</li>
-<li>
-<p>$\textcolor{magenta}{选择随机数 \delta_l ,\delta_r 和 \delta_o}$</p>
-</li>
-<li>
-<p>计算 $h(x) = \frac{L(x)R(x)-O(x)}{t(x)} \textcolor{magenta}{+ \delta_r L(x) + \delta_lR(x) + \delta_l \delta_r t(x) - \delta_o}$</p>
-</li>
-<li>
-<p>将证明者的变量值赋值给加密的可变多项式 $\textcolor{magenta}{并进行零知识的 \delta-转换}\quad  g_l^{L_p(s)}= \textcolor{magenta}{(g_l^{t(s)})^{\delta_l}} \cdot \prod_{i=m+1}^n{(g_l^{l_i(s)})^{v_i}}$，再用同样的方式计算 $g_r^{R_p(s)}$ 和 $g_o^{O_p(s)}$。</p>
-</li>
-<li>
-<p>为其 *α-*变换赋值 $g_l^{L_p'(s)}= \textcolor{magenta}{(g_l^{\alpha <em>l t(s)})^{\delta_l}} \cdot \prod</em>{i=m+1}^n{(g_l^{\alpha _l l_i(s)})^{v_i}}$，再用同样的方式计算 $g_r^{R_p'(s)}$ 和 $g_o^{O_p'(s)}$。</p>
-</li>
-<li>
-<p>为变量值一致性多项式赋值</p>
-<p>$g^{Z(s) = \textcolor{magenta}{(g_l^{\beta t(s)})^{\delta_l}(g_r^{\beta t(s)})^{\delta_r}(g_o^{\beta t(s)})^{\delta_o}}} \cdot \prod_{i=m+1}^n{(g_l^{\beta l_i(s)}g_r^{\beta r_i(s)}g_o^{\beta o_i(s)})^{v_i}}$</p>
-</li>
-<li>
-<p>计算证明 $(g_l^{L_p(s)}, g_r^{R_p(s)}, g_o^{O_p(s)}, g^{h(s)}, g_l^{L_p'(s)}, g_r^{R_p'(s)}, g_o^{O_p'(s)}, g^Z)$</p>
-</li>
+<li>对于输入 \(u\)，执行 \(f(u)\) 的计算，获取所有中间变量的值 \(\{v_i\}_{i \in \{m+1, \dots, n\}}\)</li>
+<li>将所有值赋值给未加密的变量多项式 \(L(x) = l_0(x) + \sum_{i = 1}^n v_i \cdot l_i(x)\)，\(R(x), O(x)\) 同理</li>
+<li>\(\color{Magenta}{选择随机值 \ \delta_l, \delta_r \ 和 \ \delta_o}\)</li>
+<li>找到 \(\displaystyle h(x) = \frac{L(x) R(x) - O(x)}{t(x)} \color{Magenta}{\ +\ \delta_r L(x) + \delta_l R(x) + \delta_l \delta_r t(x) - \delta_o }\)</li>
+<li>将证明者的变量值赋值给加密的变量多项式 \(\color{Magenta}{并应用零知识 \ \delta-移位}\)
+$$\displaystyle g_l^{L_p(s)} = \color{Magenta}{ \left(g_l^{t(s)}\right)^{\delta_l} } \cdot \prod_{i = m+1}^n \left( g_l^{l_i(s)} \right)^{v_i}，g_r^{R_p(s)}, g_o^{O_p(s)} \ 同理$$</li>
+<li>为它的 \(\alpha\)-移位赋值
+$$\displaystyle g_l^{L'_p(s)} = \color{Magenta}{ \left(g_l^{\alpha_l t(s)}\right)^{\delta_l} } \cdot \prod_{i = m+1}^n \left( g_l^{\alpha_l l_i(s)} \right)^{v_i}，g_r^{R'_p(s)}, g_o^{O'_p(s)} \ 同理$$</li>
+<li>为变量值一致性多项式赋值
+$$g^{Z(s)} = \color{Magenta}{ \left(g_l^{\beta t(s)}\right)^{\delta_l} \left(g_r^{\beta t(s)}\right)^{\delta_r} \left(g_o^{\beta t(s)}\right)^{\delta_o} } \cdot \prod_{i=m+1}^n \left( g_l^{\beta l_i(s)} g_r^{\beta r_i(s)} g_o^{\beta o_i(s)} \right)^{v_i}$$</li>
+<li>计算证明
+$$\left( g_l^{L_p(s)}, g_r^{R_p(s)}, g_o^{O_p(s)}, g^{h(s)}, g_l^{L'_p(s)}, g_r^{R'_p(s)}, g_o^{O'_p(s)}, g^{Z(s)} \right)$$</li>
 </ul>
 </li>
-<li>
-<p>Verification</p>
+<li>验证
 <ul>
-<li>
-<p>解析提供的证明为 $(g_l^{L_p},g_r^{R_p},g_o^{O_p},g^h,g_l^{L_p'},g_r^{R_p'},g_o^{O_p'},g^Z)$</p>
-</li>
-<li>
-<p>将输入/输出值赋值给验证者的加密多项式并加 1：</p>
-<p>$g_l^{L_v(s)} = g_l^{l_o(s)} \cdot \prod_{i=1}^m{(g_l^{l_i(s)})^{v_i}}$，并对 $g_r^{R_v(s)}$ 和 $g_o^{O_v(s)}$ 做同样的计算</p>
-</li>
-<li>
-<p>可变多项式约束检查：</p>
-<p>$e(g_l^{L_p},g^{\alpha_l}) = e(g_l^{L_p'},g)$，并对 $g_r^{R_p}$ 和 $g_o^{O_p}$ 做同样的检查</p>
-</li>
-<li>
-<p>变量值一致性检查：</p>
-<p>$e(g_l^{L_p},g_r^{R_p},g_o^{O_p},g^{\beta \gamma}) = e(g^Z, g^{\gamma})$</p>
-</li>
-<li>
-<p>有效的计算检查：</p>
-<p>$e(g_l^{L_p}g_l^{L_v(s)},g_r^{R_p}g_r^{R_v(s)}) = e(g_o^{t(s)},g^h) \cdot e(g_o^{O_p}g_o^{O_v(s)},g)$</p>
-</li>
+<li>将证明解析为 \(\left( g_l^{L_p}, g_r^{R_p}, g_o^{O_p}, g^{h}, g_l^{L'_p}, g_r^{R'_p}, g_o^{O'_p}, g^{Z} \right)\)</li>
+<li>将输入 / 输出值赋值给验证者的加密多项式并加到 \(1\)：
+$$\displaystyle g_l^{L_v(s)} = g_l^{l_0(s)} \cdot \prod_{i=1}^m \left( g_l^{l_i(s)} \right)^{v_i}，g_r^{R_v(s)} \ 和 \ g_o^{O_v(s)} \ 同理$$</li>
+<li>检查变量多项式限制：
+$$e\left( g_l^{L_p}, g^{\alpha_l} \right) = e\left( g_l^{L'_p}, g \right)，g_r^{R_p} \ 和 \ g_o^{O_p} \ 同理$$</li>
+<li>检查变量值一致性：
+$$e\left( g_l^{L_p} g_r^{R_p} g_o^{O_p}, g^{\beta \gamma} \right) = e\left( g^{Z}, g^{\gamma} \right)$$</li>
+<li>检查运算的有效性：
+$$e\left( g_l^{L_p} g_l^{L_v(s)}, g_r^{R_p} g_r^{R_v(s)} \right) = e\left( g_o^{t(s)}, g^{h} \right) \cdot e\left( g_o^{O_p} g_o^{O_v(s)}, g \right)$$</li>
 </ul>
 </li>
 </ul>
