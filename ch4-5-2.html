@@ -141,17 +141,17 @@
                     <main>
                         <h1 id="多运算多项式"><a class="header" href="#多运算多项式">多运算多项式</a></h1>
 <p>现在我们有了代表三个运算的操作数多项式，让我们一步一步地看看如何验证每个运算的正确性。回想一下，验证者正在寻找等式 \(l(x) \times r(x) - o(x) = t(x)h(x)\)。在这种情况下，由于运算在点 \(x \in \{1,2,3\}\) 处表示，因此目标多项式必须在这些 \(x\) 处计算为 \(0\)，换句话说，\(t(x)\) 的根必须是 1、2 和 3，其基本形式为：</p>
-<p><img src="img/3/1*h8i-j98fBxmFSraGWadrJA.png" alt="img" /></p>
+<p><img src="img/4-13.png" alt="img" /></p>
 <p>首先，将 \(l(x)\) 和 \(r(x)\) 相乘，得到：</p>
-<p><img src="img/3/1*bsT-MgxaGDGJxWPZKk37Rw.png" alt="img" /></p>
+<p><img src="img/4-14.png" alt="img" /></p>
 <p>接着，从 \(l(x) \times r(x)\) 的结果中减去 \(o(x)\)：</p>
-<p><img src="img/3/1*hs7NGn66W8Isu26jtVpDrw.png" alt="img" /></p>
+<p><img src="img/4-15.png" alt="img" /></p>
 <p>已经可以看出，每个操作数的乘法都对应一个正确的结果。对于最后一步，<em>证明者</em>需要提供一个有效的辅因子：</p>
 <p>$$h(x) = \frac{l(x) \times r(x) - o(x)}{t(x)} = \frac{-3x^4 + 22x^3 - 57x^2 + 62x - 24}{(x - 1)(x - 2)(x - 3)}$$</p>
 <p>使用长除法我们得到：</p>
-<p><img src="./img/3/div2.png" alt="img" /></p>
+<p><img src="img/4-16.png" alt="img" /></p>
 <p>使用 \(h(x) = -3x + 4\)，<em>验证者</em>可以计算 \(t(x)h(x)\)：</p>
-<p><img src="img/3/1*NEpiDG9xLK_purIz175KXA.png" alt="img" /></p>
+<p><img src="img/4-17.png" alt="img" /></p>
 <p>现在很明显 \(l(x) \times r(x) - o(x) = t(x) h(x)\)，这就是我们要证明的内容。</p>
 <blockquote>
 <p>译者注：这里只需要一组多项式 \(l(x)\)、\(r(x)\)、\(o(x)\) 就可以表示出所有计算的约束关系，计算的数量与目标多项式 \(t(x)\) 的根的数量相同。</p>

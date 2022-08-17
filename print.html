@@ -144,7 +144,7 @@
 <p><a href="https://zyw271828.github.io/wahzw-zh-cn/abstract.html"><img alt="立即阅读"
     src="https://img.shields.io/badge/立即阅读-0091EA.svg?style=for-the-badge&logoColor=white&logo=mdbook" height="48" /></a></p>
 <blockquote>
-<p>注意：本文是在《Why and How zk-SNARK Works》原译文《从零开始学习 zk-SNARK》基础上的重新翻译，原译文的翻译工作由「even@安比实验室」于 2020 年完成。</p>
+<p>注意：本文是在《Why and How zk-SNARK Works》原译文《从零开始学习 zk-SNARK》基础上的重新翻译，原译文的翻译工作由「even@安比实验室」于 2020 年完成。本文中的译者注为原译者所加。</p>
 </blockquote>
 <p>原文作者：<a href="https://petkus.info/">Maksym Petkus</a></p>
 <p>原文地址：<a href="https://arxiv.org/abs/1906.07221">arXiv</a> / <a href="https://medium.com/@imolfar/why-and-how-zk-snark-works-1-introduction-the-medium-of-a-proof-d946e931160">Medium</a></p>
@@ -211,17 +211,17 @@
 <p>$$b = [\ \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}\ ]$$</p>
 <p>验证者一次只能检查（也就是读取）一位。为了验证这个陈述，我们以某种任意的顺序读取元素并检查其是否确实等于 1。如果第一次抽样检查的结果是 1，就设置陈述的可信度为 \(\displaystyle \frac{1}{10} = 10%\)，否则，如果等于 0，就说明陈述是错误的。验证者继续进行下一轮验证，直到获得足够的可信度为止。假如在一些场景下要信任证明者需要至少 50% 的可信度，那就意味着必须执行 5 次校验。但假如在其它一些场景下需要 95% 的可信度，就需要检查所有的元素。很明显这个证明协议的缺点是必须要根据元素的数量进行检查，如果我们处理数百万个元素的数组，这么做是不现实的。</p>
 <p>现在我们来看一下由数学方程式表示的多项式，它可以被画成坐标系上的一条曲线：</p>
-<p><img src="img/1_-icO0q-Mu7AcFFMmCoOvfQ.png" alt="img" /></p>
+<p><img src="img/2-1.png" alt="img" /></p>
 <p>上面的曲线对应多项式：\(f(x) = x^3 -6x^2 + 11x - 6\)。多项式的阶数取决于 \(x\) 的最大指数，当前多项式的阶数是 3。</p>
 <p>多项式有一个非常好的特性，就是如果我们有两个阶为 \(d\) 的不相等多项式，它们相交的点数不会超过 \(d\)。例如，稍微修改一下原来的多项式为 \(x^3 - 6x^2 + \mathbf{10}x - \mathbf{5}\) 并在图上用绿色标出：</p>
-<p><img src="img/1_7JGXnnMDoEr4Rbn7-WOSQw.png" alt="img" /></p>
+<p><img src="img/2-2.png" alt="img" /></p>
 <p>这一点微小的修改就产生了变化很大的曲线。事实上，我们不可能找到两条不同的曲线，它们会在某段区域内重合（它们只会相交于一些点）。</p>
 <p>这是从找多项式共同点的方法中得出的性质。如果要找到两个多项式的交点，就要先令它们相等。例如，要找到多项式与 \(x\) 轴的交点（即 \(f(x) = 0\)），我们就要令 \(x^3 - 6x^2 + 11x - 6 = 0\)，等式的解就是共同点：\(x = 1\)、\(x = 2\) 和 \(x = 3\)。在上面图中也可以很清晰地看出这些解，也就是图上蓝色曲线和 \(x\) 轴相交的地方。</p>
 <p>同样，我们也可以令上文中原始的多项式和修改后的多项式相等，找到它们的交点。</p>
 <p>$$x^3 - 6x^2 + 11x - 6 = x^3 - 6x^2 + \mathbf{10}x - \mathbf{5}$$</p>
 <p>$$x - 1 = 0$$</p>
 <p>多项式化简后的结果阶数为 1，它有一个很明显的解 \(x = 1\)。因此这两个多项式有一个交点。</p>
-<p><img src="img/1_5tGItKaiCxwLAjYJaBRffg.png" alt="img" /></p>
+<p><img src="img/2-3.png" alt="img" /></p>
 <p>任意一个由阶数为 \(d\) 的多项式组成的等式，最后都会被化简为另外一个阶数至多为 \(d\) 的多项式，这是因为等式中没有能用来构造更高阶数的乘法。例如：\(5x^3 + 7x^2 - x + 2 = 3x^3 - x^2 + 2x - 5\)，简化为 \(2x^3 + 8x^2 - 3x + 7 = 0\)。另外代数的基本原理也告诉我们，对于一个阶数为 \(d\) 的多项式至多有 \(d\) 个解（3.2 节将对此进行详细介绍），因此也就至多有 \(d\) 个共同点。</p>
 <p>所以我们可以得出结论，任何多项式在任意点的计算结果（更多关于多项式求值可以参考：[<a href="./references.html#Pik13">Pik13</a>]）都可以看做是其唯一身份的表示。我们来计算一下当 \(x = 10\) 时，示例多项式的结果。</p>
 <p>$$ x^3 - 6x^2 + 11x - 6 = 504 $$</p>
@@ -268,7 +268,7 @@
 <p>换句话说，存在一些多项式 \(h(x)\) 能够使得 \(t(x)\) 与之相乘后等于 \(p(x)\)，由此得出，\(p(x)\) 中包含 \(t(x)\)，所以 \(p(x)\) 的根中也包含 \(t(x)\) 的所有根，这也就是我们要证明的东西。</p>
 <p>自然地算出 \(h(x)\) 的方式就是直接相除：\(h(x) = \frac{p(x)}{t(x)}\)。如果一个证明者不能找到这样一个 \(h(x)\) 也就意味着 \(p(x)\) 中不包含因式 \(t(x)\)，那么多项式相除就会有余数。</p>
 <p>例如我们用 \(p(x) = x^3 - 3x^2 + 2x\) 除以 \(t(x) = (x - 1)(x - 2) = x^2 - 3x + 2\)：</p>
-<p><img src="img/1_iT3kRk3C-DJdvQgi1b2uOA.png" alt="img" /></p>
+<p><img src="img/3-1.png" alt="img" /></p>
 <blockquote>
 <p>注：左边的式子是分母，右上角的是计算结果。底部是余数（多项式相除的解释及示例可以参考 [<a href="./references.html#Pik14">Pik14</a>]）。</p>
 </blockquote>
@@ -296,7 +296,7 @@
 <li>验证者再验证 \(p = t \cdot h\)：\(10626 = 462 \cdot 23\) 是正确的，这样陈述就被证明了</li>
 </ul>
 <p>相反，如果证明者使用一个并不包含必要因式的不同 \(p'(x)\)，例如 \(p'(x) = {\color{red}2}x^3 - 3x^2 + 2x\), 那么：</p>
-<p><img src="img/1_heV9wqxECa2N4rG0OpvItQ.png" alt="img" /></p>
+<p><img src="img/3-2.png" alt="img" /></p>
 <p>我们算出结果 \(2x + 3\) 和余数 \(7x - 6\)，即：\(p(x) = t(x) \times (2x + 3) + 7x - 6\)。这就意味着验证者为了计算出结果不得不用余数除以 \(t(x)\)，\(h(x) = 2x + 3 + \frac{7x - 6}{t(x)}\)。不过由于 \(x\) 是验证者随机选择的，就有极低（但仍然不可忽略）的概率余数 \(7x - 6\) 最终可以被 \(t(x)\) 整除。如果后面验证者要另外再检查 \(p\) 和 \(h\) 必须是整数的话，这个证明就会被拒绝。</p>
 <p>不过这个校验同时也要求多项式系数也是整数，这对协议产生了极大的限制。</p>
 <p>这就是为什么接下来我们要介绍能够使余数不被整除的密码学原理的原因，尽管这个原始值是有可能被整除的。</p>
@@ -333,15 +333,15 @@
 <p>不过由于基数 5 是公开的，很容易就可以找到被加密的数字。只要将密文一直除以 5，直到结果为 1，那么做除法的次数也就是被加密的值。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="模运算"><a class="header" href="#模运算">模运算</a></h1>
 <p>这里就到了模运算发挥作用的地方了。模运算的思路如下：除了我们所选择的组成有限集合的前 \(n\) 个自然数（即 \(0, 1, \ldots, n - 1\)）以外，任何超出此范围的给定整数，我们就将它「缠绕」起来。例如，我们选择前六个数。为了说明这一点，可以把它看做一个有六个单位大小相等刻度的圆；这就是我们所说的范围（通常指的是有限域）。</p>
-<p><img src="img/1_q-GtshK0LkZMg5PSj44FvA.png" alt="img" /></p>
+<p><img src="img/3-3.png" alt="img" /></p>
 <p>现在我们看一下数字八应该在哪里。打个比方，我们可以把它看成一条长度为八的绳子：</p>
-<p><img src="img/1_WbT1Eie_Frg1vdqcfi_uig.png" alt="img" /></p>
+<p><img src="img/3-4.png" alt="img" /></p>
 <p>如果我们将绳子固定在圆圈的开头</p>
-<p><img src="img/1_O-OE3lLnPelGiej4L56R3A.png" alt="img" /></p>
+<p><img src="img/3-5.png" alt="img" /></p>
 <p>然后用绳子缠绕圆圈，我们在缠完一圈后还剩下一部分的绳子：</p>
-<p><img src="img/1_nOJ-DFp3L4fOYmHbkWp-JQ.png" alt="img" /></p>
+<p><img src="img/3-6.png" alt="img" /></p>
 <p>然后我们继续缠绕，这根绳子将在刻度 #2 的地方终止。</p>
-<p><img src="img/1_5970QxlFD23iOJrY8_DPsw.png" alt="img" /></p>
+<p><img src="img/3-7.png" alt="img" /></p>
 <p>这就是模运算操作的结果。无论这根绳子多长，它最终都会在圆圈一个刻度处终止。因而模运算结果将保持在一定范围内（例子中是 0 到 5）。长度为 15 的绳子将会在刻度 3 的地方终止，即 6 + 6 + 3（缠两个完整的圈并剩下 3 个单位长的部分）。负数运算类似，唯一不同的地方就是它是沿相反方向缠绕的，如 -8 的取模结果是 4。</p>
 <p>我们执行算术运算，结果都将落在这个 \(n\) 的范围内。现在开始我们将用符号「\(\mathrm{mod}\ n\)」来表示这个范围内的数。</p>
 <p>$$3 \times 5 = 3 \ (\mathrm{mod}\ {6})$$</p>
@@ -568,7 +568,7 @@
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="加密值的乘法"><a class="header" href="#加密值的乘法">加密值的乘法</a></h1>
 <p>密码学配对（双线性映射）是一种数学结构，表示为函数 \(e(g^*, g^*)\)，给定一个数集中的两个加密的输入（例如 \(g^a, g^b\)），可以将他们确定性地映射到另一组不同的输出数集上的它们的乘积，即 \(e(g^a, g^b) = e(g,g)^{ab}\)：</p>
-<p><img src="./img/2/1*0Qnz6c35UV1bv7uk620qrw.png" alt="img" /></p>
+<p><img src="img/3-8.png" alt="img" /></p>
 <p>因为源数集和输出数集（通常被称为一个群）是不同的，所以一个配对的结果不能用作其他配对计算的输入。我们可以将输出集（也称为「目标集」）视为「不同的宇宙」。因而我们不能用另一个加密值乘以结果，而且「配对」这个名称本身也表明了，我们一次只能将两个加密值相乘。</p>
 <blockquote>
 <p>译者注：换句话说，配对只支持 \(x \cdot y\) 这种两个值的乘法，不支持三个或以上的值相乘，例如不支持 \(x \cdot y \cdot z\)。</p>
@@ -745,13 +745,13 @@ end function
 <p>两个操作数（也就是值）与一个运算符（例如 \(+, -, \times, \div\)）放在一起执行运算。例如操作数是 2 和 3，运算符为「乘法」，那么结果就是 \(2 \times 3 = 6\)。由于任何复杂的计算（或者程序）都是由一系列这样的基本运算组成的，所以首先我们需要知道单一运算在多项式中是怎样表示的。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="多项式的算术性质"><a class="header" href="#多项式的算术性质">多项式的算术性质</a></h1>
 <p>我们先来看一下如何将多项式和算术运算关联起来。例如，有两个多项式 \(f(x)\) 和 \(g(x)\)，尝试将他们相乘得到 \(h(x) = f(x) \times g(x)\)，在任意一个 \(x = r\) 处 \(h(x)\) 的计算结果都是 \(f(r)\) 和 \(g(r)\) 的乘积。考虑下面两个多项式 \(f(x) = 2x^2 - 9x + 10\) 和 \(g(x) = -4x^2 + 15 x -9\)。以图形的形式可视化：</p>
-<p><img src="img/3/1*zURb98IOmtMOxlIprp8xOQ.png" alt="img" /></p>
+<p><img src="img/4-1.png" alt="img" /></p>
 <p>当 \(x = 1\) 时 \(f(1) = 2 -9 + 10 = 3\)，\(g(1) = -4 + 15 -9 = 2\)。</p>
 <p>把两个多项式相乘：\(h(x) = f(x) \times g(x) =-8 x^4 + 66 x^3 - 193 x^2 + 231 x -90\)。从图中可以看出相乘的结果：</p>
-<p><img src="img/3/1*yBmMsuYRemhrLCc8PNuBaQ.png" alt="img" /></p>
+<p><img src="img/4-2.png" alt="img" /></p>
 <p>\(x = 1\) 时，计算 \(f(x) \times g(x)\) 结果为：\(h(1) = -8 + 66 -193 + 231 - 90 = 6\)，也就是说当 \(x = 1\) 时，\(h(x)\) 就是 \(f(x)\) 和 \(g(x)\) 相乘的结果 ，在 \(x\) 取其他值的时候也一样。</p>
 <p>同样，如果我们将 \(f(x)\) 和 \(g(x)\) 相加，会得到 \(-2x^2 + 6x + 1\)，在 \(x = 1\) 处的计算结果就是 5。</p>
-<p><img src="img/3/1*YIHfveOVrQVdjqbabMYw2Q.png" alt="img" /></p>
+<p><img src="img/4-3.png" alt="img" /></p>
 <blockquote>
 <p>注：在其他 \(x\) 的取值处，多项式相加的计算结果也是将两个多项式的值加在一起的结果，例如可以验证一下 \(x = 2\)、\(x = 3\) 处的结果。</p>
 <p>如果我们可以将操作数的值表示为多项式（我们也确实可以这么做），那么利用算术属性，我们就能够得到操作数的计算结果了。</p>
@@ -775,7 +775,7 @@ end function
 <p>因此，如果这些多项式的运算正确地表示了操作数和输出，那么 \(l(a) \ \mathbf{运算符} \ r(a) = o(a)\) 就应该成立。将<em>输出多项式</em> \(o(x)\) 移动到等式的左侧 \(l(a) \ \mathbf{运算符} \ r(a) - o(a) = 0\)，如果<em>输出多项式</em> \(o(x)\) 表示的值是 \(\mathbf{运算符}\) 对<em>操作数多项式</em> \(l(x)\) 和 \(r(x)\) 表示的值产生的正确结果，这表示<em>运算多项式</em> \(l(x) \ \mathbf{运算符} \ r(x) - o(x) = 0\) 必须在 \(a\) 处计算为 0。那么只要<em>运算多项式</em>有效，就一定有一个根 \(a\)，因此，根据前面的基础（参见 3.2 节的因式分解），它必须包含辅因子 \((x - a)\)，这也就是我们要证明的<em>目标多项式</em>，即 \(t(x) = x - a\)。</p>
 <p>例如，我们来看一个运算：\(3 \times 2 = 6\)</p>
 <p>可以用一个简单的多项式表示它：\(l(x) = 3x\)，\(r(x) = 2x\)，\(o(x) = 6x\)，取 \(a = 1\) 进行计算，即 \(l(1) = 3;\ r(1) = 2;\ o(1) = 6\)。</p>
-<p><img src="img/3/1*c-MTFle20kE2N4V7_oIuPw.png" alt="img" /></p>
+<p><img src="img/4-4.png" alt="img" /></p>
 <blockquote>
 <p>注：\(a\) 的值可以是任意的。</p>
 </blockquote>
@@ -784,13 +784,13 @@ end function
 <p>$$3x \times 2x = 6x$$</p>
 <p>$$6x^2 - 6x = 0$$</p>
 <p>在图上表示为：</p>
-<p><img src="img/3/1*8inYSIOVem2TWfwblR3j3g.png" alt="img" /></p>
+<p><img src="img/4-5.png" alt="img" /></p>
 <p>值得注意的是，操作多项式有一个辅因子 \((x-1)\)：</p>
 <p>$$6x^2 - 6x = 6x (x - 1)$$</p>
 <p>因此，如果证明者提供这样的多项式 \(l(x), r(x), o(x)\) 而不是以前的 \(p(x)\)，那么验证者将接受它为有效的，因为它可以被 \(t(x)\) 整除。相反，如果证明者试图作弊并将输出值替换为 4，例如 \(o(x) = 4x\)，则运算多项式就会变成 \(6x^2 - 4x = 0\)：</p>
-<p><img src="img/3/1*jacXf4SAhn3OpOyeqR6EOA.png" alt="img" /></p>
+<p><img src="img/4-6.png" alt="img" /></p>
 <p>图中这个多项式并没有 \(x = 1\) 的解，因而 \(l(x) \times r(x) - o(x)\) 就不能被 \(t(x)\) 整除：</p>
-<p><img src="img/3/div.png" alt="img" /></p>
+<p><img src="img/4-7.png" alt="img" /></p>
 <p>因此，验证者不会接受这种<em>不一致的计算结果</em>（就像 3.2 节描述的那样）。</p>
 <blockquote>
 <p>译者注：在前面的协议中，我们要证明的多项式是 \(p(x) = t(x) \times h(x)\)，这里我们修改 \(p(x)\)，使得 \(p(x) = l(x) \times r(x) - o(x)\)。这里目标多项式 \(t(x)\) 的根就是对应能够计算出数学表达式的值的 \(x\)。</p>
@@ -834,9 +834,9 @@ $$e(g^{o'}, g) = e(g^{o}, g^\alpha)$$</li>
 <p>$$\color{ForestGreen}{a}\quad \times \quad\color{blue}{b}\quad = \quad\color{red}{r_1}$$</p>
 <p>$$\color{ForestGreen}{r_1}\quad \times \quad\color{blue}{c}\quad = \quad\color{red}{r_2}$$</p>
 <p>在前面的讨论中，我们可以通过使操作数多项式计算为某个任意 \(x\) 处的相应值（例如 \(1\)）来表示此类运算。有了这个方法，多项式的属性并不会限制我们在不同的 \(x\) 处表示其他值（例如 \(2\)），即：</p>
-<p><img src="img/3/1*mVveHukkAvK1sDSNgkP_Hw.png" alt="img" /></p>
+<p><img src="img/4-8.png" alt="img" /></p>
 <p>这种独立性允许我们一次<em>执行</em>两个运算而不会将它们「混合」在一起，也就是说相互之间没有干扰。这个多项式算术的结果就变成了：</p>
-<p><img src="img/3/1*8Z3PDChGgZm87PjtxyIetw.png" alt="img" /></p>
+<p><img src="img/4-9.png" alt="img" /></p>
 <p>可以看出，运算多项式有两个根 \(x = 1\) 和 \(x = 2\)。因此，这两次计算都被正确<em>执行</em>了。</p>
 <blockquote>
 <p>译者注：这里的示例为了方便理解，选择了 \(x = 1\) 和 \(x = 2\) 两个位置。在完整的 zk-SNARK 方案中，这些「root」值必须为有限域内的随机数，否则就会引入安全漏洞。</p>
@@ -859,27 +859,27 @@ $$e(g^{o'}, g) = e(g^{o}, g^\alpha)$$</li>
 <p>我们以第一个方法为例。这个方法的思路是存在一个<em>系数未知</em>、阶数至多为 \(n\) 的唯一多项式能够经过给定的 \(n + 1\) 个点，对于每个点 \(\left\{ \left(x_i, y_i\right) \right\}_{i \in [n + 1]}\)，多项式在 \(x_i\) 处的计算结果都等于 \(y_i\)。在我们的例子中，三个点对应阶数为 2 的多项式，表示为：</p>
 <p>$$ax^2 + bx + c = y$$</p>
 <p>让我们令<em>左操作数多项式</em>（绿色）在每个点的多项式求值<em>相等</em>，并通过用其他系数表达每个系数来求解方程组：</p>
-<p><img src="./img/3/eq1.png" alt="img" /></p>
+<p><img src="img/4-10.png" alt="img" /></p>
 <p>因此<em>左操作数多项式</em>为：</p>
 <p>$$\color{ForestGreen}{l(x)} = 2x^2 - 6x + 6$$</p>
 <p>对应于下图：</p>
-<p><img src="img/3/1*hAFtc6UZWhr34FA-ljVJ8w.png" alt="img" /></p>
+<p><img src="img/4-11.png" alt="img" /></p>
 <p>我们可以用同样的方法找到 \(r(x)\) 和 \(o(x)\)：</p>
 <p>$$\color{blue}{r(x)} = \frac{-3x^2 + 13x - 8}{2}; \quad \color{red}{o(x)} = x^2 + x$$</p>
-<p><img src="img/3/1*Cc3KRiEfoYsyoD098-X3DQ.png" alt="img" /></p>
+<p><img src="img/4-12.png" alt="img" /></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="多运算多项式"><a class="header" href="#多运算多项式">多运算多项式</a></h1>
 <p>现在我们有了代表三个运算的操作数多项式，让我们一步一步地看看如何验证每个运算的正确性。回想一下，验证者正在寻找等式 \(l(x) \times r(x) - o(x) = t(x)h(x)\)。在这种情况下，由于运算在点 \(x \in \{1,2,3\}\) 处表示，因此目标多项式必须在这些 \(x\) 处计算为 \(0\)，换句话说，\(t(x)\) 的根必须是 1、2 和 3，其基本形式为：</p>
-<p><img src="img/3/1*h8i-j98fBxmFSraGWadrJA.png" alt="img" /></p>
+<p><img src="img/4-13.png" alt="img" /></p>
 <p>首先，将 \(l(x)\) 和 \(r(x)\) 相乘，得到：</p>
-<p><img src="img/3/1*bsT-MgxaGDGJxWPZKk37Rw.png" alt="img" /></p>
+<p><img src="img/4-14.png" alt="img" /></p>
 <p>接着，从 \(l(x) \times r(x)\) 的结果中减去 \(o(x)\)：</p>
-<p><img src="img/3/1*hs7NGn66W8Isu26jtVpDrw.png" alt="img" /></p>
+<p><img src="img/4-15.png" alt="img" /></p>
 <p>已经可以看出，每个操作数的乘法都对应一个正确的结果。对于最后一步，<em>证明者</em>需要提供一个有效的辅因子：</p>
 <p>$$h(x) = \frac{l(x) \times r(x) - o(x)}{t(x)} = \frac{-3x^4 + 22x^3 - 57x^2 + 62x - 24}{(x - 1)(x - 2)(x - 3)}$$</p>
 <p>使用长除法我们得到：</p>
-<p><img src="./img/3/div2.png" alt="img" /></p>
+<p><img src="img/4-16.png" alt="img" /></p>
 <p>使用 \(h(x) = -3x + 4\)，<em>验证者</em>可以计算 \(t(x)h(x)\)：</p>
-<p><img src="img/3/1*NEpiDG9xLK_purIz175KXA.png" alt="img" /></p>
+<p><img src="img/4-17.png" alt="img" /></p>
 <p>现在很明显 \(l(x) \times r(x) - o(x) = t(x) h(x)\)，这就是我们要证明的内容。</p>
 <blockquote>
 <p>译者注：这里只需要一组多项式 \(l(x)\)、\(r(x)\)、\(o(x)\) 就可以表示出所有计算的约束关系，计算的数量与目标多项式 \(t(x)\) 的根的数量相同。</p>
@@ -902,9 +902,9 @@ $$e(g^{o'}, g) = e(g^{o}, g^\alpha)$$</li>
 <p>$$\color{ForestGreen}{a}\quad \times \quad\color{blue}{b}\quad = \quad\color{red}{r_1}$$</p>
 <p>$$\color{ForestGreen}{a}\quad \times \quad\color{blue}{c}\quad = \quad\color{red}{r_2}$$</p>
 <p>对于这两个运算，\(\color{ForestGreen}{a}\) 必须在<em>左操作数多项式</em>中表示：</p>
-<p><img src="img/3/1*PMNd1I7dYeJhSqF8MD5wCg.png" alt="img" /></p>
+<p><img src="img/4-18.png" alt="img" /></p>
 <p>尽管如此，由于我们的协议允许证明者将任何系数设置为多项式，所以他为不同的运算（由一些 \(a\) 表示）设置不同的 \(x\) 值是不受限制的，例如：</p>
-<p><img src="img/3/1*HO_ZD_vp-c7LZK-IDxJo3A.png" alt="img" /></p>
+<p><img src="img/4-19.png" alt="img" /></p>
 <p>这种自由破坏了一致性，并允许证明者证明验证者不感兴趣的其他程序的执行。因此，我们必须确保任何变量在它被使用的每个运算中只能有一个值。</p>
 <blockquote>
 <p>注：这里的变量与常规的计算机科学中的变量定义不同，这里的变量是不可改变的，而且每次执行都只能被赋值一次。</p>
@@ -916,7 +916,7 @@ $$e(g^{o'}, g) = e(g^{o}, g^\alpha)$$</li>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="单变量操作数多项式"><a class="header" href="#单变量操作数多项式">单变量操作数多项式</a></h1>
 <p>我们来看一个简单的例子（与当前示例一样），在由<em>左操作数多项式</em> \(l(x)\) 表示的所有左操作数中仅使用一个变量（例如 \(a\)）。我们要找出是否可以确保这个多项式在每个运算中都表示相同的 \(a\) 值。证明者可以设置不同值的原因是他可以控制 \(x\) 的每次幂的每个系数。因此，如果这些系数是固定的，这个可变性问题就被解决了。</p>
 <p>让我们仔细观察包含相等值的多项式。例如，分别检查两个表示两个运算相等值的多项式（即，在 \(x = 1\) 和 \(x = 2\) 处），其中第一个多项式包含值 \(1\)，第二个包含值 \(2\)：</p>
-<p><img src="img/3/1*sVoDxQA6KHkuEJAZvsL8xQ.png" alt="img" /></p>
+<p><img src="img/4-20.png" alt="img" /></p>
 <p>注意到相应的系数在每个多项式中是成比例的，也就是说第二个多项式中的系数是第一个的两倍，即：</p>
 <p>$$2x^2 - 6x + 6 = 2 \times (x^2 - 3x + 3)$$</p>
 <p>当我们想要同时改变多项式中的所有值时，我们需要改变它的比例，由于多项式的算术特性，如果我们将多项式乘以一个数字，每个可能的 \(x\) 的求值也将乘以这个数字（即按比例缩放）。要验证这一点，可以尝试将第一个多项式乘以 3 或任何其他数字。</p>
@@ -952,9 +952,9 @@ $$e(g^{o'}, g) = e(g^{o}, g^\alpha)$$</li>
 </ul>
 <p>证明者需要以相同的 \(\alpha\)-移位进行响应，由于他无法从证明密钥中恢复出 \(\alpha\)，所以保持该移位的唯一方法就是用相同的值乘以加密值 \(g^{l(s)}\) 和 \(g^{\alpha l(s)}\)。这样一来证明者就不能修改 \(l(x)\) 的单个系数，例如，如果 \(l(x) = ax^2 + bx + c\)，他只能一次将整个多项式乘以某个值 \(v\)：\(v(ax^2 + bx + c)= vax^2 + vbx + vc\)。由于<em>配对</em>，不能与另一个多项式相乘，并且 \(s\) 的各个指数的 \(\alpha\)-移位也会不可用。证明者既不能加也不能减，因为 \(g^{\alpha(l(x) + a'x^2 + c')} \neq g^{\alpha l(x)} \cdot g^{a' x^2} \cdot g^{c'}\)（这同样需要未加密的 \(\alpha\) 的知识）。</p>
 <p>我们现在有了协议，但应该如何构造<em>操作数多项式</em> \(l(x)\) 呢？由于任何整数都可以通过乘以 \(1\) 得到它本身，因此对于每个相应的运算，多项式的计算结果都应为 \(1\)，例如：</p>
-<p><img src="img/3/1*OD_cyAXNCBB62DVBe815qA.png" alt="img" /></p>
+<p><img src="img/4-21.png" alt="img" /></p>
 <p>这允许证明者<em>分配</em> \(a\) 的值：</p>
-<p><img src="img/3/1*qNsslAIXLSPq5MWf4TCpqw.png" alt="img" /></p>
+<p><img src="img/4-22.png" alt="img" /></p>
 <p><strong>备注 4.1</strong> 由于验证密钥包含 \(g^\alpha\)，因此可以对多项式添加（或减去）任意值 \(v'\)，即：</p>
 <p>$$g^{v l(s)} \cdot g^{v'} = g^{v l(s) + v'}$$</p>
 <p>$$g^{\alpha v l(s)} \cdot \left(g^{\alpha}\right)^{v'} = g^{\alpha (v l(s) + v')}$$</p>
@@ -967,12 +967,12 @@ $$e(g^{o'}, g) = e(g^{o}, g^\alpha)$$</li>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="多变量操作数多项式"><a class="header" href="#多变量操作数多项式">多变量操作数多项式</a></h1>
 <p>现在，只有当所有左操作数都使用相同的变量时，我们才能单独设置值。如果我们再添加一个 \(d\) 呢：</p>
-<p><img src="img/3/1*yAqgTjn5LB4qh465LhM6hA.png" alt="img" /></p>
+<p><img src="img/4-23.png" alt="img" /></p>
 <p>如果使用相同的方法，我们将无法为每个变量单独设置值，并且每个不同的变量都将全部乘在一起。因此，这种受限多项式只能支持一个<em>变量</em>。如果检查多项式的性质，我们将看到把多项式相加也会让这些多项式的不同求值相加。因此，我们可以将<em>操作数多项式</em> \(l(x)\) 分成<em>操作数变量多项式</em> \(l_a(x)\) 和 \(l_d(x)\)（注意下标），从而用与上一节类似的方法分别<em>赋值</em>和限制<em>变量</em> \(a\) 和 \(d\)，然后将它们加在一起以表示所有左操作数的变量。因为我们将<em>操作数变量多项式</em>相加，所以我们需要确保对于每个运算，操作数多项式只表示所有<em>变量</em>中的一个。</p>
 <p>使用这个算术性质，我们可以构造每个<em>操作数变量多项式</em>，如果<em>变量</em>被用作相应运算中的操作数，则它的计算结果置为 \(1\)，否则就置为 \(0\)。\(0\) 乘以任何值都将保持为零，加在一起时将被忽略。对于我们的例子 \(l_a(x)\) 必须符合 \(l_a(1) = 1\)、\(l_a(2) = 1\) 和 \(l_a(3) = 0\) 并且 \(l_d(x)\) 在 1 和 2 处为零，但在 \(x = 3\) 处为 \(1\)：</p>
-<p><img src="img/3/1*mPS0DWApQpziFbz9Almi1Q.png" alt="img" /></p>
+<p><img src="img/4-24.png" alt="img" /></p>
 <p>因此，我们可以分别设置每个变量的值，然后将它们相加得到操作数多项式，例如，如果 \(a = 3\) 且 \(d = 2\)：</p>
-<p><img src="img/3/1*haDU8bsgI7xwmxHTVZUODw.png" alt="img" /></p>
+<p><img src="img/4-25.png" alt="img" /></p>
 <blockquote>
 <p>注：我们在一个值旁边使用下标来指示它代表哪个变量，例如，\(3_a\)是一个用值 \(3\) 实例化的变量 \(a\)。</p>
 </blockquote>
@@ -1071,9 +1071,9 @@ end function
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="无成本加法"><a class="header" href="#无成本加法">无成本加法</a></h1>
 <p>看一下更新后的结构，很明显在多项式表示中，由一些不同的 \(x\) 表示的每个<em>操作数</em>都是所有<em>操作数变量多项式</em>的总和，因此只有单个<em>使用</em>的变量可以具有非零值，而所有其他变量都为零。下图很好地说明了这一点：</p>
-<p><img src="./img/4/1*HeUXxV8-H5MVbhdT8haqqw.png" alt="img" /></p>
+<p><img src="img/4-26.png" alt="img" /></p>
 <p>我们可以利用这种结构，允许为运算中的每个操作数添加任意数量的必要<em>变量</em>。例如在第一个运算中，我们可以先做加法 \(a + c\)，然后再乘以其他操作数，例如 \(\color{ForestGreen}{(a + c)} \times \color{blue}{b} = \color{red}{r}\)，这可以表示为：</p>
-<p><img src="./img/4/1*RpLBxan0och5LvpuE5KJVw.png" alt="img" /></p>
+<p><img src="img/4-27.png" alt="img" /></p>
 <p>因此，可以在单个<em>操作数</em>中添加任意数量的当前变量，对它们中的每一个使用任意系数，这样可以根据各个程序的需要来生成将在相应运算中使用的操作数值。这种特性有效地允许将运算结构更改为：</p>
 <p>$$\color{ForestGreen}{(c_{\textrm{l},a} \cdot a + c_{\textrm{l},b} \cdot b + \ldots)}\quad \times \quad\color{blue}{(c_{\textrm{r},a} \cdot a + c_{\textrm{r},b} \cdot b + \ldots)}\quad = \quad\color{red}{(c_{\textrm{o},a} \cdot a + c_{\textrm{o},b} \cdot b + \ldots)}$$</p>
 <p>或更正式地说，对于变量 \(v_i \in \{v_1, v_2, ..., v_n\}\) 和操作数变量系数 \(c_{\textrm{l},i} \in \{c_{\textrm{l},1}, c_{\textrm{l},2}, ..., c_{\textrm{r},n}\}\)，\(c_{\textrm{r},i} \in \{c_{\textrm{r},1}, c_{\textrm{r},2}, ..., c_{\textrm{r},n}\}\)，\(c_{\textrm{o},i} \in \{c_{\textrm{o},1}, c_{\textrm{o},2}, ..., c_{\textrm{o},n}\}\)：</p>
@@ -1133,12 +1133,12 @@ end function
 <p>$$\color{blue}{R(x)} = \color{blue}{ m \cdot r_{m}(x) + a \cdot r_a(x) + b \cdot r_b(x) + w\cdot r_w(x) }$$</p>
 <p>$$\color{red}{O(x)} = \color{red}{ m \cdot o_{m}(x) + v \cdot o_v(x) + a \cdot o_a(x) + b \cdot o_b(x) + w\cdot o_w(x) }$$</p>
 <p>其中每个<em>变量多项式</em>必须为 3 个运算中的每一个运算计算出一个相应的系数，如果变量不存在于运算的操作数或输出中，则计算为 0：</p>
-<p><img src="./img/4/eq1.png" alt="img" /></p>
+<p><img src="img/4-28.png" alt="img" /></p>
 <p>因此，辅因子多项式是 \(t(x) = (x-1)(x-2)(x-3)\)，这可以确保所有三个运算都已经被正确计算。</p>
 <p>接下来我们利用多项式插值来找到每个<em>变量多项式</em>：</p>
-<p><img src="./img/4/eq2.png" alt="img" /></p>
+<p><img src="img/4-29.png" alt="img" /></p>
 <p>绘制出来就是：</p>
-<p><img src="./img/4/1*YoNx3JunyKJh8kFad6qtpQ.png" alt="img" /></p>
+<p><img src="img/4-30.png" alt="img" /></p>
 <p>现在我们就可以通过多项式来证明计算了。首先，我们为函数选择输入值，例如 \(w = 1, a = 3, b = 2\)。接着，从运算中计算中间变量的值：</p>
 <p>$$m = a \times b = 6$$</p>
 <p>$$v = w(m - a - b) + a + b = 6$$</p>
@@ -1147,13 +1147,13 @@ end function
 <p>$$\color{blue}{R(x)} = \color{blue}{ 6 \cdot r_{m}(x) + 3 \cdot r_a(x) + 2 \cdot r_b(x) + 1\cdot r_w(x) } = \frac{1}{2} x^2 - 2\frac{1}{2}x + 4$$</p>
 <p>$$\color{red}{O(x)} = \color{red}{ 6 \cdot o_{m}(x) + 6 \cdot o_v(x) + 3 \cdot o_a(x) + 2 \cdot o_b(x) + 1\cdot o_w(x) } = 2\frac{1}{2} x^2 - 12\frac{1}{2}x + 16$$</p>
 <p>在图中表示为：</p>
-<p><img src="./img/4/1*XwRYLT4_4KRPTqQKg2jqfQ.png" alt="img" /></p>
+<p><img src="img/4-31.png" alt="img" /></p>
 <p>加起来表示相应运算中的操作数和输出值：</p>
-<p><img src="./img/4/1*8xEajzq2MlB9i7O8PQ829Q.png" alt="img" /></p>
+<p><img src="img/4-32.png" alt="img" /></p>
 <p>我们需要证明 \(L(x) \times R(x) - O(x) = t(x), h(x)\)，因此要找出 \(h(x)\)：</p>
 <p>$$h(x) = \frac{L(x) \times R(x) - O(x)}{t(x)} = \frac{\frac{1}{2}x^4 - 5x^3 + \frac{35}{2} x^2 - 25x + 12}{(x-1)(x-2)(x-3)} = \frac{1}{2}x - 2$$</p>
 <p>在图中表示为：</p>
-<p><img src="./img/4/1*z4sW_cYeeGZS_8AAJzfoKQ.png" alt="img" /></p>
+<p><img src="img/4-33.png" alt="img" /></p>
 <p>可见多项式 \(L(x)\times R(x) - O(x)\) 有解 \(x = 1\)、\(x = 2\) 和 \(x = 3\)，因此 \(t(x)\) 是它的辅因子，如果我们使用不一致的变量值，情况就不是这样了。</p>
 <p>这就是正确计算执行的变量值的知识在多项式层面上证明的方法。下面证明者还要继续处理协议的密码学部分。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="可验证计算协议"><a class="header" href="#可验证计算协议">可验证计算协议</a></h1>
@@ -1624,6 +1624,8 @@ $$e\left( g_l^{L_p} g_l^{L_v(s)}, g_r^{R_p} g_r^{R_v(s)} \right) = e\left( g_o^{
 <p>该协议证明了唯一的有限执行机计算的正确性，它在一次运算中可以将几乎任意数量的变量相加，但只能执行一次乘法。因此，有机会优化程序以有效利用这种特殊性，以及使用最小化运算数量的结构。</p>
 <p>重要的是，验证者不必知道任何秘密数据来验证证明，任何人都可以用非交互的方式发布和使用正确构造的验证密钥。这与证明只能说服一方的「指定验证者（Designated Verifier）」方案相反，后者是不可转让的。在 <em>zk-SNARK</em> 中，我们可以在不可信或单方生成密钥对的情况下实现可转让属性。</p>
 <p>零知识证明结构领域正在不断发展，包括优化（[<a href="./references.html#Ben+13">Ben+13</a>; <a href="./references.html#Gro16">Gro16</a>; <a href="./references.html#GM17">GM17</a>]）、可更新的证明和验证密钥等改进（[<a href="./references.html#Gro+18">Gro+18</a>]），以及新的结构（Bulletproofs [<a href="./references.html#B%C3%BCn+17">Bün+17</a>]，ZK-STARK [<a href="./references.html#Ben+18">Ben+18</a>]，Sonic [<a href="./references.html#Mal+19">Mal+19</a>]）。</p>
+<h2 id="致谢"><a class="header" href="#致谢">致谢</a></h2>
+<p>我们感谢 Mary Maller 和 Andrew Miller 对这篇文章提出的宝贵意见。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="参考文献"><a class="header" href="#参考文献">参考文献</a></h1>
 <p><a name="Bit+11"></a>[Bit+11] — Nir Bitansky, Ran Canetti, Alessandro Chiesa, and Eran Tromer. <em>From Extractable Collision Resistance to Succinct Non-Interactive Arguments of Knowledge, and Back Again</em>. Cryptology ePrint Archive, Report 2011/443. <a href="https://eprint.iacr.org/2011/443">https://eprint.iacr.org/2011/443</a>. 2011</p>
 <p><a name="Par+13"></a>[Par+13] — Bryan Parno, Craig Gentry, Jon Howell, and Mariana Raykova. <em>Pinocchio: Nearly Practical Verifiable Computation</em>. Cryptology ePrint Archive, Report 2013/279. <a href="https://eprint.iacr.org/2013/279">https://eprint.iacr.org/2013/279</a>. 2013</p>

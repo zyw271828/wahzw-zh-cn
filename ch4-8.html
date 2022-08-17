@@ -156,12 +156,12 @@
 <p>$$\color{blue}{R(x)} = \color{blue}{ m \cdot r_{m}(x) + a \cdot r_a(x) + b \cdot r_b(x) + w\cdot r_w(x) }$$</p>
 <p>$$\color{red}{O(x)} = \color{red}{ m \cdot o_{m}(x) + v \cdot o_v(x) + a \cdot o_a(x) + b \cdot o_b(x) + w\cdot o_w(x) }$$</p>
 <p>其中每个<em>变量多项式</em>必须为 3 个运算中的每一个运算计算出一个相应的系数，如果变量不存在于运算的操作数或输出中，则计算为 0：</p>
-<p><img src="./img/4/eq1.png" alt="img" /></p>
+<p><img src="img/4-28.png" alt="img" /></p>
 <p>因此，辅因子多项式是 \(t(x) = (x-1)(x-2)(x-3)\)，这可以确保所有三个运算都已经被正确计算。</p>
 <p>接下来我们利用多项式插值来找到每个<em>变量多项式</em>：</p>
-<p><img src="./img/4/eq2.png" alt="img" /></p>
+<p><img src="img/4-29.png" alt="img" /></p>
 <p>绘制出来就是：</p>
-<p><img src="./img/4/1*YoNx3JunyKJh8kFad6qtpQ.png" alt="img" /></p>
+<p><img src="img/4-30.png" alt="img" /></p>
 <p>现在我们就可以通过多项式来证明计算了。首先，我们为函数选择输入值，例如 \(w = 1, a = 3, b = 2\)。接着，从运算中计算中间变量的值：</p>
 <p>$$m = a \times b = 6$$</p>
 <p>$$v = w(m - a - b) + a + b = 6$$</p>
@@ -170,13 +170,13 @@
 <p>$$\color{blue}{R(x)} = \color{blue}{ 6 \cdot r_{m}(x) + 3 \cdot r_a(x) + 2 \cdot r_b(x) + 1\cdot r_w(x) } = \frac{1}{2} x^2 - 2\frac{1}{2}x + 4$$</p>
 <p>$$\color{red}{O(x)} = \color{red}{ 6 \cdot o_{m}(x) + 6 \cdot o_v(x) + 3 \cdot o_a(x) + 2 \cdot o_b(x) + 1\cdot o_w(x) } = 2\frac{1}{2} x^2 - 12\frac{1}{2}x + 16$$</p>
 <p>在图中表示为：</p>
-<p><img src="./img/4/1*XwRYLT4_4KRPTqQKg2jqfQ.png" alt="img" /></p>
+<p><img src="img/4-31.png" alt="img" /></p>
 <p>加起来表示相应运算中的操作数和输出值：</p>
-<p><img src="./img/4/1*8xEajzq2MlB9i7O8PQ829Q.png" alt="img" /></p>
+<p><img src="img/4-32.png" alt="img" /></p>
 <p>我们需要证明 \(L(x) \times R(x) - O(x) = t(x), h(x)\)，因此要找出 \(h(x)\)：</p>
 <p>$$h(x) = \frac{L(x) \times R(x) - O(x)}{t(x)} = \frac{\frac{1}{2}x^4 - 5x^3 + \frac{35}{2} x^2 - 25x + 12}{(x-1)(x-2)(x-3)} = \frac{1}{2}x - 2$$</p>
 <p>在图中表示为：</p>
-<p><img src="./img/4/1*z4sW_cYeeGZS_8AAJzfoKQ.png" alt="img" /></p>
+<p><img src="img/4-33.png" alt="img" /></p>
 <p>可见多项式 \(L(x)\times R(x) - O(x)\) 有解 \(x = 1\)、\(x = 2\) 和 \(x = 3\)，因此 \(t(x)\) 是它的辅因子，如果我们使用不一致的变量值，情况就不是这样了。</p>
 <p>这就是正确计算执行的变量值的知识在多项式层面上证明的方法。下面证明者还要继续处理协议的密码学部分。</p>
 
