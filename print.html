@@ -601,11 +601,11 @@
 <li>有了验证密钥，验证者就可以处理从证明者那里得到的加密多项式 \(g^p, g^h, g^{p'}\) 的值：
 <ul>
 <li>
-<p>在加密空间中校验 \(p = t \cdot h\)：</p>
+<p>在加密空间中检查 \(p = t \cdot h\)：</p>
 <p>$$e\left(g^p, g^1\right) = e\left(g^t, g^h\right) \quad\text{等效于}\quad e\left(g, g\right)^{p} = e\left(g, g\right)^{t \cdot h}$$</p>
 </li>
 <li>
-<p>校验多项式的限制：</p>
+<p>检查多项式限制：</p>
 <p>$$e\left(g^p, g^\alpha\right) = e\left(g^{p'}, g\right)$$</p>
 </li>
 </ul>
@@ -697,8 +697,8 @@
 <li>验证
 <ul>
 <li>映射证明 \(\pi\) 为 \(\left(g^{p}, g^{h}, g^{p'} \right)\)</li>
-<li>验证多项式限制：\(e\left(g^{p'}, g\right) = e\left(g^{p}, g^\alpha\right)\)</li>
-<li>验证多项式系数：\(e\left(g^p, g\right) = e\left(g^{t(s)}, g^h\right)\)</li>
+<li>检查多项式限制：\(e\left(g^{p'}, g\right) = e\left(g^{p}, g^\alpha\right)\)</li>
+<li>检查多项式系数：\(e\left(g^p, g\right) = e\left(g^{t(s)}, g^h\right)\)</li>
 </ul>
 </li>
 </ul>
@@ -819,7 +819,7 @@ end function
 <li>验证
 <ul>
 <li>将证明 \(\pi\) 解析为 \(\left( g^l, g^r, g^o, g^h, g^{l'}, g^{r'}, g^{o'} \right)\)</li>
-<li>验证多项式限制：
+<li>检查多项式限制：
 $$e(g^{l'}, g) = e(g^{l}, g^\alpha)$$
 $$e(g^{r'}, g) = e(g^{r}, g^\alpha)$$
 $$e(g^{o'}, g) = e(g^{o}, g^\alpha)$$</li>
