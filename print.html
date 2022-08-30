@@ -994,7 +994,7 @@ $$\left( g^\alpha \right)$$</li>
 </li>
 <li>证明
 <ul>
-<li>将变量多项式中的 \(a\) 和 \(d\) <em>赋值</em>：
+<li>将 \(a\) 和 \(d\) <em>赋值</em>给变量多项式：
 $$\left(g^{l_a(s)}\right)^a, \left( g^{l_d(s)} \right)^d$$</li>
 <li>为<em>移位</em>的多项式<em>赋</em>相同的<em>值</em>：
 $$\left(g^{\alpha l_a(s)}\right)^a, \left( g^{\alpha l_d(s)} \right)^d$$</li>
@@ -1072,9 +1072,9 @@ end function
 <div style="break-before: page; page-break-before: always;"></div><h1 id="无成本加法"><a class="header" href="#无成本加法">无成本加法</a></h1>
 <p>看一下更新后的结构，很明显在多项式表示中，由一些不同的 \(x\) 表示的每个<em>操作数</em>都是所有<em>操作数变量多项式</em>的总和，因此只有单个<em>使用</em>的变量可以具有非零值，而所有其他变量都为零。下图很好地说明了这一点：</p>
 <p><img src="img/4-26.png" alt="img" /></p>
-<p>我们可以利用这种结构，允许为运算中的每个操作数添加任意数量的必要<em>变量</em>。例如在第一个运算中，我们可以先做加法 \(a + c\)，然后再乘以其他操作数，例如 \(\color{ForestGreen}{(a + c)} \times \color{blue}{b} = \color{red}{r}\)，这可以表示为：</p>
+<p>我们可以利用这种结构，并允许为运算中的每个操作数添加任意数量的必要<em>变量</em>。例如在第一个运算中，我们可以先做加法 \(a + c\)，然后再乘以其他操作数，例如 \(\color{ForestGreen}{(a + c)} \times \color{blue}{b} = \color{red}{r}\)，这可以表示为：</p>
 <p><img src="img/4-27.png" alt="img" /></p>
-<p>因此，可以在单个<em>操作数</em>中添加任意数量的当前变量，对它们中的每一个使用任意系数，这样可以根据各个程序的需要来生成将在相应运算中使用的操作数值。这种特性有效地允许将运算结构更改为：</p>
+<p>因此，可以在单个<em>操作数</em>中添加任意数量的当前变量，对它们中的每一个使用任意系数，这样可以根据各个程序的需要来生成将在相应运算中使用的操作数的值。这种特性有效地允许将运算结构更改为：</p>
 <p>$$\color{ForestGreen}{(c_{\textrm{l},a} \cdot a + c_{\textrm{l},b} \cdot b + \ldots)}\quad \times \quad\color{blue}{(c_{\textrm{r},a} \cdot a + c_{\textrm{r},b} \cdot b + \ldots)}\quad = \quad\color{red}{(c_{\textrm{o},a} \cdot a + c_{\textrm{o},b} \cdot b + \ldots)}$$</p>
 <p>或更正式地说，对于变量 \(v_i \in \{v_1, v_2, ..., v_n\}\) 和操作数变量系数 \(c_{\textrm{l},i} \in \{c_{\textrm{l},1}, c_{\textrm{l},2}, ..., c_{\textrm{r},n}\}\)，\(c_{\textrm{r},i} \in \{c_{\textrm{r},1}, c_{\textrm{r},2}, ..., c_{\textrm{r},n}\}\)，\(c_{\textrm{o},i} \in \{c_{\textrm{o},1}, c_{\textrm{o},2}, ..., c_{\textrm{o},n}\}\)：</p>
 <p>$$\color{ForestGreen}{\sum_{i=1}^{n} c_{\textrm{l},i} \cdot v_i}\quad \times \quad\color{blue}{\sum_{i=1}^{n} c_{\textrm{r},i} \cdot v_i}\quad = \quad\color{red}{\sum_{i=1}^{n} c_{\textrm{o},i} \cdot v_i}$$</p>
@@ -1157,7 +1157,7 @@ end function
 <p>可见多项式 \(L(x)\times R(x) - O(x)\) 有解 \(x = 1\)、\(x = 2\) 和 \(x = 3\)，因此 \(t(x)\) 是它的辅因子，如果我们使用不一致的变量值，情况就不是这样了。</p>
 <p>这就是正确计算执行的变量值的知识在多项式层面上证明的方法。下面证明者还要继续处理协议的密码学部分。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="可验证计算协议"><a class="header" href="#可验证计算协议">可验证计算协议</a></h1>
-<p>我们对多项式知识协议（第 3.7 节）做了许多重要的修改来让它更具有通用性，让我们看看它现在是如何定义的。假设函数 \(f(*)\) 的计算结果是证明的主题，运算的数量为 \(d\)，变量的数量 \(n\) 和对应的系数 \(\left\{ c_{L,i,j}, c_{R,i,j}, c_{O,i,j} \right\}_{i \in \{1, \ldots, n\}, j \in \{1, \ldots, d\}}\)：</p>
+<p>我们对多项式知识协议（3.7 节）做了许多重要的修改来让它更具有通用性，让我们看看它现在是如何定义的。假设函数 \(f(*)\) 的计算结果是证明的主体，运算的数量为 \(d\)，变量的数量为 \(n\)，对应的系数为 \(\left\{ c_{L,i,j}, c_{R,i,j}, c_{O,i,j} \right\}_{i \in \{1, \ldots, n\}, j \in \{1, \ldots, d\}}\)：</p>
 <ul>
 <li>设置
 <ul>
@@ -1510,8 +1510,8 @@ $$e\left( g_l^{L_v(s)} g_l^{L_p}, g_r^{R_v(s)} g_r^{R_p} \right) = e\left( g_o^{
 <p>译者注：这里将原本由证明者赋值的一些变量改为由验证者赋值，使得证明者不得不与验证者保持相同的输入。这不仅解决了验证者参数输入的问题，也间接解决了常数赋值的问题。</p>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="计算的零知识证明"><a class="header" href="#计算的零知识证明">计算的零知识证明</a></h1>
-<p>自从引入通用计算协议（第 4.4 节运算证明）以来，我们不得不放弃<em>零知识</em>属性来让过渡更加简单。现在，我们已经构建了一个可验证计算协议。</p>
-<p>以前为了构造多项式的<em>零知识</em>证明，我们使用了随机 \(\delta\)-移位，这使得证明与随机无法区分（第 3.5 节）：</p>
+<p>自从引入通用计算协议（4.4 节运算证明）以来，我们不得不放弃<em>零知识</em>属性来让过渡更加简单。现在，我们已经构建了一个可验证计算协议。</p>
+<p>以前为了构造多项式的<em>零知识</em>证明，我们使用了随机 \(\delta\)-移位，这使得证明与随机无法区分（3.5 节）：</p>
 <p>$$\delta p(s) = t(s) \cdot \delta h(s)$$</p>
 <p>通过计算，我们证明：</p>
 <p>$$L(s) \cdot R(s) - O(s) = t(s)h(s)$$</p>
