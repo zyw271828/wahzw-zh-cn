@@ -144,7 +144,7 @@
 <p>让我们用以下两个运算作为例子来说明备注 4.1：</p>
 <p>$$\color{ForestGreen}{a}\quad \times \quad\color{blue}{1}\quad = \quad\color{red}{b}$$</p>
 <p>$$\color{ForestGreen}{3a}\quad \times \quad\color{blue}{1}\quad = \quad\color{red}{c}$$</p>
-<p>预期结果是 \(b = a\) 和 \(c = 3a\)，有明确的 \(c = 3b\) 的关系。这意味着<em>左操作数的变量</em>多项式的求值为 \(l_a(1) = 1\) 和 \(l_a(2) = 3\)。无论 \(l_a(x)\) 的形式如何，证明者都可以通过提供修改的多项式 \(l'_a(x) = a l_a(x) + 1\) 来不成比例地赋 \(a\) 的值。因此求值将会变成 \(l'_a(1) = a + 1\) 和 \(l'_a(2) = 3a + 1\)，结果 \(b = a + 1\)，\(c = 3a + 1\) 其中 \(c \neq 3b\)，实际上意味着 \(a\) 的值在不同的运算中是不一样的。</p>
+<p>预期结果是 \(b = a\) 和 \(c = 3a\)，有明确的 \(c = 3b\) 的关系。这意味着<em>左操作数的变量</em>多项式的求值为 \(l_a(1) = 1\) 和 \(l_a(2) = 3\)。无论 \(l_a(x)\) 的形式如何，证明者都可以通过提供修改的多项式 \(l'_a(x) = a l_a(x) + 1\) 来不成比例地赋 \(a\) 的值。因此求值将会变成 \(l'_a(1) = a + 1\) 和 \(l'_a(2) = 3a + 1\)，结果 \(b = a + 1\)，\(c = 3a + 1\)，其中 \(c \neq 3b\)，实际上意味着 \(a\) 的值在不同的运算中是不一样的。</p>
 <p>因为证明者已知 \(g^{\alpha_l}\) 和 \(g^{\beta_l}\)，所以他可以同时满足<em>正确的操作数多项式</em>和<em>变量值一致性</em>检查：</p>
 <ul>
 <li>\(\ldots\) 证明
@@ -175,7 +175,7 @@ $${e\left( g, g \right)}^{(a\cdot l_a + 1) \beta_l + R\beta_r + O\beta_o} = e\le
 </li>
 </ul>
 <h2 id="变量一致性多项式的延展性"><a class="header" href="#变量一致性多项式的延展性">变量一致性多项式的延展性</a></h2>
-<p>此外，\(g^{\beta_l}, g^{\beta_r}, g^{\beta_o}\) 的可用性允许在不同的操作数中使用相同变量的不同值。例如，如果我们有一个运算：</p>
+<p>此外，可以使用 \(g^{\beta_l}, g^{\beta_r}, g^{\beta_o}\) 就允许在不同的操作数中使用相同变量的不同值。例如，如果我们有一个运算：</p>
 <p>$$\color{ForestGreen}{a}\quad \times \quad\color{blue}{a}\quad = \quad\color{red}{b}$$</p>
 <p>可以用变量多项式表示：</p>
 <p>$${\color{ForestGreen}{l_a(x) = x}},\quad {\color{blue}{r_a(x) = x}},\quad {\color{red}{o_a(x) = 0}}$$</p>
@@ -225,7 +225,7 @@ $$e\left( g^{L}, g^{\beta_l \gamma} \right) \cdot e\left( g^{R}, g^{\beta_r \gam
 </li>
 </ul>
 <p>需要注意的是，我们排除了变量多项式为 0 阶的情况（例如 \(l_1(x) = 1x^0\)），否则在任何两个操作数 / 输出为零的情况下，将允许在证明密钥 \(\left\{ g^{\beta_l l_i(s) + \beta_r r_i(s) + \beta_o o_i(s)} \right\}_{i \in \{1,\ldots,n\}}\) 的变量一致性多项式中暴露 \(\beta\) 的加密，例如，对于 \(l_1(x) = 1,\ r_1(s) = 0,\ o_1(s) = 0\)，这将导致 \(g^{\beta_l l_1(s) + \beta_r r_1(s) + \beta_o o_1(s)} = g^{\beta_l}\)。</p>
-<p>我们也可以用类似的方法<em>屏蔽</em> \(\alpha\) 来解决<em>变量多项式</em>的延展性。但这并不是必需的，因为对<em>变量多项式</em>的任何修改都需要反映在无法修改的<em>变量一致性多项式</em>中。</p>
+<p>我们也可以用类似的方法<em>屏蔽</em> \(\alpha\) 来解决<em>变量多项式</em>的延展性。但这并不是必需的，因为对<em>变量多项式</em>的任何修改都需要被反映在无法修改的<em>变量一致性多项式</em>中。</p>
 
                     </main>
 
