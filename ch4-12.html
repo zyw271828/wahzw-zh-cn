@@ -149,16 +149,16 @@
 <p>$$e\left(g, g \right)^{\delta^2 L(s) R(s)} = e(g,g)^{\delta^2 \left(t(s) h(s) + O(s) \right)}$$</p>
 <p>问题是相同的 \(\delta\) 会妨碍安全性，因为我们在证明中分别提供了这些值：</p>
 <ul>
-<li>可以很容易地识别两个不同多项式的值是否相同（例如，\(g^{\delta L(s)} = g^{\delta R(s)}\) 等等），即可以学习一些知识</li>
-<li>\(L(s)\) 和 \(R(s)\) 值之间的潜在微小差异可以允许通过暴力破解来分解，例如，如果 \(L(s) = 5R(s)\)，迭代检查 \(g^{L(s)} = \left( g^{R(s)} \right)^i\)，其中 \(i \in \{1 ... N\}\) 只需 5 步即可显示 \(5\times\) 的差异。可以对加密的加法运算执行相同的暴力破解，例如，\(g^{L(s)} = g^{R(s) + 5}\)</li>
-<li>可以发现证明中的元素之间的其他相关性，例如，如果 \(e(g^{\delta L(s)}, g^{\delta R(s)}) = e(g^{\delta^2 O(s)}, g)\) 则 \(L(x) \cdot R(x) = O(x)\) 等等</li>
+<li>可以很容易地识别两个不同多项式的值是否相同（例如，\(g^{\delta L(s)} = g^{\delta R(s)}\) 等等），也就是可以学习到一些知识</li>
+<li>\(L(s)\) 和 \(R(s)\) 值之间的潜在微小差异可以允许通过暴力破解来分解，例如，如果 \(L(s) = 5R(s)\)，迭代检查 \(g^{L(s)} = \left( g^{R(s)} \right)^i\)，其中 \(i \in \{1 ... N\}\) 只需 5 步即可揭示 \(5\times\) 的差异。可以对加密的加法运算执行相同的暴力破解，例如，\(g^{L(s)} = g^{R(s) + 5}\)</li>
+<li>可以发现证明中元素之间的其他相关性，例如，如果 \(e(g^{\delta L(s)}, g^{\delta R(s)}) = e(g^{\delta^2 O(s)}, g)\) 则 \(L(x) \cdot R(x) = O(x)\) 等等</li>
 </ul>
 <blockquote>
-<p>注：优化 4.9.4 使此类数据挖掘变得更加困难，但仍然允许发现关系，除了验证者可以用有助于揭示知识的特定方式选择 \(\rho_l, \rho_r\)（只要它不是一种多元化的设置）这一事实。</p>
+<p>注：优化 4.9.4 使此类数据挖掘变得更加困难，但仍然允许发现其中的关系，除了验证者可以用有助于揭示知识的特定方式选择 \(\rho_l, \rho_r\)（只要它不是一种多元化的设置）这一事实。</p>
 </blockquote>
 <p>因此，我们需要让每个多项式的值具有不同的随机性（\(\delta\)），例如：</p>
 <p>$$\delta_l L(s) \cdot \delta_r R(s) - \delta_o O(s) = t(s) \cdot (\Delta\ \ \unicode{x003F}\unicode{x2009}\unicode{x20DD}\ h(s))$$</p>
-<p>为了解右侧的不等式，我们只能修改证明的值 \(h(s)\)，而不需要更改协议。这里的 Delta（\(\Delta\)）代表我们需要应用到 \(h(s)\) 来抵消等式另一边的随机性的差异，\(\ \unicode{x003F}\unicode{x2009}\unicode{x20DD}\) 代表乘法或加法运算（反过来也适应除法和减法）。如果我们选择通过乘法（\(\ \unicode{x003F}\unicode{x2009}\unicode{x20DD} = \times\)）应用 \(\Delta\)，这意味着不可能以压倒性的概率找到 \(\Delta\)，因为存在随机性：</p>
+<p>为了解决右侧的不相等，我们修改证明的值 \(h(s)\) 相比更改协议显得更为可取。这里的 Delta（\(\Delta\)）代表我们需要应用到 \(h(s)\) 来抵消等式另一边的随机性的差异，\(\ \unicode{x003F}\unicode{x2009}\unicode{x20DD}\) 代表乘法或加法运算（反过来也适应除法和减法）。如果我们选择通过乘法（\(\ \unicode{x003F}\unicode{x2009}\unicode{x20DD} = \times\)）应用 \(\Delta\)，这意味着不可能以压倒性的概率找到 \(\Delta\)，因为存在随机性：</p>
 <p>$$\Delta = \frac{\delta_l L(s) \cdot \delta_r R(s) - \delta_o O(s)}{t(s) h(s)}$$</p>
 <p>我们可以设置 \(\delta_o = \delta_l \cdot \delta_r\)，于是转换为：</p>
 <p>$$\Delta = \frac{\delta_l \delta_r( L(s) \cdot R(s) - O(s))}{t(s) h(s)} = \delta_l \delta_r$$</p>
@@ -187,7 +187,7 @@
 </blockquote>
 <p>为了使「变量多项式限制」和「变量值一致性」检查与零知识更改一致，有必要将以下参数添加到证明密钥中：</p>
 <p>$$g_l^{t(s)}, g_r^{t(s)}, g_o^{t(s)}, g_l^{\alpha_l t(s)}, g_r^{\alpha_r t(s)}, g_o^{\alpha_o t(s)}, g_l^{\beta t(s)}, g_r^{\beta t(s)}, g_o^{\beta t(s)}$$</p>
-<p>非常奇怪的是，最初的 Pinocchio 协议 [<a href="./references.html#%5BPar+13">Par+13</a>] 主要关注可验证计算，而不是<em>零知识</em>属性，这只是一个小的修改，几乎是无成本的。</p>
+<p>非常奇怪的是，最初的 Pinocchio 协议 [<a href="./references.html#%5BPar+13">Par+13</a>] 主要关注可验证计算，很少关注<em>零知识</em>属性，但这只是一个小的修改，几乎是无成本的。</p>
 <blockquote>
 <p>译者注：与前文的零知识方案不同，这里通过相加而不是相乘的方式来确保证明者知识的零知识性。</p>
 <p>Pinocchio 协议是针对 [GGPR] 论文的改进，在 3.1 节中也提到了实现零知识只需要沿用 [GGPR] 论文的方法即可，并不是这篇论文的贡献。另外，Pinocchio 协议的论文侧重工程实践，在 2013 年时，零知识证明还没有得到应用，真正的应用还是从匿名币 Zcash 开始的。</p>

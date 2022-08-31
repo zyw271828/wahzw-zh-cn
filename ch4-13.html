@@ -140,7 +140,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="zk-snark-协议"><a class="header" href="#zk-snark-协议">zk-SNARK 协议</a></h1>
-<p>在所有的逐步改进之后，最终的零知识简洁的非交互式知识论证是这样的（<em>零知识</em>组件是可选的，并以\(\color{Magenta}{不同的颜色}\)突出显示）：</p>
+<p>在所有的逐步改进之后，最终的零知识简洁的非交互式知识论证如下（<em>零知识</em>组件是可选的，并以\(\color{Magenta}{不同的颜色}\)突出显示）：</p>
 <ul>
 <li>设置
 <ul>
@@ -162,9 +162,9 @@ $$\left( g^1, g_o^{t(s)}, \left\{ g_l^{l_i(s)}, g_r^{r_i(s)}, g_o^{o_i(s)} \righ
 <li>将所有值赋值给未加密的变量多项式 \(L(x) = l_0(x) + \sum_{i = 1}^n v_i \cdot l_i(x)\)，\(R(x), O(x)\) 同理</li>
 <li>\(\color{Magenta}{选择随机值 \ \delta_l, \delta_r \ 和 \ \delta_o}\)</li>
 <li>找到 \(\displaystyle h(x) = \frac{L(x) R(x) - O(x)}{t(x)} \color{Magenta}{\ +\ \delta_r L(x) + \delta_l R(x) + \delta_l \delta_r t(x) - \delta_o }\)</li>
-<li>将证明者的变量值赋值给加密的变量多项式 \(\color{Magenta}{并应用零知识 \ \delta-移位}\)
+<li>将证明者的变量值赋值给加密的变量多项式 \(\color{Magenta}{并应用零知识 \ \delta\text{-}移位}\)
 $$\displaystyle g_l^{L_p(s)} = \color{Magenta}{ \left(g_l^{t(s)}\right)^{\delta_l} } \cdot \prod_{i = m+1}^n \left( g_l^{l_i(s)} \right)^{v_i}，g_r^{R_p(s)}, g_o^{O_p(s)} \ 同理$$</li>
-<li>为它的 \(\alpha\)-移位赋值
+<li>为它的 \(\alpha\)-移位的配对赋值
 $$\displaystyle g_l^{L'_p(s)} = \color{Magenta}{ \left(g_l^{\alpha_l t(s)}\right)^{\delta_l} } \cdot \prod_{i = m+1}^n \left( g_l^{\alpha_l l_i(s)} \right)^{v_i}，g_r^{R'_p(s)}, g_o^{O'_p(s)} \ 同理$$</li>
 <li>为变量值一致性多项式赋值
 $$g^{Z(s)} = \color{Magenta}{ \left(g_l^{\beta t(s)}\right)^{\delta_l} \left(g_r^{\beta t(s)}\right)^{\delta_r} \left(g_o^{\beta t(s)}\right)^{\delta_o} } \cdot \prod_{i=m+1}^n \left( g_l^{\beta l_i(s)} g_r^{\beta r_i(s)} g_o^{\beta o_i(s)} \right)^{v_i}$$</li>
@@ -175,7 +175,7 @@ $$\left( g_l^{L_p(s)}, g_r^{R_p(s)}, g_o^{O_p(s)}, g^{h(s)}, g_l^{L'_p(s)}, g_r^
 <li>验证
 <ul>
 <li>将证明解析为 \(\left( g_l^{L_p}, g_r^{R_p}, g_o^{O_p}, g^{h}, g_l^{L'_p}, g_r^{R'_p}, g_o^{O'_p}, g^{Z} \right)\)</li>
-<li>将输入 / 输出值赋值给验证者的加密多项式并加到 \(1\)：
+<li>将输入 / 输出值赋值给验证者的加密多项式并与 \(1\) 相加：
 $$\displaystyle g_l^{L_v(s)} = g_l^{l_0(s)} \cdot \prod_{i=1}^m \left( g_l^{l_i(s)} \right)^{v_i}，g_r^{R_v(s)} \ 和 \ g_o^{O_v(s)} \ 同理$$</li>
 <li>检查变量多项式限制：
 $$e\left( g_l^{L_p}, g^{\alpha_l} \right) = e\left( g_l^{L'_p}, g \right)，g_r^{R_p} \ 和 \ g_o^{O_p} \ 同理$$</li>

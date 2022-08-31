@@ -148,11 +148,11 @@
 <li>在<em>零知识</em>中（In <em>Zero-Knowledge</em>）——从证明中提取任何知识都是不可行的，即它与随机无法区分</li>
 </ul>
 <blockquote>
-<p>译者注：论证（Argument）与证明（Proof）不同，Pinocchio 协议是论证而非证明。这是因为 Pinocchio 的可靠性是计算可靠性（Computational Soundness）、统计零知识（Statistical Zero-Knowledge），这一类的证明系统被称为论证。计算可靠性暗含了一种事实：如果证明者的计算能力足够强，可以破坏可靠性。</p>
+<p>译者注：论证（Argument）与证明（Proof）不同，Pinocchio 协议是论证而非证明。这是因为 Pinocchio 的可靠性是计算可靠性（Computational Soundness）、统计零知识（Statistical Zero-Knowledge），这一类的证明系统被称为论证。计算可靠性暗示了一个事实：如果证明者的计算能力足够强，可以破坏可靠性。</p>
 </blockquote>
 <p>由于多项式的独特性质、模算术、同态加密、椭圆曲线密码学、密码学配对和发明者的独创性，这个协议才得以实现。</p>
-<p>该协议证明了唯一的有限执行机计算的正确性，它在一次运算中可以将几乎任意数量的变量相加，但只能执行一次乘法。因此，有机会优化程序以有效利用这种特殊性，以及使用最小化运算数量的结构。</p>
-<p>重要的是，验证者不必知道任何秘密数据来验证证明，任何人都可以用非交互的方式发布和使用正确构造的验证密钥。这与证明只能说服一方的「指定验证者（Designated Verifier）」方案相反，后者是不可转让的。在 <em>zk-SNARK</em> 中，我们可以在不可信或单方生成密钥对的情况下实现可转让属性。</p>
+<p>该协议证明了唯一的有限执行机计算的正确性，它在一次运算中可以将几乎任意数量的变量相加，但只能执行一次乘法。因此，有机会优化程序来有效利用这种特殊性，以及使用最小化运算数量的结构。</p>
+<p>重要的是，验证者不必知道任何秘密数据来验证证明，任何人都可以用非交互的方式发布和使用正确构造的验证密钥。这与证明只能说服一方的「指定验证者」方案相反，后者是不可转让的。在 <em>zk-SNARK</em> 中，我们可以在不可信或单方生成密钥对的情况下实现可转让属性。</p>
 <p>零知识证明结构领域正在不断发展，包括优化（[<a href="./references.html#Ben+13">Ben+13</a>; <a href="./references.html#Gro16">Gro16</a>; <a href="./references.html#GM17">GM17</a>]）、可更新的证明和验证密钥等改进（[<a href="./references.html#Gro+18">Gro+18</a>]），以及新的结构（Bulletproofs [<a href="./references.html#B%C3%BCn+17">Bün+17</a>]，ZK-STARK [<a href="./references.html#Ben+18">Ben+18</a>]，Sonic [<a href="./references.html#Mal+19">Mal+19</a>]）。</p>
 <h2 id="致谢"><a class="header" href="#致谢">致谢</a></h2>
 <p>我们感谢 Mary Maller 和 Andrew Miller 对这篇文章提出的宝贵意见。</p>

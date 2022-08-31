@@ -556,7 +556,7 @@
 <li>验证者在所有相关证明被验证完毕之前必须保存 \(\alpha\) 和 \(t(s)\)，这就带来了一个可能造成秘密参数泄漏的额外攻击面</li>
 </ul>
 <p>因此，为了证明一个陈述（在这种情况下是多项式知识），需要与每个验证者进行单独的交互。</p>
-<p>尽管交互式证明也有它的用处，例如一个证明者只想让一个特定的验证者（称为指定验证者，更多信息参见 [<a href="./references.html#JSI96">JSI96</a>]）确信，就不能再重复利用同一个证明去向别人证明这个声明了，但是当一个证明者想让众多的参与者同时（例如在区块链等分布式系统中）或者永久地确信的话，这种方法就很低效了。证明者需要一直保持在线并对每一个验证者执行相同的计算。</p>
+<p>尽管交互式证明也有它的用处，例如一个证明者只想让一个特定的验证者（称为指定验证者，即 Designated Verifier，更多信息参见 [<a href="./references.html#JSI96">JSI96</a>]）确信，就不能再重复利用同一个证明去向别人证明这个声明了，但是当一个证明者想让众多的参与者同时（例如在区块链等分布式系统中）或者永久地确信的话，这种方法就很低效了。证明者需要一直保持在线并对每一个验证者执行相同的计算。</p>
 <p>因而，我们就需要一个可以被重复使用、公开、可信，又不会被滥用的秘密参数。</p>
 <p>我们先来思考一下如何在构造出秘密值（\(t(s), \alpha\)）之后保证它们的安全性。我们可以像验证者在发送给证明者之前加密 \(s\) 的幂一样对它们进行加密。但是备注 3.2 中提到，我们使用的同态加密并不支持两个秘密值相乘，这一点对 \(t(s)\) 和 \(h\) 的加密值相乘以及 \(p\) 和 \(\alpha\) 的加密值相乘的验证都很重要。这正是密码学配对（Cryptographic Pairing）适用的地方。</p>
 <blockquote>
@@ -1485,7 +1485,7 @@ $$\left( g_l^{L_p(s)}, g_r^{R_p(s)}, g_o^{O_p(s)}, g_l^{\alpha_l L_p(s)}, g_r^{\
 </li>
 <li>验证
 <ul>
-<li>为验证者的变量多项式赋值并加到 1：
+<li>为验证者的变量多项式赋值并与 1 相加：
 $$g_l^{L_v(s)} = g_l^{l_0(s)} \cdot \prod_{i=1}^m \left( g_l^{l_i(s)} \right)^{v_i}，g_r^{R_v(s)} \ 和 \ g_o^{O_v(s)} \ 同理$$</li>
 <li>检查变量多项式限制：
 $$e\left( g_l^{L_p}, g^{\alpha_l} \right) = e\left( g_l^{L'_p}, g \right)，g_r^{R_p} \ 和 \ g_o^{O_p} \ 同理$$</li>
@@ -1519,16 +1519,16 @@ $$e\left( g_l^{L_v(s)} g_l^{L_p}, g_r^{R_v(s)} g_r^{R_p} \right) = e\left( g_o^{
 <p>$$e\left(g, g \right)^{\delta^2 L(s) R(s)} = e(g,g)^{\delta^2 \left(t(s) h(s) + O(s) \right)}$$</p>
 <p>问题是相同的 \(\delta\) 会妨碍安全性，因为我们在证明中分别提供了这些值：</p>
 <ul>
-<li>可以很容易地识别两个不同多项式的值是否相同（例如，\(g^{\delta L(s)} = g^{\delta R(s)}\) 等等），即可以学习一些知识</li>
-<li>\(L(s)\) 和 \(R(s)\) 值之间的潜在微小差异可以允许通过暴力破解来分解，例如，如果 \(L(s) = 5R(s)\)，迭代检查 \(g^{L(s)} = \left( g^{R(s)} \right)^i\)，其中 \(i \in \{1 ... N\}\) 只需 5 步即可显示 \(5\times\) 的差异。可以对加密的加法运算执行相同的暴力破解，例如，\(g^{L(s)} = g^{R(s) + 5}\)</li>
-<li>可以发现证明中的元素之间的其他相关性，例如，如果 \(e(g^{\delta L(s)}, g^{\delta R(s)}) = e(g^{\delta^2 O(s)}, g)\) 则 \(L(x) \cdot R(x) = O(x)\) 等等</li>
+<li>可以很容易地识别两个不同多项式的值是否相同（例如，\(g^{\delta L(s)} = g^{\delta R(s)}\) 等等），也就是可以学习到一些知识</li>
+<li>\(L(s)\) 和 \(R(s)\) 值之间的潜在微小差异可以允许通过暴力破解来分解，例如，如果 \(L(s) = 5R(s)\)，迭代检查 \(g^{L(s)} = \left( g^{R(s)} \right)^i\)，其中 \(i \in \{1 ... N\}\) 只需 5 步即可揭示 \(5\times\) 的差异。可以对加密的加法运算执行相同的暴力破解，例如，\(g^{L(s)} = g^{R(s) + 5}\)</li>
+<li>可以发现证明中元素之间的其他相关性，例如，如果 \(e(g^{\delta L(s)}, g^{\delta R(s)}) = e(g^{\delta^2 O(s)}, g)\) 则 \(L(x) \cdot R(x) = O(x)\) 等等</li>
 </ul>
 <blockquote>
-<p>注：优化 4.9.4 使此类数据挖掘变得更加困难，但仍然允许发现关系，除了验证者可以用有助于揭示知识的特定方式选择 \(\rho_l, \rho_r\)（只要它不是一种多元化的设置）这一事实。</p>
+<p>注：优化 4.9.4 使此类数据挖掘变得更加困难，但仍然允许发现其中的关系，除了验证者可以用有助于揭示知识的特定方式选择 \(\rho_l, \rho_r\)（只要它不是一种多元化的设置）这一事实。</p>
 </blockquote>
 <p>因此，我们需要让每个多项式的值具有不同的随机性（\(\delta\)），例如：</p>
 <p>$$\delta_l L(s) \cdot \delta_r R(s) - \delta_o O(s) = t(s) \cdot (\Delta\ \ \unicode{x003F}\unicode{x2009}\unicode{x20DD}\ h(s))$$</p>
-<p>为了解右侧的不等式，我们只能修改证明的值 \(h(s)\)，而不需要更改协议。这里的 Delta（\(\Delta\)）代表我们需要应用到 \(h(s)\) 来抵消等式另一边的随机性的差异，\(\ \unicode{x003F}\unicode{x2009}\unicode{x20DD}\) 代表乘法或加法运算（反过来也适应除法和减法）。如果我们选择通过乘法（\(\ \unicode{x003F}\unicode{x2009}\unicode{x20DD} = \times\)）应用 \(\Delta\)，这意味着不可能以压倒性的概率找到 \(\Delta\)，因为存在随机性：</p>
+<p>为了解决右侧的不相等，我们修改证明的值 \(h(s)\) 相比更改协议显得更为可取。这里的 Delta（\(\Delta\)）代表我们需要应用到 \(h(s)\) 来抵消等式另一边的随机性的差异，\(\ \unicode{x003F}\unicode{x2009}\unicode{x20DD}\) 代表乘法或加法运算（反过来也适应除法和减法）。如果我们选择通过乘法（\(\ \unicode{x003F}\unicode{x2009}\unicode{x20DD} = \times\)）应用 \(\Delta\)，这意味着不可能以压倒性的概率找到 \(\Delta\)，因为存在随机性：</p>
 <p>$$\Delta = \frac{\delta_l L(s) \cdot \delta_r R(s) - \delta_o O(s)}{t(s) h(s)}$$</p>
 <p>我们可以设置 \(\delta_o = \delta_l \cdot \delta_r\)，于是转换为：</p>
 <p>$$\Delta = \frac{\delta_l \delta_r( L(s) \cdot R(s) - O(s))}{t(s) h(s)} = \delta_l \delta_r$$</p>
@@ -1557,13 +1557,13 @@ $$e\left( g_l^{L_v(s)} g_l^{L_p}, g_r^{R_v(s)} g_r^{R_p} \right) = e\left( g_o^{
 </blockquote>
 <p>为了使「变量多项式限制」和「变量值一致性」检查与零知识更改一致，有必要将以下参数添加到证明密钥中：</p>
 <p>$$g_l^{t(s)}, g_r^{t(s)}, g_o^{t(s)}, g_l^{\alpha_l t(s)}, g_r^{\alpha_r t(s)}, g_o^{\alpha_o t(s)}, g_l^{\beta t(s)}, g_r^{\beta t(s)}, g_o^{\beta t(s)}$$</p>
-<p>非常奇怪的是，最初的 Pinocchio 协议 [<a href="./references.html#%5BPar+13">Par+13</a>] 主要关注可验证计算，而不是<em>零知识</em>属性，这只是一个小的修改，几乎是无成本的。</p>
+<p>非常奇怪的是，最初的 Pinocchio 协议 [<a href="./references.html#%5BPar+13">Par+13</a>] 主要关注可验证计算，很少关注<em>零知识</em>属性，但这只是一个小的修改，几乎是无成本的。</p>
 <blockquote>
 <p>译者注：与前文的零知识方案不同，这里通过相加而不是相乘的方式来确保证明者知识的零知识性。</p>
 <p>Pinocchio 协议是针对 [GGPR] 论文的改进，在 3.1 节中也提到了实现零知识只需要沿用 [GGPR] 论文的方法即可，并不是这篇论文的贡献。另外，Pinocchio 协议的论文侧重工程实践，在 2013 年时，零知识证明还没有得到应用，真正的应用还是从匿名币 Zcash 开始的。</p>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="zk-snark-协议"><a class="header" href="#zk-snark-协议">zk-SNARK 协议</a></h1>
-<p>在所有的逐步改进之后，最终的零知识简洁的非交互式知识论证是这样的（<em>零知识</em>组件是可选的，并以\(\color{Magenta}{不同的颜色}\)突出显示）：</p>
+<p>在所有的逐步改进之后，最终的零知识简洁的非交互式知识论证如下（<em>零知识</em>组件是可选的，并以\(\color{Magenta}{不同的颜色}\)突出显示）：</p>
 <ul>
 <li>设置
 <ul>
@@ -1585,9 +1585,9 @@ $$\left( g^1, g_o^{t(s)}, \left\{ g_l^{l_i(s)}, g_r^{r_i(s)}, g_o^{o_i(s)} \righ
 <li>将所有值赋值给未加密的变量多项式 \(L(x) = l_0(x) + \sum_{i = 1}^n v_i \cdot l_i(x)\)，\(R(x), O(x)\) 同理</li>
 <li>\(\color{Magenta}{选择随机值 \ \delta_l, \delta_r \ 和 \ \delta_o}\)</li>
 <li>找到 \(\displaystyle h(x) = \frac{L(x) R(x) - O(x)}{t(x)} \color{Magenta}{\ +\ \delta_r L(x) + \delta_l R(x) + \delta_l \delta_r t(x) - \delta_o }\)</li>
-<li>将证明者的变量值赋值给加密的变量多项式 \(\color{Magenta}{并应用零知识 \ \delta-移位}\)
+<li>将证明者的变量值赋值给加密的变量多项式 \(\color{Magenta}{并应用零知识 \ \delta\text{-}移位}\)
 $$\displaystyle g_l^{L_p(s)} = \color{Magenta}{ \left(g_l^{t(s)}\right)^{\delta_l} } \cdot \prod_{i = m+1}^n \left( g_l^{l_i(s)} \right)^{v_i}，g_r^{R_p(s)}, g_o^{O_p(s)} \ 同理$$</li>
-<li>为它的 \(\alpha\)-移位赋值
+<li>为它的 \(\alpha\)-移位的配对赋值
 $$\displaystyle g_l^{L'_p(s)} = \color{Magenta}{ \left(g_l^{\alpha_l t(s)}\right)^{\delta_l} } \cdot \prod_{i = m+1}^n \left( g_l^{\alpha_l l_i(s)} \right)^{v_i}，g_r^{R'_p(s)}, g_o^{O'_p(s)} \ 同理$$</li>
 <li>为变量值一致性多项式赋值
 $$g^{Z(s)} = \color{Magenta}{ \left(g_l^{\beta t(s)}\right)^{\delta_l} \left(g_r^{\beta t(s)}\right)^{\delta_r} \left(g_o^{\beta t(s)}\right)^{\delta_o} } \cdot \prod_{i=m+1}^n \left( g_l^{\beta l_i(s)} g_r^{\beta r_i(s)} g_o^{\beta o_i(s)} \right)^{v_i}$$</li>
@@ -1598,7 +1598,7 @@ $$\left( g_l^{L_p(s)}, g_r^{R_p(s)}, g_o^{O_p(s)}, g^{h(s)}, g_l^{L'_p(s)}, g_r^
 <li>验证
 <ul>
 <li>将证明解析为 \(\left( g_l^{L_p}, g_r^{R_p}, g_o^{O_p}, g^{h}, g_l^{L'_p}, g_r^{R'_p}, g_o^{O'_p}, g^{Z} \right)\)</li>
-<li>将输入 / 输出值赋值给验证者的加密多项式并加到 \(1\)：
+<li>将输入 / 输出值赋值给验证者的加密多项式并与 \(1\) 相加：
 $$\displaystyle g_l^{L_v(s)} = g_l^{l_0(s)} \cdot \prod_{i=1}^m \left( g_l^{l_i(s)} \right)^{v_i}，g_r^{R_v(s)} \ 和 \ g_o^{O_v(s)} \ 同理$$</li>
 <li>检查变量多项式限制：
 $$e\left( g_l^{L_p}, g^{\alpha_l} \right) = e\left( g_l^{L'_p}, g \right)，g_r^{R_p} \ 和 \ g_o^{O_p} \ 同理$$</li>
@@ -1618,11 +1618,11 @@ $$e\left( g_l^{L_p} g_l^{L_v(s)}, g_r^{R_p} g_r^{R_v(s)} \right) = e\left( g_o^{
 <li>在<em>零知识</em>中（In <em>Zero-Knowledge</em>）——从证明中提取任何知识都是不可行的，即它与随机无法区分</li>
 </ul>
 <blockquote>
-<p>译者注：论证（Argument）与证明（Proof）不同，Pinocchio 协议是论证而非证明。这是因为 Pinocchio 的可靠性是计算可靠性（Computational Soundness）、统计零知识（Statistical Zero-Knowledge），这一类的证明系统被称为论证。计算可靠性暗含了一种事实：如果证明者的计算能力足够强，可以破坏可靠性。</p>
+<p>译者注：论证（Argument）与证明（Proof）不同，Pinocchio 协议是论证而非证明。这是因为 Pinocchio 的可靠性是计算可靠性（Computational Soundness）、统计零知识（Statistical Zero-Knowledge），这一类的证明系统被称为论证。计算可靠性暗示了一个事实：如果证明者的计算能力足够强，可以破坏可靠性。</p>
 </blockquote>
 <p>由于多项式的独特性质、模算术、同态加密、椭圆曲线密码学、密码学配对和发明者的独创性，这个协议才得以实现。</p>
-<p>该协议证明了唯一的有限执行机计算的正确性，它在一次运算中可以将几乎任意数量的变量相加，但只能执行一次乘法。因此，有机会优化程序以有效利用这种特殊性，以及使用最小化运算数量的结构。</p>
-<p>重要的是，验证者不必知道任何秘密数据来验证证明，任何人都可以用非交互的方式发布和使用正确构造的验证密钥。这与证明只能说服一方的「指定验证者（Designated Verifier）」方案相反，后者是不可转让的。在 <em>zk-SNARK</em> 中，我们可以在不可信或单方生成密钥对的情况下实现可转让属性。</p>
+<p>该协议证明了唯一的有限执行机计算的正确性，它在一次运算中可以将几乎任意数量的变量相加，但只能执行一次乘法。因此，有机会优化程序来有效利用这种特殊性，以及使用最小化运算数量的结构。</p>
+<p>重要的是，验证者不必知道任何秘密数据来验证证明，任何人都可以用非交互的方式发布和使用正确构造的验证密钥。这与证明只能说服一方的「指定验证者」方案相反，后者是不可转让的。在 <em>zk-SNARK</em> 中，我们可以在不可信或单方生成密钥对的情况下实现可转让属性。</p>
 <p>零知识证明结构领域正在不断发展，包括优化（[<a href="./references.html#Ben+13">Ben+13</a>; <a href="./references.html#Gro16">Gro16</a>; <a href="./references.html#GM17">GM17</a>]）、可更新的证明和验证密钥等改进（[<a href="./references.html#Gro+18">Gro+18</a>]），以及新的结构（Bulletproofs [<a href="./references.html#B%C3%BCn+17">Bün+17</a>]，ZK-STARK [<a href="./references.html#Ben+18">Ben+18</a>]，Sonic [<a href="./references.html#Mal+19">Mal+19</a>]）。</p>
 <h2 id="致谢"><a class="header" href="#致谢">致谢</a></h2>
 <p>我们感谢 Mary Maller 和 Andrew Miller 对这篇文章提出的宝贵意见。</p>
