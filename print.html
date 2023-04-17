@@ -5,8 +5,10 @@
         <meta charset="UTF-8">
         <title>zk-SNARK 为什么以及如何工作</title>
         <meta name="robots" content="noindex" />
+
+
         <!-- Custom HTML head -->
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        
         <meta name="description" content="《zk-SNARK 为什么以及如何工作（Why and How zk-SNARK Works）》简体中文版">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -17,27 +19,31 @@
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
         <link rel="stylesheet" href="css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -53,7 +59,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -65,12 +71,14 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -86,7 +94,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -96,7 +104,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -116,6 +124,7 @@
                         <a href="https://github.com/zyw271828/wahzw-zh-cn" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -129,8 +138,9 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -165,7 +175,7 @@
 </li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="摘要"><a class="header" href="#摘要">摘要</a></h1>
-<p>不管是原始论文 [<a href="./references.html#Bit+11">Bit+11</a>; <a href="./references.html#Par+13">Par+13</a>] 还是原理讲解 [<a href="./references.html#Rei16">Rei16</a>; <a href="./references.html#But16">But16</a>; <a href="./references.html#But17">But17</a>; <a href="./references.html#Gab17">Gab17</a>]，其实现在已经有大量关于 zk-SNARK 的学习资源了。由于 zk-SNARK 由大量的可变模块组成，对于很多人来说它依然像一个黑盒子一样难懂。这些资料对 zk-SNARK 中的一些技术难题部分做出了解释，但由于缺少了对应的其它环节的解释，大家还是很难通过这些资料了解到 zk-SNARK 的全貌。</p>
+<p>不管是原始论文 [<a href="./references.html#Bit+11">Bit+11</a>; <a href="./references.html#Par+13">Par+13</a>] 还是原理讲解 [<a href="./references.html#Rei16">Rei16</a>; <a href="./references.html#But16">But16</a>; <a href="./references.html#But17">But17</a>; <a href="./references.html#Gab17">Gab17</a>]，其实现在已经有大量关于 zk-SNARK 的学习资源了。由于 zk-SNARK 由大量的可变模块组成，对于很多人来说它依然像一个黑盒子一样难懂。这些资料对 zk-SNARK 中的一些技术难题部分做出了解释，但由于缺少了对应的其他环节的解释，大家还是很难通过这些资料了解到 zk-SNARK 的全貌。</p>
 <p>当我第一次了解到 zk-SNARK 技术是如何将这些东西完美地融合在一起的时候，就被数学之美震撼到了，并且随着我发现的维度越多，好奇心就越强烈。在这篇文章中，我主要基于一些实例来简洁明了地阐明 zk-SNARK，对其中的很多问题做出解释，并利用这种方式来分享我的经验，进而让更多人也能够欣赏到这项最先进的技术以及它的创新之处，最终欣赏到数学之美。</p>
 <p>这篇文章的主要贡献是比较简洁明了地解释了 zk-SNARK 中相当复杂的技术，这些简单的解释对于在不具备任何与之相关先决知识（比如密码学和高等数学）的前提下理解 zk-SNARK 是很有必要的。文章不仅解释了 zk-SNARK 是如何工作的，还解释了为什么这样就可以工作，以及为什么选择了这样的工作方式。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="前言"><a class="header" href="#前言">前言</a></h1>
@@ -195,21 +205,21 @@
 <p>4）外包计算</p>
 <ul>
 <li>将昂贵的计算外包，并在不重新执行的情况下验证结果是否正确；它开辟了一种零信任计算的类别</li>
-<li>改进区块链模型，从所有节点做同样的计算，到只需一方计算，然后其它节点进行验证</li>
+<li>改进区块链模型，从所有节点做同样的计算，到只需一方计算，然后其他节点进行验证</li>
 </ul>
 <p>和「零知识证明」这个伟大的名词一样，其背后的方法可以说是数学和密码学的奇迹。自 1985 年零知识证明这个概念在《交互式证明系统的知识复杂性》[<a href="./references.html#GMR85">GMR85</a>] 一文中被引入以来，至今已经进入到第四个十年的研究。还有随后出现的非交互式零知识证明 [<a href="./references.html#BFM88">BFM88</a>]，在区块链环境中尤其重要。</p>
 <p>在任意的零知识证明（Zero-knowledge Proof）系统中，都有一个证明者（Prover）在不泄漏任何额外信息的前提下要让验证者（Verifier）确信某些陈述（Statement）是正确的。例如验证者仅能知道证明者的银行账户金额超过 <em>X</em>（也就是不披露实际金额）。协议应当满足下面三个性质：</p>
 <ul>
 <li>完整性——只要陈述是正确的，证明者就可以让验证者确信</li>
 <li>可靠性——如果陈述是错误的，那么作弊的证明者就没有办法让验证者相信</li>
-<li>零知识——协议的交互仅仅揭露陈述是否正确而不泄漏任何其它的信息</li>
+<li>零知识——协议的交互仅仅揭露陈述是否正确而不泄漏任何其他的信息</li>
 </ul>
 <p>zk-SNARK 这个术语本身是在 [<a href="./references.html#Bit+11">Bit+11</a>] 中引入的，它在 [<a href="./references.html#Gro10">Gro10</a>] 的基础上，又遵循了匹诺曹协议（Pinocchio Protocol）[<a href="./references.html#Gen+12">Gen+12</a>; <a href="./references.html#Par+13">Par+13</a>] 使其能够适用于通用的计算。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="证明的媒介"><a class="header" href="#证明的媒介">证明的媒介</a></h1>
 <p>这里我们先不去管零知识、非交互性其形式和适用性这些概念，就从尝试证明一些简单的东西开始。</p>
 <p>想象一下我们有一个长度为 10 的位数组，现在要向验证者（例如程序）证明这样一个陈述：所有的位都被设置成了 1（即我们<em>知道</em>一个每个元素都等于 1 的数组）。</p>
 <p>$$b = [\ \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}, \boxed{?}\ ]$$</p>
-<p>验证者一次只能检查（也就是读取）一位。为了验证这个陈述，我们以某种任意的顺序读取元素并检查其是否确实等于 1。如果第一次抽样检查的结果是 1，就设置陈述的可信度为 \(\displaystyle \frac{1}{10} = 10%\)，否则，如果等于 0，就说明陈述是错误的。验证者继续进行下一轮验证，直到获得足够的可信度为止。假如在一些场景下要信任证明者需要至少 50% 的可信度，那就意味着必须执行 5 次校验。但假如在其它一些场景下需要 95% 的可信度，就需要检查所有的元素。很明显这个证明协议的缺点是必须要根据元素的数量进行检查，如果我们处理数百万个元素的数组，这么做是不现实的。</p>
+<p>验证者一次只能检查（也就是读取）一位。为了验证这个陈述，我们以某种任意的顺序读取元素并检查其是否确实等于 1。如果第一次抽样检查的结果是 1，就设置陈述的可信度为 \(\displaystyle \frac{1}{10} = 10%\)，否则，如果等于 0，就说明陈述是错误的。验证者继续进行下一轮验证，直到获得足够的可信度为止。假如在一些场景下要信任证明者需要至少 50% 的可信度，那就意味着必须执行 5 次校验。但假如在其他一些场景下需要 95% 的可信度，就需要检查所有的元素。很明显这个证明协议的缺点是必须要根据元素的数量进行检查，如果我们处理数百万个元素的数组，这么做是不现实的。</p>
 <p>现在我们来看一下由数学方程式表示的多项式，它可以被画成坐标系上的一条曲线：</p>
 <p><img src="img/2-1.png" alt="img" /></p>
 <p>上面的曲线对应多项式：\(f(x) = x^3 -6x^2 + 11x - 6\)。多项式的阶数取决于 \(x\) 的最大指数，当前多项式的阶数是 3。</p>
@@ -226,7 +236,7 @@
 <p>所以我们可以得出结论，任何多项式在任意点的计算结果（更多关于多项式求值可以参考：[<a href="./references.html#Pik13">Pik13</a>]）都可以看做是其唯一身份的表示。我们来计算一下当 \(x = 10\) 时，示例多项式的结果。</p>
 <p>$$ x^3 - 6x^2 + 11x - 6 = 504 $$</p>
 <p>$$ x^3 - 6x^2 + 10x - 5 = 495 $$</p>
-<p>事实上，在 \(x\) 可以选择的所有值中，至多只有三个值能够使这些多项式相等，其它的值都是不相等的。</p>
+<p>事实上，在 \(x\) 可以选择的所有值中，至多只有三个值能够使这些多项式相等，其他的值都是不相等的。</p>
 <p>这也是为什么如果一个证明者声称他<em>知道</em>一些验证者也知道的多项式（无论多项式的阶数有多大）时，他们就可以按照一个简单的协议去验证：</p>
 <ul>
 <li>验证者选择一个随机值 \(x\) 并在本地计算多项式结果</li>
@@ -427,13 +437,13 @@
 <blockquote>
 <p>注：因为证明者并不知道与 \(s\) 相关的任何信息，所以很难提出不合法但能匹配验证的计算结果。</p>
 </blockquote>
-<p>尽管这个协议中证明者的灵活性有限，他依然可以通过其它的方式来伪造证明，无需实际使用验证者提供的 \(s\) 的幂的加密值。例如，如果证明者声称有一个满足条件的多项式，但只使用了 2 个幂值 \(s^3\) 和 \(s^1\)，这在当前协议中是不能验证的。</p>
+<p>尽管这个协议中证明者的灵活性有限，他依然可以通过其他的方式来伪造证明，无需实际使用验证者提供的 \(s\) 的幂的加密值。例如，如果证明者声称有一个满足条件的多项式，但只使用了 2 个幂值 \(s^3\) 和 \(s^1\)，这在当前协议中是不能验证的。</p>
 <blockquote>
 <p>译者注：本节利用强同态加密这个工具，构造了一个相对较强的零知识证明协议。但是如上文所述，这里还是存在一些问题——无法验证证明者是否是真的使用了验证者提供的值来构造证明。</p>
 <p>下一节中将会展示如何构造一个完备的多项式零知识证明协议。</p>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="限制多项式"><a class="header" href="#限制多项式">限制多项式</a></h1>
-<p>前文提到，多项式的知识其实就是它的系数 \(c_0, c_1, \ldots, c_i\) 的知识。协议中我们是通过对秘密值 \(s\) 的幂的加密值再进行求幂来对系数进行「赋值」的（例如 \(E\left(s^i\right)^{c_i} = g^{c_i \cdot s^i}\)）。我们已经限制了证明者对 \(s\) 幂的加密值的选择，但是这个限制并不是强制的，也就是说，证明者可以使用任何可能的方法找到满足 \(z_p = \left(z_h\right)^{t(s)}\) 的值 \(z_p\) 和 \(z_h\)，再用这两个值来代替 \(g^p\) 和 \(g^h\) 交给验证者。例如随机选定的 \(r\)、\(z_h = g^r\) 和 \(z_p = \left(g^{t(s)}\right)^r\)，其中 \(g^{t(s)}\) 可以从已知的 \(s\) 的加密幂中计算出来。所以验证者需要证明者证明，他给出的 \(g^p\) 和 \(g^h\) 就是用 \(s\) 幂的加密值而不是其它值计算出来的。</p>
+<p>前文提到，多项式的知识其实就是它的系数 \(c_0, c_1, \ldots, c_i\) 的知识。协议中我们是通过对秘密值 \(s\) 的幂的加密值再进行求幂来对系数进行「赋值」的（例如 \(E\left(s^i\right)^{c_i} = g^{c_i \cdot s^i}\)）。我们已经限制了证明者对 \(s\) 幂的加密值的选择，但是这个限制并不是强制的，也就是说，证明者可以使用任何可能的方法找到满足 \(z_p = \left(z_h\right)^{t(s)}\) 的值 \(z_p\) 和 \(z_h\)，再用这两个值来代替 \(g^p\) 和 \(g^h\) 交给验证者。例如随机选定的 \(r\)、\(z_h = g^r\) 和 \(z_p = \left(g^{t(s)}\right)^r\)，其中 \(g^{t(s)}\) 可以从已知的 \(s\) 的加密幂中计算出来。所以验证者需要证明者证明，他给出的 \(g^p\) 和 \(g^h\) 就是用 \(s\) 幂的加密值而不是其他值计算出来的。</p>
 <p>我们看一个由一个变量和一个系数组成的一阶多项式 \(f(x) = c \cdot x\) 的简单例子，对应的 \(s\) 的加密值为 \(E(s) = g^s\)。这里我们要做的就是确保证明者是使用 \(s\) 的加密值，即 \(g^s\)，而不是其他值与系数 \(c\) 做同态相乘的。所以结果一定是 \(\left(g^s\right)^c\) 的形式（\(c\) 为任意值）。</p>
 <p>解决这个问题的一种方法就是对另一个移位（Shift）的加密值做同样的运算，充当「校验和（Checksum）」的算术模拟，以确保结果是原始值的求幂值。</p>
 <p>这是通过指数知识假设（Knowledge-of-Exponent Assumption，KEA）方法来实现的，在 [<a href="./references.html#Dam91">Dam91</a>] 中有介绍，更精准地说：</p>
@@ -1638,8 +1648,8 @@ $$e\left( g_l^{L_p} g_l^{L_v(s)}, g_r^{R_p} g_r^{R_v(s)} \right) = e\left( g_o^{
 <p><a name="BFM88"></a>[BFM88] — Manuel Blum, Paul Feldman, and Silvio Micali. “Non-interactive Zero-knowledge and Its Applications”. In: <em>Proceedings of the Twentieth Annual ACM Symposium on Theory of Computing</em>. STOC ’88. Chicago, Illinois, USA: ACM, 1988, pp. 103–112. isbn: 0–89791–264–0. doi: <a href="https://doi.org/10.1145/62212.62222">10.1145/62212.62222</a>. url: <a href="http://doi.acm.org/10.1145/62212.62222">http://doi.acm.org/10.1145/62212.62222</a></p>
 <p><a name="Gro10"></a>[Gro10] — Jens Groth. “Short pairing-based non-interactive zero-knowledge arguments”. In: <em>International Conference on the Theory and Application of Cryptology and Information Security</em>. Springer. 2010, pp. 321–340</p>
 <p><a name="Gen+12"></a>[Gen+12] — Rosario Gennaro, Craig Gentry, Bryan Parno, and Mariana Raykova. <em>Quadratic Span Programs and Succinct NIZKs without PCPs</em>. Cryptology ePrint Archive, Report 2012/215. <a href="https://eprint.iacr.org/2012/215">https://eprint.iacr.org/2012/215</a>. 2012</p>
-<p><a name="Pik13"></a>[Pik13] — Scott Pike. <em>Evaluating Polynomial Functions</em>. 2013. url: <a href="http://www.mesacc.edu/%7Escotz47781/mat120/notes/polynomials/evaluating/evaluating.html">http://www.mesacc.edu/~scotz47781/mat120/notes/polynomials/evaluating/evaluating.html</a></p>
-<p><a name="Pik14"></a>[Pik14] — Scott Pike. <em>Dividing by a Polynomial</em>. 2014. url: <a href="http://www.mesacc.edu/%7Escotz47781/mat120/notes/divide_poly/long_division/long_division.html">http://www.mesacc.edu/~scotz47781/mat120/notes/divide_poly/long_division/long_division.html</a></p>
+<p><a name="Pik13"></a>[Pik13] — Scott Pike. <em>Evaluating Polynomial Functions</em>. 2013. url: <a href="http://www.mesacc.edu/~scotz47781/mat120/notes/polynomials/evaluating/evaluating.html">http://www.mesacc.edu/~scotz47781/mat120/notes/polynomials/evaluating/evaluating.html</a></p>
+<p><a name="Pik14"></a>[Pik14] — Scott Pike. <em>Dividing by a Polynomial</em>. 2014. url: <a href="http://www.mesacc.edu/~scotz47781/mat120/notes/divide_poly/long_division/long_division.html">http://www.mesacc.edu/~scotz47781/mat120/notes/divide_poly/long_division/long_division.html</a></p>
 <p><a name="Dam91"></a>[Dam91] — Ivan Damgård. “Towards practical public key systems secure against chosen ciphertext attacks”. In: <em>Annual International Cryptology Conference</em>. Springer. 1991, pp. 445–456.</p>
 <p><a name="JSI96"></a>[JSI96] — Markus Jakobsson, Kazue Sako, and Russell Impagliazzo. “Designated verifier proofs and their applications”. In: <em>International Conference on the Theory and Applications of Cryptographic Techniques</em>. Springer. 1996, pp. 143–154.</p>
 <p><a name="DBS04"></a>[DBS04] — Ratna Dutta, Rana Barua, and Palash Sarkar. <em>Pairing-Based Cryptographic Protocols: A Survey</em>. Cryptology ePrint Archive, Report 2004/064. <a href="https://eprint.iacr.org/2004/064">https://eprint.iacr.org/2004/064</a>. 2004.</p>
@@ -1658,33 +1668,45 @@ $$e\left( g_l^{L_p} g_l^{L_v(s)}, g_r^{R_p} g_r^{R_v(s)} \right) = e\left( g_o^{
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
             </nav>
 
         </div>
 
-        <script type="text/javascript">
+
+
+
+        <script>
             window.playground_copyable = true;
         </script>
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript">
+
+        <script>
         window.addEventListener('load', function() {
             MathJax.Hub.Register.StartupHook('End', function() {
                 window.setTimeout(window.print, 100);
             });
         });
         </script>
+
+    </div>
     </body>
 </html>
