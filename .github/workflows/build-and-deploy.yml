@@ -12,17 +12,17 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-      - uses: actions/checkout@v3.0.2
+      - uses: actions/checkout@v3.5.2
 
       - name: Setup mdBook
-        uses: peaceiris/actions-mdbook@v1.1.14
+        uses: peaceiris/actions-mdbook@v1.2.0
         with:
           mdbook-version: "latest"
 
       - run: mdbook build
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3.8.0
+        uses: peaceiris/actions-gh-pages@v3.9.3
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
