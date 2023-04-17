@@ -1,6 +1,6 @@
 # 摘要
 
-不管是原始论文 [[Bit+11](./references.md#Bit+11); [Par+13](./references.md#Par+13)] 还是原理讲解 [[Rei16](./references.md#Rei16); [But16](./references.md#But16); [But17](./references.md#But17); [Gab17](./references.md#Gab17)]，其实现在已经有大量关于 zk-SNARK 的学习资源了。由于 zk-SNARK 由大量的可变模块组成，对于很多人来说它依然像一个黑盒子一样难懂。这些资料对 zk-SNARK 中的一些技术难题部分做出了解释，但由于缺少了对应的其它环节的解释，大家还是很难通过这些资料了解到 zk-SNARK 的全貌。
+不管是原始论文 [[Bit+11](./references.md#Bit+11); [Par+13](./references.md#Par+13)] 还是原理讲解 [[Rei16](./references.md#Rei16); [But16](./references.md#But16); [But17](./references.md#But17); [Gab17](./references.md#Gab17)]，其实现在已经有大量关于 zk-SNARK 的学习资源了。由于 zk-SNARK 由大量的可变模块组成，对于很多人来说它依然像一个黑盒子一样难懂。这些资料对 zk-SNARK 中的一些技术难题部分做出了解释，但由于缺少了对应的其他环节的解释，大家还是很难通过这些资料了解到 zk-SNARK 的全貌。
 
 当我第一次了解到 zk-SNARK 技术是如何将这些东西完美地融合在一起的时候，就被数学之美震撼到了，并且随着我发现的维度越多，好奇心就越强烈。在这篇文章中，我主要基于一些实例来简洁明了地阐明 zk-SNARK，对其中的很多问题做出解释，并利用这种方式来分享我的经验，进而让更多人也能够欣赏到这项最先进的技术以及它的创新之处，最终欣赏到数学之美。
 
